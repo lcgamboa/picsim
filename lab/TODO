@@ -1,0 +1,42 @@
+
+######### ALL     #################
+
+SERIAL PORT baudarte select
+
+OSCOPE window 
+
+mplabx integrated debug support
+
+LCD -> read and busy flag
+LCD -> scroll
+LCD -> extended font
+
+MOTOR control step, servo and DC
+
+Animated cooler
+
+memory and register view window
+
+graphic LCD
+
+
+RGB LEDS
+
+######### board 1 ################
+
+
+######### board 2 ################
+RTC -> int output
+RTC -> Countdown timer
+
+######### board 3 4 ##############
+BUZZER freq. sound output
+JUMPERS
+TEMP cooler don't work with AQUE=0
+
+######### board 5 6 ##############
+SHOW TEMP and ADC voltages
+BUZZER freq. sound output
+RTC -> int output
+TEMP cooler don't work with AQUE=0
+

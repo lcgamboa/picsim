@@ -1,0 +1,56 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.5.4	//
+!_TAG_REVISION_NAME	MCHPTags	//
+!_TAG_REVISION_VERSION	6.0.1	//
+BAUD::19200	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	26;"	d	line:26	file:
+BAUD_FACTOR::(16L*BAUD)	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	32;"	d	line:32	file:
+BAUD_FACTOR::(64L*BAUD)	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	34;"	d	line:34	file:
+BAUD_HI::1	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	27;"	d	line:27	file:
+CLK0::spi_clk=0;	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	49;"	d	line:49	file:
+CLK1::spi_clk=1;	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	50;"	d	line:50	file:
+CS0::spi_cs=0;	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	47;"	d	line:47	file:
+CS1::spi_cs=1;	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	48;"	d	line:48	file:
+KHZ::4000	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	14;"	d	line:14	file:
+RESET0::spi_reset=0;	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	53;"	d	line:53	file:
+RESET1::spi_reset=1;	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	54;"	d	line:54	file:
+RX_BIT::(1<<RX_PORT)	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	21;"	d	line:21	file:
+RX_PORT::1	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	19;"	d	line:19	file:
+SDA0::spi_dta=0;	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	51;"	d	line:51	file:
+SDA1::spi_dta=1;	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	52;"	d	line:52	file:
+SPBRG_VALUE::(unsignedchar)(((KHZ*1000L)-BA	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	37;"	d	line:37	file:
+TX_BIT::(1<<TX_PORT)	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	20;"	d	line:20	file:
+TX_PORT::2	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	18;"	d	line:18	file:
+__16f628a	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	2;"	d	line:2	file:
+__CONFIG	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	9;"	v	line:9
+b	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	58;"	v	line:58
+c	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	90;"	v	line:90	file:
+d	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	90;"	v	line:90	file:
+delay_ms	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	92;"	f	line:92	signature:(unsigned char loop)
+e	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	90;"	v	line:90	file:
+g	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	58;"	v	line:58
+getc	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	179;"	f	line:179	signature:(void)
+i	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	188;"	l	line:188
+main	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	186;"	f	line:186
+n	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	56;"	v	line:56
+putc	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	173;"	f	line:173	signature:(unsigned char datax)
+r	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	58;"	v	line:58
+s1	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	57;"	v	line:57
+s2	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	57;"	v	line:57
+sendCMD	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	101;"	f	line:101	signature:(byte datax)
+sendCMD	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	60;"	p	line:60	file:	signature:(byte cmd)
+sendData	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	145;"	f	line:145	signature:(byte datax)
+sendData	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	61;"	p	line:61	file:	signature:(byte cmd)
+setPixel	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	155;"	f	line:155	signature:(byte r_,byte g_,byte b_)
+setPixel	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	63;"	p	line:63	file:	signature:(byte r,byte g,byte b)
+shiftBits	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	107;"	p	line:107	file:
+shiftBits	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	110;"	f	line:110	signature:(byte b)
+shiftBits	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	151;"	p	line:151	file:
+shiftBits	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	62;"	p	line:62	file:	signature:(byte b)
+spi_clk::RB7	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	41;"	d	line:41	file:
+spi_cs::RB5	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	43;"	d	line:43	file:
+spi_dta::RB6	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	42;"	d	line:42	file:
+spi_reset::RB4	C:\Ricardo PFC\Anterior\spi_sdcc\spi.c	44;"	d	line:44	file:

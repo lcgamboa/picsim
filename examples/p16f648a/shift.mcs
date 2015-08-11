@@ -1,0 +1,71 @@
+[Header]
+MagicCookie={0b13fe8c-dfe0-40eb-8900-6712719559a7}
+Version=1.0
+[File000]
+Location=Y:\picsim\examples\p16f648a\shift.o
+Folder=Intermediary
+DeviceName=PIC16F648A
+LanguageToolSuiteID={6B3DAA78-59C1-46DD-B6AA-DBDAE4E06484}
+LanguageToolID={49D3CA3F-D9A3-4518-9943-226A347E8CC7}
+LanguageToolLocation=C:\Arquivos de programas\Microchip\MPASM Suite\MPASMWIN.exe
+PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)||$(LIBDIR)||$(LKRDIR)||
+SOLK=<src>|shift.asm||<obj>||<lib>||<lkr>||
+SuiteArgsString=generate-absolute-code
+ToolArgsString=
+TraceCmdString=
+DebugOptions=/d__DEBUG=1 /d__MPLAB_DEBUGGER_ICD2=1
+[File001]
+Location=Y:\picsim\examples\p16f648a\shift.err
+Folder=Intermediary
+DeviceName=PIC16F648A
+LanguageToolSuiteID={6B3DAA78-59C1-46DD-B6AA-DBDAE4E06484}
+LanguageToolID={49D3CA3F-D9A3-4518-9943-226A347E8CC7}
+LanguageToolLocation=C:\Arquivos de programas\Microchip\MPASM Suite\MPASMWIN.exe
+PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)||$(LIBDIR)||$(LKRDIR)||
+SOLK=<src>|shift.asm||<obj>||<lib>||<lkr>||
+SuiteArgsString=generate-absolute-code
+ToolArgsString=
+TraceCmdString=
+DebugOptions=/d__DEBUG=1 /d__MPLAB_DEBUGGER_ICD2=1
+[File002]
+Location=Y:\picsim\examples\p16f648a\shift.hex
+Folder=Output
+DeviceName=PIC16F648A
+LanguageToolSuiteID={6B3DAA78-59C1-46DD-B6AA-DBDAE4E06484}
+LanguageToolID={49D3CA3F-D9A3-4518-9943-226A347E8CC7}
+LanguageToolLocation=C:\Arquivos de programas\Microchip\MPASM Suite\MPASMWIN.exe
+PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)||$(LIBDIR)||$(LKRDIR)||
+SOLK=<src>|shift.asm||<obj>||<lib>||<lkr>||
+SuiteArgsString=generate-absolute-code
+ToolArgsString=
+TraceCmdString=
+DebugOptions=/d__DEBUG=1 /d__MPLAB_DEBUGGER_ICD2=1
+[File003]
+Location=Y:\picsim\examples\p16f648a\shift.lst
+Folder=Output
+DeviceName=PIC16F648A
+LanguageToolSuiteID={6B3DAA78-59C1-46DD-B6AA-DBDAE4E06484}
+LanguageToolID={49D3CA3F-D9A3-4518-9943-226A347E8CC7}
+LanguageToolLocation=C:\Arquivos de programas\Microchip\MPASM Suite\MPASMWIN.exe
+PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)||$(LIBDIR)||$(LKRDIR)||
+SOLK=<src>|shift.asm||<obj>||<lib>||<lkr>||
+SuiteArgsString=generate-absolute-code
+ToolArgsString=
+TraceCmdString=
+DebugOptions=/d__DEBUG=1 /d__MPLAB_DEBUGGER_ICD2=1
+[File004]
+Location=Y:\picsim\examples\p16f648a\shift.cof
+Folder=Output
+DeviceName=PIC16F648A
+LanguageToolSuiteID={6B3DAA78-59C1-46DD-B6AA-DBDAE4E06484}
+LanguageToolID={96C98149-AA1B-4CF9-B967-FAE79CAB663C}
+LanguageToolLocation=C:\Arquivos de programas\Microchip\MPASM Suite\mplink.exe
+PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)||$(LIBDIR)||$(LKRDIR)||
+SOLK=<src>|shift.asm||<obj>||<lib>||<lkr>||
+SuiteArgsString=generate-absolute-code
+ToolArgsString=/o"$(BINDIR_)$(TARGETBASE).cof" /M"$(BINDIR_)$(TARGETBASE).map" /W
+TraceCmdString=
+DebugOptions=/z__MPLAB_DEBUG=1 /z__MPLAB_DEBUGGER_ICD2=1 /z__ICD2RAM=1
+[TOOL_LOC_STAMPS]
+tool_loc{49D3CA3F-D9A3-4518-9943-226A347E8CC7}=C:\Arquivos de programas\Microchip\MPASM Suite\MPASMWIN.exe
+tool_loc{96C98149-AA1B-4CF9-B967-FAE79CAB663C}=C:\Arquivos de programas\Microchip\MPASM Suite\mplink.exe

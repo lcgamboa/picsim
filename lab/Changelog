@@ -1,0 +1,16 @@
+
+10/15/2011 Board processor combo added
+
+Version 0.5
+07/26/2011 psp support 18f
+07/21/2011 Configure Window and psp memory limits
+06/27/2011 RTC DS1307 implemented
+06/24/2011 Max clock auto ajust 
+06/23/2011 Resize window implemented
+06/23/2011 Board 5 and 6 added
+06/19/2011 I2C Bus bug fixed
+06/15/2011 LCD 4 bit mode implemented
+
+Version 0.4
+03/22/2011 memory save files 
+03/21/2011 LCD dor matrix implemented

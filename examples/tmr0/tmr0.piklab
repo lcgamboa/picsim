@@ -1,0 +1,11 @@
+<!DOCTYPE piklab>
+<piklab>
+  <general>
+    <device>16F628A</device>
+    <tool>gputils</tool>
+    <files>
+      <item>tmr0.asm</item>
+    </files>
+  </general>
+  <editors/>
+</piklab>

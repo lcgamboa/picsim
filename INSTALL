@@ -1,0 +1,7 @@
+Installation:
+
+make         - Compile the picsim simulator
+
+cd lab/ make - Compile the picsimlab gui
+
+this version is not installable

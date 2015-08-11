@@ -1,0 +1,39 @@
+<img src="picsimlab1.png" width="640" height="444" border="0" usemap="#map" />
+
+<map name="map">
+<!-- #$-:Image map file created by GIMP Image Map plug-in -->
+<!-- #$-:GIMP Image Map plug-in by Maurits Rijk -->
+<!-- #$-:Please do not edit lines starting with "#$" -->
+<!-- #$VERSION:2.3 -->
+<!-- #$AUTHOR:Luis Claudio Gamboa Lopes      -->
+<area shape="circle" coords="395,33,9" href="RB0" />
+<area shape="circle" coords="394,62,9" href="RB1" />
+<area shape="circle" coords="394,88,9" href="RB2" />
+<area shape="circle" coords="394,116,9" href="RB3" />
+<area shape="circle" coords="394,144,9" href="RB4" />
+<area shape="circle" coords="394,171,9" href="RB5" />
+<area shape="circle" coords="394,198,9" href="RB6" />
+<area shape="circle" coords="393,226,9" href="RB7" />
+<area shape="circle" coords="374,295,9" href="RA1" />
+<area shape="circle" coords="443,295,9" href="RA2" />
+<area shape="circle" coords="513,296,9" href="RA3" />
+<area shape="circle" coords="100,403,23" href="RA0L" />
+<area shape="circle" coords="133,295,8" href="RA0" />
+<area shape="rect" coords="485,73,511,78" href="A1" />
+<area shape="rect" coords="517,86,522,105" href="B1" />
+<area shape="rect" coords="518,122,523,144" href="C1" />
+<area shape="rect" coords="486,152,512,157" href="D1" />
+<area shape="rect" coords="475,125,480,146" href="E1" />
+<area shape="rect" coords="476,84,481,103" href="F1" />
+<area shape="rect" coords="486,113,512,118" href="G1" />
+<area shape="rect" coords="526,155,530,159" href="P1" />
+<area shape="rect" coords="565,72,598,80" href="A2" />
+<area shape="rect" coords="599,79,607,110" href="B2" />
+<area shape="rect" coords="599,118,608,152" href="C2" />
+<area shape="rect" coords="565,151,599,159" href="D2" />
+<area shape="rect" coords="556,118,565,152" href="E2" />
+<area shape="rect" coords="556,79,564,111" href="F2" />
+<area shape="rect" coords="565,111,597,119" href="G2" />
+<area shape="rect" coords="608,153,617,161" href="P2" />
+<area shape="rect" coords="515,25,559,42" href="JP1" />
+</map>

@@ -1,0 +1,14 @@
+<!DOCTYPE piklab>
+<piklab>
+  <general>
+    <device>16F628A</device>
+    <tool>gputils</tool>
+    <files>
+      <item>eeprom.asm</item>
+    </files>
+    <opened_files>
+      <item>eeprom.asm</item>
+    </opened_files>
+  </general>
+  <editors/>
+</piklab>

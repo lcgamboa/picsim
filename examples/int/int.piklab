@@ -1,0 +1,15 @@
+<!DOCTYPE piklab>
+<piklab>
+  <general>
+    <device>16F628A</device>
+    <tool>gputils</tool>
+    <programmer>psp</programmer>
+    <files>
+      <item>int.asm</item>
+    </files>
+    <opened_files>
+      <item>int.asm</item>
+    </opened_files>
+  </general>
+  <editors/>
+</piklab>

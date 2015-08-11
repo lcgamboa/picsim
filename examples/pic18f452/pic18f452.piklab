@@ -1,0 +1,17 @@
+<!DOCTYPE piklab>
+<piklab>
+  <general>
+    <device>18F452</device>
+    <tool>gputils</tool>
+    <programmer>icd2_debugger</programmer>
+    <files>
+      <item>pic18f452.asm</item>
+    </files>
+    <custom_linker_script>/home/win/Arquivos de programas/gputils/lkr/18f452i.lkr</custom_linker_script>
+    <opened_files>
+      <item>pic18f452.asm</item>
+      <item>/home/gamboa/projetos/picsim/examples/877/teste_877.asm</item>
+    </opened_files>
+  </general>
+  <editors/>
+</piklab>

@@ -1,0 +1,16 @@
+<!DOCTYPE piklab>
+<piklab>
+  <general>
+    <device>18F452</device>
+    <tool>gputils</tool>
+    <programmer>icd2_debugger</programmer>
+    <files>
+      <item>pic18f452_asm.asm</item>
+    </files>
+    <custom_linker_script>/usr/share/gputils/lkr/18f452i.lkr</custom_linker_script>
+    <watched_registers>
+      <item>3969 2 </item>
+    </watched_registers>
+  </general>
+  <editors/>
+</piklab>

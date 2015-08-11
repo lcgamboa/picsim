@@ -1,0 +1,52 @@
+
+11/07/2013 PIC18F4550 support (Standard Instruction Set)
+11/07/2013 PIC18F4620 support (Standard Instruction Set)
+10/10/2012 PIC16F648A ICD support
+09/20/2012 PIC16F648A support
+03/09/2012 ADDWF and ADDWFC POSTINC bug fix
+09/20/2011 On Chip Debug support for PIC18F452
+08/21/2011 ICSP core18F implemented
+08/05/2011 Core18 INCF file,W,0 bug fixed
+
+Version 0.5
+07/14/2011 18f WDT implemented
+07/08/2011 16f PCL bug fix
+07/06/2011 18f core bug fix
+07/01/2011 18f core bug fix
+06/22/2011 18f interrupt level implemented
+06/22/2011 fast stack bug fixed
+06/21/2011 hexfile load bug fixed
+06/20/2011 PIC18XXX RCALL bug fixed 
+06/14/2011 interrupts flags bug fixed 
+06/11/2011 PIC16F777 support
+
+Version 0.4
+03/21/2011 hexfile write implemented
+03/18/2011 serial freeze bug fixed
+01/31/2011 P18 timers implemented
+01/29/2011 P16 timers bug fixed
+01/22/2011 init pic18f core implementation
+
+Version 0.3
+11/11/2010 MSSP I2C master mode implemented
+11/09/2010 t0cki and t1cki implemented
+11/01/2010 serial freeze fixed
+09/10/2010 latch pins implemented
+09/08/2010 concurrent interrupt bug fix 
+08/07/2010 STATUS IRP bug fixed
+08/02/2010 support to idlocs read in .hex file
+07/31/2010 On Chip Debug support for PIC16F877A 
+07/30/2010 ICSP implemented
+07/29/2010 serial flowcontrol implemented
+07/28/2010 RCREG 2 level FIFO implemented
+07/24/2010 FSR bug fixed 
+07/23/2010 usart tx interrupt implemented
+07/21/2010 tmrx disabled TxIF  when  TXIE disable BUG fixed
+07/20/2010 self-programming flash support added 
+07/11/2010 serial baudrate emulation and tx fix
+07/10/2010 fix CLRF TXREG
+
+Version 0.2
+Support TMR1 TMR2 WDT 
+
+Version 0.1

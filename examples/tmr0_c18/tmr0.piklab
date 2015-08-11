@@ -1,0 +1,14 @@
+<!DOCTYPE piklab>
+<piklab>
+  <general>
+    <device>18F452</device>
+    <tool>sdcc</tool>
+    <files>
+      <item>tmr0.c</item>
+    </files>
+    <opened_files>
+      <item>tmr0.c</item>
+    </opened_files>
+  </general>
+  <editors/>
+</piklab>

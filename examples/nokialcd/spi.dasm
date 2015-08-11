@@ -1,0 +1,731 @@
+000000:  0000  nop
+000001:  29fc  goto	0x1fc
+000005:  1283  bcf	0x3, 0x5
+000006:  1703  bsf	0x3, 0x6
+000007:  01b3  clrf	0x33
+000008:  1683  bsf	0x3, 0x5
+000009:  1303  bcf	0x3, 0x6
+00000a:  0186  clrf	0x6
+00000b:  3006  movlw	0x6
+00000c:  0086  movwf	0x6
+00000d:  300c  movlw	0xc
+00000e:  0099  movwf	0x19
+00000f:  1518  bsf	0x18, 0x2
+000010:  1218  bcf	0x18, 0x4
+000011:  1283  bcf	0x3, 0x5
+000012:  1303  bcf	0x3, 0x6
+000013:  1798  bsf	0x18, 0x7
+000014:  1683  bsf	0x3, 0x5
+000015:  1303  bcf	0x3, 0x6
+000016:  1698  bsf	0x18, 0x5
+000017:  1283  bcf	0x3, 0x5
+000018:  1303  bcf	0x3, 0x6
+000019:  1618  bsf	0x18, 0x4
+00001a:  304f  movlw	0x4f
+00001b:  20dd  call	0xdd
+00001c:  304b  movlw	0x4b
+00001d:  20dd  call	0xdd
+00001e:  300a  movlw	0xa
+00001f:  20dd  call	0xdd
+000020:  300d  movlw	0xd
+000021:  20dd  call	0xdd
+000022:  1283  bcf	0x3, 0x5
+000023:  1303  bcf	0x3, 0x6
+000024:  1286  bcf	0x6, 0x5
+000025:  1306  bcf	0x6, 0x6
+000026:  1786  bsf	0x6, 0x7
+000027:  1606  bsf	0x6, 0x4
+000028:  300a  movlw	0xa
+000029:  21d0  call	0x1d0
+00002a:  1283  bcf	0x3, 0x5
+00002b:  1303  bcf	0x3, 0x6
+00002c:  1206  bcf	0x6, 0x4
+00002d:  300a  movlw	0xa
+00002e:  21d0  call	0x1d0
+00002f:  1283  bcf	0x3, 0x5
+000030:  1303  bcf	0x3, 0x6
+000031:  1606  bsf	0x6, 0x4
+000032:  1786  bsf	0x6, 0x7
+000033:  1706  bsf	0x6, 0x6
+000034:  1786  bsf	0x6, 0x7
+000035:  300a  movlw	0xa
+000036:  21d0  call	0x1d0
+000037:  3001  movlw	0x1
+000038:  21c3  call	0x1c3
+000039:  3011  movlw	0x11
+00003a:  21c3  call	0x1c3
+00003b:  3003  movlw	0x3
+00003c:  21c3  call	0x1c3
+00003d:  300a  movlw	0xa
+00003e:  21d0  call	0x1d0
+00003f:  3029  movlw	0x29
+000040:  21c3  call	0x1c3
+000041:  3013  movlw	0x13
+000042:  21c3  call	0x1c3
+000043:  3021  movlw	0x21
+000044:  21c3  call	0x1c3
+000045:  30ba  movlw	0xba
+000046:  21c3  call	0x1c3
+000047:  3036  movlw	0x36
+000048:  21c3  call	0x1c3
+000049:  3088  movlw	0x88
+00004a:  2138  call	0x138
+00004b:  303a  movlw	0x3a
+00004c:  21c3  call	0x1c3
+00004d:  3003  movlw	0x3
+00004e:  2138  call	0x138
+00004f:  3025  movlw	0x25
+000050:  21c3  call	0x1c3
+000051:  303f  movlw	0x3f
+000052:  2138  call	0x138
+000053:  302a  movlw	0x2a
+000054:  21c3  call	0x1c3
+000055:  3000  movlw	0
+000056:  2138  call	0x138
+000057:  3083  movlw	0x83
+000058:  2138  call	0x138
+000059:  302b  movlw	0x2b
+00005a:  21c3  call	0x1c3
+00005b:  3000  movlw	0
+00005c:  2138  call	0x138
+00005d:  3083  movlw	0x83
+00005e:  2138  call	0x138
+00005f:  302c  movlw	0x2c
+000060:  21c3  call	0x1c3
+000061:  3004  movlw	0x4
+000062:  1283  bcf	0x3, 0x5
+000063:  1703  bsf	0x3, 0x6
+000064:  00ae  movwf	0x2e
+000065:  3011  movlw	0x11
+000066:  00af  movwf	0x2f
+000067:  3000  movlw	0
+000068:  00fe  movwf	0x7e
+000069:  3000  movlw	0
+00006a:  00ff  movwf	0x7f
+00006b:  30ff  movlw	0xff
+00006c:  20e1  call	0xe1
+00006d:  30ff  movlw	0xff
+00006e:  1283  bcf	0x3, 0x5
+00006f:  1703  bsf	0x3, 0x6
+000070:  07ae  addwf	0x2e, f
+000071:  1c03  btfss	0x3, 0
+000072:  03af  decf	0x2f, f
+000073:  082e  movf	0x2e, w
+000074:  042f  iorwf	0x2f, w
+000075:  1d03  btfss	0x3, 0x2
+000076:  2867  goto	0x67
+000077:  3004  movlw	0x4
+000078:  00ae  movwf	0x2e
+000079:  3011  movlw	0x11
+00007a:  00af  movwf	0x2f
+00007b:  3000  movlw	0
+00007c:  00fe  movwf	0x7e
+00007d:  30ff  movlw	0xff
+00007e:  00ff  movwf	0x7f
+00007f:  3000  movlw	0
+000080:  20e1  call	0xe1
+000081:  30ff  movlw	0xff
+000082:  1283  bcf	0x3, 0x5
+000083:  1703  bsf	0x3, 0x6
+000084:  07ae  addwf	0x2e, f
+000085:  1c03  btfss	0x3, 0
+000086:  03af  decf	0x2f, f
+000087:  082e  movf	0x2e, w
+000088:  042f  iorwf	0x2f, w
+000089:  1d03  btfss	0x3, 0x2
+00008a:  287b  goto	0x7b
+00008b:  3004  movlw	0x4
+00008c:  00ae  movwf	0x2e
+00008d:  3011  movlw	0x11
+00008e:  00af  movwf	0x2f
+00008f:  30ff  movlw	0xff
+000090:  00fe  movwf	0x7e
+000091:  3000  movlw	0
+000092:  00ff  movwf	0x7f
+000093:  3000  movlw	0
+000094:  20e1  call	0xe1
+000095:  30ff  movlw	0xff
+000096:  1283  bcf	0x3, 0x5
+000097:  1703  bsf	0x3, 0x6
+000098:  07ae  addwf	0x2e, f
+000099:  1c03  btfss	0x3, 0
+00009a:  03af  decf	0x2f, f
+00009b:  082e  movf	0x2e, w
+00009c:  042f  iorwf	0x2f, w
+00009d:  1d03  btfss	0x3, 0x2
+00009e:  288f  goto	0x8f
+00009f:  3004  movlw	0x4
+0000a0:  00ae  movwf	0x2e
+0000a1:  3011  movlw	0x11
+0000a2:  00af  movwf	0x2f
+0000a3:  30ff  movlw	0xff
+0000a4:  00fe  movwf	0x7e
+0000a5:  30ff  movlw	0xff
+0000a6:  00ff  movwf	0x7f
+0000a7:  30ff  movlw	0xff
+0000a8:  20e1  call	0xe1
+0000a9:  30ff  movlw	0xff
+0000aa:  1283  bcf	0x3, 0x5
+0000ab:  1703  bsf	0x3, 0x6
+0000ac:  07ae  addwf	0x2e, f
+0000ad:  1c03  btfss	0x3, 0
+0000ae:  03af  decf	0x2f, f
+0000af:  082e  movf	0x2e, w
+0000b0:  042f  iorwf	0x2f, w
+0000b1:  1d03  btfss	0x3, 0x2
+0000b2:  28a3  goto	0xa3
+0000b3:  3046  movlw	0x46
+0000b4:  20dd  call	0xdd
+0000b5:  3049  movlw	0x49
+0000b6:  20dd  call	0xdd
+0000b7:  304d  movlw	0x4d
+0000b8:  20dd  call	0xdd
+0000b9:  300a  movlw	0xa
+0000ba:  20dd  call	0xdd
+0000bb:  300d  movlw	0xd
+0000bc:  20dd  call	0xdd
+0000bd:  20d7  call	0xd7
+0000be:  1283  bcf	0x3, 0x5
+0000bf:  1703  bsf	0x3, 0x6
+0000c0:  00b6  movwf	0x36
+0000c1:  20d7  call	0xd7
+0000c2:  1283  bcf	0x3, 0x5
+0000c3:  1703  bsf	0x3, 0x6
+0000c4:  00b7  movwf	0x37
+0000c5:  20d7  call	0xd7
+0000c6:  1283  bcf	0x3, 0x5
+0000c7:  1703  bsf	0x3, 0x6
+0000c8:  00b8  movwf	0x38
+0000c9:  0838  movf	0x38, w
+0000ca:  00fe  movwf	0x7e
+0000cb:  1283  bcf	0x3, 0x5
+0000cc:  1703  bsf	0x3, 0x6
+0000cd:  0837  movf	0x37, w
+0000ce:  00ff  movwf	0x7f
+0000cf:  1283  bcf	0x3, 0x5
+0000d0:  1703  bsf	0x3, 0x6
+0000d1:  0836  movf	0x36, w
+0000d2:  20e1  call	0xe1
+0000d3:  302e  movlw	0x2e
+0000d4:  20dd  call	0xdd
+0000d5:  28bd  goto	0xbd
+0000d6:  0008  return
+
+0000d7:  1283  bcf	0x3, 0x5
+0000d8:  1303  bcf	0x3, 0x6
+0000d9:  1e8c  btfss	0xc, 0x5
+0000da:  28d7  goto	0xd7
+0000db:  081a  movf	0x1a, w
+0000dc:  0008  return
+
+0000dd:  1283  bcf	0x3, 0x5
+0000de:  1303  bcf	0x3, 0x6
+0000df:  0099  movwf	0x19
+0000e0:  0008  return
+
+0000e1:  1283  bcf	0x3, 0x5
+0000e2:  1703  bsf	0x3, 0x6
+0000e3:  00b6  movwf	0x36
+0000e4:  087f  movf	0x7f, w
+0000e5:  1283  bcf	0x3, 0x5
+0000e6:  1703  bsf	0x3, 0x6
+0000e7:  00b7  movwf	0x37
+0000e8:  087e  movf	0x7e, w
+0000e9:  1283  bcf	0x3, 0x5
+0000ea:  1703  bsf	0x3, 0x6
+0000eb:  00b8  movwf	0x38
+0000ec:  3000  movlw	0
+0000ed:  1283  bcf	0x3, 0x5
+0000ee:  1703  bsf	0x3, 0x6
+0000ef:  0433  iorwf	0x33, w
+0000f0:  1d03  btfss	0x3, 0x2
+0000f1:  2910  goto	0x110
+0000f2:  30f0  movlw	0xf0
+0000f3:  1283  bcf	0x3, 0x5
+0000f4:  1703  bsf	0x3, 0x6
+0000f5:  0536  andwf	0x36, w
+0000f6:  1283  bcf	0x3, 0x5
+0000f7:  1703  bsf	0x3, 0x6
+0000f8:  00ac  movwf	0x2c
+0000f9:  1283  bcf	0x3, 0x5
+0000fa:  1703  bsf	0x3, 0x6
+0000fb:  0e37  swapf	0x37, w
+0000fc:  390f  andlw	0xf
+0000fd:  1283  bcf	0x3, 0x5
+0000fe:  1703  bsf	0x3, 0x6
+0000ff:  00ad  movwf	0x2d
+000100:  042c  iorwf	0x2c, w
+000101:  1283  bcf	0x3, 0x5
+000102:  1703  bsf	0x3, 0x6
+000103:  00b4  movwf	0x34
+000104:  30f0  movlw	0xf0
+000105:  1283  bcf	0x3, 0x5
+000106:  1703  bsf	0x3, 0x6
+000107:  0538  andwf	0x38, w
+000108:  1283  bcf	0x3, 0x5
+000109:  1703  bsf	0x3, 0x6
+00010a:  00b5  movwf	0x35
+00010b:  3001  movlw	0x1
+00010c:  1283  bcf	0x3, 0x5
+00010d:  1703  bsf	0x3, 0x6
+00010e:  00b3  movwf	0x33
+00010f:  2937  goto	0x137
+000110:  1283  bcf	0x3, 0x5
+000111:  1703  bsf	0x3, 0x6
+000112:  01b3  clrf	0x33
+000113:  1283  bcf	0x3, 0x5
+000114:  1703  bsf	0x3, 0x6
+000115:  0834  movf	0x34, w
+000116:  2138  call	0x138
+000117:  1283  bcf	0x3, 0x5
+000118:  1703  bsf	0x3, 0x6
+000119:  0e36  swapf	0x36, w
+00011a:  390f  andlw	0xf
+00011b:  1283  bcf	0x3, 0x5
+00011c:  1703  bsf	0x3, 0x6
+00011d:  00ac  movwf	0x2c
+00011e:  1283  bcf	0x3, 0x5
+00011f:  1703  bsf	0x3, 0x6
+000120:  0835  movf	0x35, w
+000121:  1283  bcf	0x3, 0x5
+000122:  1703  bsf	0x3, 0x6
+000123:  04ac  iorwf	0x2c, f
+000124:  082c  movf	0x2c, w
+000125:  2138  call	0x138
+000126:  30f0  movlw	0xf0
+000127:  1283  bcf	0x3, 0x5
+000128:  1703  bsf	0x3, 0x6
+000129:  0537  andwf	0x37, w
+00012a:  1283  bcf	0x3, 0x5
+00012b:  1703  bsf	0x3, 0x6
+00012c:  00ac  movwf	0x2c
+00012d:  1283  bcf	0x3, 0x5
+00012e:  1703  bsf	0x3, 0x6
+00012f:  0e38  swapf	0x38, w
+000130:  390f  andlw	0xf
+000131:  1283  bcf	0x3, 0x5
+000132:  1703  bsf	0x3, 0x6
+000133:  00ad  movwf	0x2d
+000134:  04ac  iorwf	0x2c, f
+000135:  082c  movf	0x2c, w
+000136:  2138  call	0x138
+000137:  0008  return
+
+000138:  1283  bcf	0x3, 0x5
+000139:  1703  bsf	0x3, 0x6
+00013a:  00ac  movwf	0x2c
+00013b:  1283  bcf	0x3, 0x5
+00013c:  1303  bcf	0x3, 0x6
+00013d:  1386  bcf	0x6, 0x7
+00013e:  1706  bsf	0x6, 0x6
+00013f:  1786  bsf	0x6, 0x7
+000140:  1283  bcf	0x3, 0x5
+000141:  1703  bsf	0x3, 0x6
+000142:  082c  movf	0x2c, w
+000143:  2145  call	0x145
+000144:  0008  return
+
+000145:  1283  bcf	0x3, 0x5
+000146:  1703  bsf	0x3, 0x6
+000147:  00ad  movwf	0x2d
+000148:  1283  bcf	0x3, 0x5
+000149:  1303  bcf	0x3, 0x6
+00014a:  1386  bcf	0x6, 0x7
+00014b:  1283  bcf	0x3, 0x5
+00014c:  1703  bsf	0x3, 0x6
+00014d:  1fad  btfss	0x2d, 0x7
+00014e:  2953  goto	0x153
+00014f:  1283  bcf	0x3, 0x5
+000150:  1303  bcf	0x3, 0x6
+000151:  1706  bsf	0x6, 0x6
+000152:  2956  goto	0x156
+000153:  1283  bcf	0x3, 0x5
+000154:  1303  bcf	0x3, 0x6
+000155:  1306  bcf	0x6, 0x6
+000156:  1283  bcf	0x3, 0x5
+000157:  1303  bcf	0x3, 0x6
+000158:  1786  bsf	0x6, 0x7
+000159:  1386  bcf	0x6, 0x7
+00015a:  1283  bcf	0x3, 0x5
+00015b:  1703  bsf	0x3, 0x6
+00015c:  1f2d  btfss	0x2d, 0x6
+00015d:  2962  goto	0x162
+00015e:  1283  bcf	0x3, 0x5
+00015f:  1303  bcf	0x3, 0x6
+000160:  1706  bsf	0x6, 0x6
+000161:  2965  goto	0x165
+000162:  1283  bcf	0x3, 0x5
+000163:  1303  bcf	0x3, 0x6
+000164:  1306  bcf	0x6, 0x6
+000165:  1283  bcf	0x3, 0x5
+000166:  1303  bcf	0x3, 0x6
+000167:  1786  bsf	0x6, 0x7
+000168:  1386  bcf	0x6, 0x7
+000169:  1283  bcf	0x3, 0x5
+00016a:  1703  bsf	0x3, 0x6
+00016b:  1ead  btfss	0x2d, 0x5
+00016c:  2971  goto	0x171
+00016d:  1283  bcf	0x3, 0x5
+00016e:  1303  bcf	0x3, 0x6
+00016f:  1706  bsf	0x6, 0x6
+000170:  2974  goto	0x174
+000171:  1283  bcf	0x3, 0x5
+000172:  1303  bcf	0x3, 0x6
+000173:  1306  bcf	0x6, 0x6
+000174:  1283  bcf	0x3, 0x5
+000175:  1303  bcf	0x3, 0x6
+000176:  1786  bsf	0x6, 0x7
+000177:  1386  bcf	0x6, 0x7
+000178:  1283  bcf	0x3, 0x5
+000179:  1703  bsf	0x3, 0x6
+00017a:  1e2d  btfss	0x2d, 0x4
+00017b:  2980  goto	0x180
+00017c:  1283  bcf	0x3, 0x5
+00017d:  1303  bcf	0x3, 0x6
+00017e:  1706  bsf	0x6, 0x6
+00017f:  2983  goto	0x183
+000180:  1283  bcf	0x3, 0x5
+000181:  1303  bcf	0x3, 0x6
+000182:  1306  bcf	0x6, 0x6
+000183:  1283  bcf	0x3, 0x5
+000184:  1303  bcf	0x3, 0x6
+000185:  1786  bsf	0x6, 0x7
+000186:  1386  bcf	0x6, 0x7
+000187:  1283  bcf	0x3, 0x5
+000188:  1703  bsf	0x3, 0x6
+000189:  1dad  btfss	0x2d, 0x3
+00018a:  298f  goto	0x18f
+00018b:  1283  bcf	0x3, 0x5
+00018c:  1303  bcf	0x3, 0x6
+00018d:  1706  bsf	0x6, 0x6
+00018e:  2992  goto	0x192
+00018f:  1283  bcf	0x3, 0x5
+000190:  1303  bcf	0x3, 0x6
+000191:  1306  bcf	0x6, 0x6
+000192:  1283  bcf	0x3, 0x5
+000193:  1303  bcf	0x3, 0x6
+000194:  1786  bsf	0x6, 0x7
+000195:  1386  bcf	0x6, 0x7
+000196:  1283  bcf	0x3, 0x5
+000197:  1703  bsf	0x3, 0x6
+000198:  1d2d  btfss	0x2d, 0x2
+000199:  299e  goto	0x19e
+00019a:  1283  bcf	0x3, 0x5
+00019b:  1303  bcf	0x3, 0x6
+00019c:  1706  bsf	0x6, 0x6
+00019d:  29a1  goto	0x1a1
+00019e:  1283  bcf	0x3, 0x5
+00019f:  1303  bcf	0x3, 0x6
+0001a0:  1306  bcf	0x6, 0x6
+0001a1:  1283  bcf	0x3, 0x5
+0001a2:  1303  bcf	0x3, 0x6
+0001a3:  1786  bsf	0x6, 0x7
+0001a4:  1386  bcf	0x6, 0x7
+0001a5:  1283  bcf	0x3, 0x5
+0001a6:  1703  bsf	0x3, 0x6
+0001a7:  1cad  btfss	0x2d, 0x1
+0001a8:  29ad  goto	0x1ad
+0001a9:  1283  bcf	0x3, 0x5
+0001aa:  1303  bcf	0x3, 0x6
+0001ab:  1706  bsf	0x6, 0x6
+0001ac:  29b0  goto	0x1b0
+0001ad:  1283  bcf	0x3, 0x5
+0001ae:  1303  bcf	0x3, 0x6
+0001af:  1306  bcf	0x6, 0x6
+0001b0:  1283  bcf	0x3, 0x5
+0001b1:  1303  bcf	0x3, 0x6
+0001b2:  1786  bsf	0x6, 0x7
+0001b3:  1386  bcf	0x6, 0x7
+0001b4:  1283  bcf	0x3, 0x5
+0001b5:  1703  bsf	0x3, 0x6
+0001b6:  1c2d  btfss	0x2d, 0
+0001b7:  29bc  goto	0x1bc
+0001b8:  1283  bcf	0x3, 0x5
+0001b9:  1303  bcf	0x3, 0x6
+0001ba:  1706  bsf	0x6, 0x6
+0001bb:  29bf  goto	0x1bf
+0001bc:  1283  bcf	0x3, 0x5
+0001bd:  1303  bcf	0x3, 0x6
+0001be:  1306  bcf	0x6, 0x6
+0001bf:  1283  bcf	0x3, 0x5
+0001c0:  1303  bcf	0x3, 0x6
+0001c1:  1786  bsf	0x6, 0x7
+0001c2:  0008  return
+
+0001c3:  1283  bcf	0x3, 0x5
+0001c4:  1703  bsf	0x3, 0x6
+0001c5:  00ac  movwf	0x2c
+0001c6:  1283  bcf	0x3, 0x5
+0001c7:  1303  bcf	0x3, 0x6
+0001c8:  1386  bcf	0x6, 0x7
+0001c9:  1306  bcf	0x6, 0x6
+0001ca:  1786  bsf	0x6, 0x7
+0001cb:  1283  bcf	0x3, 0x5
+0001cc:  1703  bsf	0x3, 0x6
+0001cd:  082c  movf	0x2c, w
+0001ce:  2145  call	0x145
+0001cf:  0008  return
+
+0001d0:  1283  bcf	0x3, 0x5
+0001d1:  1703  bsf	0x3, 0x6
+0001d2:  00ac  movwf	0x2c
+0001d3:  1283  bcf	0x3, 0x5
+0001d4:  1703  bsf	0x3, 0x6
+0001d5:  01b0  clrf	0x30
+0001d6:  1283  bcf	0x3, 0x5
+0001d7:  1703  bsf	0x3, 0x6
+0001d8:  082c  movf	0x2c, w
+0001d9:  1283  bcf	0x3, 0x5
+0001da:  1703  bsf	0x3, 0x6
+0001db:  0230  subwf	0x30, w
+0001dc:  1803  btfsc	0x3, 0
+0001dd:  29fb  goto	0x1fb
+0001de:  1283  bcf	0x3, 0x5
+0001df:  1703  bsf	0x3, 0x6
+0001e0:  01b1  clrf	0x31
+0001e1:  30ff  movlw	0xff
+0001e2:  1283  bcf	0x3, 0x5
+0001e3:  1703  bsf	0x3, 0x6
+0001e4:  0231  subwf	0x31, w
+0001e5:  1803  btfsc	0x3, 0
+0001e6:  29f7  goto	0x1f7
+0001e7:  3004  movlw	0x4
+0001e8:  1283  bcf	0x3, 0x5
+0001e9:  1703  bsf	0x3, 0x6
+0001ea:  00b2  movwf	0x32
+0001eb:  1283  bcf	0x3, 0x5
+0001ec:  1703  bsf	0x3, 0x6
+0001ed:  03b2  decf	0x32, f
+0001ee:  0832  movf	0x32, w
+0001ef:  1d03  btfss	0x3, 0x2
+0001f0:  29eb  goto	0x1eb
+0001f1:  3004  movlw	0x4
+0001f2:  00b2  movwf	0x32
+0001f3:  1283  bcf	0x3, 0x5
+0001f4:  1703  bsf	0x3, 0x6
+0001f5:  0ab1  incf	0x31, f
+0001f6:  29e1  goto	0x1e1
+0001f7:  1283  bcf	0x3, 0x5
+0001f8:  1703  bsf	0x3, 0x6
+0001f9:  0ab0  incf	0x30, f
+0001fa:  29d6  goto	0x1d6
+0001fb:  0008  return
+
+0001fc:  30c4  movlw	0xc4
+0001fd:  00fe  movwf	0x7e
+0001fe:  3002  movlw	0x2
+0001ff:  00ff  movwf	0x7f
+000200:  3080  movlw	0x80
+000201:  0000  nop
+000202:  0000  nop
+000203:  22a3  call	0x2a3
+000204:  0000  nop
+000205:  0000  nop
+000206:  1283  bcf	0x3, 0x5
+000207:  1703  bsf	0x3, 0x6
+000208:  00a1  movwf	0x21
+000209:  087f  movf	0x7f, w
+00020a:  00a0  movwf	0x20
+00020b:  30c6  movlw	0xc6
+00020c:  00a2  movwf	0x22
+00020d:  3002  movlw	0x2
+00020e:  00a3  movwf	0x23
+00020f:  1283  bcf	0x3, 0x5
+000210:  1703  bsf	0x3, 0x6
+000211:  0820  movf	0x20, w
+000212:  00a4  movwf	0x24
+000213:  0821  movf	0x21, w
+000214:  00a5  movwf	0x25
+000215:  30ff  movlw	0xff
+000216:  07a0  addwf	0x20, f
+000217:  1c03  btfss	0x3, 0
+000218:  03a1  decf	0x21, f
+000219:  0824  movf	0x24, w
+00021a:  0425  iorwf	0x25, w
+00021b:  1903  btfsc	0x3, 0x2
+00021c:  2a8c  goto	0x28c
+00021d:  3004  movlw	0x4
+00021e:  0722  addwf	0x22, w
+00021f:  00a4  movwf	0x24
+000220:  01a5  clrf	0x25
+000221:  0da5  rlf	0x25, f
+000222:  0823  movf	0x23, w
+000223:  07a5  addwf	0x25, f
+000224:  0824  movf	0x24, w
+000225:  00fe  movwf	0x7e
+000226:  0825  movf	0x25, w
+000227:  00ff  movwf	0x7f
+000228:  3080  movlw	0x80
+000229:  0000  nop
+00022a:  0000  nop
+00022b:  22a3  call	0x2a3
+00022c:  0000  nop
+00022d:  0000  nop
+00022e:  1283  bcf	0x3, 0x5
+00022f:  1703  bsf	0x3, 0x6
+000230:  00a7  movwf	0x27
+000231:  087f  movf	0x7f, w
+000232:  00a6  movwf	0x26
+000233:  0822  movf	0x22, w
+000234:  00fe  movwf	0x7e
+000235:  0823  movf	0x23, w
+000236:  00ff  movwf	0x7f
+000237:  3080  movlw	0x80
+000238:  0000  nop
+000239:  0000  nop
+00023a:  22a3  call	0x2a3
+00023b:  0000  nop
+00023c:  0000  nop
+00023d:  1283  bcf	0x3, 0x5
+00023e:  1703  bsf	0x3, 0x6
+00023f:  00a9  movwf	0x29
+000240:  00a5  movwf	0x25
+000241:  087f  movf	0x7f, w
+000242:  00a8  movwf	0x28
+000243:  00a4  movwf	0x24
+000244:  3002  movlw	0x2
+000245:  0722  addwf	0x22, w
+000246:  00a4  movwf	0x24
+000247:  01a5  clrf	0x25
+000248:  0da5  rlf	0x25, f
+000249:  0823  movf	0x23, w
+00024a:  07a5  addwf	0x25, f
+00024b:  0824  movf	0x24, w
+00024c:  00fe  movwf	0x7e
+00024d:  0825  movf	0x25, w
+00024e:  00ff  movwf	0x7f
+00024f:  3080  movlw	0x80
+000250:  0000  nop
+000251:  0000  nop
+000252:  22a3  call	0x2a3
+000253:  0000  nop
+000254:  0000  nop
+000255:  1283  bcf	0x3, 0x5
+000256:  1703  bsf	0x3, 0x6
+000257:  00a5  movwf	0x25
+000258:  00ab  movwf	0x2b
+000259:  087f  movf	0x7f, w
+00025a:  00a4  movwf	0x24
+00025b:  00aa  movwf	0x2a
+00025c:  1283  bcf	0x3, 0x5
+00025d:  1703  bsf	0x3, 0x6
+00025e:  0826  movf	0x26, w
+00025f:  00aa  movwf	0x2a
+000260:  0827  movf	0x27, w
+000261:  00ab  movwf	0x2b
+000262:  30ff  movlw	0xff
+000263:  07a6  addwf	0x26, f
+000264:  1c03  btfss	0x3, 0
+000265:  03a7  decf	0x27, f
+000266:  082a  movf	0x2a, w
+000267:  042b  iorwf	0x2b, w
+000268:  1903  btfsc	0x3, 0x2
+000269:  2a85  goto	0x285
+00026a:  0828  movf	0x28, w
+00026b:  00fe  movwf	0x7e
+00026c:  0829  movf	0x29, w
+00026d:  00ff  movwf	0x7f
+00026e:  3080  movlw	0x80
+00026f:  0000  nop
+000270:  0000  nop
+000271:  2290  call	0x290
+000272:  0000  nop
+000273:  0000  nop
+000274:  1283  bcf	0x3, 0x5
+000275:  1703  bsf	0x3, 0x6
+000276:  00aa  movwf	0x2a
+000277:  0824  movf	0x24, w
+000278:  0084  movwf	0x4
+000279:  1383  bcf	0x3, 0x7
+00027a:  1825  btfsc	0x25, 0
+00027b:  1783  bsf	0x3, 0x7
+00027c:  082a  movf	0x2a, w
+00027d:  0080  movwf	0
+00027e:  0aa8  incf	0x28, f
+00027f:  1903  btfsc	0x3, 0x2
+000280:  0aa9  incf	0x29, f
+000281:  0aa4  incf	0x24, f
+000282:  1903  btfsc	0x3, 0x2
+000283:  0aa5  incf	0x25, f
+000284:  2a5c  goto	0x25c
+000285:  3006  movlw	0x6
+000286:  1283  bcf	0x3, 0x5
+000287:  1703  bsf	0x3, 0x6
+000288:  07a2  addwf	0x22, f
+000289:  1803  btfsc	0x3, 0
+00028a:  0aa3  incf	0x23, f
+00028b:  2a0f  goto	0x20f
+00028c:  0000  nop
+00028d:  0000  nop
+00028e:  2805  goto	0x5
+00028f:  0008  return
+
+000290:  3a00  xorlw	0
+000291:  1903  btfsc	0x3, 0x2
+000292:  2a97  goto	0x297
+000293:  3a80  xorlw	0x80
+000294:  1903  btfsc	0x3, 0x2
+000295:  2a9e  goto	0x29e
+000296:  3400  retlw	0
+
+000297:  087e  movf	0x7e, w
+000298:  0084  movwf	0x4
+000299:  1383  bcf	0x3, 0x7
+00029a:  187f  btfsc	0x7f, 0
+00029b:  1783  bsf	0x3, 0x7
+00029c:  0800  movf	0, w
+00029d:  0008  return
+
+00029e:  087f  movf	0x7f, w
+00029f:  008a  movwf	0xa
+0002a0:  087e  movf	0x7e, w
+0002a1:  0082  movwf	0x2
+0002a2:  0008  return
+
+0002a3:  3a00  xorlw	0
+0002a4:  1903  btfsc	0x3, 0x2
+0002a5:  2aab  goto	0x2ab
+0002a6:  3a80  xorlw	0x80
+0002a7:  1903  btfsc	0x3, 0x2
+0002a8:  2ab5  goto	0x2b5
+0002a9:  01ff  clrf	0x7f
+0002aa:  3400  retlw	0
+
+0002ab:  087e  movf	0x7e, w
+0002ac:  0084  movwf	0x4
+0002ad:  1383  bcf	0x3, 0x7
+0002ae:  187f  btfsc	0x7f, 0
+0002af:  1783  bsf	0x3, 0x7
+0002b0:  0800  movf	0, w
+0002b1:  00ff  movwf	0x7f
+0002b2:  0a84  incf	0x4, f
+0002b3:  0800  movf	0, w
+0002b4:  0008  return
+
+0002b5:  0000  nop
+0002b6:  0000  nop
+0002b7:  229e  call	0x29e
+0002b8:  00fd  movwf	0x7d
+0002b9:  0ffe  incfsz	0x7e, f
+0002ba:  03ff  decf	0x7f, f
+0002bb:  0aff  incf	0x7f, f
+0002bc:  0000  nop
+0002bd:  0000  nop
+0002be:  229e  call	0x29e
+0002bf:  00fc  movwf	0x7c
+0002c0:  087d  movf	0x7d, w
+0002c1:  00ff  movwf	0x7f
+0002c2:  087c  movf	0x7c, w
+0002c3:  0008  return
+
+0002c4:  3401  retlw	0x1
+0002c5:  3400  retlw	0
+0002c6:  34cc  retlw	0xcc
+0002c7:  3402  retlw	0x2
+0002c8:  3439  retlw	0x39
+0002c9:  3401  retlw	0x1
+0002ca:  3401  retlw	0x1
+0002cb:  3400  retlw	0
+0002cc:  3400  retlw	0
+
+002007:  3f50  addlw	0x50

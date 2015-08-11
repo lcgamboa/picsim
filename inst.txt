@@ -1,0 +1,35 @@
+ NOP     --  	No Operation                 1     0000000 xx00000  
+ RETURN  --  	Return from Subroutine       2     0000000 0001000
+SLEEP   --  	Go into Standby mode         1     0000000 1100011   	TO,PD
+CLRWDT  --  	Clear Watchdog Timer         1     0000000 1100100   	TO,PD
+ RETFIE  --  	Return from interrupt        2     0000000 0001001                                                         
+ MOVWF   f  	Move W to f                  1     0000001 fffffff
+ CLRW    --  	Clear W                      1     0000010 xxxxxxx 	Z	
+ CLRF    f  	Clear f                      1     0000011 fffffff 	Z       2
+ SUBWF   f, d 	Subtract W from f            1     000010 dfffffff 	C,DC,Z  1, 2
+ DECF    f, d 	Decrement f                  1     000011 dfffffff  	Z       1, 2
+ IORWF   f, d 	Inclusive OR W with f        1     000100 dfffffff   	Z       1, 2
+ ANDWF   f, d 	AND W with f                 1     000101 dfffffff	Z       1, 2
+ XORWF   f, d 	Exclusive OR W with f        1     000110 dfffffff  	Z       1, 2
+ ADDWF	f, d 	Add W and f                  1     000111 dfffffff	C,DC,Z  1, 2
+ MOVF    f, d 	Move f                       1     001000 dfffffff 	Z       1, 2
+ COMF    f, d 	Complement f                 1     001001 dfffffff 	Z       1, 2
+ INCF    f, d 	Increment f                  1     001010 dfffffff	Z       1, 2
+ DECFSZ  f, d 	Decrement f, Skip if 0       1(2)  001011 dfffffff 		1, 2, 3  
+ RRF     f, d 	Rotate Right f through Carry 1     001100 dfffffff	C       1, 2
+ RLF     f, d 	Rotate Left f through Carry  1     001101 dfffffff	C       1, 2                   
+ SWAPF   f, d 	Swap nibbles in f            1     001110 dfffffff 		1, 2
+ INCFSZ  f, d 	Increment f, Skip if 0       1(2)  001111 dfffffff		1, 2, 3 
+ BCF     f, b 	Bit Clear f                  1     0100 bbbfffffff           1, 2
+ BSF     f, b 	Bit Set f                    1     0101 bbbfffffff           1, 2
+ BTFSC   f, b 	Bit Test f, Skip if Clear    1(2)  0110 bbbfffffff           3
+ BTFSS   f, b 	Bit Test f, Skip if Set      1(2)  0111 bbbfffffff           3
+ CALL    k  	Call subroutine              2     100 kkkkkkkkkkk
+ GOTO    k  	Go to address                2     101 kkkkkkkkkkk
+ MOVLW   k  	Move literal to W            1     1100xx kkkkkkkk                                                         
+ RETLW   k  	Return with literal in W     2     1101xx kkkkkkkk
+ IORLW   k  	Inclusive OR literal with W  1     111000 kkkkkkkk   	Z
+ ANDLW   k 	AND literal with W           1     111001 kkkkkkkk   	Z
+ XORLW   k  	Exclusive OR literal with W  1     111010 kkkkkkkk   	Z
+ SUBLW   k  	Subtract W from literal      1     11110x kkkkkkkk   	C,DC,Z
+ ADDLW   k  	Add literal and W            1     11111x kkkkkkkk   	C,DC,Z

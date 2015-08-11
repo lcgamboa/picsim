@@ -1,0 +1,16 @@
+<!DOCTYPE piklab>
+<piklab>
+  <general>
+    <device>16F877A</device>
+    <tool>sdcc</tool>
+    <programmer>gpsim</programmer>
+    <files>
+      <item>eeprom.c</item>
+      <item>eeprom_ext.c</item>
+      <item>eeprom_ext.h</item>
+      <item>i2c.c</item>
+      <item>i2c.h</item>
+    </files>
+  </general>
+  <editors/>
+</piklab>

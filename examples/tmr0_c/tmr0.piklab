@@ -1,0 +1,11 @@
+<!DOCTYPE piklab>
+<piklab>
+  <general>
+    <device>16F628A</device>
+    <tool>sdcc</tool>
+    <files>
+      <item>tmr0.c</item>
+    </files>
+  </general>
+  <editors/>
+</piklab>

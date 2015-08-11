@@ -1,0 +1,163 @@
+<html>
+<body>
+<h1><a href="http://sourceforge.net/projects/picsim/">PicsimLab_0_5_0</a></h1>
+<br><a href="#ajuda">Ajuda</a>
+<br><a href="#help">Help</a>
+<br><a href="#schematics">Schematics</a>
+<br><a href="#sourcecode">Examples source code</a>
+<br><a href="#license">License</a>
+<br>
+<br>
+<hr>
+<h2><a name="ajuda"></a>Ajuda</h2> 
+<h3>Comandos</h3>
+<br>Clique no conector ICSP para carregar um arquivo .hex. 
+<br>
+<br>Clique no bot&atilde;o PWR para ligar/desligar o emulador. 
+<br>
+<br>Os bot&otilde;es podem ser acionados pelo mouse ou pelas teclas 1, 2, 3 ...
+<br>
+
+<h3>Características placa 1</h3>
+<br>Emula a placa de desenvolvimento McLab1 da Labtools que utiliza um PIC16F628A.
+<br>
+<br>Compra do kit McLab1, manual e exemplos na &Aacute;rea de donwload <a href="http://www.mosaico.com.br/" target="_blank">http://www.mosaico.com.br/</a>
+<br>
+<br>O hardware e a utiliza&ccedil;&atilde;o do kit tamb&eacute;m &eacute; descrita no livro <b>Desbravando o PIC - Ampliado e Atualizado para PIC 16F628A</b> da <a href="http://www.erica.com.br/">editora Erica</a> (ISBN: 978-85-7194-867-9). 
+<br>
+<h3>Características placa 2</h3>
+<br>Emula uma placa didática desenvolvida pelo autor.
+<br>
+<h3>Características placas 3 e 4</h3>
+<br>Emula a placa de desenvolvimento McLab2 da Labtools que utiliza um PIC16F877A ou um PIC18F452.
+<br>
+<br>Compra do kit McLab2, manual e exemplos na &Aacute;rea de donwload <a href="http://www.mosaico.com.br/" target="_blank">http://www.mosaico.com.br/</a>
+<br>
+<br>O hardware e a utiliza&ccedil;&atilde;o do kit tamb&eacute;m &eacute; descrita no livro <b>Conectando o PIC - Recursos Avançados</b> da <a href="http://www.erica.com.br/">editora Erica</a> (ISBN: 978-85-7194-737-5). 
+<br>
+<h3>Características placas 5 e 6</h3>
+<br>Emula a placa de desenvolvimento PICGenios PIC18F e PIC16F Microchip da microgenios que utiliza um PIC16F877A ou um PIC18F452.
+<br>
+<br>Compra do kit PICGenios PIC18F e PIC16F Microchip e manual em <a href="http://www.microgenios.com" target="_blank">http://www.microgenios.com</a>
+<br>
+
+<h3>Conexão com o Programador</h3>
+<br>Para utilizar o emulador de programador picstart+ embutido, instale um emulador NULL-MODEM:
+<br>
+<br> Windows: com0com   <a href="http://sourceforge.net/projects/com0com/" target="_blank">http://sourceforge.net/projects/com0com/</a>
+<br>
+<br> Linux:   tty0tty   <a href="http://sourceforge.net/projects/tty0tty/" target="_blank">http://sourceforge.net/projects/tty0tty/</a>  
+<br>
+<br><b> Exemplos de configura&ccedil;&atilde;o:</b>
+<table border="1">
+<tr><td><b>OS</b></td><td><b>porta PicsimLab1</b></td><td><b>porta IDE</b></td><td><b>NULL-Modem prog.</b></td><td><b>Conex&atilde;o</b></td></tr>   
+<tr><td>Windows</td><td> wport=com8      </td><td>   Mplab=com2       </td><td>   com0com  </td><td>   com2&lt;=&gt;com8           </td></tr>
+<tr><td>Linux  </td><td> lport=/dev/tnt4 </td><td>   Piklab=/dev/tnt5 </td><td>   tty0tty  </td><td>  /dev/tnt4&lt;=&gt;/dev/tnt5  </td></tr>
+</table>
+<h3>Prefer&ecirc;ncias</h3>
+<br>Edite o arquivo picsimlab.ini para definir as prefer&ecirc;ncias:
+<br>
+<br><b>wprog=com8</b> Porta do Programador no windows 
+<br>
+<br><b>lprog=/dev/tnt4</b> Porta do Programador no linux 
+<br>
+<br><b>clock=4</b> Configura clock Padr&atilde;o (em MHz)
+<br>
+<br>
+<hr>
+<h2><a name="help"></a>Help</h2>
+<h3>Commands</h3>
+<br>Click in ICSP connector to load an .hex file. 
+<br>
+<br>Click in PWR button to ON/OFF the emulator.. 
+<br>
+<br>The buttons can be activated through mouse or keys 1, 2, 3 e 4.
+<br>
+<h3>Features board 1</h3>
+<br>Emulates the Labtools development board McLab1 who uses one PIC16F628A.
+<br>
+<br>McLab1 kit buy, manual and examples in download area <a href="http://www.mosaico.com.br/" target="_blank">http://www.mosaico.com.br/</a>
+<br>
+<br>The hardware and the use of kit is described in book <b>Desbravando o PIC - Ampliado e Atualizado para PIC 16F628A</b> of <a href="http://www.erica.com.br/">Erica publisher</a> (ISBN: 978-85-7194-867-9). 
+<br>
+<h3>Features board 2</h3>
+<br>Emulates an didatic board developed by author.
+<br>
+<h3>Features boards 3 and 4</h3>
+<br>Emulates the Labtools development board McLab2 who uses one PIC16F877A or one PIC18F452.
+<br>
+<br>McLab2 kit buy, manual and examples in download area <a href="http://www.mosaico.com.br/" target="_blank">http://www.mosaico.com.br/</a>
+<br>
+<br>The hardware and the use of kit is described in book <b>Conectando o PIC - Recursos Avançados</b> da <a href="http://www.erica.com.br/">editora Erica</a> (ISBN: 978-85-7194-737-5). 
+<br>
+<h3>Features boards 5 and 6</h3>
+<br>Emulates the microgenius development board PICGenios PIC18F e PIC16F Microchip who uses one PIC16F877A or one PIC18F452.
+<br>
+<br>PICGenios PIC18F e PIC16F Microchip kit buy and manual in <a href="http://www.microgenios.com" target="_blank">http://www.microgenios.com</a>
+<br>
+
+<h3>Programmer connection</h3>
+<br>To utilize the embedded picstart+ emulator, install an NULL-MODEM emulator:
+<br>
+<br> Windows: com0com   <a href="http://sourceforge.net/projects/com0com/" target="_blank">http://sourceforge.net/projects/com0com/</a>
+<br>
+<br> Linux:   tty0tty   <a href="http://sourceforge.net/projects/tty0tty/" target="_blank">http://sourceforge.net/projects/tty0tty/</a>  
+<br>
+<br><b> Configuration examples:</b>
+<table border="1">
+<tr><td><b>OS</b></td><td><b>PicsimLab1 port</b></td><td><b>IDE port</b></td><td><b>NULL-Modem prog.</b></td><td><b>Connection</b></td></tr>   
+<tr><td>Windows</td><td> wport=com8      </td><td>   Mplab=com2       </td><td>   com0com  </td><td>   com2&lt;=&gt;com8           </td></tr>
+<tr><td>Linux  </td><td> lport=/dev/tnt4 </td><td>   Piklab=/dev/tnt5 </td><td>   tty0tty  </td><td>  /dev/tnt4&lt;=&gt;/dev/tnt5  </td></tr>
+</table>
+<h3>Preferences</h3>
+<br>Edit the file picsimlab.ini to define the preferences:
+<br>
+<br><b>wprog=com8</b> Windows programmer port 
+<br>
+<br><b>lprog=/dev/tnt4</b> Linux programmer port  
+<br>
+<br><b>clock=4</b> Default clock (em MHz)
+<br>
+<br>
+<hr>
+<h2><a name="schematics"></a>Schematics</h2>
+<br>
+<br>
+<br><a href="board1.pdf" target="_blank">Board 1</a>
+<br>
+<br><a href="board2.pdf" target="_blank">Board 2</a>
+<br>
+<br><a href="board3.pdf"target="_blank">Board 3 (4)</a>
+<br>
+<br><a href="http://www.microgenios.com.br/news/manuais_kits/manual_picgenios_VER2.0.pdf"target="_blank">Board 5 (6)</a>
+<br>
+<hr>
+<h2><a name="sourcecode"></a>Examples source code</h2>
+<br>
+<br> Examples using <a href="http://sdcc.sourceforge.net/" target="_blank">sdcc</a>, <a href="http://www.mikroe.com/eng/products/view/7/mikroc-pro-for-pic/" target="_blank">mikroc pro</a>, <a href="http://www.microchip.com/mplab" target="_blank">hi-tech and c18</a> compilers.
+<br>
+<br><a href="../examples/" target="_blank">source code</a>
+<br>
+<hr>
+<h2><a name="license"></a>License</h2>
+<br>
+<br>Copyright © 2011 Luis Claudio Gamboa Lopes &lt;lcgamboa@yahoo.com&gt;
+<br>
+<br>
+<br>This program is free software; you can redistribute it and/or modify
+<br>it under the terms of the GNU General Public License as published by
+<br>the Free Software Foundation; either version 2 of the License, or
+<br>(at your option) any later version.
+<br>
+<br>This program is distributed in the hope that it will be useful,
+<br>but WITHOUT ANY WARRANTY; without even the implied warranty of
+<br>MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+<br>GNU General Public License for more details.
+<br>
+<br>You should have received a copy of the GNU General Public License
+<br>along with this program; if not, write to the Free Software
+<br>Foundation, Inc., 59 Temple Place, Suite 330, 
+<br>Boston, MA 02111-1307, USA. 
+<br>
+</body>
+</html>

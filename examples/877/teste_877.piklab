@@ -1,0 +1,16 @@
+<!DOCTYPE piklab>
+<piklab>
+  <general>
+    <device>16F877A</device>
+    <tool>gputils</tool>
+    <files>
+      <item>teste_877.asm</item>
+    </files>
+    <programmer>icd2_debugger</programmer>
+    <custom_linker_script>/usr/share/gputils/lkr/16f877ai.lkr</custom_linker_script>
+    <opened_files>
+      <item>teste_877.asm</item>
+    </opened_files>
+  </general>
+  <editors/>
+</piklab>

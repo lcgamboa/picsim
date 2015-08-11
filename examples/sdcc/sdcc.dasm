@@ -1,0 +1,278 @@
+000000:  0000  nop
+000001:  2805  goto	0x5
+
+#_sdcc_gsinit_startup
+000005:  30e6  movlw	0xe6
+000006:  00fe  movwf	0x7e
+000007:  3000  movlw	0
+000008:  00ff  movwf	0x7f
+000009:  3080  movlw	0x80
+00000a:  0000  nop
+00000b:  0000  nop
+00000c:  20ac  call	0xac #__gptrget2
+#_code_idata_000008
+00000d:  0000  nop
+00000e:  0000  nop
+00000f:  1283  bcf	0x3, 0x5
+000010:  1703  bsf	0x3, 0x6
+000011:  00a1  movwf	0x21
+000012:  087f  movf	0x7f, w
+000013:  00a0  movwf	0x20
+000014:  30e8  movlw	0xe8
+000015:  00a2  movwf	0x22
+000016:  3000  movlw	0
+000017:  00a3  movwf	0x23
+#_00108_DS_
+000018:  1283  bcf	0x3, 0x5
+000019:  1703  bsf	0x3, 0x6
+00001a:  0820  movf	0x20, w
+00001b:  00a4  movwf	0x24
+00001c:  0821  movf	0x21, w
+00001d:  00a5  movwf	0x25
+00001e:  30ff  movlw	0xff
+00001f:  07a0  addwf	0x20, f
+000020:  1c03  btfss	0x3, 0
+000021:  03a1  decf	0x21, f
+000022:  0824  movf	0x24, w
+000023:  0425  iorwf	0x25, w
+000024:  1903  btfsc	0x3, 0x2
+000025:  2895  goto	0x95
+000026:  3004  movlw	0x4
+000027:  0722  addwf	0x22, w
+000028:  00a4  movwf	0x24
+000029:  01a5  clrf	0x25
+00002a:  0da5  rlf	0x25, f
+00002b:  0823  movf	0x23, w
+00002c:  07a5  addwf	0x25, f
+00002d:  0824  movf	0x24, w
+00002e:  00fe  movwf	0x7e
+00002f:  0825  movf	0x25, w
+000030:  00ff  movwf	0x7f
+000031:  3080  movlw	0x80
+000032:  0000  nop
+000033:  0000  nop
+000034:  20ac  call	0xac #__gptrget2
+#_code_idata_000030
+000035:  0000  nop
+000036:  0000  nop
+000037:  1283  bcf	0x3, 0x5
+000038:  1703  bsf	0x3, 0x6
+000039:  00a7  movwf	0x27
+00003a:  087f  movf	0x7f, w
+00003b:  00a6  movwf	0x26
+00003c:  0822  movf	0x22, w
+00003d:  00fe  movwf	0x7e
+00003e:  0823  movf	0x23, w
+00003f:  00ff  movwf	0x7f
+000040:  3080  movlw	0x80
+000041:  0000  nop
+000042:  0000  nop
+000043:  20ac  call	0xac #__gptrget2
+#_code_idata_00003f
+000044:  0000  nop
+000045:  0000  nop
+000046:  1283  bcf	0x3, 0x5
+000047:  1703  bsf	0x3, 0x6
+000048:  00a9  movwf	0x29
+000049:  00a5  movwf	0x25
+00004a:  087f  movf	0x7f, w
+00004b:  00a8  movwf	0x28
+00004c:  00a4  movwf	0x24
+00004d:  3002  movlw	0x2
+00004e:  0722  addwf	0x22, w
+00004f:  00a4  movwf	0x24
+000050:  01a5  clrf	0x25
+000051:  0da5  rlf	0x25, f
+000052:  0823  movf	0x23, w
+000053:  07a5  addwf	0x25, f
+000054:  0824  movf	0x24, w
+000055:  00fe  movwf	0x7e
+000056:  0825  movf	0x25, w
+000057:  00ff  movwf	0x7f
+000058:  3080  movlw	0x80
+000059:  0000  nop
+00005a:  0000  nop
+00005b:  20ac  call	0xac #__gptrget2
+#_code_idata_000057
+00005c:  0000  nop
+00005d:  0000  nop
+00005e:  1283  bcf	0x3, 0x5
+00005f:  1703  bsf	0x3, 0x6
+000060:  00a5  movwf	0x25
+000061:  00ab  movwf	0x2b
+000062:  087f  movf	0x7f, w
+000063:  00a4  movwf	0x24
+000064:  00aa  movwf	0x2a
+#_00105_DS_
+000065:  1283  bcf	0x3, 0x5
+000066:  1703  bsf	0x3, 0x6
+000067:  0826  movf	0x26, w
+000068:  00aa  movwf	0x2a
+000069:  0827  movf	0x27, w
+00006a:  00ab  movwf	0x2b
+00006b:  30ff  movlw	0xff
+00006c:  07a6  addwf	0x26, f
+00006d:  1c03  btfss	0x3, 0
+00006e:  03a7  decf	0x27, f
+00006f:  082a  movf	0x2a, w
+000070:  042b  iorwf	0x2b, w
+000071:  1903  btfsc	0x3, 0x2
+000072:  288e  goto	0x8e
+000073:  0828  movf	0x28, w
+000074:  00fe  movwf	0x7e
+000075:  0829  movf	0x29, w
+000076:  00ff  movwf	0x7f
+000077:  3080  movlw	0x80
+000078:  0000  nop
+000079:  0000  nop
+00007a:  2099  call	0x99 #__gptrget
+#_code_idata_000076
+00007b:  0000  nop
+00007c:  0000  nop
+00007d:  1283  bcf	0x3, 0x5
+00007e:  1703  bsf	0x3, 0x6
+00007f:  00aa  movwf	0x2a
+000080:  0824  movf	0x24, w
+000081:  0084  movwf	0x4
+000082:  1383  bcf	0x3, 0x7
+000083:  1825  btfsc	0x25, 0
+000084:  1783  bsf	0x3, 0x7
+000085:  082a  movf	0x2a, w
+000086:  0080  movwf	0
+000087:  0aa8  incf	0x28, f
+000088:  1903  btfsc	0x3, 0x2
+000089:  0aa9  incf	0x29, f
+00008a:  0aa4  incf	0x24, f
+00008b:  1903  btfsc	0x3, 0x2
+00008c:  0aa5  incf	0x25, f
+00008d:  2865  goto	0x65
+_00107_DS_
+00008e:  3006  movlw	0x6
+00008f:  1283  bcf	0x3, 0x5
+000090:  1703  bsf	0x3, 0x6
+000091:  07a2  addwf	0x22, f
+000092:  1803  btfsc	0x3, 0
+000093:  0aa3  incf	0x23, f
+000094:  2818  goto	0x18
+#_00110_DS_
+000095:  0000  nop
+000096:  0000  nop
+000097:  28cd  goto	0xcd
+000098:  0008  return
+
+#__gptrget
+000099:  3a00  xorlw	0
+00009a:  1903  btfsc	0x3, 0x2
+00009b:  28a0  goto	0xa0
+00009c:  3a80  xorlw	0x80
+00009d:  1903  btfsc	0x3, 0x2
+00009e:  28a7  goto	0xa7
+00009f:  3400  retlw	0
+#__dataptrget1
+0000a0:  087e  movf	0x7e, w
+0000a1:  0084  movwf	0x4
+0000a2:  1383  bcf	0x3, 0x7
+0000a3:  187f  btfsc	0x7f, 0
+0000a4:  1783  bsf	0x3, 0x7
+0000a5:  0800  movf	0, w
+0000a6:  0008  return
+#__codeptrget1
+0000a7:  087f  movf	0x7f, w
+0000a8:  008a  movwf	0xa
+0000a9:  087e  movf	0x7e, w
+0000aa:  0082  movwf	0x2
+0000ab:  0008  return
+
+#__gptrget2
+0000ac:  3a00  xorlw	0
+0000ad:  1903  btfsc	0x3, 0x2
+0000ae:  28b4  goto	0xb4
+0000af:  3a80  xorlw	0x80
+0000b0:  1903  btfsc	0x3, 0x2
+0000b1:  28be  goto	0xbe
+0000b2:  01ff  clrf	0x7f
+0000b3:  3400  retlw	0
+#__dataptrget2 
+0000b4:  087e  movf	0x7e, w
+0000b5:  0084  movwf	0x4
+0000b6:  1383  bcf	0x3, 0x7
+0000b7:  187f  btfsc	0x7f, 0
+0000b8:  1783  bsf	0x3, 0x7
+0000b9:  0800  movf	0, w
+0000ba:  00ff  movwf	0x7f
+0000bb:  0a84  incf	0x4, f
+0000bc:  0800  movf	0, w
+0000bd:  0008  return
+#__codeptrget2
+0000be:  0000  nop
+0000bf:  0000  nop
+0000c0:  20a7  call	0xa7       #__codeptrget1
+0000c1:  00fd  movwf	0x7d
+0000c2:  0ffe  incfsz	0x7e, f
+0000c3:  03ff  decf	0x7f, f
+0000c4:  0aff  incf	0x7f, f
+0000c5:  0000  nop
+0000c6:  0000  nop
+0000c7:  20a7  call	0xa7      #__codeptrget1
+0000c8:  00fc  movwf	0x7c
+0000c9:  087d  movf	0x7d, w
+0000ca:  00ff  movwf	0x7f
+0000cb:  087c  movf	0x7c, w
+0000cc:  0008  return
+
+
+#MAIN
+0000cd:  1683  bsf	0x3, 0x5
+0000ce:  1303  bcf	0x3, 0x6
+0000cf:  0185  clrf	0x5
+0000d0:  0186  clrf	0x6
+0000d1:  1283  bcf	0x3, 0x5
+0000d2:  1703  bsf	0x3, 0x6
+0000d3:  082c  movf	0x2c, w
+0000d4:  1283  bcf	0x3, 0x5
+0000d5:  1303  bcf	0x3, 0x6
+0000d6:  0085  movwf	0x5
+0000d7:  1283  bcf	0x3, 0x5
+0000d8:  1703  bsf	0x3, 0x6
+0000d9:  082d  movf	0x2d, w
+0000da:  1283  bcf	0x3, 0x5
+0000db:  1303  bcf	0x3, 0x6
+0000dc:  0086  movwf	0x6
+0000dd:  1283  bcf	0x3, 0x5
+0000de:  1703  bsf	0x3, 0x6
+0000df:  0aac  incf	0x2c, f
+0000e0:  1283  bcf	0x3, 0x5
+0000e1:  1703  bsf	0x3, 0x6
+0000e2:  0aad  incf	0x2d, f
+0000e3:  0aad  incf	0x2d, f
+0000e4:  28d1  goto	0xd1
+0000e5:  0008  return
+
+#.cinit
+0000e6:  3403  retlw	0x3
+0000e7:  3400  retlw	0
+0000e8:  34fa  retlw	0xfa
+0000e9:  3400  retlw	0
+0000ea:  342c  retlw	0x2c
+0000eb:  3401  retlw	0x1
+0000ec:  3401  retlw	0x1
+0000ed:  3400  retlw	0
+0000ee:  34fb  retlw	0xfb
+0000ef:  3400  retlw	0
+0000f0:  342d  retlw	0x2d
+0000f1:  3401  retlw	0x1
+0000f2:  3401  retlw	0x1
+0000f3:  3400  retlw	0
+0000f4:  34fc  retlw	0xfc
+0000f5:  3400  retlw	0
+0000f6:  342e  retlw	0x2e
+0000f7:  3401  retlw	0x1
+0000f8:  3401  retlw	0x1
+0000f9:  3400  retlw	0
+#ID_sdcc_0_i
+0000fa:  3401  retlw	0x1
+#ID_sdcc_1_i
+0000fb:  3401  retlw	0x1
+#ID_idata_0_i
+0000fc:  3400  retlw	0
+002007:  3f1b  addlw	0x1b

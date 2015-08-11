@@ -1,0 +1,16 @@
+<!DOCTYPE piklab>
+<piklab>
+  <general>
+    <device>16F628A</device>
+    <tool>gputils</tool>
+    <files>
+      <item>shift.asm</item>
+    </files>
+    <programmer>icd2</programmer>
+    <custom_linker_script>/usr/share/gputils/lkr/16f628ai.lkr</custom_linker_script>
+    <opened_files>
+      <item>shift.asm</item>
+    </opened_files>
+  </general>
+  <editors/>
+</piklab>

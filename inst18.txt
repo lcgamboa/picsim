@@ -1,0 +1,98 @@
+NOP    --   	No Operation                 1     	0000 0000 0000 0000 None
+SLEEP  --   	Go into Standby mode         1     	0000 0000 0000 0011 TO, PD
+CLRWDT --   	Clear Watchdog Timer         1     	0000 0000 0000 0100 TO, PD
+PUSH   --   	Push top of ret stack(TOS)   1     	0000 0000 0000 0101 None
+POP    --   	Pop top of ret stack(TOS)    1     	0000 0000 0000 0110 None
+DAW    --   	Decimal Adjust WREG          1     	0000 0000 0000 0111 C
+TBLRD*        	Table Read                   2     	0000 0000 0000 1000 None
+TBLRD*+       	Table Read with post-inc     2 (5)   	0000 0000 0000 1001 None
+TBLRD*-       	Table Read with post-dec     2 (5)   	0000 0000 0000 1010 None
+TBLRD+*       	Table Read with pre-inc      2 (5)   	0000 0000 0000 1011 None
+TBLWT*        	Table Write                  2 (5) 	0000 0000 0000 1100 None
+TBLWT*+       	Table Write with post-inc    2 (5)   	0000 0000 0000 1101 None
+TBLWT*-       	Table Write with post-dec    2 (5)   	0000 0000 0000 1110 None
+TBLWT+*       	Table Write with pre-inc     2 (5)   	0000 0000 0000 1111 None
+
+RETFIE s    	Return from interrupt enable 2     	0000 0000 0001 000s GIE/GIEH,PEIE/GIEL
+RETURN s    	Return from Subroutine       2     	0000 0000 0001 001s None
+RESET       	Software device RESET        1     	0000 0000 1111 1111 All
+
+MOVLB    k    	Move literal to BSR<3:0>     1     	0000 0001 0000 kkkk None
+MULWF  f, a    	Multiply WREG with f         1          0000 001a ffff ffff None
+DECF   f, d, a 	Decrement f                  1          0000 01da ffff ffff C, DC, Z, OV, N 1, 2, 3, 4
+SUBLW    k    	Subtract WREG from literal   1     	0000 1000 kkkk kkkk C, DC, Z, OV, N
+IORLW    k    	Inclusive OR literalw/ WREG  1     	0000 1001 kkkk kkkk Z, N
+XORLW    k    	Exclusive OR literal w\WREG  1     	0000 1010 kkkk kkkk Z, N
+ANDLW    k    	AND literal with WREG        1     	0000 1011 kkkk kkkk Z, N
+RETLW    k    	Return with literal in WREG  2     	0000 1100 kkkk kkkk None
+MULLW    k    	Multiply literal with WREG   1     	0000 1101 kkkk kkkk None
+MOVLW    k    	Move literal to WREG         1     	0000 1110 kkkk kkkk None
+ADDLW    k    	Add literal and WREG         1     	0000 1111 kkkk kkkk C, DC, Z, OV, N
+
+IORWF  f, d, a 	Inclusive OR WREG with f     1          0001 00da ffff ffff Z, N            1, 2
+ANDWF  f, d, a 	AND WREG with f              1          0001 01da ffff ffff Z, N            1,2
+XORWF  f, d, a 	Exclusive OR WREG with f     1          0001 10da ffff ffff Z, N
+COMF   f, d, a 	Complement f                 1          0001 11da ffff ffff Z, N            1, 2
+
+ADDWFC f, d, a 	Add WREG and Carry bit to f  1          0010 00da ffff ffff C, DC, Z, OV, N 1, 2
+ADDWF  f, d, a 	Add WREG and f               1          0010 01da ffff ffff C, DC, Z, OV, N 1, 2
+INCF   f, d, a 	Increment f                  1          0010 10da ffff ffff C, DC, Z, OV, N 1, 2, 3, 4
+DECFSZ f, d, a 	Decrement f, Skip if 0       1 (2 or 3) 0010 11da ffff ffff None            1, 2, 3, 4
+
+RRCF   f, d, a 	Rotate Right f through Carry 1          0011 00da ffff ffff C, Z, N
+RLCF   f, d, a 	Rotate Left f through Carry  1          0011 01da ffff ffff C, Z, N
+SWAPF  f, d, a 	Swap nibbles in f            1          0011 10da ffff ffff None            4
+INCFSZ f, d, a 	Increment f, Skip if 0       1 (2 or 3) 0011 11da ffff ffff None            4
+
+RRNCF  f, d, a	Rotate Right f (No Carry)    1          0100 00da ffff ffff Z, N
+RLNCF  f, d, a 	Rotate Left f (No Carry)     1          0100 01da ffff ffff Z, N            1, 2
+INFSNZ f, d, a 	Increment f, Skip if Not 0   1 (2 or 3) 0100 10da ffff ffff None            1, 2
+DCFSNZ f, d, a 	Decrement f, Skip if Not 0   1 (2 or 3) 0100 11da ffff ffff None            1, 2
+
+MOVF   f, d, a 	Move f                       1          0101 00da ffff ffff Z, N            1
+SUBFWB f, d, a 	Subtract f from WREG with b. 1          0101 01da ffff ffff C, DC, Z, OV, N 1, 2
+SUBWFB f, d, a 	Subtract WREG from f with b. 1          0101 10da ffff ffff C, DC, Z, OV, N 1, 2
+SUBWF  f, d, a 	Subtract WREG from f         1          0101 11da ffff ffff C, DC, Z, OV, N
+
+CPFSLT f, a    	Compare f with WREG, skip <  1 (2 or 3) 0110 000a ffff ffff None            1, 2
+CPFSEQ f, a    	Compare f with WREG, skip =  1 (2 or 3) 0110 001a ffff ffff None            4
+CPFSGT f, a    	Compare f with WREG, skip >  1 (2 or 3) 0110 010a ffff ffff None            4
+TSTFSZ f, a    	Test f, skip if 0            1 (2 or 3) 0110 011a ffff ffff None            1, 2
+SETF   f, a    	Set f                        1          0110 100a ffff ffff None
+CLRF   f, a    	Clear f                      1          0110 101a ffff ffff Z               2
+NEGF   f, a    	Negate f                     1          0110 110a ffff ffff C, DC, Z, OV, N 1, 2
+MOVWF  f, a    	Move WREG to f               1          0110 111a ffff ffff None
+
+BTG    f, d, a 	Bit Toggle f                 1          0111 bbba ffff ffff None 1, 2
+
+BSF    f, b, a 	Bit Set f                    1          1000 bbba ffff ffff None 1, 2
+
+BCF    f, b, a 	Bit Clear f                  1          1001 bbba ffff ffff None 1, 2
+
+BTFSS  f, b, a 	Bit Test f, Skip if Set      1 (2 or 3) 1010 bbba ffff ffff None 3, 4
+
+BTFSC  f, b, a 	Bit Test f, Skip if Clear    1 (2 or 3) 1011 bbba ffff ffff None 3, 4
+
+MOVFF  fs, fd  	Move fs (source) to 1st word 2          1100 ffff  ffff ffff None
+                   fd (destination) 2nd word            1111 ffff  ffff ffff
+
+BRA    n    	Branch Unconditionally       1 (2) 	1101 0nnn nnnn nnnn None
+RCALL  n    	Relative Call                2     	1101 1nnn nnnn nnnn None
+
+BZ     n    	Branch if Zero               1 (2) 	1110 0000 nnnn nnnn None
+BNZ    n    	Branch if Not Zero           2     	1110 0001 nnnn nnnn None
+BC     n    	Branch if Carry              1 (2)      1110 0010 nnnn nnnn None
+BNC    n    	Branch if Not Carry          1 (2) 	1110 0011 nnnn nnnn None
+BOV    n    	Branch if Overflow           1 (2) 	1110 0100 nnnn nnnn None
+BNOV   n    	Branch if Not Overflow       1 (2) 	1110 0101 nnnn nnnn None
+BN     n    	Branch if Negative           1 (2)      1110 0110 nnnn nnnn None
+BNN    n    	Branch if Not Negative       1 (2) 	1110 0111 nnnn nnnn None
+
+CALL   n, s 	Call subroutine1st word      2     	1110 110s kkkk kkkk None
+            	2nd word                             	1111 kkkk kkkk kkkk
+LFSR     f, k 	Move literal (12-bit) 2nd w  2     	1110 1110 00ff kkkk None
+                   to FSRx 1st word                   	1111 0000 kkkk kkkk
+GOTO   n    	Go to address1st word        2     	1110 1111 kkkk kkkk None
+            	2nd word                             	1111 kkkk kkkk kkkk
+
+NOP    --   	No Operation                 1     	1111 xxxx xxxx xxxx None      4
