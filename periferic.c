@@ -87,12 +87,16 @@ int interrupt(_pic * pic,int print)
       //SSPIE
       if((pic->ram[PIE1] & 0x08)&&(pic->ram[PIR1] & 0x08)) return 1;
       //CCP1IE CCP1IF
-      //if((pic->ram[PIE1] & 0x04)&&(pic->ram[PIR1] & 0x04)) return 1;
+      if((pic->ram[PIE1] & 0x04)&&(pic->ram[PIR1] & 0x04)) return 1;
       //TMR2IE TMR2IF
       if((pic->ram[PIE1] & 0x02)&&(pic->ram[PIR1] & 0x02)) return 1;
       //TMR1IE TMR1IF
       if((pic->ram[PIE1] & 0x01)&&(pic->ram[PIR1] & 0x01)) return 1;
 
+      //CCP2IE CCP2IF
+      if((pic->ram[PIE2] & 0x01)&&(pic->ram[PIR2] & 0x01)) return 1;
+      //CCP3IE CCP3IF
+      if((pic->ram[PIE2] & 0x02)&&(pic->ram[PIR2] & 0x02)) return 1;
     }
   
   }
@@ -1000,6 +1004,85 @@ if(pic->portbm)
        }
        pic->cp1=0;
      }
+
+//CCP - only when TMR1 is ON
+//CCP1 compare modes 
+     if((pic->CCPCOUNT >= 1)&&(pic->ccp[0] > 0)&&((pic->ram[CCP1CON] & 0x0C) == 0x08))
+     {
+       if((pic->ram[TMR1H]==pic->ram[CCPR1H])&&(pic->ram[TMR1L]==pic->ram[CCPR1L]))//match !!
+       {
+          pic->ram[PIR1]|=0x04;//CCP1IF
+          switch(pic->ram[CCP1CON] & 0x03)
+          {
+            case 0://set output
+              if(pic->pins[pic->ccp[0]-1].dir == PD_OUT)
+                pic->ram[pic->pins[(pic->ccp[0]-1)].port]|=0x01<<(pic->pins[(pic->ccp[0]-1)].pord);
+              break;
+            case 1://clear output
+              if(pic->pins[pic->ccp[0]-1].dir == PD_OUT)
+                pic->ram[pic->pins[(pic->ccp[0]-1)].port]&=~(0x01<<(pic->pins[(pic->ccp[0]-1)].pord));
+              break;
+            case 2://software interrupt
+              break;
+            case 3://trigger special event
+              pic->ram[TMR1H]=0;
+              pic->ram[TMR1L]=0;
+              break;
+          }
+       }
+     }
+//CCP2 compare modes 
+     if((pic->CCPCOUNT >= 2)&&(pic->ccp[1] > 0)&&((pic->ram[CCP2CON] & 0x0C) == 0x08))
+     {
+       if((pic->ram[TMR1H]==pic->ram[CCPR2H])&&(pic->ram[TMR1L]==pic->ram[CCPR2L]))//match !!
+       {
+          pic->ram[PIR2]|=0x01;//CCP2IF
+          switch(pic->ram[CCP2CON] & 0x03)
+          {
+            case 0://set output
+              if(pic->pins[pic->ccp[1]-1].dir == PD_OUT)
+                pic->ram[pic->pins[(pic->ccp[1]-1)].port]|=0x01<<(pic->pins[(pic->ccp[1]-1)].pord);
+              break;
+            case 1://clear output
+              if(pic->pins[pic->ccp[1]-1].dir == PD_OUT)
+                pic->ram[pic->pins[(pic->ccp[1]-1)].port]&=~(0x01<<(pic->pins[(pic->ccp[1]-1)].pord));
+              break;
+            case 2://software interrupt
+              break;
+            case 3://trigger special event
+              pic->ram[TMR1H]=0;
+              pic->ram[TMR1L]=0;
+              if(pic->ram[ADCON0] & 0x01)pic->ram[ADCON0]|=0x04; //if ad on, enable one conversion
+              break;
+          }
+       }
+     }
+//CCP3 compare modes 
+     if((pic->CCPCOUNT >= 3)&&(pic->ccp[2] > 0)&&((pic->ram[CCP3CON] & 0x0C) == 0x08))
+     {
+       if((pic->ram[TMR1H]==pic->ram[CCPR3H])&&(pic->ram[TMR1L]==pic->ram[CCPR3L]))//match !!
+       {
+          pic->ram[PIR2]|=0x02;//CCP3IF
+          switch(pic->ram[CCP3CON] & 0x03)
+          {
+            case 0://set output
+              if(pic->pins[pic->ccp[2]-1].dir == PD_OUT)
+                pic->ram[pic->pins[(pic->ccp[2]-1)].port]|=0x01<<(pic->pins[(pic->ccp[2]-1)].pord);
+              break;
+            case 1://clear output
+              if(pic->pins[pic->ccp[2]-1].dir == PD_OUT)
+                pic->ram[pic->pins[(pic->ccp[2]-1)].port]&=~(0x01<<(pic->pins[(pic->ccp[2]-1)].pord));
+              break;
+            case 2://software interrupt
+              break;
+            case 3://trigger special event
+              pic->ram[TMR1H]=0;
+              pic->ram[TMR1L]=0;
+              break;
+          }
+       }
+     }
+
 
   } 
 

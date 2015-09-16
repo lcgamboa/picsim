@@ -40,6 +40,7 @@ extern "C" {
 #define PCLATH	0x0A
 #define INTCON  0x0B
 #define PIR1	0x0C
+#define PIR2	0x0D
 #define TMR1L	0x0E
 #define TMR1H	0x0F
 #define T1CON	0x10
@@ -68,6 +69,7 @@ extern "C" {
 #define TRISD	0x88
 #define TRISE	0x89
 #define PIE1	0x8C
+#define PIE2	0x8D
 #define SSPCON2 0x91
 #define PR2	0x92
 #define SSPADD  0x93
