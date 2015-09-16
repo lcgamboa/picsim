@@ -2,6 +2,37 @@
 #define CPWINDOW1
 
 #include<lxrad/lxrad.h>
+#include "../picsim.h"
+#include "lcd.h"
+#include "mi2c.h"
+#include "rtc.h"
+#include "rtc2.h"
+#include "id.h"
+
+#include<wx/sound.h>
+#include "wx/stdpaths.h"
+
+typedef struct
+{
+unsigned int x1;
+unsigned int x2;
+unsigned int y1;
+unsigned int y2;
+char name[10];
+unsigned short id;
+}input_t;
+
+typedef struct
+{
+unsigned int x1;
+unsigned int x2;
+unsigned int y1;
+unsigned int y2;
+unsigned int r;
+char name[10];
+unsigned short id;
+//int lval;
+}output_t;
 
 class CPWindow1:public CPWindow
 {
@@ -61,6 +92,91 @@ class CPWindow1:public CPWindow
   void board_2(void);
   void board_3(void);
   void board_4(void);
+  private:
+
+
+
+long int NSTEP;
+
+input_t  input[90];
+output_t output[90];
+
+int inputc;
+int outputc;
+
+int picrun;
+
+int picpwr;
+
+int picrst;
+
+int jmp[10];
+int dip[20];
+
+int lab;
+int lab_;
+char family;
+int proc;
+
+int board_proc[4];
+int board_family[4];
+
+_pic pic;
+
+unsigned int lm[50]; //luminosidade media
+unsigned int lm1[50]; //luminosidade media display
+unsigned int lm2[50]; //luminosidade media display
+unsigned int lm3[50]; //luminosidade media display
+unsigned int lm4[50]; //luminosidade media display
+
+
+int p_BT1; 
+int p_BT2; 
+int p_BT3; 
+int p_BT4; 
+int p_BT5; 
+int p_BT6; 
+int p_BT7; 
+
+int p_CL1; 
+int p_CL2; 
+int p_CL3; 
+
+lcd_t lcd;
+
+mi2c_t mi2c;
+rtc_t rtc;
+rtc2_t rtc2;
+
+int lcde;
+
+wxSound buzz;
+
+char share[512];
+
+float vp1in;
+float vp2in;
+float vp2[2];
+float temp[2];
+float ref;
+
+int rpmstp;
+int rpmc;
+
+float over;
+unsigned char clko;
+unsigned char d;
+
+String PATH;
+
+unsigned char sda,sck;
+
+int plWidth;
+int plHeight;
+double scale;
+
+int create;
+
 };
 
 extern CPWindow1 Window1 ;

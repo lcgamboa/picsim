@@ -1,3 +1,13 @@
+
+
+
+#define TIMER           0.1      //timer period in s
+#define CPUTUSEMAX      0.1      //max period cpu use in s 
+#define NSTEPKT     25000.0      //TIMER constant 1MHz/(4.0*timer_freq) 
+#define NSTEPKF        40.0      //Freq constant 4.0*timer_freq
+
+
+
 #include"picsimlab1.h"
 #include"picsimlab1_d.cc"
 
@@ -10,16 +20,8 @@ CPWindow1 Window1;
 
 #include"picsimlab2.h"
 #include"picsimlab3.h"
-#include "../picsim.h"
-#include "lcd.h"
-#include "mi2c.h"
-#include "rtc.h"
-#include "rtc2.h"
-#include "id.h"
 
 #include<dirent.h>
-#include<wx/sound.h>
-#include "wx/stdpaths.h"
 
 extern char PROGDEVICE[100];
 
@@ -28,115 +30,6 @@ char SERIALDEVICE[100];
 int prog_init(void);
 int prog_loop(_pic * pic);
 int prog_end(void);
-
-typedef struct
-{
-unsigned int x1;
-unsigned int x2;
-unsigned int y1;
-unsigned int y2;
-char name[10];
-unsigned short id;
-}input_t;
-
-typedef struct
-{
-unsigned int x1;
-unsigned int x2;
-unsigned int y1;
-unsigned int y2;
-unsigned int r;
-char name[10];
-unsigned short id;
-//int lval;
-}output_t;
-
-long int NSTEP=25000;
-
-input_t  input[90];
-output_t output[90];
-
-int inputc=0;
-int outputc=0;
-
-int picrun=1;
-
-int picpwr=1;
-
-int picrst=0;
-
-int jmp[10];
-int dip[20];
-
-int lab=1;
-int lab_=1;
-char family=P16;
-int proc=P16F628A;
-
-int board_proc[4];
-int board_family[4];
-
-_pic pic;
-
-unsigned int lm[50]; //luminosidade media
-unsigned int lm1[50]; //luminosidade media display
-unsigned int lm2[50]; //luminosidade media display
-unsigned int lm3[50]; //luminosidade media display
-unsigned int lm4[50]; //luminosidade media display
-
-
-int p_BT1=1; 
-int p_BT2=1; 
-int p_BT3=1; 
-int p_BT4=1; 
-int p_BT5=1; 
-int p_BT6=1; 
-int p_BT7=1; 
-
-int p_CL1=1; 
-int p_CL2=1; 
-int p_CL3=1; 
-
-lcd_t lcd;
-
-mi2c_t mi2c;
-rtc_t rtc;
-rtc2_t rtc2;
-
-int lcde=0;
-
-wxSound buzz;
-
-char share[512]={0};
-
-float vp1in=2.5;
-float vp2in=2.5;
-float vp2[2]={2.5,2.5};
-float temp[2]={27.5,27.5};
-float ref=0;
-
-int rpmstp=(NSTEP*2)/100;
-int rpmc=0;
-
-int over=0;
-unsigned char clko=0;
-unsigned char d=0;
-
-String PATH;
-
-unsigned char sda,sck;
-
-int plWidth=10;
-int plHeight=10;
-double scale=1.0;
-
-int create=0;
-
-
-#include"board_1.cc"
-#include"board_2.cc"
-#include"board_3.cc"
-#include"board_4.cc"
 
 
 void
@@ -167,14 +60,18 @@ CPWindow1::timer1_EvOnTime(CControl * control)
 
    cend = clock();
    cpu_time_used = ((double) (cend - cstart)) / CLOCKS_PER_SEC;
-   
-   //printf("time=%f \n",cpu_time_used); 
 
-   if(cpu_time_used > 0.09)
+
+   //printf("time=%f \n",cpu_time_used);
+
+
+   if(cpu_time_used > CPUTUSEMAX)
    {
-      over++;
+      over+=(cpu_time_used-CPUTUSEMAX);
+   
+      //printf("over= %f   \n",over);
 
-      if(over > 2)
+      if(over > 0.5)
       {
 /*   
           picrun=0; 
@@ -197,7 +94,7 @@ CPWindow1::timer1_EvOnTime(CControl * control)
 */
           over=0;
 
-         int newf=((NSTEP-25000.0)/25000.0);//diminui clock
+         int newf=((NSTEP-NSTEPKT)/NSTEPKT);//diminui clock
          
          if(newf <= 1)newf=1;    
 
@@ -252,7 +149,7 @@ CPWindow1::draw1_EvMouseButtonPress(CControl * control, uint button, uint x, uin
   	  rtc_end(&rtc);
   	  rtc2_end(&rtc2);
           pic_set_serial(&pic,SERIALDEVICE,0,0,0);
-          picrun=pic_init(&pic,family,proc,filedialog1.GetFileName().char_str(),1,NSTEP*40.0);
+          picrun=pic_init(&pic,family,proc,filedialog1.GetFileName().char_str(),1,NSTEP*NSTEPKF);
           lcd_rst(&lcd);
           pic.config[0] |= 0x0800; //disable DEBUG
           switch(lab)
@@ -1290,7 +1187,7 @@ create++;
 
   sprintf(fname,"%s/mdump_%02i.hex",home,lab);
  
-  pic_init(&pic,family,proc,fname,1,NSTEP*40.0);
+  pic_init(&pic,family,proc,fname,1,NSTEP*NSTEPKF);
 
 
   lcd_rst(&lcd);
@@ -1439,9 +1336,9 @@ void
 CPWindow1::combo1_EvOnComboChange(CControl * control)
 {
 
-  NSTEP= (int)(atof(combo1.GetText())*25000); 
+  NSTEP= (int)(atof(combo1.GetText())*NSTEPKT); 
 
-  pic.freq=NSTEP*40.0;
+  pic.freq=NSTEP*NSTEPKF;
          
 
   Application->ProcessEvents();
@@ -1598,7 +1495,7 @@ CPWindow1::menu1_File_LoadHex_EvMenuActive(CControl * control)
   	  rtc_end(&rtc);
   	  rtc2_end(&rtc2);
           pic_set_serial(&pic,SERIALDEVICE,0,0,0);
-          picrun=pic_init(&pic,family,proc,filedialog1.GetFileName().char_str(),1,NSTEP*40.0);
+          picrun=pic_init(&pic,family,proc,filedialog1.GetFileName().char_str(),1,NSTEP*NSTEPKF);
           lcd_rst(&lcd);
           pic.config[0] |= 0x0800; //disable DEBUG
           switch(lab)
@@ -1710,7 +1607,7 @@ CPWindow1::menu1_Help_Examples_EvMenuActive(CControl * control)
   	  rtc_end(&rtc);
   	  rtc2_end(&rtc2);
           pic_set_serial(&pic,SERIALDEVICE,0,0,0);
-          picrun=pic_init(&pic,family,proc,filedialog1.GetFileName().char_str(),1,NSTEP*40.0);
+          picrun=pic_init(&pic,family,proc,filedialog1.GetFileName().char_str(),1,NSTEP*NSTEPKF);
           lcd_rst(&lcd);
           pic.config[0] |= 0x0800; //disable DEBUG
           switch(lab)

@@ -1,4 +1,6 @@
 
+#include"picsimlab1.h"
+
 void
 CPWindow1::board_2(void)
 {

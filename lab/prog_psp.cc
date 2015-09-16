@@ -42,7 +42,6 @@
 #endif
 
 
-#include "../picsim.h"
 #include"picsimlab1.h"
 
 /*-------------------serial------------------------------------*/
