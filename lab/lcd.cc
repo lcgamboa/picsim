@@ -252,11 +252,6 @@ void lcd_data(lcd_t * lcd, char data)
 */
   fp=((unsigned char)data)-0x20;
 
-  if(fp > 96)
-  {
- //   printf("LCD dat=ERROR!\n");
-    return;
-  }
 
 //  printf("LCD dat=%#04X  (%c)\n",(unsigned char)data,data);
 
@@ -266,10 +261,7 @@ void lcd_data(lcd_t * lcd, char data)
     {
       if(fp >= 0)
       {
-        if(fp < 128)
           lcd->ddram[lcd->cursor][j]=LCDfont[fp][j];
-        else
-          lcd->ddram[lcd->cursor][j]=0xFF;
       }
       else
       {
