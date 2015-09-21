@@ -405,8 +405,10 @@ void serial(_pic * pic,int print)
     {
     
      pic->serialc=0;
-  
-     if(pic->s_open != 0)
+     
+     
+     
+     if((pic->s_open != 0)&&((pic->ram[pic->pins[pic->usart[0]-1].port+0x80] &  (0x01 << pic->pins[pic->usart[0]-1].pord)) != 0))//work only if RX TRIS is set
      {
       if(serial_recbuff(pic,&rctemp) == 1)
       {
@@ -441,6 +443,7 @@ void serial(_pic * pic,int print)
       }
      } 
     
+      //if(((pic->ram[TXSTA] & 0x02) == 0 )&&((pic->ram[pic->pins[pic->usart[1]-1].port+0x80] &  (0x01 << pic->pins[pic->usart[1]-1].pord)) != 0))
       if((pic->ram[TXSTA] & 0x02) == 0 )
       {   
         if(pic->s_open == 1 ) serial_send(pic,pic->txtemp);
@@ -560,7 +563,7 @@ void serial18(_pic * pic,int print)
     
      pic->serialc=0;
   
-     if(pic->s_open != 0)
+     if((pic->s_open != 0)&&((pic->ram[pic->pins[pic->usart[0]-1].port+0x12] &  (0x01 << pic->pins[pic->usart[0]-1].pord)) != 0)) //work only if RX tris bit is set
      {
       if(serial_recbuff(pic,&rctemp) == 1)
       {
@@ -595,8 +598,9 @@ void serial18(_pic * pic,int print)
       }
      } 
     
+      //if(((pic->ram[P18_TXSTA] & 0x02) == 0 ) &&((pic->ram[pic->pins[pic->usart[1]-1].port+0x12] &  (0x01 << pic->pins[pic->usart[1]-1].pord)) == 0))
       if((pic->ram[P18_TXSTA] & 0x02) == 0 )
-      {   
+       {   
         if(pic->s_open == 1 ) serial_send(pic,pic->txtemp);
         pic->ram[P18_TXSTA]|=0x02; //TRMT=1 empty  
     
