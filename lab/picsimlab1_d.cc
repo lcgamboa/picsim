@@ -381,7 +381,9 @@ CPWindow1::CPWindow1(void)
   CreateChild(&combo3);
 
 
-NSTEP=NSTEPKT;
+  NSTEP=NSTEPKT;
+
+  NSTEPJ=NSTEP/JUMP;
 
 inputc=0;
 outputc=0;

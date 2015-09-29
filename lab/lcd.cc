@@ -10,7 +10,7 @@ void lcd_cmd(lcd_t * lcd, char cmd)
   int i,j;
 
 
-
+  //switch betwwen 8 ou 4 bits communication
   if(!( lcd->flags & L_DL))
   {
      if(lcd->bc)
@@ -28,43 +28,43 @@ void lcd_cmd(lcd_t * lcd, char cmd)
 
 //  printf("LCD cmd=%#04X\n",(unsigned char)cmd);
   
-  
-  if((cmd & 0x80) == 0x80 )
+
+//Set DDRAM address  
+  if(cmd & 0x80 )
   {
-//Set DDRAM address
     
     i=cmd & 0x7F;
  
     if(i < 40)
     {
-       lcd->cursor=i;
+       lcd->ddram_ad=i;
     }
     else
     {
-       lcd->cursor=i-24;
+       lcd->ddram_ad=i-24;
     }
      
-    if(lcd->cursor >= DDRMAX)lcd->cursor =0;
+    if(lcd->ddram_ad >= DDRMAX)lcd->ddram_ad =0;
     lcd->cgram_ad=0xFF;
    
     return;
   }
- 
-  if((cmd & 0x40) == 0x40 )
+  
+ //Set CGRAM address
+  if(cmd & 0x40 )
   {
-//Set CGRAM address
-    
+  
     lcd->cgram_ad=cmd & 0x3F;
 
     return;
   }
- 
-  if((cmd & 0x20) == 0x20 )
+
+ //Function set 
+  if(cmd & 0x20)
   {
-//Function set
 
 //Sets interface data length
-    if((cmd & 0x10)==0x10) 
+    if(cmd & 0x10) 
     {
       lcd->flags|=L_DL;
     }
@@ -74,7 +74,7 @@ void lcd_cmd(lcd_t * lcd, char cmd)
     }
     
 //Sets number of display line
-    if((cmd & 0x08)==0x08) 
+    if(cmd & 0x08) 
     {
       lcd->flags|=L_NLI;
     }
@@ -84,7 +84,7 @@ void lcd_cmd(lcd_t * lcd, char cmd)
     }
 
 //Sets character font
-    if((cmd & 0x04)==0x04) 
+    if(cmd & 0x04) 
     {
       lcd->flags|=L_FNT;
     }
@@ -96,12 +96,12 @@ void lcd_cmd(lcd_t * lcd, char cmd)
     return;
   }
  
-  if((cmd & 0x10) == 0x10 )
+  //Cursor/display shift
+  if(cmd & 0x10 )
   {
-//Cursor/display shift
-  
+
 //Sets shift direction  
-    if((cmd & 0x08)==0x08) 
+    if(cmd & 0x04) 
     {
       lcd->flags|=L_LR;
     }
@@ -111,25 +111,42 @@ void lcd_cmd(lcd_t * lcd, char cmd)
     }
   
 //Sets cursor-move or display-shift  
-    if((cmd & 0x04)==0x04) 
+    if(cmd & 0x08) 
     {
+     //display shift   
       lcd->flags|=L_CD;
+      
+      if(lcd->flags & L_LR)
+      {
+        lcd->shift++;
+        if(lcd->shift > 40)lcd->shift=lcd->shift-40;
+      }
+      else
+      {
+        lcd->shift--;
+        if(lcd->shift < -40)lcd->shift=lcd->shift+40;
+      }   
     }
     else
     {
+     //cursor move   
       lcd->flags&=~L_CD;
+      
+      if(lcd->flags & L_LR)
+        lcd->ddram_ad++;
+      else
+        lcd->ddram_ad--;  
     }
 
-
+    lcd->update=1;
     return;
   }
  
-  if((cmd & 0x08) == 0x08 )
+  //Display On/Off control
+  if(cmd & 0x08 )
   {
-//Display On/Off control
-
 //Sets On/Off of all display
-    if((cmd & 0x04)==0x04) 
+    if(cmd & 0x04) 
     {
       lcd->flags|=L_DON;
     }
@@ -139,7 +156,7 @@ void lcd_cmd(lcd_t * lcd, char cmd)
     }
     
 //Sets cursor On/Off 
-    if((cmd & 0x02)==0x02) 
+    if(cmd & 0x02) 
     {
       lcd->flags|=L_CON;
     }
@@ -149,7 +166,7 @@ void lcd_cmd(lcd_t * lcd, char cmd)
     }
 
 //Set blink of cursor position character    
-    if((cmd & 0x01)==0x01) 
+    if(cmd & 0x01) 
     {
       lcd->flags|=L_CBL;
     }
@@ -158,16 +175,17 @@ void lcd_cmd(lcd_t * lcd, char cmd)
       lcd->flags&=~L_CBL;
     }
 
-
+    lcd->update=1;  
     return;
   }
  
-  if((cmd & 0x04) == 0x04 )
+  
+  //Entry mode set
+  if(cmd & 0x04)
   {
-//Entry mode set
-
+         
 //Sets cursor move direction    
-    if((cmd & 0x02)==0x02) 
+    if(cmd & 0x02) 
     {
       lcd->flags|=L_DID;
     }
@@ -177,7 +195,7 @@ void lcd_cmd(lcd_t * lcd, char cmd)
     }
    
 //specifies to shift the display  
-    if((cmd & 0x01)==0x01) 
+    if(cmd & 0x01) 
     {
       lcd->flags|=L_DSH;
     }
@@ -188,17 +206,19 @@ void lcd_cmd(lcd_t * lcd, char cmd)
 
     return;
   }
- 
-  if((cmd & 0x02) == 0x02 )
+
+ //Cursor home 
+  if(cmd & 0x02 )
   {
-//Cursor home
-    lcd->cursor=0;
+    lcd->ddram_ad=0;
+    lcd->update=1;  
     return;
   }
  
-  if((cmd & 0x01) == 0x01 )
+
+  //Clear display
+  if(cmd & 0x01 )
   {
-//Clear display
     for(i=0;i<DDRMAX;i++)
     {
       for(j=0;j<5;j++)
@@ -206,7 +226,9 @@ void lcd_cmd(lcd_t * lcd, char cmd)
         lcd->ddram[i][j]=0;
       }
     }
-    lcd->cursor=0;
+    lcd->ddram_ad=0;
+    lcd->shift=0;
+    lcd->flags|=L_DID;
     lcd->update=1; 
     return;
   }
@@ -226,7 +248,7 @@ void lcd_data(lcd_t * lcd, char data)
       return;
    }
 
-
+  //switch betwwen 8 ou 4 bits communication
   if(!( lcd->flags & L_DL))
   {
      if(lcd->bc)
@@ -261,16 +283,36 @@ void lcd_data(lcd_t * lcd, char data)
     {
       if(fp >= 0)
       {
-          lcd->ddram[lcd->cursor][j]=LCDfont[fp][j];
+          lcd->ddram[lcd->ddram_ad][j]=LCDfont[fp][j];
       }
       else
       {
-        lcd->ddram[lcd->cursor][j]=lcd->cgram[data&0x07][j];
+        lcd->ddram[lcd->ddram_ad][j]=lcd->cgram[data&0x07][j];
       }
     }
-    lcd->cursor++;
+    if(lcd->flags & L_DID)
+    {
+      lcd->ddram_ad++;
+      if(lcd->ddram_ad >= DDRMAX)lcd->ddram_ad=0;
+      if(lcd->flags & L_DSH)
+      {
+        lcd->shift--;
+        if(lcd->shift < -40)lcd->shift=lcd->shift+40;
+      }
+    }
+    else
+    {
+      lcd->ddram_ad--;
+      if(lcd->ddram_ad >= DDRMAX)lcd->ddram_ad=DDRMAX;
+      if(lcd->flags & L_DSH)
+      {
+        lcd->shift++;
+         if(lcd->shift > 40)lcd->shift=lcd->shift-40;
+      }
+    }
+ 
+    
     lcd->update=1; 
-    if(lcd->cursor >= DDRMAX)lcd->cursor=0;
   }
   else
   {
@@ -314,11 +356,14 @@ int i,j;
         lcd->cgram[i][j]=0;
       }
     }
-    lcd->cursor=0;
+    lcd->ddram_ad=0;
     lcd->cgram_ad=0xFF;
     lcd->update=1; 
     lcd->bc=0;
     
+    lcd->blink=0;
+    lcd->blinkc=0;
+    lcd->shift=0;
     return;
 };
 

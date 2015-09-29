@@ -5,10 +5,10 @@ void
 CPWindow1::board_1(void)
 {
   int i;
+  int j;
   unsigned char pi;
   unsigned char pinv;
   const picpin * pins;
-  
   
   draw1.Canvas.Init(scale,scale);
   
@@ -125,18 +125,23 @@ CPWindow1::board_1(void)
 
  pins = pic.pins;
 
-
+  
+ j=JUMP+1;
  if(picpwr)
    for(i=0;i<NSTEP;i++)
       {
  
+          if(j >JUMP)
+          {  
           pic_set_pin(&pic,18,p_BT1); 
           pic_set_pin(&pic,1,p_BT2); 
           pic_set_pin(&pic,2,p_BT3); 
-          pic_set_pin(&pic,3,p_BT4); 
-  
+          pic_set_pin(&pic,3,p_BT4);
+          } 
         pic_step(&pic,0);
 
+          if(j >JUMP)
+          {  
         for(pi=0;pi < pic.PINCOUNT;pi++)
         {
            lm[pi]+=pins[pi].value;
@@ -157,14 +162,17 @@ CPWindow1::board_1(void)
                 if((pinv)&&(pins[9].value)) lm2[pi]++;
               }
             }
+          j=0;
+          } 
+          j++;
      }
    //fim STEP
    
      for(pi=0;pi < pic.PINCOUNT;pi++)
      { 
-      lm[pi]= (int)(((225.0*lm[pi])/NSTEP)+30);
-      lm1[pi]= (int)(((600.0*lm1[pi])/NSTEP)+30);
-      lm2[pi]= (int)(((600.0*lm2[pi])/NSTEP)+30);
+      lm[pi]= (int)(((225.0*lm[pi])/NSTEPJ)+30);
+      lm1[pi]= (int)(((600.0*lm1[pi])/NSTEPJ)+30);
+      lm2[pi]= (int)(((600.0*lm2[pi])/NSTEPJ)+30);
       if(lm1[pi] > 255)lm1[pi]=255;
       if(lm2[pi] > 255)lm2[pi]=255;
      }

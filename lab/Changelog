@@ -1,4 +1,8 @@
 
+
+09/27/2015 LCD cursor draw and LCD shift support added
+09/20/2015 LCD full fontset added
+09/17/2015 Sampled I/O for speed otimization 
 10/15/2011 Board processor combo added
 
 Version 0.5
@@ -13,4 +17,4 @@ Version 0.5
 
 Version 0.4
 03/22/2011 memory save files 
-03/21/2011 LCD dor matrix implemented
+03/21/2011 LCD dot matrix implemented

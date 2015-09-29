@@ -39,7 +39,7 @@ CPWindow1::timer1_EvOnTime(CControl * control)
  clock_t cstart=0, cend=0;
  double cpu_time_used;
 
-
+  //TODO implement loop in one separed thread
   cstart = clock();
 
   switch(lab)
@@ -1337,6 +1337,8 @@ CPWindow1::combo1_EvOnComboChange(CControl * control)
 {
 
   NSTEP= (int)(atof(combo1.GetText())*NSTEPKT); 
+  
+  NSTEPJ=NSTEP/JUMP;
 
   pic.freq=NSTEP*NSTEPKF;
          

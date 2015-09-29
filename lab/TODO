@@ -6,19 +6,16 @@ SERIAL PORT baudarte select
 OSCOPE window 
 
 mplabx integrated debug support
+memory and register view window
+
 
 LCD -> read and busy flag
-LCD -> scroll
-LCD -> extended font
 
 MOTOR control step, servo and DC
 
 Animated cooler
 
-memory and register view window
-
 graphic LCD
-
 
 RGB LEDS
 

@@ -12,6 +12,8 @@
 #include<wx/sound.h>
 #include "wx/stdpaths.h"
 
+#define JUMP 100 //sampled IO refresh
+
 typedef struct
 {
 unsigned int x1;
@@ -97,6 +99,7 @@ class CPWindow1:public CPWindow
 
 
 long int NSTEP;
+long int NSTEPJ;
 
 input_t  input[90];
 output_t output[90];

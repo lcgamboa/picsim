@@ -5,6 +5,7 @@ void
 CPWindow1::board_3(void)
 {
   int i;
+  int j;
   int l,c,x,y;
   unsigned char pi;
   unsigned char pinv;
@@ -12,6 +13,21 @@ CPWindow1::board_3(void)
   
   draw1.Canvas.Init(scale,scale);
   
+          
+
+//lcd blink timer 
+     if((lcd.flags & L_CON )&&(lcd.flags & L_CBL))
+          {
+            lcd.blinkc++;
+            if(lcd.blinkc > 4)
+            {
+              lcd.blinkc=0;   
+              lcd.update=1;
+              lcd.blink^=1;
+            }
+          }
+          else
+           lcd.blink=0;
 
 //lab3 draw
   for(i=0;i<outputc;i++)
@@ -68,6 +84,7 @@ CPWindow1::board_3(void)
         draw1.Canvas.Rectangle (1, output[i].x1, output[i].y1, output[i].x2-output[i].x1,output[i].y2-output[i].y1 );
  
 //draw lcd text 
+   
       if((output[i].id == O_LCD)&&(lcd.update))
       {
          draw1.Canvas.Rectangle (1, output[i].x1, output[i].y1, output[i].x2-output[i].x1,output[i].y2-output[i].y1 );
@@ -81,7 +98,11 @@ CPWindow1::board_3(void)
              { 
                for(y=0;y<8;y++)
                {
-                 if(lcd.ddram[c+(40*l)][x]  & (0x01<<y))
+                 int cs= c-lcd.shift;
+                 if(cs < 0) cs= 40+(cs%40);
+                 if(cs >= 40 )cs=cs%40;
+                   
+                 if((lcd.ddram[cs+(40*l)][x]  & (0x01<<y))&& (lcd.flags & L_DON))
                  {  
                     draw1.Canvas.SetFgColor (0, 35 , 0);
                     draw1.Canvas.SetColor (0, 35 , 0);
@@ -97,7 +118,37 @@ CPWindow1::board_3(void)
              }
            }
          } 
+//cursor  
+         if((lcd.flags & L_DON)&&(lcd.flags & L_CON))
+         {
+           if(lcd.ddram_ad < 40)
+           {
+             l=0;
+             c=(lcd.ddram_ad+lcd.shift);
+           }
+           else
+           {
+             l=1;
+             c=lcd.ddram_ad-40+lcd.shift;  
+           }
+           
+           if(c < 0) c= 40+(c%40);
+           if(c >= 40 )c=c%40;      
+           
+         
+           if((c >= 0)&& (c< 16)) //draw only visible columns
+           {    
+             draw1.Canvas.SetFgColor (0, 35 , 0);
+             draw1.Canvas.SetColor (0, 35 , 0);
+            
+             if(lcd.blink)
+               draw1.Canvas.Rectangle (1, output[i].x1+2+(c*23), output[i].y1+10 +(l*35), 20,32 );  
+             else    
+               draw1.Canvas.Rectangle (1, output[i].x1+2+(c*23), output[i].y1+38+(l*35), 20,4 );
+           }
+         }
       }
+
        
       if((output[i].name[0]=='J')&&(output[i].name[1]=='P'))
       {
@@ -154,10 +205,13 @@ CPWindow1::board_3(void)
  pins = pic.pins;
 
 
+ j=JUMP+1;
  if(picpwr)
    for(i=0;i<NSTEP;i++)
       {
  
+          if(j >JUMP)
+          {  
           pic_set_pin(&pic,33,p_BT1); 
           pic_set_pin(&pic,34,p_BT2); 
           pic_set_pin(&pic,35,p_BT3); 
@@ -169,9 +223,12 @@ CPWindow1::board_3(void)
              rpmc=0;
              pic_set_pin(&pic,15, !pic_get_pin(&pic,15));
           }
-  
+          }
+         
         pic_step(&pic,0);
 
+          if(j >JUMP)
+          {  
 /*
         for(pi=0;pi < pic.PINCOUNT;pi++)
         {
@@ -206,26 +263,6 @@ CPWindow1::board_3(void)
               if((pinv)&&(pins[37].value)) lm3[pi]++;
               if((pinv)&&(pins[36].value)) lm4[pi]++;
             }
-//i2c code
-        if(pins[22].dir)
-        {
-          sda=1;
-        }
-        else
-        {
-          sda=pins[22].value;
-        }
-        
-        if(pins[17].dir)
-        {
-          sck=1;
-	  pic_set_pin(&pic,18,1);
-        }
-        else
-        {
-          sck=pins[17].value;
-        }
-	pic_set_pin(&pic,23,mi2c_io(&mi2c,sck,sda));
      
 //potênciometro p2
 //p2 rc circuit
@@ -277,31 +314,54 @@ CPWindow1::board_3(void)
     {
       lcde=0;
     }
+          j=0;
+          } 
+          j++;
      
+//i2c code
+        if(pins[22].dir)
+        {
+          sda=1;
+        }
+        else
+        {
+          sda=pins[22].value;
+        }
+        
+        if(pins[17].dir)
+        {
+          sck=1;
+	  pic_set_pin(&pic,18,1);
+        }
+        else
+        {
+          sck=pins[17].value;
+        }
+	pic_set_pin(&pic,23,mi2c_io(&mi2c,sck,sda));
 
  }
    //fim STEP
    
 
-     if( ((100.0*lm[6])/NSTEP) > 40)
+     if( ((100.0*lm[6])/NSTEPJ) > 40)
      {
        buzz.Stop(); 
        buzz.Play(); 
      }
 
      //Ventilador
-     gauge1.SetValue((100.0*lm[15])/NSTEP); 
+     gauge1.SetValue((100.0*lm[15])/NSTEPJ); 
      //Aquecedor
-     gauge2.SetValue((100.0*lm[16])/NSTEP); 
+     gauge2.SetValue((100.0*lm[16])/NSTEPJ); 
 
      //sensor ventilador
-     rpmstp=((float)NSTEP*NSTEP)/(144.0*(lm[15]+1));
+     rpmstp=((float)NSTEPJ*NSTEPJ)/(144.0*(lm[15]+1));
    
      //tensão p2
      vp2in=((5.0*(scroll1.GetPosition()))/(scroll1.GetRange()-1));
 
      //temperatura 
-     ref=((50.0*lm[16])/NSTEP)-((50.0*lm[15])/NSTEP); 
+     ref=((50.0*lm[16])/NSTEPJ)-((50.0*lm[15])/NSTEPJ); 
 
      if(ref < 0)
        ref=0; 
@@ -316,12 +376,12 @@ CPWindow1::board_3(void)
 
      for(pi=0;pi < pic.PINCOUNT;pi++)
      { 
-      lm[pi]= (int)(((225.0*lm[pi])/NSTEP)+30);
+      lm[pi]= (int)(((225.0*lm[pi])/NSTEPJ)+30);
 
-      lm1[pi]= (int)(((600.0*lm1[pi])/NSTEP)+30);
-      lm2[pi]= (int)(((600.0*lm2[pi])/NSTEP)+30);
-      lm3[pi]= (int)(((600.0*lm3[pi])/NSTEP)+30);
-      lm4[pi]= (int)(((600.0*lm4[pi])/NSTEP)+30);
+      lm1[pi]= (int)(((600.0*lm1[pi])/NSTEPJ)+30);
+      lm2[pi]= (int)(((600.0*lm2[pi])/NSTEPJ)+30);
+      lm3[pi]= (int)(((600.0*lm3[pi])/NSTEPJ)+30);
+      lm4[pi]= (int)(((600.0*lm4[pi])/NSTEPJ)+30);
       if(lm1[pi] > 255)lm1[pi]=255;
       if(lm2[pi] > 255)lm2[pi]=255;
       if(lm3[pi] > 255)lm3[pi]=255;
