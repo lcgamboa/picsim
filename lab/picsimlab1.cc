@@ -222,6 +222,7 @@ CPWindow1::draw1_EvMouseButtonPress(CControl * control, uint button, uint x, uin
             break; 
           } 
           PATH=filedialog1.GetDir();
+          FNAME=filedialog1.GetFileName();
         }
         picpwr=pa;
       };break;  
@@ -961,10 +962,15 @@ create++;
         combo1.SetText(itoa(i)); 
         combo1_EvOnComboChange(control);
       }
+
       if(!strcmp(name,"lpath"))
       {
-         //PATH=String::FromAscii(value); 
          PATH=String(value,wxConvUTF8);
+      }
+      
+      if(!strcmp(name,"lfile"))
+      {
+         FNAME=String(value,wxConvUTF8);
       }
       
       if(!strcmp(name,"jmp"))
@@ -1445,6 +1451,7 @@ CPWindow1::_EvOnDestroy(CControl * control)
     fprintf(fout,"wprog   = \"%s\"\n",PROGDEVICE);
 #endif
     fprintf(fout,"lpath   = \"%s\"\n",(char *) PATH.char_str());
+    fprintf(fout,"lfile   = \"%s\"\n",(char *) FNAME.char_str());
     fprintf(fout,"bproc   = \"");
     for(i=0;i<4;i++)
       fprintf(fout,"0x%04X,",board_proc[i]);
@@ -1461,6 +1468,7 @@ CPWindow1::_EvOnDestroy(CControl * control)
   }
   
 //write memory
+
 
   sprintf(fname,"%s/mdump_%02i.hex",home,lab_);
   
@@ -1569,6 +1577,7 @@ CPWindow1::menu1_File_LoadHex_EvMenuActive(CControl * control)
           } 
         
           PATH=filedialog1.GetDir();
+          FNAME=filedialog1.GetFileName();
         }
         picpwr=pa;
 };
@@ -1750,8 +1759,91 @@ CPWindow1::combo3_EvOnComboChange(CControl * control)
 void
 CPWindow1::menu1_File_ReloadLast_EvMenuActive(CControl * control)
 {
-  //code here:)
-  mprint(wxT("menu1_File_ReloadLast_EvMenuActive\n"));
+  int pa;
+
+        pa=picpwr; 
+        picpwr=0;
+
+        //if(filedialog1.Run())
+        //{
+  	  pic_end(&pic);
+  	  mi2c_end(&mi2c);
+  	  rtc_end(&rtc);
+  	  rtc2_end(&rtc2);
+          pic_set_serial(&pic,SERIALDEVICE,0,0,0);
+          picrun=pic_init(&pic,family,proc,FNAME.char_str(),1,NSTEP*NSTEPKF);
+          lcd_rst(&lcd);
+          pic.config[0] |= 0x0800; //disable DEBUG
+          switch(lab)
+          {
+            case 2: 
+	      mi2c_init(&mi2c,512);
+	      rtc_init(&rtc);
+              break;
+            case 1:
+            case 3: 
+	      mi2c_init(&mi2c,4);
+ 	      break;
+            case 4: 
+	      mi2c_init(&mi2c,4);
+	      rtc2_init(&rtc2);
+              break;
+          };
+ 
+          if(picrun) 
+            Window1.SetTitle(wxT("PicsimLab - ")+basename(filedialog1.GetFileName()));          
+          else
+            Window1.SetTitle(wxT("PicsimLab"));
+          
+          p_BT1=1; 
+          p_BT2=1; 
+          p_BT3=1; 
+          p_BT4=1; 
+          p_BT5=1; 
+          p_BT6=1; 
+          p_BT7=1; 
+          
+          switch(lab)
+          {
+           case 1:
+            pic_set_pin(&pic,18,p_BT1); 
+            pic_set_pin(&pic,1,p_BT2); 
+            pic_set_pin(&pic,2,p_BT3); 
+            pic_set_pin(&pic,3,p_BT4); 
+            break;
+           case 2:
+            p_CL1=0; 
+            p_CL2=0; 
+            p_CL3=0; 
+            pic_set_pin(&pic,13,p_CL1); 
+            pic_set_pin(&pic,12,p_CL2); 
+            pic_set_pin(&pic,11,p_CL3); 
+            break;
+           case 3: 
+            pic_set_pin(&pic,33,p_BT1); 
+            pic_set_pin(&pic,34,p_BT2); 
+            pic_set_pin(&pic,35,p_BT3); 
+            pic_set_pin(&pic,36,p_BT4); 
+            break;
+           case 4: 
+            pic_set_pin(&pic,33,p_BT1); 
+            pic_set_pin(&pic,34,p_BT2); 
+            pic_set_pin(&pic,35,p_BT3); 
+            pic_set_pin(&pic,36,p_BT4); 
+            pic_set_pin(&pic,37,p_BT5); 
+            pic_set_pin(&pic,38,p_BT6); 
+            pic_set_pin(&pic,7,p_BT7); 
+            p_CL1=0; 
+            p_CL2=0; 
+            p_CL3=0; 
+            pic_set_pin(&pic,33,p_CL1); 
+            pic_set_pin(&pic,34,p_CL2); 
+            pic_set_pin(&pic,35,p_CL3); 
+            break;
+          } 
+        
+        //}
+        picpwr=pa;
 };
 
 

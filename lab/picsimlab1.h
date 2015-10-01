@@ -171,6 +171,7 @@ unsigned char clko;
 unsigned char d;
 
 String PATH;
+String FNAME;
 
 unsigned char sda,sck;
 
