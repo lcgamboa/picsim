@@ -118,7 +118,7 @@ read_ihx(_pic * pic,const char * fname, int lrom)
                 for(bc=0;bc < nbytes;bc+=2)
 	        {
                   addrx= (((addrh<<16)|addr)+bc-0x4200)/2;
-                  if(addrx < pic->EEPROMSIZE)
+                  if(addrx < pic->EEPROMSIZE*2)
 	            pic->eeprom[addrx]=parse_hex(line+9+(bc*2),2);
                 }
               }
@@ -303,7 +303,7 @@ write_ihx(_pic * pic,const char * fname)
   FILE * fout;
   unsigned char sum;
   unsigned char nb;
-  unsigned short iaddr=0;
+  unsigned int iaddr=0;
   int i;
   char values[100]; 
 
@@ -439,7 +439,7 @@ write_ihx(_pic * pic,const char * fname)
     
       if(nb==0)
       {
-        iaddr=0x4200+i;
+        iaddr=0x4200+2*i;
         sprintf(values,"%02X00",pic->eeprom[i]);
       }
       else
@@ -490,7 +490,7 @@ write_ihx18(_pic * pic,const char * fname)
   FILE * fout;
   unsigned char sum;
   unsigned char nb;
-  unsigned short iaddr=0;
+  unsigned int iaddr=0;
   int i;
   char values[100]; 
 
@@ -498,7 +498,7 @@ write_ihx18(_pic * pic,const char * fname)
 
   if(fout)
   {
-//program memory
+//program memory  //TODO only address < 64K bytes  
     nb=0;
     sum=0;
     fprintf(fout,":020000040000FA\n");
