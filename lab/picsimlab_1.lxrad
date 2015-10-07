@@ -37,6 +37,14 @@
   <RunState type="int">0</RunState>
   <EvOnTime type="Event">TRUE</EvOnTime>
 </timer1>
+<timer2>
+  <Class type="String">CTimer</Class>
+  <Name type="String">timer2</Name>
+  <Tag type="int">0</Tag>
+  <Time type="int">1000</Time>
+  <RunState type="int">0</RunState>
+  <EvOnTime type="Event">TRUE</EvOnTime>
+</timer2>
 <filedialog1>
   <Class type="String">CFileDialog</Class>
   <Name type="String">filedialog1</Name>
@@ -339,7 +347,7 @@
   <Class type="String">CStatusbar</Class>
   <Name type="String">statusbar1</Name>
   <Tag type="int">0</Tag>
-  <Fields type="StringList">port,stats,serial,</Fields>
+  <Fields type="StringList">port,stats,serial,temp</Fields>
 </statusbar1>
 <label4>
   <Class type="String">CLabel</Class>
@@ -526,4 +534,30 @@
   <Items type="StringList">PIC16F628A,PIC16F648A,PIC16F648AICD,</Items>
   <EvOnComboChange type="Event">TRUE</EvOnComboChange>
 </combo3>
+<label8>
+  <Class type="String">CLabel</Class>
+  <Name type="String">label8</Name>
+  <Tag type="int">0</Tag>
+  <X type="int">12</X>
+  <Y type="int">89</Y>
+  <Width type="uint">94</Width>
+  <Height type="uint">24</Height>
+  <Hint type="String"></Hint>
+  <Enable type="bool">1</Enable>
+  <Visible type="bool">1</Visible>
+  <PopupMenu type="PopupMenu">NULL</PopupMenu>
+  <EvMouseMove type="Event">FALSE</EvMouseMove>
+  <EvMouseButtonPress type="Event">FALSE</EvMouseButtonPress>
+  <EvMouseButtonRelease type="Event">FALSE</EvMouseButtonRelease>
+  <EvMouseButtonClick type="Event">FALSE</EvMouseButtonClick>
+  <EvMouseButtonDoubleClick type="Event">FALSE</EvMouseButtonDoubleClick>
+  <EvKeyboardPress type="Event">FALSE</EvKeyboardPress>
+  <EvKeyboardRelease type="Event">FALSE</EvKeyboardRelease>
+  <EvKeyboardKey type="Event">FALSE</EvKeyboardKey>
+  <EvOnDraw type="Event">FALSE</EvOnDraw>
+  <EvOnFocusIn type="Event">FALSE</EvOnFocusIn>
+  <EvOnFocusOut type="Event">FALSE</EvOnFocusOut>
+  <Text type="String">Temp</Text>
+  <Align type="CAlign">1</Align>
+</label8>
 </window1>

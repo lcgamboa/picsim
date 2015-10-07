@@ -38,8 +38,9 @@ unsigned char dir;       //dir
 unsigned char value;     //value
 unsigned char lvalue;    //latch value
 char pord;               //pin port number
-unsigned short port;      //port address
+unsigned short port;     //port address
 float avalue;            //analog value
+unsigned char ovalue;    //defaut open pin value
 }picpin;
 
 #define PD_OUT	  0x00
@@ -94,7 +95,6 @@ typedef struct
   unsigned short *id;
   unsigned char  *eeprom;
   unsigned short *config;
-//  unsigned short pc;
   unsigned int pc;
   unsigned int jpc;
   unsigned short lram;  //loaded register 
@@ -178,8 +178,10 @@ unsigned char ssp_bit;
   int serialc;
   unsigned char txtemp;
   unsigned char RCREG2;
-//serial emaultion
+//serial emulation
   char SERIALDEVICE[100];
+  unsigned int serialbaud; //serial baud emulated
+  float serialexbaud;      //exac serial baud
 //  FILE * sfout;
 #ifdef _WIN_
   HANDLE serialfd;

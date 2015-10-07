@@ -1,13 +1,10 @@
 
 ######### ALL     #################
 
-SERIAL PORT baudarte select
-
 OSCOPE window 
 
 mplabx integrated debug support
 memory and register view window
-
 
 LCD -> read and busy flag
 
@@ -32,7 +29,6 @@ JUMPERS
 TEMP cooler don't work with AQUE=0
 
 ######### board 5 6 ##############
-SHOW TEMP and ADC voltages
 BUZZER freq. sound output
 RTC -> int output
 TEMP cooler don't work with AQUE=0

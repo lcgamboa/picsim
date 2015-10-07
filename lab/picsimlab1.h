@@ -41,6 +41,7 @@ class CPWindow1:public CPWindow
   public:
   /*#Controls*/
   CTimer timer1;
+  CTimer timer2;
   CFileDialog filedialog1;
   CDraw draw1;
   CCombo combo1;
@@ -68,11 +69,13 @@ class CPWindow1:public CPWindow
   CLabel label6;
   CLabel label7;
   CCombo combo3;
+  CLabel label8;
   /*#Events*/
   void _EvOnCreate(CControl * control);
   void _EvOnDestroy(CControl * control);
   void _EvOnShow(CControl * control);
   void timer1_EvOnTime(CControl * control);
+  void timer2_EvOnTime(CControl * control);
   void draw1_EvMouseButtonPress(CControl * control, uint button, uint x, uint y,uint state);
   void draw1_EvMouseButtonRelease(CControl * control, uint button, uint x, uint y,uint state);
   void draw1_EvKeyboardPress(CControl * control, uint key, uint x, uint y,uint mask);

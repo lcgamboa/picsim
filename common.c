@@ -68,7 +68,7 @@ pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, fl
      {
        case P16F628:
        case P16F628A:
-         pic->ROMSIZE=2048;
+         pic->ROMSIZE=2048;          //size in WORDS
          pic->EEPROMSIZE=128;
          pic->RAMSIZE=512;
          pic->PINCOUNT=18;
@@ -123,37 +123,37 @@ pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, fl
        switch(processor)
        {
          case P18F452:
-           pic->ROMSIZE=16384;
+           pic->ROMSIZE=16384; //size in WORDS
            pic->EEPROMSIZE=256;
          //  pic->RAMSIZE=1536;
            pic->RAMSIZE=4096;//for linear bank 15
            pic->STACKSIZE=31;
            pic->PINCOUNT=40;
-           pic->IDSIZE=8;
+           pic->IDSIZE=4;
            pic->CONFIGSIZE=7;
            pic->CCPCOUNT=2;
            pic->ADCCOUNT=8;
            break;
          case P18F4620:
-           pic->ROMSIZE=65536;
+           pic->ROMSIZE=32768;
            pic->EEPROMSIZE=1024;
          //  pic->RAMSIZE=3968;
            pic->RAMSIZE=4096;//for linear bank 15
            pic->STACKSIZE=31;
            pic->PINCOUNT=40;
-           pic->IDSIZE=8;
+           pic->IDSIZE=4;
            pic->CONFIGSIZE=7;
            pic->CCPCOUNT=2;
            pic->ADCCOUNT=13;
            break;
          case P18F4550:
-           pic->ROMSIZE=32768;
+           pic->ROMSIZE=16384;
            pic->EEPROMSIZE=256;
          //  pic->RAMSIZE=2048;
            pic->RAMSIZE=4096;//for linear bank 15
            pic->STACKSIZE=31;
            pic->PINCOUNT=40;
-           pic->IDSIZE=8;
+           pic->IDSIZE=4;
            pic->CONFIGSIZE=7;
            pic->CCPCOUNT=1;
            pic->ADCCOUNT=13;
@@ -702,6 +702,9 @@ pic_reset(_pic * pic, int flags)
        pic->int0=33;
        pic->int1=34;
        pic->int2=35;
+
+       pic->serialbaud=9600; 
+       pic->serialexbaud=9600.0; 
 
        break;
      default:

@@ -26,6 +26,15 @@ CPWindow1::CPWindow1(void)
   timer1.SetRunState(0);
   timer1.EvOnTime=EVONTIME & CPWindow1::timer1_EvOnTime;
   CreateChild(&timer1);
+  //timer2
+  timer2.SetFOwner(this);
+  timer2.SetClass(wxT("CTimer"));
+  timer2.SetName(wxT("timer2"));
+  timer2.SetTag(0);
+  timer2.SetTime(1000);
+  timer2.SetRunState(1);
+  timer2.EvOnTime=EVONTIME & CPWindow1::timer2_EvOnTime;
+  CreateChild(&timer2);
   //filedialog1
   filedialog1.SetFOwner(this);
   filedialog1.SetClass(wxT("CFileDialog"));
@@ -379,6 +388,22 @@ CPWindow1::CPWindow1(void)
   combo3.SetItems(wxT("PIC16F628A,PIC16F648A,PIC16F648AICD,"));
   combo3.EvOnComboChange=EVONCOMBOCHANGE & CPWindow1::combo3_EvOnComboChange;
   CreateChild(&combo3);
+  //label8
+  label8.SetFOwner(this);
+  label8.SetClass(wxT("CLabel"));
+  label8.SetName(wxT("label8"));
+  label8.SetTag(0);
+  label8.SetX(13);
+  label8.SetY(412);
+  label8.SetWidth(120);
+  label8.SetHeight(24);
+  label8.SetHint(wxT(""));
+  label8.SetEnable(1);
+  label8.SetVisible(1);
+  label8.SetPopupMenu(NULL);
+  label8.SetText(wxT("Temp: 00.0°C"));
+  label8.SetAlign(1);
+  CreateChild(&label8);
 
 
   NSTEP=NSTEPKT;

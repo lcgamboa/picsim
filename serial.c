@@ -51,14 +51,6 @@
         
 
 
-#ifdef _WIN_
-#define BAUDRATE 19200
-#else
-#define BAUDRATE B19200
-#endif
-
-
-
 int 
 serial_open(_pic * pic)
 {
@@ -125,6 +117,118 @@ serial_close(_pic * pic)
 int
 serial_cfg(_pic * pic)
 {
+    unsigned int BAUDRATE;
+   
+    if(pic->family == P16)
+    { 
+      if(pic->ram[TXSTA] & 0x04) //BRGH=1 
+      {
+         pic->serialexbaud=pic->freq/(16*(pic->ram[SPBRG]+1));
+      }
+      else
+      {
+        pic->serialexbaud=pic->freq/(64*(pic->ram[SPBRG]+1));
+      }
+    }
+    else
+    {
+      if(pic->ram[P18_TXSTA] & 0x04) //BRGH=1 
+      {
+         pic->serialexbaud=pic->freq/(16*(pic->ram[P18_SPBRG]+1));
+      }
+      else
+      {
+        pic->serialexbaud=pic->freq/(64*(pic->ram[P18_SPBRG]+1));
+      }
+
+    }
+
+
+
+    switch(((int)((pic->serialexbaud/300.0)+0.5))) 
+    {
+       case 0 ... 1:
+          pic->serialbaud=300;
+          #ifndef _WIN_
+          BAUDRATE=B300;
+          #else
+          BAUDRATE=300;
+          #endif  
+          break; 
+       case 2 ... 3:
+          pic->serialbaud=600;
+          #ifndef _WIN_
+          BAUDRATE=B600;
+          #else
+          BAUDRATE=600;
+          #endif  
+          break; 
+       case 4 ... 7:
+          pic->serialbaud=1200;
+          #ifndef _WIN_
+          BAUDRATE=B1200;
+          #else
+          BAUDRATE=1200;
+          #endif  
+          break; 
+       case 8 ... 15:
+          pic->serialbaud=2400;
+          #ifndef _WIN_
+          BAUDRATE=B2400;
+          #else
+          BAUDRATE=2400;
+          #endif  
+          break; 
+       case 16 ... 31:
+          pic->serialbaud=4800;
+          #ifndef _WIN_
+          BAUDRATE=B4800;
+          #else
+          BAUDRATE=4800;
+          #endif  
+          break; 
+       case 32 ... 63:
+          pic->serialbaud=9600;
+          #ifndef _WIN_
+          BAUDRATE=B9600;
+          #else
+          BAUDRATE=9600;
+          #endif  
+          break; 
+       case 64 ... 127:
+          pic->serialbaud=19200;
+          #ifndef _WIN_
+          BAUDRATE=B19200;
+          #else
+          BAUDRATE=19200;
+          #endif  
+          break; 
+       case 128 ... 191:
+          pic->serialbaud=38400;
+          #ifndef _WIN_
+          BAUDRATE=B38400;
+          #else
+          BAUDRATE=38400;
+          #endif  
+          break; 
+       case 192 ... 383:
+          pic->serialbaud=57600;
+          #ifndef _WIN_
+          BAUDRATE=B57600;
+          #else
+          BAUDRATE=57600;
+          #endif  
+          break; 
+       default:
+          pic->serialbaud=115200;
+          #ifndef _WIN_
+          BAUDRATE=B115200;
+          #else
+          BAUDRATE=115200;
+          #endif  
+          break; 
+    } 
+
 #ifdef _WIN_
   BOOL bPortReady;
   DCB dcb;
@@ -189,7 +293,8 @@ EscapeCommFunction(pic->serialfd ,SETRTS );
         
 	cmd=TIOCM_RTS;
 	ioctl(pic->serialfd, TIOCMBIS ,&cmd);
-#endif   
+#endif
+
 	return 0; 
 }
 
@@ -546,7 +651,7 @@ void serial18(_pic * pic,int print)
 
     pic->serialc++;
 
-    if((pic->ram[P18_TXSTA] & 0x04) == 0x04)
+    if(pic->ram[P18_TXSTA] & 0x04)
     {
        //BRGH=1  start + 8 bits + stop
        if(pic->serialc >= ((pic->ram[P18_SPBRG]+1)*40))pic->sr =1;

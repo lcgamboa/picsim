@@ -117,7 +117,36 @@ CPWindow1::timer1_EvOnTime(CControl * control)
 
    cstart=0;
   // Application->ProcessEvents();
+
+
 };
+
+
+void
+CPWindow1::timer2_EvOnTime(CControl * control)
+{
+
+//serial port status
+   if(lab > 1)
+   {
+#ifndef _WIN_
+    if(pic.serialfd > 0)
+#else
+    if(pic.serialfd != INVALID_HANDLE_VALUE)
+#endif
+      statusbar1.SetField(2,wxT("Serial Port: ")+String::FromAscii(SERIALDEVICE)+wxT(":")+itoa(pic.serialbaud)+wxT("(")+String().Format("%4.1f",fabs((100.0*pic.serialexbaud-100.0*pic.serialbaud)/pic.serialexbaud))+wxT("%)"));
+    else  
+      statusbar1.SetField(2,wxT("Serial Port: ")+String::FromAscii(SERIALDEVICE)+wxT(" (ERROR)"));
+   }
+
+   if(lab > 2)
+   {
+      label8.SetText(wxT("Temp: ")+String().Format("%5.2f",temp[0])+wxT("°C"));
+   }
+
+ 
+};
+
 
 
 void
@@ -1018,7 +1047,7 @@ create++;
   }
   else
   {
-    printf("Erro abrindo configuracoes!\n");
+    printf("Error open config file!\n");
 
 #ifndef _WIN_   
    strcpy(SERIALDEVICE,"/dev/tnt2");
@@ -1112,7 +1141,7 @@ create++;
   }
   else
   {
-    Message(wxT("Error open input.map"));
+    //Message(wxT("Error open input.map")); Not use this in create!!
     printf("Error open input.map!\n");
   }
  
@@ -1171,7 +1200,7 @@ create++;
   }
   else
   {
-    Message(wxT("Error open output.map"));
+    //Message(wxT("Error open output.map")); not use this in create!!!
     printf("Error open output.map!\n");
   }
   
@@ -1221,6 +1250,7 @@ create++;
   p_BT6=1;
   p_BT7=1;
  
+
   switch(lab)
   { 
    case 1:
@@ -1237,6 +1267,7 @@ create++;
     label4.SetVisible(0);
     label5.SetVisible(0);
     label6.SetVisible(0);
+    label8.SetVisible(0);
 
     statusbar1.SetField(2,wxT(""));
     break;
@@ -1256,13 +1287,14 @@ create++;
     label4.SetVisible(0);
     label5.SetVisible(0);
     label6.SetVisible(0);
+    label8.SetVisible(0);
 
 #ifndef _WIN_
     if(pic.serialfd > 0)
 #else
     if(pic.serialfd != INVALID_HANDLE_VALUE)
 #endif
-      statusbar1.SetField(2,wxT("Serial Port: ")+String::FromAscii(SERIALDEVICE));
+      statusbar1.SetField(2,wxT("Serial Port: ")+String::FromAscii(SERIALDEVICE)+wxT(":")+itoa(pic.serialbaud)+wxT("(")+String().Format("%4.1f",fabs((100.0*pic.serialexbaud-100.0*pic.serialbaud)/pic.serialexbaud))+wxT("%)"));
     else  
       statusbar1.SetField(2,wxT("Serial Port: ")+String::FromAscii(SERIALDEVICE)+wxT(" (ERROR)"));
     break; 
@@ -1280,12 +1312,13 @@ create++;
     label4.SetVisible(1);
     label5.SetVisible(1);
     label6.SetVisible(0);
+    label8.SetVisible(1);
 #ifndef _WIN_
     if(pic.serialfd > 0)
 #else
     if(pic.serialfd != INVALID_HANDLE_VALUE)
 #endif
-      statusbar1.SetField(2,wxT("Serial Port: ")+String::FromAscii(SERIALDEVICE));
+      statusbar1.SetField(2,wxT("Serial Port: ")+String::FromAscii(SERIALDEVICE)+wxT(":")+itoa(pic.serialbaud)+wxT("(")+String().Format("%4.1f",fabs((100.0*pic.serialexbaud-100.0*pic.serialbaud)/pic.serialexbaud))+wxT("%)"));
     else
       statusbar1.SetField(2,wxT("Serial Port: ")+String::FromAscii(SERIALDEVICE)+wxT(" (ERROR)"));
     break;
@@ -1313,12 +1346,14 @@ create++;
     label4.SetVisible(1);
     label5.SetVisible(1);
     label6.SetVisible(1);
+    label8.SetVisible(1);
+    
 #ifndef _WIN_
     if(pic.serialfd > 0)
 #else
     if(pic.serialfd != INVALID_HANDLE_VALUE)
 #endif
-      statusbar1.SetField(2,wxT("Serial Port: ")+String::FromAscii(SERIALDEVICE));
+      statusbar1.SetField(2,wxT("Serial Port: ")+String::FromAscii(SERIALDEVICE)+wxT(":")+itoa(pic.serialbaud)+wxT("(")+String().Format("%4.1f",fabs((100.0*pic.serialexbaud-100.0*pic.serialbaud)/pic.serialexbaud))+wxT("%)"));
     else
       statusbar1.SetField(2,wxT("Serial Port: ")+String::FromAscii(SERIALDEVICE)+wxT(" (ERROR)"));
     break;

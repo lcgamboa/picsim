@@ -1,4 +1,5 @@
 
+10/06/2015 Serial baud rate emulation support
 09/30/2015 Reload last hex file implemented
 09/27/2015 LCD cursor draw and LCD shift support added
 09/20/2015 LCD full fontset added

@@ -24,21 +24,21 @@
    ######################################################################## */
 
 
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 
 #ifdef _WIN_
-#include <conio.h>
-#include <time.h>
-#include <windows.h>
+//#include <conio.h>
+//#include <time.h>
+//#include <windows.h>
 #else
 #include <termios.h>
 #include <sys/ioctl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #endif
 
 
@@ -66,7 +66,7 @@ int
 prog_sopen(const char * port)
 {
 #ifdef _WIN_
-phCom = CreateFile(port, GENERIC_READ | GENERIC_WRITE,
+phCom = CreateFile((const wchar_t*)port, GENERIC_READ | GENERIC_WRITE,
 0, // exclusive access
 NULL, // no security
 OPEN_EXISTING,
@@ -115,6 +115,7 @@ prog_scfg(void)
   COMMTIMEOUTS CommTimeouts;
 
 bPortReady = GetCommState(phCom, &dcb);
+
 dcb.BaudRate = BAUDRATE;
 dcb.ByteSize = 8;
 dcb.Parity = NOPARITY;
