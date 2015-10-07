@@ -183,11 +183,16 @@ CPWindow1::draw1_EvMouseButtonPress(CControl * control, uint button, uint x, uin
           pic.config[0] |= 0x0800; //disable DEBUG
           switch(lab)
           {
+            case 1:
+              break;
             case 2: 
 	      mi2c_init(&mi2c,512);
 	      rtc_init(&rtc);
+              pic_set_pin_DOV(&pic,18,0);
+              pic_set_pin_DOV(&pic,1,0);
+              pic_set_pin_DOV(&pic,15,0);
+              pic_set_pin_DOV(&pic,16,0);
               break;
-            case 1:
             case 3: 
 	      mi2c_init(&mi2c,4);
               break;
@@ -1228,11 +1233,16 @@ create++;
   lcd_rst(&lcd);
           switch(lab)
           {
+            case 1:
+              break;
             case 2: 
 	      mi2c_init(&mi2c,512);
 	      rtc_init(&rtc);
+              pic_set_pin_DOV(&pic,18,0);
+              pic_set_pin_DOV(&pic,1,0);
+              pic_set_pin_DOV(&pic,15,0);
+              pic_set_pin_DOV(&pic,16,0);
               break;
-            case 1:
             case 3: 
 	      mi2c_init(&mi2c,4);
               break;
@@ -1545,11 +1555,16 @@ CPWindow1::menu1_File_LoadHex_EvMenuActive(CControl * control)
           pic.config[0] |= 0x0800; //disable DEBUG
           switch(lab)
           {
+            case 1:
+              break; 
             case 2: 
 	      mi2c_init(&mi2c,512);
 	      rtc_init(&rtc);
+              pic_set_pin_DOV(&pic,18,0);
+              pic_set_pin_DOV(&pic,1,0);
+              pic_set_pin_DOV(&pic,15,0);
+              pic_set_pin_DOV(&pic,16,0);
               break;
-            case 1:
             case 3: 
 	      mi2c_init(&mi2c,4);
  	      break;
@@ -1658,11 +1673,16 @@ CPWindow1::menu1_Help_Examples_EvMenuActive(CControl * control)
           pic.config[0] |= 0x0800; //disable DEBUG
           switch(lab)
           {
+            case 1:
+              break;
             case 2: 
 	      mi2c_init(&mi2c,512);
 	      rtc_init(&rtc);
+              pic_set_pin_DOV(&pic,18,0);
+              pic_set_pin_DOV(&pic,1,0);
+              pic_set_pin_DOV(&pic,15,0);
+              pic_set_pin_DOV(&pic,16,0);
               break;
-            case 1:
             case 3: 
 	      mi2c_init(&mi2c,4);
 	      break; 	
@@ -1811,11 +1831,16 @@ CPWindow1::menu1_File_ReloadLast_EvMenuActive(CControl * control)
           pic.config[0] |= 0x0800; //disable DEBUG
           switch(lab)
           {
+            case 1:
+              break; 
             case 2: 
 	      mi2c_init(&mi2c,512);
 	      rtc_init(&rtc);
+              pic_set_pin_DOV(&pic,18,0);
+              pic_set_pin_DOV(&pic,1,0);
+              pic_set_pin_DOV(&pic,15,0);
+              pic_set_pin_DOV(&pic,16,0);
               break;
-            case 1:
             case 3: 
 	      mi2c_init(&mi2c,4);
  	      break;

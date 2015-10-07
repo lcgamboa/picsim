@@ -156,7 +156,6 @@ CPWindow1::board_2(void)
       {
           if(j >JUMP)
           {  
-          //FIXME keyboard slow!!!! default value must be set to 0
  
           L[0]=pic_get_pin(&pic,18);
           L[1]=pic_get_pin(&pic,1);

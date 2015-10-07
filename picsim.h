@@ -209,6 +209,8 @@ int pic_set_pin(_pic * pic,unsigned char pin,unsigned char value);
 int pic_set_apin(_pic * pic,unsigned char pin,float value);
 unsigned char pic_get_pin_type(_pic * pic, unsigned char pin);
 unsigned char pic_get_pin_dir(_pic * pic, unsigned char pin);
+unsigned char pic_get_pin_DOV(_pic * pic, unsigned char pin);//get default open value
+int pic_set_pin_DOV(_pic * pic,unsigned char pin,unsigned char value);//set default open value
 
 void pic_icsp_init(_pic * pic);
 int pic_icsp(_pic * pic, int print);

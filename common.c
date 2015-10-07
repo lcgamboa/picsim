@@ -56,6 +56,7 @@ unsigned short * memsets(unsigned short * mem,unsigned short value, unsigned lon
 int 
 pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, float freq)
 {
+   int i;
 
    pic->freq=freq;
    pic->processor=processor;
@@ -203,6 +204,11 @@ pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, fl
    pic->pwd=0; 
    
    pic_reset(pic,1);
+   
+   for(i=0; i < pic->PINCOUNT; i++)
+   {
+     pic->pins[i].ovalue=1;  //put default pin values to 1  
+   }  
 
    serial_open(pic);
   
@@ -885,5 +891,31 @@ pic_get_pin_dir(_pic * pic, unsigned char pin)
      return 0;  
 };
 
+
+
+int 
+pic_set_pin_DOV(_pic * pic,unsigned char pin,unsigned char value)
+{
+   if((pin-1) < pic->PINCOUNT)
+   {
+    if (pic->pins[(pin-1)].ovalue == value) return 1;
+        
+    pic->pins[(pin-1)].ovalue=value;
+    return 1;        
+   } 
+   else
+     return 0;
+}
+
+unsigned char 
+pic_get_pin_DOV(_pic * pic, unsigned char pin)
+{
+   if((pin-1) < pic->PINCOUNT)
+   {
+      return pic->pins[(pin-1)].ovalue;
+   }
+   else
+     return 0;  
+}
 
 
