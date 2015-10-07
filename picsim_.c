@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2008  Luis Claudio Gambôa Lopes
+   Copyright (c) : 2008  Luis Claudio GambÃ´a Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -137,7 +137,7 @@ main(int argc,char** argv)
        if(c == 'b')
        {
          c=0;
-         printf("Digite endereço de parada:\n"); 
+         printf("Digite endereÃ§o de parada:\n"); 
          scanf("%x",&brk);
          rep=1;  
        } 
@@ -145,7 +145,7 @@ main(int argc,char** argv)
        if(c == 'f')
        {
          c=0;
-         printf("Digite endereço de parada:\n"); 
+         printf("Digite endereÃ§o de parada:\n"); 
          scanf("%x",&brk);
          rep=1;   
          fst=1;
@@ -154,7 +154,7 @@ main(int argc,char** argv)
        if(c == 'n')
        {
          c=0;
-         printf("Digite numero de repetições:\n"); 
+         printf("Digite numero de repetiÃ§Ãµes:\n"); 
          scanf("%x",&nrep);
          brk=0;
          rep=1;  
@@ -166,7 +166,7 @@ main(int argc,char** argv)
 
      while(c == 'm')
      {
-       printf("Digite endereço:\n"); 
+       printf("Digite endereÃ§o:\n"); 
        scanf("%x",&addr);  
        printf("\n");
        for(i=-8;i<8;i++)

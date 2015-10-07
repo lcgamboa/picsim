@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2011  Luis Claudio Gambôa Lopes
+   Copyright (c) : 2011  Luis Claudio GambÃ´a Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -666,7 +666,7 @@ pic_decode_16(_pic * pic,int print)
      pic->ram[afsr]=pic->ram[bank|(INDF & 0x007F)];
      pic->lram=afsr;
   }
-  /*faz espelhamento de memória*/
+  /*faz espelhamento de memÃ³ria*/
   
 
 

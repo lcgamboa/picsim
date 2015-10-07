@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2011  Luis Claudio Gambôa Lopes
+   Copyright (c) : 2011  Luis Claudio GambÃ´a Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -124,7 +124,7 @@ pic->twdt=0;
 
 pic->ee_wr=0;
 
-pic->porta=129;
+pic->porta=129;//dummy value to be changed
 pic->portb=129;
 pic->portc=129;
 pic->portd=129;
@@ -1521,7 +1521,9 @@ int temp;
      }
      else
      {
+       val=pic->pins[i].dir;
        pic->pins[i].dir=PD_IN;
+       if(val != PD_IN)pic_wr_pin(pic,i+1,pic->pins[i].ovalue);
      }
      }
    };
