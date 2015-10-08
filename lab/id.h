@@ -102,6 +102,8 @@
 #define O_D19	88
 #define O_D20	89
 
+#define O_VT	90
+
 
 
 /*inputsa*/

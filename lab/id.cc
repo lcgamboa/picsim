@@ -109,6 +109,7 @@ unsigned short get_out_id(char * name)
   if(strcmp(name,"DP18")==0)return O_D18;
   if(strcmp(name,"DP19")==0)return O_D19;
   if(strcmp(name,"DP20")==0)return O_D20;
+  if(strcmp(name,"VT")==0)  return O_VT;
 
   printf("Erro output '%s' don't have a valid id! \n",name);
   return 1;

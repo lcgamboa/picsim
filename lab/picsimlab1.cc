@@ -1379,6 +1379,16 @@ create++;
 
   Application->ProcessEvents();
 
+  if(vent[0] == NULL)
+  {      
+     wxImage  image;
+     image.LoadFile(String().Format("%sVT1.png",share));
+     vent[0] = new wxBitmap(image);
+     image.LoadFile(String().Format("%sVT2.png",share));
+     vent[1] = new wxBitmap(image);
+  }
+       
+  
 
   timer1.SetRunState(1);
 };
@@ -1532,6 +1542,12 @@ CPWindow1::_EvOnDestroy(CControl * control)
   rtc_end(&rtc);
   rtc2_end(&rtc2);
   prog_end();
+  
+   if(vent[0] != NULL)
+   { 
+      delete vent[0];
+      delete vent[1];
+   }
 
 };
 

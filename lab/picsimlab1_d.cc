@@ -464,4 +464,7 @@ scale=1.0;
 
 create=0;
 
+vent[0]=NULL;
+vent[1]=NULL;
+
 };

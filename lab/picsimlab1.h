@@ -183,6 +183,8 @@ int plHeight;
 double scale;
 
 int create;
+        
+wxBitmap * vent[2];
 
 };
 

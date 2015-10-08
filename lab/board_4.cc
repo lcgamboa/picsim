@@ -1,6 +1,9 @@
 
 #include"picsimlab1.h"
 
+int vtc =0;
+int vt=0;
+
 void
 CPWindow1::board_4(void)
 {
@@ -47,7 +50,7 @@ CPWindow1::board_4(void)
            lcd.blink=0;   
   
 
-//lab5 draw 
+//lab4 draw 
   for(i=0;i<outputc;i++)
   {
     if(!output[i].r)
@@ -116,9 +119,24 @@ CPWindow1::board_4(void)
            };
       }
      
-      if(output[i].id != O_LCD)
+      if((output[i].id != O_LCD)&&(output[i].id != O_VT))  
         draw1.Canvas.Rectangle (1, output[i].x1, output[i].y1, output[i].x2-output[i].x1,output[i].y2-output[i].y1 );
- 
+
+
+//draw cooler //FIXME cooler draw!!!
+      if(output[i].id == O_VT)
+      { 
+        if(gauge1.GetValue() > 20) vtc++;
+        
+        if(vtc > (4  - 0.04*gauge1.GetValue()) )
+        {
+          vtc=0;
+          draw1.Canvas.PutBitmap(vent[vt],output[i].x1, output[i].y1);
+          vt^=1; 
+        }    
+        
+      }
+      
 //draw lcd text 
       if(dip[0]) 
       {
