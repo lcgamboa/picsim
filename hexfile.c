@@ -306,6 +306,7 @@ write_ihx(_pic * pic,const char * fname)
   unsigned int iaddr=0;
   int i;
   char values[100]; 
+  char tmp[100]; 
 
   fout=fopen(fname,"w");
 
@@ -325,7 +326,8 @@ write_ihx(_pic * pic,const char * fname)
       }
       else
       {
-        sprintf(values,"%s%02X%02X",values,pic->prog[i]&0x00FF,(pic->prog[i]&0xFF00)>>8);
+        sprintf(tmp,"%s%02X%02X",values,pic->prog[i]&0x00FF,(pic->prog[i]&0xFF00)>>8);
+        strcpy(values,tmp);
       }
 
       nb+=2;
@@ -365,7 +367,8 @@ write_ihx(_pic * pic,const char * fname)
       }
       else
       {
-        sprintf(values,"%s%02X%02X",values,pic->id[i]&0x00FF,(pic->id[i]&0xFF00)>>8);
+        sprintf(tmp,"%s%02X%02X",values,pic->id[i]&0x00FF,(pic->id[i]&0xFF00)>>8);
+        strcpy(values,tmp);
       }
 
       nb+=2;
@@ -405,7 +408,8 @@ write_ihx(_pic * pic,const char * fname)
       }
       else
       {
-        sprintf(values,"%s%02X%02X",values,pic->config[i]&0x00FF,(pic->config[i]&0xFF00)>>8);
+        sprintf(tmp,"%s%02X%02X",values,pic->config[i]&0x00FF,(pic->config[i]&0xFF00)>>8);
+        strcpy(values,tmp);
       }
 
       nb+=2;
@@ -444,7 +448,8 @@ write_ihx(_pic * pic,const char * fname)
       }
       else
       {
-        sprintf(values,"%s%02X00",values,pic->eeprom[i]);
+        sprintf(tmp,"%s%02X00",values,pic->eeprom[i]);
+        strcpy(values,tmp);
       }
 
       nb+=2;
@@ -493,6 +498,7 @@ write_ihx18(_pic * pic,const char * fname)
   unsigned int iaddr=0;
   int i;
   char values[100]; 
+  char tmp[100]; 
 
   fout=fopen(fname,"w");
 
@@ -512,7 +518,8 @@ write_ihx18(_pic * pic,const char * fname)
       }
       else
       {
-        sprintf(values,"%s%02X%02X",values,pic->prog[i]&0x00FF,(pic->prog[i]&0xFF00)>>8);
+        sprintf(tmp,"%s%02X%02X",values,pic->prog[i]&0x00FF,(pic->prog[i]&0xFF00)>>8);
+        strcpy(values,tmp);
       }
 
       nb+=2;
@@ -553,7 +560,8 @@ write_ihx18(_pic * pic,const char * fname)
       }
       else
       {
-        sprintf(values,"%s%02X%02X",values,pic->id[i]&0x00FF,(pic->id[i]&0xFF00)>>8);
+        sprintf(tmp,"%s%02X%02X",values,pic->id[i]&0x00FF,(pic->id[i]&0xFF00)>>8);
+        strcpy(values,tmp);
       }
 
       nb+=2;
@@ -594,7 +602,8 @@ write_ihx18(_pic * pic,const char * fname)
       }
       else
       {
-        sprintf(values,"%s%02X%02X",values,pic->config[i]&0x00FF,(pic->config[i]&0xFF00)>>8);
+        sprintf(tmp,"%s%02X%02X",values,pic->config[i]&0x00FF,(pic->config[i]&0xFF00)>>8);
+        strcpy(values,tmp);
       }
 
       nb+=2;
@@ -634,7 +643,8 @@ write_ihx18(_pic * pic,const char * fname)
       }
       else
       {
-        sprintf(values,"%s%02X",values,pic->eeprom[i]);
+        sprintf(tmp,"%s%02X",values,pic->eeprom[i]);
+        strcpy(values,tmp);
       }
 
       nb++;

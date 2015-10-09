@@ -170,7 +170,7 @@ pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, fl
      }
 
    pic->ram=calloc(pic->RAMSIZE,sizeof(char));   
-   pic->prog=calloc(pic->ROMSIZE+1,sizeof(short));   
+   pic->prog=calloc(pic->ROMSIZE,sizeof(short));   
    pic->id=calloc(pic->IDSIZE,sizeof(short));   
    pic->config=calloc(pic->CONFIGSIZE,sizeof(short));   
    pic->stack=calloc(pic->STACKSIZE,sizeof(short));   

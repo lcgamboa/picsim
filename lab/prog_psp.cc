@@ -66,13 +66,16 @@ int
 prog_sopen(const char * port)
 {
 #ifdef _WIN_
-phCom = CreateFile((const wchar_t*)port, GENERIC_READ | GENERIC_WRITE,
+//FIXME
+/*
+phCom = CreateFile(port, GENERIC_READ | GENERIC_WRITE,
 0, // exclusive access
 NULL, // no security
 OPEN_EXISTING,
 0, // no overlapped I/O
 NULL); // null template
-
+*/phCom=INVALID_HANDLE_VALUE;
+  
   if(phCom == INVALID_HANDLE_VALUE)
   {
    return 1;

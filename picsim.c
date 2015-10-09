@@ -78,7 +78,7 @@ main(int argc,char** argv)
     pic_set_serial(&pic1,"/dev/tnt2",0,0,0);
     pic_init(&pic1,P16,P16F628A,argv[1],1,4e6);
 //    pic_init(&pic1,P16,P16F877A,argv[1],1,4e6);
-//    write_ihx(&pic1,"out.hex");
+    write_ihx(&pic1,"out.hex");
 
     while(c != 'q')
     {
