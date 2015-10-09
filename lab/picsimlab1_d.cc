@@ -467,4 +467,6 @@ create=0;
 vent[0]=NULL;
 vent[1]=NULL;
 
+sound_on=0;
+
 };

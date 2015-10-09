@@ -405,6 +405,7 @@ CPWindow1::board_4(void)
           lm[16]+=pins[16].value;
           lm[14]+=pins[14].value;
           lm[7]+=pins[7].value;
+          lm[15]+=pins[15].value;
 
 //inputs
           if((pins[32].dir)&&(p_BT1))lm[32]++; 
@@ -504,14 +505,22 @@ CPWindow1::board_4(void)
      }
 
    //fim STEP
-   
-/*
-     if( ((100.0*lm[16])/NSTEP) > 40)
+
+
+     if( ((100.0*lm[15])/NSTEPJ) > 40)
+     {
+       if(!sound_on)
+       {
+         buzz.Play(wxSOUND_ASYNC|wxSOUND_LOOP); 
+         sound_on=1;
+       }
+     }
+     else
      {
        buzz.Stop(); 
-       buzz.Play(); 
+       sound_on=0;
      }
-*/
+
      if(!dip[15])lm[23]=0;//aquecedor
      if(!dip[17])lm[16]=0;//ventilador
 

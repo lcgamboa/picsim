@@ -156,6 +156,7 @@ rtc2_t rtc2;
 
 int lcde;
 
+int sound_on;
 wxSound buzz;
 
 char share[512];

@@ -345,8 +345,16 @@ CPWindow1::board_3(void)
 
      if( ((100.0*lm[6])/NSTEPJ) > 40)
      {
+       if(!sound_on)
+       {
+         buzz.Play(wxSOUND_ASYNC|wxSOUND_LOOP); 
+         sound_on=1;
+       }
+     }
+     else
+     {
        buzz.Stop(); 
-       buzz.Play(); 
+       sound_on=0;
      }
 
      //Ventilador

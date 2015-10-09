@@ -981,7 +981,8 @@ create++;
             combo3.SetItems(wxT("PIC16F877A,PIC16F777,PIC18F452,PIC18F4620,PIC18F4550,"));
           break;
           default:
-            Message(wxT("Invalid Board! Using Default."));
+            //Message(wxT("Invalid Board! Using Default."));
+            mprint(wxT("Invalid Board! Using Default!\n"));
             lab=1;//default  
             lab_=1;//default  
             combo2.SetText(wxT("1"));
@@ -1454,12 +1455,15 @@ CPWindow1::_EvOnDestroy(CControl * control)
   
   timer1.SetRunState(0);
   
+  buzz.Stop();
+
+/*
 #ifndef _WIN_
   usleep(100);
 #else
   Sleep(1);
-#endif
- 
+#endif 
+*/
 
 //write options
   wxTheApp->SetAppName(_T("picsimlab"));
@@ -1547,6 +1551,8 @@ CPWindow1::_EvOnDestroy(CControl * control)
    { 
       delete vent[0];
       delete vent[1];
+      vent[0]=NULL; 
+      vent[1]=NULL; 
    }
 
 };
