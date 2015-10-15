@@ -3,9 +3,6 @@
 
 OSCOPE window 
 
-mplabx integrated debug support
-memory and register view window
-
 LCD -> read and busy flag
 
 MOTOR control step, servo and DC
@@ -21,12 +18,12 @@ RGB LEDS
 RTC -> int output
 RTC -> Countdown timer
 
-######### board 3 4 ##############
+######### board 3 ##############
 BUZZER freq. sound output
 JUMPERS
-TEMP cooler don't work with AQUE=0
+TEMP cooler must don't work with AQUE=0
 
-######### board 5 6 ##############
+######### board 4 ##############
 BUZZER freq. sound output
 RTC -> int output
 TEMP cooler don't work with AQUE=0
