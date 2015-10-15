@@ -208,7 +208,7 @@ CPWindow1::board_4(void)
          }
       }
       }
-      else
+      else if(output[i].id == O_LCD)  
       {
          draw1.Canvas.Rectangle (1, output[i].x1, output[i].y1, output[i].x2-output[i].x1,output[i].y2-output[i].y1 );
       } 
@@ -371,7 +371,7 @@ CPWindow1::board_4(void)
           }
         }    
 
-        pic_step(&pic,0);
+        if(!mplabxd_testbp(&pic))pic_step(&pic,0);
 /*
         for(pi=0;pi < pic.PINCOUNT;pi++)
         {

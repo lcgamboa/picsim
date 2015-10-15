@@ -1,7 +1,7 @@
 CC = g++
 FLAGS = -D_VERSION_=\"0.5.0\" -Wall -O3 -D_SHARE_=\"`pwd`/share/\"   -fomit-frame-pointer `lxrad-config --cxxflags`
 
-OBJS = ppicsimlab.o picsimlab1.o picsimlab2.o picsimlab3.o id.o lcd.o mi2c.o rtc.o rtc2.o ../libpicsim.a prog_psp.o board_1.o board_2.o board_3.o board_4.o
+OBJS = ppicsimlab.o picsimlab1.o picsimlab2.o picsimlab3.o id.o lcd.o mi2c.o rtc.o rtc2.o ../libpicsim.a prog_psp.o board_1.o board_2.o board_3.o board_4.o mplabxd.o
 
 
 all: $(OBJS)

@@ -27,6 +27,10 @@
 extern "C" {
 #endif
 
+
+#ifndef PICSIM
+#define PICSIM
+
 #ifdef _WIN_
 #include <windows.h>
 #endif
@@ -229,6 +233,7 @@ char * getnamebyproc(int proc,char *str);
 
 #include"p18fxxx_defs.h"
 
+#endif
 
 #ifdef __cplusplus
 }

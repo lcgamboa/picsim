@@ -27,10 +27,17 @@ extern char PROGDEVICE[100];
 
 char SERIALDEVICE[100];
 
+
+//picstart plus
 int prog_init(void);
 int prog_loop(_pic * pic);
 int prog_end(void);
 
+//mplabx debugger
+int mplabxd_init(void);
+int mplabxd_loop(_pic *pic);
+void mplabxd_end(void);
+int mplabxd_testbp(_pic *pic);
 
 void
 CPWindow1::timer1_EvOnTime(CControl * control)
@@ -111,9 +118,11 @@ CPWindow1::timer1_EvOnTime(CControl * control)
       over=0;
    }
   
-   if(picpwr) 
+   if(picpwr)
+   { 
       prog_loop(&pic);
-
+      mplabxd_loop(&pic);
+   }
 
    cstart=0;
   // Application->ProcessEvents();
@@ -963,22 +972,11 @@ create++;
         {
           case 1:
           case 2: 
-            //family=P16;
-            //proc=P16F628A;
-            //combo3.SetText(wxT("PIC16F628A"));
-            combo3.SetItems(wxT("PIC16F628A,PIC16F648A,PIC16F648AICD,"));
+            combo3.SetItems(wxT("PIC16F628A,PIC16F648A,"));
           break;
           case 3:
-            //family=P16;
-            //proc=P16F877A;
-            //combo3.SetText(wxT("PIC16F877A"));
-            combo3.SetItems(wxT("PIC16F877A,PIC16F777,PIC18F452,PIC18F4620,PIC18F4550,"));
-          break;
   	  case 4: 
-            //family=P18;
-            //proc=P18F452;
-            //combo3.SetText(wxT("PIC18F452"));
-            combo3.SetItems(wxT("PIC16F877A,PIC16F777,PIC18F452,PIC18F4620,PIC18F4550,"));
+            combo3.SetItems(wxT("PIC16F777,PIC16F877A,PIC18F452,PIC18F4550,PIC18F4620,"));
           break;
           default:
             //Message(wxT("Invalid Board! Using Default."));
@@ -986,8 +984,7 @@ create++;
             lab=1;//default  
             lab_=1;//default  
             combo2.SetText(wxT("1"));
-            combo3.SetItems(wxT("PIC16F628A,PIC16F648A,PIC16F648AICD,"));
-            //exit(-1);
+            combo3.SetItems(wxT("PIC16F628A,PIC16F648A,"));
           break;
         } 
       }
@@ -1375,6 +1372,9 @@ create++;
      statusbar1.SetField(1,wxT("Programmer Port: ")+String::FromAscii(PROGDEVICE));
   else
      statusbar1.SetField(1,wxT("Programmer Port: ")+String::FromAscii(PROGDEVICE)+wxT(" (ERROR)"));
+
+  mplabxd_init();
+
  
   statusbar1.SetField(0,wxT("Running..."));
 
@@ -1392,6 +1392,7 @@ create++;
   
 
   timer1.SetRunState(1);
+  timer2.SetRunState(1);
 };
 
 void
@@ -1454,6 +1455,7 @@ CPWindow1::_EvOnDestroy(CControl * control)
   int i; 
   
   timer1.SetRunState(0);
+  timer2.SetRunState(0);
   
   buzz.Stop();
 
@@ -1546,6 +1548,7 @@ CPWindow1::_EvOnDestroy(CControl * control)
   rtc_end(&rtc);
   rtc2_end(&rtc2);
   prog_end();
+  mplabxd_end();
   
    if(vent[0] != NULL)
    { 

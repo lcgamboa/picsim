@@ -32,7 +32,7 @@ CPWindow1::CPWindow1(void)
   timer2.SetName(wxT("timer2"));
   timer2.SetTag(0);
   timer2.SetTime(1000);
-  timer2.SetRunState(1);
+  timer2.SetRunState(0);
   timer2.EvOnTime=EVONTIME & CPWindow1::timer2_EvOnTime;
   CreateChild(&timer2);
   //filedialog1
@@ -414,11 +414,9 @@ inputc=0;
 outputc=0;
 
 picrun=1;
-
 picpwr=1;
-
 picrst=0;
-
+picdbg=0;
 
 lab=1;
 lab_=1;

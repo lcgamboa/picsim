@@ -14,6 +14,8 @@
 
 #define JUMP 100 //sampled IO refresh
 
+int mplabxd_testbp(_pic *pic);
+
 typedef struct
 {
 unsigned int x1;
@@ -97,6 +99,11 @@ class CPWindow1:public CPWindow
   void board_2(void);
   void board_3(void);
   void board_4(void);
+
+
+  int picdbg;
+
+
   private:
 
 
@@ -111,9 +118,7 @@ int inputc;
 int outputc;
 
 int picrun;
-
 int picpwr;
-
 int picrst;
 
 int jmp[10];

@@ -1,6 +1,7 @@
 
 #include"picsimlab1.h"
 
+
 void
 CPWindow1::board_1(void)
 {
@@ -138,7 +139,8 @@ CPWindow1::board_1(void)
           pic_set_pin(&pic,2,p_BT3); 
           pic_set_pin(&pic,3,p_BT4);
           } 
-        pic_step(&pic,0);
+        
+        if(!mplabxd_testbp(&pic))pic_step(&pic,0);
 
           if(j >JUMP)
           {  

@@ -193,7 +193,7 @@ CPWindow1::board_2(void)
           }
           } 
   
-        pic_step(&pic,0);
+        if(!mplabxd_testbp(&pic))pic_step(&pic,0);
 
           if(j >JUMP)
           {  
