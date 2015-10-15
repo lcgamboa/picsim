@@ -255,10 +255,21 @@ pic_reset(_pic * pic, int flags)
    pic->t0cki_=0;  
    pic->t1cki_=1;  
  
-   /*zerar memória*/
+   /*memory clear*/
    memset(pic->ram,0,pic->RAMSIZE); 
    memset(pic->stack,0,pic->STACKSIZE*2); 
-   memset(pic->pins,0,sizeof(picpin)*pic->PINCOUNT); 
+   
+   for(i=0; i < pic->PINCOUNT; i++)
+   {
+     pic->pins[i].avalue=0;
+     pic->pins[i].lvalue=0;
+     pic->pins[i].pord=0;
+     pic->pins[i].port=0;   
+     pic->pins[i].value=0;        
+     pic->pins[i].ptype=PT_CMOS;
+     pic->pins[i].dir=PD_IN;
+   }
+   
    
    switch(pic->family)
    {
@@ -734,11 +745,6 @@ pic_reset(_pic * pic, int flags)
     break;
     }
    
-   for(i=0; i < pic->PINCOUNT; i++)
-   {
-     pic->pins[i].ptype=PT_CMOS;
-     pic->pins[i].dir=PD_IN;
-   }  
 
  //  pic->debug=0;
 

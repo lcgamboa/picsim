@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2008  Luis Claudio Gambôa Lopes
+   Copyright (c) : 2015  Luis Claudio GambÃ´a Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -66,7 +66,7 @@ int
 prog_sopen(const char * port)
 {
 #ifdef _WIN_
-//FIXME
+//FIXME unicode
 /*
 phCom = CreateFile(port, GENERIC_READ | GENERIC_WRITE,
 0, // exclusive access

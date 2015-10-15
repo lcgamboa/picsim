@@ -123,7 +123,7 @@ CPWindow1::board_4(void)
         draw1.Canvas.Rectangle (1, output[i].x1, output[i].y1, output[i].x2-output[i].x1,output[i].y2-output[i].y1 );
 
 
-//draw cooler //FIXME cooler draw!!!
+//draw cooler 
       if(output[i].id == O_VT)
       { 
         if(gauge1.GetValue() > 20) vtc++;
