@@ -110,3 +110,22 @@ int getfprocbyname(char *str)
 }
 
 
+int getfprocbynumber(int proc)
+{
+
+  if(P16F628 == proc)return P16;
+  if(P16F628A == proc)return P16;	
+  if(P16F648A == proc)return P16;	
+  if(P16F648AICD == proc)return P16;	
+  if(P16F877 == proc)return P16;
+  if(P16F877A == proc)return P16;
+  if(P16F777 == proc)return P16;
+
+  if(P18F452 == proc)return P18;
+  if(P18F4620 == proc)return P18;
+  if(P18F4550 == proc)return P18;
+
+  return 0;
+}
+
+

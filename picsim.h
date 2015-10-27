@@ -227,6 +227,7 @@ int write_ihx18(_pic * pic,const char * fname);
 
 int getprocbyname(char *str);
 int getfprocbyname(char *str);
+int getfprocbynumber(int proc);
 char * getnamebyproc(int proc,char *str);
 
 #include"p16fxxx_defs.h"
