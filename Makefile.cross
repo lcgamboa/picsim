@@ -1,20 +1,110 @@
 CC= x86_64-w64-mingw32-gcc
+RM= rm -f
 AR= x86_64-w64-mingw32-ar
+LN= ln -sfn
+CP= cp
+MKDIR = mkdir -p
+
+LIBVER=0.6
+LIBMAINVER=0
 #FLAGS= -ggdb -Wall
-FLAGS= -Wall -O3 -D_WIN_ -fomit-frame-pointer  
-OBJS= common.o p16fxxx.o p18fxxx.o hexfile.o periferic.o periferic18.o serial.o icsp.o icsp18.o util.o
+FLAGS= -Wall -O3 -fomit-frame-pointer  -D_WIN_
 
-all: picsim
+prefix = /usr/x86_64-w64-mingw32
+exec_prefix = ${prefix}
+datadir = ${datarootdir}
+includedir = ${prefix}/include/picsim
+bindir = ${exec_prefix}/bin
+libdir = ${exec_prefix}/lib
 
-picsim: lib picsim.c 
-	$(CC) $(FLAGS) picsim.c -o picsim.exe  libpicsim.aw -lm
+
+OBJS= common.o p16fxxx.o p18fxxx.o hexfile.o periferic.o periferic18.o serial.o icsp.o icsp18.o util.o 
+
+all: all-lib picsim
+
+picsim: picsim.a picsim.c 
+	$(CC) $(FLAGS) picsim.c -o picsim.exe  picsim.a 
+	#$(CC) $(FLAGS) picsim_.c -o picsim_.exe  picsim.a 
+	#$(CC) $(FLAGS) picsim18.c -o picsim18.exe  picsim.a 
+
 
 %.o: %.c  
 	$(CC) $< -c  $(FLAGS) 
 
-lib:    $(OBJS)
-	 $(AR) rcs libpicsim.aw  $(OBJS)
-	 $(CC) $(FLAGS) -shared $(OBJS) -o libpicsim.dll 
 
-clean:
-	rm -f picsim.exe libpicsim.aw libpicsim.dll $(OBJS)
+# The static lib name, the shared lib name, and the internal ('so') name of
+# the shared lib.
+LIBNAME = picsim
+LIBSHBASENAME = $(LIBNAME).dll
+LIBSTLIBNAME = $(LIBNAME).a
+
+LIBTARGETS := $(LIBSHBASENAME)
+
+
+
+LIBHEADERFILES := p16fxxx_defs.h  p18fxxx_defs.h periferic18.h periferic.h picsim.h 
+
+# How to create the shared library
+$(LIBSHBASENAME): $(OBJS)
+	$(CC) -shared -Wl,--out-implib,$(LIBSHBASENAME).a -Wl,--no-undefined -Wl,--enable-runtime-pseudo-reloc -o $@  $^    
+
+# And the static library
+$(LIBSTLIBNAME): $(OBJS)
+	$(RM) $@
+	$(AR) rcvs $(LIBSTLIBNAME) $^
+
+# Include all dependency files
+#INCLUDEFILES += $(LIBCSOURCES:.c=.ld) $(LIBCSOURCES:.c=.ad)
+
+all-lib: $(LIBTARGETS)
+
+static :: $(LIBSTLIBNAME)
+
+clean-lib:
+	$(RM) *.ld *.ad
+	$(RM) *.lo *.ao *.a
+	$(RM) $(LIBTARGETS) $(LIBEXTRACLEAN)
+
+install: all
+	$(CP) -dvf $(LIBNAME).dll* ${libdir}
+	${MKDIR} ${includedir}
+	$(CP) -dvf $(LIBHEADERFILES) ${includedir}
+	chmod 644 ${includedir}/*
+
+uninstall:
+	$(RM) ${libdir}/$(LIBNAME)* 
+	$(RM) -r ${includedir} 
+
+
+clean:  clean-lib
+	rm -f picsim.exe picsim_.exe picsim18.exe picsim.a picsim.dll $(OBJS)
+	rm -f examples/*_sdcc*/*.asm
+	rm -f share/examples/*_mikroc_pro*/*.asm
+	rm -f examples/*/*.adb
+	rm -f examples/*/*.lst
+	rm -f examples/*/*.o
+	rm -f examples/*/*.cod
+	rm -f examples/*/*.cof
+	rm -f examples/*/*.map
+	rm -f examples/*/*.err
+	rm -f examples/*/*.p
+	rm -f examples/*/*.pre
+	rm -f examples/*/*.p1
+	rm -f examples/*/funclist
+	rm -f examples/*/*.obj
+	rm -f examples/*/*.as
+	rm -f examples/*/*.rlf
+	rm -f examples/*/*.sym
+	rm -f examples/*/*.sdb
+	rm -f examples/*/*.hxl
+	rm -f examples/*/*.ini
+	rm -f examples/*/*.cp
+	rm -f examples/*/*.cfg
+	rm -f examples/*/*.dbg
+	rm -f examples/*/*.dct
+	rm -f examples/*/*.dlt
+	rm -f examples/*/*.dic
+	rm -f examples/*/*callertable.txt
+	rm -f examples/*/*.mcl
+	rm -f examples/*/*.log
+
