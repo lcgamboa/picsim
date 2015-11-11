@@ -1,19 +1,13 @@
 
 PICsim - PIC Simulator
 
-This is the lcsim directory tree:
+This is the picsim directory tree:
 
 examples         - Examples
 gui		 - Graphic User Interface using wxwidgets
-lab              - Picsimlab
 
 
-Requirements:
-
-wxwidget 	- For graphic suport		   http://www.wxwidgets.org
-wxdevcpp	 -For compile picsim in windows    http://wxdsgn.sourceforge.net 
-
-Pic16fxx supported hardware:
+Pic supported hardware:
 	Interrupts
 	WTD
 	TMR0
@@ -29,13 +23,7 @@ Pic16fxx supported hardware:
 Utils:
 
 com0com		- For serial emulation in windows  http://com0com.sourceforge.net/ 
-ttypatch	- For serial emulation in linux    http://ttypatch.sourceforge.net/
+tty0tty 	- For serial emulation in linux    http://tty0tty.sourceforge.net/
 gputils		- For assemble examples            http://gputils.sourceforge.net/
 sdcc		- For compile examples             http://sdcc.sourceforge.net/
-piklab		- IDE for edit examples            http://piklab.sourceforge.net/
-
-
-
-
-
 

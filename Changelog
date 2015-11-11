@@ -1,3 +1,5 @@
+
+Version 0.6
 08/25/2015 PIC16F CCP1 compare modes implemented 
 11/07/2013 PIC18F4550 support (Standard Instruction Set)
 11/07/2013 PIC18F4620 support (Standard Instruction Set)
@@ -13,7 +15,7 @@ Version 0.5
 07/08/2011 16f PCL bug fix
 07/06/2011 18f core bug fix
 07/01/2011 18f core bug fix
-06/22/2011 18f interrupt level implemented
+06/22/2011 18f interrupt by level implemented
 06/22/2011 fast stack bug fixed
 06/21/2011 hexfile load bug fixed
 06/20/2011 PIC18XXX RCALL bug fixed 

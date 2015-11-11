@@ -928,10 +928,12 @@ if((pic->ram[PORTB]&pic->ram[TRISB]&0xF0) != (pic->portb&pic->ram[TRISB]&0xF0))
 if(pic->rram == PORTB)
 {
   pic->portbm=0;
+/* Only disable mismatch
   pic->ram[(0x0000)|(INTCON & 0x007F)]&=~0x01;//RBIF
   pic->ram[(0x0080)|(INTCON & 0x007F)]&=~0x01;
   pic->ram[(0x0100)|(INTCON & 0x007F)]&=~0x01;
   pic->ram[(0x0180)|(INTCON & 0x007F)]&=~0x01;
+*/
 }
 
 if(pic->portbm)

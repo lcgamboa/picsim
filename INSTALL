@@ -1,7 +1,8 @@
 Installation:
 
-make         - Compile the picsim simulator
+make           - Compile the picsim simulator
 
-cd lab/ make - Compile the picsimlab gui
+make  install  - Install libpicsim.so in /usr/lib
 
-this version is not installable
+make uninstall - Remove libpicsim.so
+        

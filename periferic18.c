@@ -837,7 +837,8 @@ if((pic->ram[P18_PORTB]&pic->ram[P18_TRISB]&0xF0) != (pic->portb&pic->ram[P18_TR
 if(pic->rram == P18_PORTB)
 {
   pic->portbm=0;
-  pic->ram[P18_INTCON]&=~0x01;//RBIF
+  //Only disable mismatch
+  //pic->ram[P18_INTCON]&=~0x01;//RBIF
 }
 
 if(pic->portbm)
