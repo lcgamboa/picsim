@@ -1310,7 +1310,7 @@ else //P16F877 P16F877A
       {
         pic->twdt=0;
         pic->wdt++;
-        if(pic->wdt == 18)
+        if(pic->wdt == pic->WDT_MS)
         {
          //reset
          pic->wdt=0;
@@ -1320,9 +1320,9 @@ else //P16F877 P16F877A
          pic->ram[((0x0040)<<2)|(STATUS & 0x007F)]&=~0x10;
          pic->ram[((0x0060)<<2)|(STATUS & 0x007F)]&=~0x10;
           
-         if( pic->pwd == 1)
+         if( pic->sleep == 1)
          {
-           pic->pwd=0;
+           pic->sleep=0;
          } 
          else
          {
@@ -1337,7 +1337,7 @@ else //P16F877 P16F877A
       {
         pic->twdt=0;
         pic->wdt++;
-        if(pic->wdt == 18)
+        if(pic->wdt == pic->WDT_MS)
         {
          //reset
          pic->wdt=0;
@@ -1347,9 +1347,9 @@ else //P16F877 P16F877A
          pic->ram[((0x0040)<<2)|(STATUS & 0x007F)]&=~0x10;
          pic->ram[((0x0060)<<2)|(STATUS & 0x007F)]&=~0x10;
          
-         if( pic->pwd == 1)
+         if( pic->sleep == 1)
          {
-           pic->pwd=0;
+           pic->sleep=0;
          } 
          else
          {
@@ -1543,7 +1543,7 @@ if(pic->s2 == 0)
 {
   if (interrupt(pic,print) )
   {
-       pic->pwd=0; 
+       pic->sleep=0; 
 
        pic->ram[(0x0000)|(INTCON & 0x007F)]&=~0x80;
        pic->ram[(0x0080)|(INTCON & 0x007F)]&=~0x80;

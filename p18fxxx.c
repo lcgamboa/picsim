@@ -79,7 +79,7 @@ pic_decode_18(_pic * pic,int print)
   pic->lram=0x8000;
   pic->rram=0x8000;
   
-  if(pic->pwd == 1)
+  if(pic->sleep == 1)
   {
     return;
   }
@@ -230,7 +230,7 @@ pic_decode_18(_pic * pic,int print)
 //SLEEP  --   		Go into Standby mode         1     	0000 0000 0000 0011 TO, PD
               if(print)printf("SLEEP\n");
   	      pic->wdt=0;
-  	      pic->pwd=1;
+  	      pic->sleep=1;
 	      pic->ram[P18_RCON]&=~0x08;
 	      pic->ram[P18_RCON]|=0x04;
 	      break;

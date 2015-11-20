@@ -51,7 +51,7 @@ pic_decode_16(_pic * pic,int print)
   pic->lram=0x8000;
   pic->rram=0x8000;
   
-  if(pic->pwd == 1)
+  if(pic->sleep == 1)
   {
     return;
   }
@@ -133,7 +133,7 @@ pic_decode_16(_pic * pic,int print)
 		case 0x0063:
 //SLEEP   --  	Go into Standby mode         1     0000000 1100011   	TO,PD
   		  pic->wdt=0;
-  		  pic->pwd=1;
+  		  pic->sleep=1;
 	          *status&=~0x08;
 	          *status|=0x10;
                 break;

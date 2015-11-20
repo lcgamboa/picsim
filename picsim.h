@@ -88,9 +88,10 @@ typedef struct
   unsigned int  IDSIZE;
   unsigned int  CONFIGSIZE;	
   unsigned char STACKSIZE;
-  unsigned char  PINCOUNT;
+  unsigned char PINCOUNT;
   unsigned char CCPCOUNT;
   unsigned char ADCCOUNT;
+  unsigned char WDT_MS;
   unsigned char family;
   unsigned int  processor;
   unsigned short  debugv[8];
@@ -108,7 +109,7 @@ typedef struct
   unsigned char  wdt;
   unsigned char  s2;
   float   	 freq;
-  unsigned char  pwd; //sleep mode on
+  unsigned char  sleep; //sleep mode on
   picpin *pins;
   unsigned char *ccp;
   unsigned char *adc;

@@ -1096,7 +1096,7 @@ if(pic->portbm)
         pic->twdt=0;
         pic->wdt++;
 
-        if(pic->wdt == 18) //FIXME time 4ms for 4629 and 4550
+        if(pic->wdt == pic->WDT_MS) 
         {
          //reset
          pic->wdt=0;
@@ -1104,9 +1104,9 @@ if(pic->portbm)
          pic->ram[P18_RCON]&=~0x08; //clear TO
            
           
-         if( pic->pwd == 1)
+         if( pic->sleep == 1)
          {
-           pic->pwd=0;
+           pic->sleep=0;
          } 
          else
          {
@@ -1317,7 +1317,7 @@ if(pic->s2 == 0)
   int iret=interrupt18(pic,print); 
   if (iret)
   {
-     pic->pwd=0; 
+     pic->sleep=0; 
      if(print)printf("interrupt!\n");
      for(i=30;i>0;i--)
        pic->stack[i]=pic->stack[i-1];

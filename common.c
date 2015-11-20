@@ -78,6 +78,7 @@ pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, fl
          pic->STACKSIZE=8;
          pic->CCPCOUNT=1;
          pic->ADCCOUNT=0;
+         pic->WDT_MS=18;
        break;  
        case P16F648A:
        case P16F648AICD:
@@ -90,6 +91,7 @@ pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, fl
          pic->STACKSIZE=8;
          pic->CCPCOUNT=1;
          pic->ADCCOUNT=0;
+         pic->WDT_MS=18;
        break;  
        case P16F877:
        case P16F877A:
@@ -102,6 +104,7 @@ pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, fl
          pic->STACKSIZE=8;
          pic->CCPCOUNT=2;
          pic->ADCCOUNT=8;
+         pic->WDT_MS=18;
        break;
        case P16F777:
          pic->ROMSIZE=8192;
@@ -113,6 +116,7 @@ pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, fl
          pic->STACKSIZE=8;
          pic->CCPCOUNT=3;
          pic->ADCCOUNT=14;
+         pic->WDT_MS=18;
        break;
        default:
          printf("unknow processor!\n");
@@ -134,6 +138,7 @@ pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, fl
            pic->CONFIGSIZE=7;
            pic->CCPCOUNT=2;
            pic->ADCCOUNT=8;
+           pic->WDT_MS=18;
            break;
          case P18F4620:
            pic->ROMSIZE=32768;
@@ -146,6 +151,7 @@ pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, fl
            pic->CONFIGSIZE=7;
            pic->CCPCOUNT=2;
            pic->ADCCOUNT=13;
+           pic->WDT_MS=4;
            break;
          case P18F4550:
            pic->ROMSIZE=16384;
@@ -158,6 +164,7 @@ pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, fl
            pic->CONFIGSIZE=7;
            pic->CCPCOUNT=1;
            pic->ADCCOUNT=13;
+           pic->WDT_MS=4;
            break;
          default:
            printf("unknow processor!\n");
@@ -201,7 +208,7 @@ pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, fl
    if(lrom == 1)
      memset(pic->eeprom,0xFF,pic->EEPROMSIZE); 
    
-   pic->pwd=0; 
+   pic->sleep=0; 
    
    pic_reset(pic,1);
    
