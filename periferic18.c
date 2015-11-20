@@ -1083,7 +1083,7 @@ if(pic->portbm)
 
 
 
-//WTD
+//WDT
 
   if((pic->config[1] & 0x0100) || (pic->ram[P18_WDTCON] & 0x01))  
   {
@@ -1095,7 +1095,8 @@ if(pic->portbm)
       {
         pic->twdt=0;
         pic->wdt++;
-        if(pic->wdt == 18)
+
+        if(pic->wdt == 18) //FIXME time 4ms for 4629 and 4550
         {
          //reset
          pic->wdt=0;

@@ -1890,18 +1890,18 @@ pic_decode_18(_pic * pic,int print)
         case 0x0000: 
 //BRA    n    		Branch Unconditionally       1 (2) 	1101 0nnn nnnn nnnn None
           jrange=(((short)((opc & 0x07FF)<<5))/16); 
-          if(print)printf("BRA %#06X\n",pic->pc+jrange);
-          pic->jpc=pic->pc+jrange ;
+          if(print)printf("BRA %#06X\n",(pic->pc+jrange)&0xFFFF);
+          pic->jpc=(pic->pc+jrange)&0xFFFF;
 	  pic->s2=1;
 	  break;
         case 0x0800: 
 //RCALL  n    		Relative Call                2     	1101 1nnn nnnn nnnn None
           jrange=(((short)((opc & 0x07FF)<<5))/16); 
-          if(print)printf("RCALL %#06X\n",pic->pc+jrange);
+          if(print)printf("RCALL %#06X\n",(pic->pc+jrange)&0xFFFF);
           for(temp=30;temp>0;temp--)
 	    pic->stack[temp]=pic->stack[temp-1];
 	  pic->stack[0]=pic->pc;
-          pic->jpc=pic->pc+jrange ;
+          pic->jpc=(pic->pc+jrange)&0xFFFF ;
 	  pic->s2=1;
           pic->ram[P18_STKPTR]++;
 	break;
@@ -1917,80 +1917,80 @@ pic_decode_18(_pic * pic,int print)
         case 0x0000:	
 //BZ     n    		Branch if Zero               1 (2) 	1110 0000 nnnn nnnn None
           jrange=(((char)(opc & 0x00FF))*2); 
-          if(print)printf("BZ  %#06X\n",pic->pc+jrange);
+          if(print)printf("BZ  %#06X\n",(pic->pc+jrange)&0xFFFF);
           if(pic->ram[P18_STATUS] & 0x04)
           {
-            pic->jpc=pic->pc+jrange ;
+            pic->jpc=(pic->pc+jrange)&0xFFFF ;
 	    pic->s2=1;
           }
           break;
         case 0x0100:	
 //BNZ    n    		Branch if Not Zero           2     	1110 0001 nnnn nnnn None
           jrange=(((char)(opc & 0x00FF))*2); 
-          if(print)printf("BNZ %#06X\n",pic->pc+jrange);
+          if(print)printf("BNZ %#06X\n",(pic->pc+jrange)&0xFFFF);
           if(!(pic->ram[P18_STATUS] & 0x04))
           {
-            pic->jpc=pic->pc+jrange ;
+            pic->jpc=(pic->pc+jrange)&0xFFFF ;
 	    pic->s2=1;
           }
           break;
         case 0x0200:	
 //BC     n    		Branch if Carry              1 (2)      1110 0010 nnnn nnnn None
           jrange=(((char)(opc & 0x00FF))*2); 
-          if(print)printf("BC  %#06X\n",pic->pc+jrange);
+          if(print)printf("BC  %#06X\n",(pic->pc+jrange)&0xFFFF);
           if(pic->ram[P18_STATUS] & 0x01)
           {
-            pic->jpc=pic->pc+jrange ;
+            pic->jpc=(pic->pc+jrange)&0xFFFF ;
 	    pic->s2=1;
           }
           break;
         case 0x0300:	
 //BNC    n    		Branch if Not Carry          1 (2) 	1110 0011 nnnn nnnn None
           jrange=(((char)(opc & 0x00FF))*2); 
-          if(print)printf("BNC %#06X\n",pic->pc+jrange);
+          if(print)printf("BNC %#06X\n",(pic->pc+jrange)&0xFFFF);
           if(!(pic->ram[P18_STATUS] & 0x01))
           {
-            pic->jpc=pic->pc+jrange ;
+            pic->jpc=(pic->pc+jrange)&0xFFFF ;
 	    pic->s2=1;
           }
           break;
         case 0x0400:	
 //BOV    n    		Branch if Overflow           1 (2) 	1110 0100 nnnn nnnn None
           jrange=(((char)(opc & 0x00FF))*2); 
-          if(print)printf("BOV  %#06X\n",pic->pc+jrange);
+          if(print)printf("BOV  %#06X\n",(pic->pc+jrange)&0xFFFF);
           if(pic->ram[P18_STATUS] & 0x08)
           {
-            pic->jpc=pic->pc+jrange ;
+            pic->jpc=(pic->pc+jrange)&0xFFFF ;
 	    pic->s2=1;
           }
           break;
         case 0x0500:	
 //BNOV   n    		Branch if Not Overflow       1 (2) 	1110 0101 nnnn nnnn None
           jrange=(((char)(opc & 0x00FF))*2); 
-          if(print)printf("BNOV %#06X\n",pic->pc+jrange);
+          if(print)printf("BNOV %#06X\n",(pic->pc+jrange)&0xFFFF);
           if(!(pic->ram[P18_STATUS] & 0x08))
           {
-            pic->jpc=pic->pc+jrange ;
+            pic->jpc=(pic->pc+jrange)&0xFFFF ;
 	    pic->s2=1;
           }
           break;
         case 0x0600:	
 //BN     n    		Branch if Negative           1 (2)      1110 0110 nnnn nnnn None
           jrange=(((char)(opc & 0x00FF))*2); 
-          if(print)printf("BN  %#06X\n",pic->pc+jrange);
+          if(print)printf("BN  %#06X\n",(pic->pc+jrange)&0xFFFF);
           if(pic->ram[P18_STATUS] & 0x10)
           {
-            pic->jpc=pic->pc+jrange ;
+            pic->jpc=(pic->pc+jrange)&0xFFFF ;
 	    pic->s2=1;
           }
           break;
         case 0x0700:	
 //BNN    n    		Branch if Not Negative       1 (2) 	1110 0111 nnnn nnnn None
           jrange=(((char)(opc & 0x00FF))*2); 
-          if(print)printf("BNN %#06X\n",pic->pc+jrange);
+          if(print)printf("BNN %#06X\n",(pic->pc+jrange)&0xFFFF);
           if(!(pic->ram[P18_STATUS] & 0x10))
           {
-            pic->jpc=pic->pc+jrange ;
+            pic->jpc=(pic->pc+jrange)&0xFFFF ;
 	    pic->s2=1;
           }
           break;

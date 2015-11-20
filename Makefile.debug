@@ -7,7 +7,7 @@ MKDIR = mkdir -p
 
 LIBVER=0.6
 LIBMAINVER=0
-FLAGS= -Wall -O3 -fomit-frame-pointer -fpic
+FLAGS= -ggdb -Wall
 
 prefix = /usr
 exec_prefix = ${prefix}
@@ -34,13 +34,9 @@ picsim: libpicsim.a picsim.c
 # The static lib name, the shared lib name, and the internal ('so') name of
 # the shared lib.
 LIBNAME = libpicsim
-LIBSHBASENAME = $(LIBNAME).so
-LIBSHLIBNAME = $(LIBNAME).so.$(LIBVER)
 LIBSTLIBNAME = $(LIBNAME).a
-LIBSHSONAME := $(LIBNAME).so.$(LIBMAINVER)
 
-LIBTARGETS := $(LIBSHLIBNAME) $(LIBSHSONAME) $(LIBSHBASENAME)
-
+LIBTARGETS := $(LIBSTLIBNAME)
 
 
 LIBHEADERFILES := p16fxxx_defs.h  p18fxxx_defs.h periferic18.h periferic.h picsim.h 

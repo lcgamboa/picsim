@@ -108,7 +108,7 @@ typedef struct
   unsigned char  wdt;
   unsigned char  s2;
   float   	 freq;
-  unsigned char  pwd;
+  unsigned char  pwd; //sleep mode on
   picpin *pins;
   unsigned char *ccp;
   unsigned char *adc;

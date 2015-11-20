@@ -1298,7 +1298,7 @@ else //P16F877 P16F877A
   } 
 }
 
-//WTD
+//WDT
 
   if((pic->config[0] & 0x04) == 0x04 )  
   {
