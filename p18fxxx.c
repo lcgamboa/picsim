@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2011  Luis Claudio GambÃ´a Lopes
+   Copyright (c) : 2011  Luis Claudio Gambôa Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -210,10 +210,9 @@ pic_decode_18(_pic * pic,int print)
   }
 */
             
-  pic->ram[P18_TOSU]=((pic->stack[0])&0x1F0000)>>16; 
-  pic->ram[P18_TOSH]=((pic->stack[0])&0x00FF00)>>8;
-  pic->ram[P18_TOSL]=((pic->stack[0])&0x0000FF);  
 
+
+  
   switch(opc & 0xF000)
   {
     case 0x0000:
@@ -243,19 +242,25 @@ pic_decode_18(_pic * pic,int print)
   	      break;
             case 0x0005:
 //PUSH   --   		Push top of ret stack(TOS)   1     	0000 0000 0000 0101 None
-              if(print)printf("PUSH \n");
-              for(temp=30;temp>0;temp--)
-	        pic->stack[temp]=pic->stack[temp-1];
-	      pic->stack[0]=pic->pc+2;
-              pic->ram[P18_STKPTR]++;
+              if(print)printf("PUSH \n");           
+              if((pic->ram[P18_STKPTR] & 0x1F) < 31 )
+              {
+	        pic->stack[pic->ram[P18_STKPTR]& 0x1F]=pic->pc;
+                pic->ram[P18_STKPTR]=(pic->ram[P18_STKPTR] &0xC0) | ((pic->ram[P18_STKPTR] &0x1F)+1);    
+                if((pic->ram[P18_STKPTR]& 0x1F) == 31)pic->ram[P18_STKPTR]|=0x80; //set STKFUL
+              }
+              pic->lram=P18_STKPTR;
 	      break;
             case 0x0006:
 //POP    --   		Pop top of ret stack(TOS)    1     	0000 0000 0000 0110 None
               if(print)printf("POP \n");
-              for(temp=0;temp<30;temp++)
-	        pic->stack[temp]=pic->stack[temp+1];
-	      pic->stack[30]=0;
-              pic->ram[P18_STKPTR]--;
+              if((pic->ram[P18_STKPTR] & 0x1F) > 0 )
+              {
+                pic->ram[P18_STKPTR]=(pic->ram[P18_STKPTR] &0xC0) | ((pic->ram[P18_STKPTR] &0x1F)-1);    
+              }
+              else
+                pic->ram[P18_STKPTR]|=0x40; //set STKUNF  
+              pic->lram=P18_STKPTR;
               break;
             case 0x0007:
 //DAW    --   		Decimal Adjust WREG          1     	0000 0000 0000 0111 C
@@ -655,10 +660,19 @@ pic_decode_18(_pic * pic,int print)
             case 0x0011:
 //RETFIE s    		Return from interrupt enable 2     	0000 0000 0001 000s GIE/GIEH,PEIE/GIEL
               if(print)printf("RETFIE\n");
-	      pic->jpc=pic->stack[0];
-              for(temp=0;temp<30;temp++)
-	        pic->stack[temp]=pic->stack[temp+1];
-	      pic->stack[30]=0;
+	      
+              if((pic->ram[P18_STKPTR] & 0x1F) > 0 )
+              {
+                pic->ram[P18_STKPTR]=(pic->ram[P18_STKPTR] &0xC0) | ((pic->ram[P18_STKPTR] &0x1F)-1);      
+                pic->jpc=pic->stack[pic->ram[P18_STKPTR] & 0x1F];  
+              }
+              else
+              {
+                pic->ram[P18_STKPTR]|=0x40; //set STKUNF  
+                pic->jpc=0;
+              }
+              pic->lram=P18_STKPTR;
+              
 	      pic->s2=1;
 
               if(pic->intlv &0x01)
@@ -678,16 +692,23 @@ pic_decode_18(_pic * pic,int print)
                 pic->ram[P18_STATUS]=pic->ram[P18_STATUSS];
                 pic->ram[P18_BSR]=pic->ram[P18_BSRS];
               }
-              pic->ram[P18_STKPTR]--;
 	      break;
             case 0x0012:
             case 0x0013:
 //RETURN s    		Return from Subroutine       2     	0000 0000 0001 001s None
               if(print)printf("RETURN %d\n",opc & 0x0001);
-	      pic->jpc=pic->stack[0];
-              for(temp=0;temp<30;temp++)
-	        pic->stack[temp]=pic->stack[temp+1];
-	      pic->stack[30]=0;
+              if((pic->ram[P18_STKPTR] & 0x1F) > 0 )
+              {
+                pic->ram[P18_STKPTR]=(pic->ram[P18_STKPTR] &0xC0) | ((pic->ram[P18_STKPTR] &0x1F)-1);     
+                pic->jpc=pic->stack[pic->ram[P18_STKPTR] & 0x1F];   
+              }
+              else
+              {
+                pic->ram[P18_STKPTR]|=0x40; //set STKUNF  
+                pic->jpc=0;
+              }
+              pic->lram=P18_STKPTR;
+              
 	      pic->s2=1;
 	  
               if(opc & 0x0001 )
@@ -696,7 +717,6 @@ pic_decode_18(_pic * pic,int print)
                 pic->ram[P18_STATUS]=pic->ram[P18_STATUSS];
                 pic->ram[P18_BSR]=pic->ram[P18_BSRS];
                }
-              pic->ram[P18_STKPTR]--;
               /* debug 
 	      if((pic->ram[ICKBUG] & 0x80)== 0x80)printf("Out DEBUG mode\n");
 	      pic->debug=0;
@@ -714,10 +734,13 @@ pic_decode_18(_pic * pic,int print)
               if(pic->pc != 0x00000)
               {
                  //printf("Debug stack save\n");
-                 for(temp=30;temp>0;temp--)
-	           pic->stack[temp]=pic->stack[temp-1];
-	         pic->stack[0]=pic->pc;
-                 pic->ram[P18_STKPTR]++;
+                 if((pic->ram[P18_STKPTR] & 0x1F) < 31 )
+                 {
+	            pic->stack[pic->ram[P18_STKPTR]& 0x1F]=pic->pc;
+                    pic->ram[P18_STKPTR]=(pic->ram[P18_STKPTR] &0xC0) | ((pic->ram[P18_STKPTR] &0x1F)+1);    
+                    if((pic->ram[P18_STKPTR]& 0x1F) == 31)pic->ram[P18_STKPTR]|=0x80; //set STKFUL
+                 }
+                 pic->lram=P18_STKPTR;
               }
 	  
 	     pic->ram[P18_DEBUG]|=0x80;
@@ -733,10 +756,17 @@ pic_decode_18(_pic * pic,int print)
             case 0x00E1:
 //TRET    		Return Debug Subroutine       2     	0000 0000 1110 0001 None
               if(print)printf("TRET\n");
-	      pic->jpc=pic->stack[0];
-              for(temp=0;temp<30;temp++)
-	        pic->stack[temp]=pic->stack[temp+1];
-	      pic->stack[30]=0;
+              if((pic->ram[P18_STKPTR] & 0x1F) > 0 )
+              {
+                pic->ram[P18_STKPTR]=(pic->ram[P18_STKPTR] &0xC0) | ((pic->ram[P18_STKPTR] &0x1F)-1);    
+                pic->jpc=pic->stack[pic->ram[P18_STKPTR] & 0x1F];    
+              }
+              else
+              {
+                pic->ram[P18_STKPTR]|=0x40; //set STKUNF  
+                pic->jpc=0;
+              }
+              pic->lram=P18_STKPTR;
 	      pic->s2=1;
 /*	  
               if(opc & 0x0001 )
@@ -746,7 +776,6 @@ pic_decode_18(_pic * pic,int print)
                 pic->ram[P18_BSR]=pic->ram[P18_BSRS];
                }
 */
-              pic->ram[P18_STKPTR]--;
 	      //if((pic->ram[P18_DEBUG] & 0x80)== 0x80)printf("Out DEBUG mode\n");
 	      pic->debug=0;
               pic->sstep=0;          
@@ -915,14 +944,20 @@ pic_decode_18(_pic * pic,int print)
           break;
         case 0x0C00:
 //RETLW    k    	Return with literal in WREG  2     	0000 1100 kkkk kkkk None
-          if(print)printf("RETLW %#06X\n",opc & 0x00FF);
-	  pic->jpc=pic->stack[0];
-          for(temp=0;temp<30;temp++)
-	    pic->stack[temp]=pic->stack[temp+1];
-	  pic->stack[30]=0;
+          if(print)printf("RETLW %#06X\n",opc & 0x00FF);  
+          if((pic->ram[P18_STKPTR] & 0x1F) > 0 )
+          {
+            pic->ram[P18_STKPTR]=(pic->ram[P18_STKPTR] &0xC0) | ((pic->ram[P18_STKPTR] &0x1F)-1);    
+            pic->jpc=pic->stack[pic->ram[P18_STKPTR] & 0x1F];    
+          }
+          else
+          {
+            pic->ram[P18_STKPTR]|=0x40; //set STKUNF  
+            pic->jpc=0;
+          }
+          pic->lram=P18_STKPTR;
 	  pic->s2=1;
 	  pic->ram[P18_WREG]= (opc & 0x00FF);
-          pic->ram[P18_STKPTR]--;
           break;
         case 0x0D00:
 //MULLW    k    	Multiply literal with WREG   1     	0000 1101 kkkk kkkk None
@@ -1898,12 +1933,15 @@ pic_decode_18(_pic * pic,int print)
 //RCALL  n    		Relative Call                2     	1101 1nnn nnnn nnnn None
           jrange=(((short)((opc & 0x07FF)<<5))/16); 
           if(print)printf("RCALL %#06X\n",(pic->pc+jrange)&((pic->ROMSIZE<<1)-1));
-          for(temp=30;temp>0;temp--)
-	    pic->stack[temp]=pic->stack[temp-1];
-	  pic->stack[0]=pic->pc;
+          if((pic->ram[P18_STKPTR] & 0x1F) < 31 )
+          {
+	     pic->stack[pic->ram[P18_STKPTR]& 0x1F]=pic->pc;
+             pic->ram[P18_STKPTR]=(pic->ram[P18_STKPTR] &0xC0) | ((pic->ram[P18_STKPTR] &0x1F)+1);    
+             if((pic->ram[P18_STKPTR] & 0x1F)== 31)pic->ram[P18_STKPTR]|=0x80; //set STKFUL
+          }
           pic->jpc=(pic->pc+jrange)&((pic->ROMSIZE<<1)-1) ;
+          pic->lram=P18_STKPTR;
 	  pic->s2=1;
-          pic->ram[P18_STKPTR]++;
 	break;
 	  break;
         default:
@@ -2006,12 +2044,15 @@ pic_decode_18(_pic * pic,int print)
             pic->ram[P18_STATUSS]=pic->ram[P18_STATUS];
             pic->ram[P18_BSRS]=pic->ram[P18_BSR];
           }
-          for(temp=30;temp>0;temp--)
-	    pic->stack[temp]=pic->stack[temp-1];
-	  pic->stack[0]=pic->pc+2;
+          if((pic->ram[P18_STKPTR] & 0x1F) < 31 )
+          {
+	      pic->stack[pic->ram[P18_STKPTR]& 0x1F]=pic->pc+2;
+              pic->ram[P18_STKPTR]=(pic->ram[P18_STKPTR] &0xC0) | ((pic->ram[P18_STKPTR] &0x1F)+1);    
+             if((pic->ram[P18_STKPTR]& 0x1F) == 31)pic->ram[P18_STKPTR]|=0x80; //set STKFUL
+          }
 	  pic->jpc=(((pic->prog[pic->pc>>1] & 0x0FFF)<<8)| (opc & 0x00FF))<<1;
+          pic->lram=P18_STKPTR;
 	  pic->s2=1;
-          pic->ram[P18_STKPTR]++;
 	break;
 	case 0x0E00:
 //LFSR     f, k 	Move literal (12-bit) 2nd w  2  	1110 1110 00ff kkkk None
@@ -2158,18 +2199,27 @@ pic_decode_18(_pic * pic,int print)
     case P18_PLUSW2:
       pic->ram[afsr2+((char)pic->ram[P18_WREG])]=pic->ram[P18_PLUSW2];
       pic->lram=afsr2+((char)pic->ram[P18_WREG]);
-      break; 
-    
-    case P18_TOSU:
-      pic->stack[0]=((pic->ram[P18_TOSU]&0x1F)<<16)|(pic->stack[0]&0x00FFFF);
-      break; 
-    case P18_TOSH:
-      pic->stack[0]=(pic->ram[P18_TOSH]<<8)|(pic->stack[0]&0xFF00FF);
-      break; 
-    case P18_TOSL:
-      pic->stack[0]=(pic->ram[P18_TOSL])|(pic->stack[0]&0xFFFF00);
       break;
-
+      
+    case P18_STKPTR:
+      if((pic->ram[P18_STKPTR] & 0x1F) >0)
+      {
+        pic->ram[P18_TOSL]=((pic->stack[(pic->ram[P18_STKPTR] & 0x1F)-1])&0x0000FF);  
+        pic->ram[P18_TOSU]=((pic->stack[(pic->ram[P18_STKPTR] & 0x1F)-1])&0x1F0000)>>16; 
+        pic->ram[P18_TOSH]=((pic->stack[(pic->ram[P18_STKPTR] & 0x1F)-1])&0x00FF00)>>8;   
+      }
+      else
+      {
+        pic->ram[P18_TOSL]=0;
+        pic->ram[P18_TOSH]=0;
+        pic->ram[P18_TOSU]=0;
+      }        
+      break;
+    case P18_TOSL:
+      if((pic->ram[P18_STKPTR] & 0x1F) > 0)  
+        pic->stack[(pic->ram[P18_STKPTR] & 0x1F)-1]= ((pic->ram[P18_TOSU]&0x1F)<<16) |((pic->ram[P18_TOSH])<<8)|pic->ram[P18_TOSL];
+      break;
+      
     case P18_LATA:
       pic->ram[P18_PORTA]=pic->ram[P18_LATA];
       break;	
@@ -2251,7 +2301,15 @@ pic_decode_18(_pic * pic,int print)
       pic->ram[P18_FSR2H]=((afsr2+1)&0xFF00)>>8;
       pic->ram[P18_FSR2L]=(afsr2+1)&0x00FF;
       break;
-    
+      
+    case P18_TOSL:
+       if((pic->ram[P18_STKPTR] & 0x1F) >0) 
+       {
+         pic->ram[P18_TOSU]=((pic->stack[(pic->ram[P18_STKPTR] & 0x1F)-1])&0x1F0000)>>16; 
+         pic->ram[P18_TOSH]=((pic->stack[(pic->ram[P18_STKPTR] & 0x1F)-1])&0x00FF00)>>8;      
+       } 
+     break;
+     
      case P18_PCL:
   //    printf("###############PCL read\n");
       pic->ram[P18_PCLATU]=(pic->pc&0x1F0000)>>16;

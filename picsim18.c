@@ -77,9 +77,9 @@ main(int argc,char** argv)
 #endif
  
     pic_set_serial(&pic1,"/dev/tnt2",0,0,0);
-    pic_init(&pic1,P18,P18F452,argv[1],1,4e6);
+    pic_init(&pic1,P18,P18F4620,argv[1],1,8e6);
 
-    write_ihx18(&pic1,"out.hex");
+    //write_ihx18(&pic1,"out.hex");
 
     while(c != 'q')
     {

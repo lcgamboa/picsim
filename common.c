@@ -745,6 +745,7 @@ pic_reset(_pic * pic, int flags)
      pic->ram[P18_TRISD]=0xFF; 
      pic->ram[P18_TRISE]=0x07; 
      pic->ram[P18_PR2]=0xFF; 
+     pic->ram[P18_STKPTR]=0x00;
    
      periferic18_rst(pic);
      break;

@@ -1130,9 +1130,7 @@ int i,val;
 
 unsigned short port;
 unsigned short tris;
-  
-int temp;
-  
+    
 
 	if(pic->lram == P18_DEBUG )
         {
@@ -1197,10 +1195,24 @@ int temp;
           if(pic->pc != 0x00000)
           {
             //printf("Debug stack save\n");
-            for(temp=30;temp>0;temp--)
-	      pic->stack[temp]=pic->stack[temp-1];
-	    pic->stack[0]=pic->pc;
-            pic->ram[P18_STKPTR]++;
+            if((pic->ram[P18_STKPTR] & 0x1F) < 31 )
+            {
+	      pic->stack[pic->ram[P18_STKPTR]& 0x1F]=pic->pc;
+              pic->ram[P18_STKPTR]=(pic->ram[P18_STKPTR] &0xC0) | ((pic->ram[P18_STKPTR] &0x1F)+1);    
+              if((pic->ram[P18_STKPTR]& 0x1F) == 31)pic->ram[P18_STKPTR]|=0x80; //set STKFUL
+            }
+            if((pic->ram[P18_STKPTR] & 0x1F) >0)
+            {    
+              pic->ram[P18_TOSL]=((pic->stack[(pic->ram[P18_STKPTR] & 0x1F) -1])&0x0000FF);  
+              pic->ram[P18_TOSU]=((pic->stack[(pic->ram[P18_STKPTR] & 0x1F)-1])&0x1F0000)>>16; 
+              pic->ram[P18_TOSH]=((pic->stack[(pic->ram[P18_STKPTR] & 0x1F)-1])&0x00FF00)>>8;   
+            }
+            else
+            {
+              pic->ram[P18_TOSL]=0;
+              pic->ram[P18_TOSH]=0;
+              pic->ram[P18_TOSU]=0;
+            }
           }
 	  
 	  pic->ram[P18_DEBUG]|=0x80;
@@ -1319,9 +1331,24 @@ if(pic->s2 == 0)
   {
      pic->sleep=0; 
      if(print)printf("interrupt!\n");
-     for(i=30;i>0;i--)
-       pic->stack[i]=pic->stack[i-1];
-     pic->stack[0]=pic->pc;
+     if((pic->ram[P18_STKPTR] & 0x1F) < 31 )
+     {
+       pic->stack[pic->ram[P18_STKPTR]& 0x1F]=pic->pc;
+       pic->ram[P18_STKPTR]=(pic->ram[P18_STKPTR] &0xC0) | ((pic->ram[P18_STKPTR] &0x1F)+1);    
+       if((pic->ram[P18_STKPTR]& 0x1F) == 31)pic->ram[P18_STKPTR]|=0x80; //set STKFUL
+     }
+     if((pic->ram[P18_STKPTR] & 0x1F) >0)
+     {
+        pic->ram[P18_TOSL]=((pic->stack[(pic->ram[P18_STKPTR] & 0x1F) -1])&0x0000FF);  
+        pic->ram[P18_TOSU]=((pic->stack[(pic->ram[P18_STKPTR] & 0x1F)-1])&0x1F0000)>>16; 
+        pic->ram[P18_TOSH]=((pic->stack[(pic->ram[P18_STKPTR] & 0x1F)-1])&0x00FF00)>>8;   
+     }
+      else
+      {
+        pic->ram[P18_TOSL]=0;
+        pic->ram[P18_TOSH]=0;
+        pic->ram[P18_TOSU]=0;
+      }
      //fast stack       
      pic->ram[P18_WS]=pic->w; 	 
      pic->ram[P18_STATUSS]=pic->ram[P18_STATUS];
@@ -1340,7 +1367,6 @@ if(pic->s2 == 0)
        pic->intlv|=0x01;
      };
      pic->s2=1;
-     pic->ram[P18_STKPTR]++;
   }  
 }
 
