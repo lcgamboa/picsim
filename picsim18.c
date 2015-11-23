@@ -102,8 +102,8 @@ main(int argc,char** argv)
         pic_step(&pic1,1);
 
         ANSI_DEFAULT(); 
-        printf("pc=%#06X w=\033[1;32m %#04X \033[0m STKPTR=%#04X TOSL=%#04X PORTB=%#04X PORTE=%#04X status=\033[1;32m %#04X \033[0m intcon=%#04X afsr0=%#06X afsr1=%#06X afsr2=%#06X\n",pic1.pc,pic1.w,
-  pic1.ram[P18_STKPTR],pic1.ram[P18_TOSL],pic1.ram[P18_PORTB],pic1.ram[P18_PORTE],pic1.ram[P18_STATUS],pic1.ram[P18_INTCON],  
+        printf("pc=%#06X w=\033[1;32m %#04X \033[0m STKPTR=%#04X TOS=%#08X PORTB=%#04X PORTE=%#04X status=\033[1;32m %#04X \033[0m intcon=%#04X afsr0=%#06X afsr1=%#06X afsr2=%#06X\n",pic1.pc,pic1.w,
+  pic1.ram[P18_STKPTR],pic1.ram[P18_TOSU]<<16|pic1.ram[P18_TOSH]<<8|pic1.ram[P18_TOSL],pic1.ram[P18_PORTB],pic1.ram[P18_PORTE],pic1.ram[P18_STATUS],pic1.ram[P18_INTCON],  
   ((pic1.ram[P18_FSR0H]&0x0F)<<8) |pic1.ram[P18_FSR0L],
   ((pic1.ram[P18_FSR1H]&0x0F)<<8) |pic1.ram[P18_FSR1L],
   ((pic1.ram[P18_FSR2H]&0x0F)<<8) |pic1.ram[P18_FSR2L]);

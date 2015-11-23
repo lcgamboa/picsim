@@ -265,6 +265,7 @@ pic_decode_18(_pic * pic,int print)
             case 0x0007:
 //DAW    --   		Decimal Adjust WREG          1     	0000 0000 0000 0111 C
               if(print)printf("DAW \n");
+              pic->lram=P18_WREG;
 
 	      if(((pic->ram[P18_WREG]&0x0F) >9) | (*status &0x02))
               {
@@ -821,13 +822,14 @@ pic_decode_18(_pic * pic,int print)
 	    *status|=0x02;
 	  else   
 	    *status&=~0x02;
+          pic->rram=raddr;
           temp=pic->ram[raddr]-1;
 	
 	  if ((0x00FF&temp) == 0xFF) 
 	    *status&=~0x01;
 	  else   
 	    *status|=0x01;
-	  
+
           ctemp=(unsigned char)(0x00FF &temp);
 
           if(opc & 0x0200) //dest FILE
@@ -855,6 +857,7 @@ pic_decode_18(_pic * pic,int print)
 	       *status|=0x08;
 	    else   
 	       *status&=~0x08;
+            pic->lram=P18_WREG;
 	    pic->ram[P18_WREG]=ctemp;
 	    if (pic->ram[P18_WREG] == 0) 
 	       *status|=0x04;
@@ -875,6 +878,8 @@ pic_decode_18(_pic * pic,int print)
 	  else   
 	    *status&=~0x02;
 
+          pic->lram=P18_WREG;
+          
 	  temp=(~pic->ram[P18_WREG]+1)+(opc & 0x00FF);
 
 	  ctemp=(unsigned char)(0x00FF &temp);
@@ -907,6 +912,7 @@ pic_decode_18(_pic * pic,int print)
 //IORLW    k    	Inclusive OR literalw/ WREG  1     	0000 1001 kkkk kkkk Z, N
           if(print)printf("IORLW %#06X\n",opc & 0x00FF);
 	  pic->ram[P18_WREG] |= (opc & 0x00FF);
+          pic->lram=P18_WREG;
 	  if (pic->ram[P18_WREG] == 0) 
 	    *status|=0x04;
 	  else   
@@ -920,6 +926,7 @@ pic_decode_18(_pic * pic,int print)
 //XORLW    k    	Exclusive OR literal w\WREG  1     	0000 1010 kkkk kkkk Z, N
           if(print)printf("XORLW %#06X\n",opc & 0x00FF);
 	  pic->ram[P18_WREG] ^= (opc & 0x00FF);
+          pic->lram=P18_WREG;
 	  if (pic->ram[P18_WREG] == 0) 
 	    *status|=0x04;
 	  else   
@@ -933,6 +940,7 @@ pic_decode_18(_pic * pic,int print)
 //ANDLW    k    	AND literal with WREG        1     	0000 1011 kkkk kkkk Z, N
           if(print)printf("ANDLW %#06X\n",opc & 0x00FF);
 	  pic->ram[P18_WREG] &= (opc & 0x00FF);
+          pic->lram=P18_WREG;
 	  if (pic->ram[P18_WREG] == 0) 
 	    *status|=0x04;
 	  else   
@@ -965,9 +973,11 @@ pic_decode_18(_pic * pic,int print)
 	  temp= pic->ram[P18_WREG]*(opc & 0x00FF);
           pic->ram[P18_PRODH]=(temp&0xFF00)>>8;
           pic->ram[P18_PRODL]=temp&0x00FF;
+          pic->lram=P18_PRODL;
         case 0x0E00:
 //MOVLW    k    	Move literal to WREG         1     	0000 1110 kkkk kkkk None
           if(print)printf("MOVLW %#06X\n",opc & 0x00FF);
+          pic->lram=P18_WREG;
           pic->ram[P18_WREG]= (opc & 0x00FF);
           break;
         case 0x0F00:
@@ -978,7 +988,7 @@ pic_decode_18(_pic * pic,int print)
 	    *status|=0x02;
 	  else   
 	    *status&=~0x02;
-
+          pic->lram=P18_WREG; 
 	  temp=pic->ram[P18_WREG]+(opc & 0x00FF);
 	  ctemp=(unsigned char)(0x00FF &temp);
 	  
@@ -1016,6 +1026,7 @@ pic_decode_18(_pic * pic,int print)
 //IORWF  f, d, a 	Inclusive OR WREG with f     1          0001 00da ffff ffff Z, N            1, 2
           if(print)printf("IORWF %#04X,%d,%d\n",opc & 0x00FF,(opc & 0x0200)>>9,(opc & 0x0100)>>8);
           fraddr();
+          pic->rram=raddr;
           if(opc & 0x0200)
 	  {
 	    pic->ram[raddr]= pic->ram[P18_WREG] | pic->ram[raddr];
@@ -1032,6 +1043,7 @@ pic_decode_18(_pic * pic,int print)
           else 
 	  {
 	    pic->ram[P18_WREG]= pic->ram[P18_WREG] | pic->ram[raddr];
+            pic->lram=P18_WREG;
 	    if (pic->ram[P18_WREG] == 0) 
 	       *status|=0x04;
 	    else   
@@ -1046,6 +1058,7 @@ pic_decode_18(_pic * pic,int print)
 //ANDWF  f, d, a 	AND WREG with f              1          0001 01da ffff ffff Z, N            1,2
           if(print)printf("ANDWF %#04X,%d,%d\n",opc & 0x00FF,(opc & 0x0200)>>9,(opc & 0x0100)>>8);
           fraddr();
+          pic->rram=raddr;
           if(opc & 0x0200)
 	  {
 	    pic->ram[raddr]= pic->ram[P18_WREG] & pic->ram[raddr];
@@ -1062,6 +1075,7 @@ pic_decode_18(_pic * pic,int print)
           else 
 	  {
 	    pic->ram[P18_WREG]= pic->ram[P18_WREG] & pic->ram[raddr];
+            pic->lram=P18_WREG;
 	    if (pic->ram[P18_WREG] == 0) 
 	       *status|=0x04;
 	    else   
@@ -1076,6 +1090,7 @@ pic_decode_18(_pic * pic,int print)
 //XORWF  f, d, a 	Exclusive OR WREG with f     1          0001 10da ffff ffff Z, N
           if(print)printf("XORWF %#04X,%d,%d\n",opc & 0x00FF,(opc & 0x0200)>>9,(opc & 0x0100)>>8);
           fraddr();
+          pic->rram=raddr;
           if(opc & 0x0200)
 	  {
 	    pic->ram[raddr]= pic->ram[P18_WREG] ^ pic->ram[raddr];
@@ -1092,6 +1107,7 @@ pic_decode_18(_pic * pic,int print)
           else 
 	  {
 	    pic->ram[P18_WREG]= pic->ram[P18_WREG] ^ pic->ram[raddr];
+            pic->lram=P18_WREG;
 	    if (pic->ram[P18_WREG] == 0) 
 	       *status|=0x04;
 	    else   
@@ -1106,6 +1122,7 @@ pic_decode_18(_pic * pic,int print)
 //COMF   f, d, a 	Complement f                 1          0001 11da ffff ffff Z, N            1, 2
           if(print)printf("COMF %#06X,%d,%d\n",opc & 0x00FF,(opc & 0x0200)>>9,(opc & 0x0100)>>8);
 	  fraddr();
+          pic->rram=raddr;
           if(opc & 0x0200 )
 	  {
 	    pic->ram[raddr]=~pic->ram[raddr];
@@ -1122,6 +1139,7 @@ pic_decode_18(_pic * pic,int print)
           else     
 	  {
 	    pic->ram[P18_WREG]=~pic->ram[raddr];
+            pic->lram=P18_WREG;
 	    if (pic->ram[P18_WREG] == 0) 
 	       *status|=0x04;
 	    else   
@@ -1144,45 +1162,46 @@ pic_decode_18(_pic * pic,int print)
 //ADDWFC f, d, a 	Add WREG and Carry bit to f  1          0010 00da ffff ffff C, DC, Z, OV, N 1, 2
           if(print)printf("ADDWFC %#06X,%d,%d\n",opc & 0x00FF,(opc & 0x0200)>>9, (opc & 0x0100)>>8);
           fraddr(); 	
-	  if((0xF0&((0x0F&pic->ram[P18_WREG])+(0x0F&pic->ram[raddr])+(pic->ram[P18_STATUS]&0x01))) !=0)
-	    *status|=0x02;
+	  if((0xF0&((0x0F&(pic->ram[P18_WREG]+pic->ram[raddr]))+(pic->ram[P18_STATUS]&0x01))) !=0)
+	    *status|=0x02; //DC=1
 	  else   
-	    *status&=~0x02;
+	    *status&=~0x02; //DC=0
 
 	  temp=pic->ram[P18_WREG]+pic->ram[raddr]+(pic->ram[P18_STATUS]&0x01);
           
           pic->rram=raddr;
 	
 	  if ((0xFF00&temp)) 
-	    *status|=0x01;
-	  else   
-	    *status&=~0x01;
+	    *status|=0x01; //C=1
+	  else    
+	    *status&=~0x01;//C=0
 
 	  ctemp=(unsigned char)(0x00FF &temp);
           if(opc & 0x0200)
 	  {
-	    if ((pic->ram[raddr] & 0x80)!=(ctemp&0x80))  
-	       *status|=0x08;
+	    if (((pic->ram[raddr]+pic->ram[P18_WREG]) & 0x80)!=(ctemp&0x80))  
+	       *status|=0x08;//OV=1
 	    else   
-	       *status&=~0x08;
+	       *status&=~0x08;//OV=0
 	    pic->ram[raddr]=ctemp;
             pic->lram=raddr;
 	    if (pic->ram[raddr] == 0) 
-	       *status|=0x04;
+	       *status|=0x04; //Z=1
 	    else   
-	       *status&=~0x04;
+	       *status&=~0x04;//Z=0
 	    if (pic->ram[raddr] & 0x80) 
-	       *status|=0x10;
+	       *status|=0x10; //N=1
 	    else   
-	       *status&=~0x10;
+	       *status&=~0x10;//N=0
 	  }
           else     
 	  {
-	    if ((pic->ram[P18_WREG] & 0x80)!=(ctemp&0x80))  
+	    if (((pic->ram[raddr]+pic->ram[P18_WREG]) & 0x80)!=(ctemp&0x80))  
 	       *status|=0x08;
 	    else   
 	       *status&=~0x08;
 	    pic->ram[P18_WREG] = ctemp;
+            pic->lram=P18_WREG;
 	    if (pic->ram[P18_WREG] == 0) 
 	       *status|=0x04;
 	    else   
@@ -1237,6 +1256,7 @@ pic_decode_18(_pic * pic,int print)
 	    else   
 	       *status&=~0x08;
 	    pic->ram[P18_WREG] = ctemp;
+            pic->lram=P18_WREG;
 	    if (pic->ram[P18_WREG] == 0) 
 	       *status|=0x04;
 	    else   
@@ -1255,7 +1275,7 @@ pic_decode_18(_pic * pic,int print)
 	    *status|=0x02;
 	  else   
 	    *status&=~0x02;
-	  
+	  pic->rram=raddr;
           temp=pic->ram[raddr]+1;
 	
 	  if ((0xFF00&temp)) 
@@ -1289,6 +1309,7 @@ pic_decode_18(_pic * pic,int print)
 	       *status|=0x08;
 	    else   
 	       *status&=~0x08;
+            pic->lram=P18_WREG;
 	    pic->ram[P18_WREG]=ctemp;
 	    if (pic->ram[P18_WREG] == 0) 
 	       *status|=0x04;
@@ -1304,6 +1325,7 @@ pic_decode_18(_pic * pic,int print)
 //DECFSZ f, d, a 	Decrement f, Skip if 0       1 (2 or 3) 0010 11da ffff ffff None            1, 2, 3, 4
           if(print)printf("DECFSZ %#06X,%d,%d\n",opc & 0x00FF,(opc & 0x0200)>>9,(opc & 0x0100)>>8);
           fraddr();
+          pic->rram=raddr; 
           if(opc & 0x0200 )
 	  {
 	    pic->ram[raddr]--;
@@ -1317,6 +1339,7 @@ pic_decode_18(_pic * pic,int print)
           else     
 	  {
 	    pic->ram[P18_WREG]=pic->ram[raddr]-1;
+            pic->lram=P18_WREG;
 	    if (pic->ram[P18_WREG] == 0)
 	    {
 	      pic->jpc=pic->pc+2;
@@ -1336,6 +1359,7 @@ pic_decode_18(_pic * pic,int print)
 //RRCF   f, d, a 	Rotate Right f through Carry 1          0011 00da ffff ffff C, Z, N
           if(print)printf("RRCF %#06X,%d,%d\n",opc & 0x00FF,(opc & 0x0200)>>9,(opc & 0x0100)>>8);
           fraddr();
+           pic->rram=raddr;
 	  temp=(pic->ram[raddr]);
 	  if((*status&0x01) ==0x01)temp|=0x0100;
 	  if((temp&0x0001) ==0x01)
@@ -1361,12 +1385,14 @@ pic_decode_18(_pic * pic,int print)
           else     
 	  {
 	    pic->ram[P18_WREG]=0x00FF&temp;
+            pic->lram=P18_WREG;
           }
 	  break;
 	case 0x0400:
 //RLCF   f, d, a 	Rotate Left f through Carry  1          0011 01da ffff ffff C, Z, N
           if(print)printf("RLCF %#06X,%d,%d\n",opc & 0x00FF,(opc & 0x0200)>>9,(opc & 0x0100)>>8);
 	  fraddr();
+          pic->rram=raddr;
 	  temp=(pic->ram[raddr])<<1;
 	  if((*status&0x01) ==0x01)temp|=0x0001;
 	  if((temp&0x0100) ==0x0100)
@@ -1389,12 +1415,14 @@ pic_decode_18(_pic * pic,int print)
           else
 	  {
 	    pic->ram[P18_WREG]=0x00FF & temp;
+            pic->lram=P18_WREG;
           }
           break;     
         case 0x0800:
 //SWAPF  f, d, a 	Swap nibbles in f            1          0011 10da ffff ffff None            4
           if(print)printf("SWAPF %#06X,%d,%d\n",opc & 0x00FF,(opc & 0x0200)>>9,(opc & 0x0100)>>8);
 	  fraddr();
+          pic->rram=raddr;
           if(opc & 0x0200)
 	  {
 	    pic->ram[raddr]=
@@ -1406,13 +1434,14 @@ pic_decode_18(_pic * pic,int print)
 	  {
 	    pic->ram[P18_WREG]=((pic->ram[raddr]&0x0F)<<4)|
 	           ((pic->ram[raddr]&0xF0)>>4);
-
+            pic->lram=P18_WREG; 
           }
           break;  
         case 0x0C00:
 //INCFSZ f, d, a 	Increment f, Skip if 0       1 (2 or 3) 0011 11da ffff ffff None            4
           if(print)printf("INCFSZ %#06X,%d,%d\n",opc & 0x00FF,(opc & 0x0200)>>9,(opc & 0x0100)>>8);
           fraddr(); 
+          pic->rram=raddr;
 	  if(opc & 0x0200)
 	  {
 	    pic->ram[raddr]++;
@@ -1426,6 +1455,7 @@ pic_decode_18(_pic * pic,int print)
           else     
 	  {
 	    pic->ram[P18_WREG]=pic->ram[raddr]+1;
+            pic->lram=P18_WREG;
 	    if (pic->ram[P18_WREG] == 0)
 	    {
 	      pic->jpc=pic->pc+2;
@@ -1445,6 +1475,7 @@ pic_decode_18(_pic * pic,int print)
 //RRNCF  f, d, a	Rotate Right f (No Carry)    1          0100 00da ffff ffff Z, N
           if(print)printf("RRNCF %#06X,%d,%d\n",opc & 0x00FF,(opc & 0x0200)>>9,(opc & 0x0100)>>8);
           fraddr();
+          pic->rram=raddr;
 	  temp=(pic->ram[raddr]);
 	  if((pic->ram[raddr]&0x01) ==0x01)temp|=0x0100;
           
@@ -1468,12 +1499,14 @@ pic_decode_18(_pic * pic,int print)
           else     
 	  {
 	    pic->ram[P18_WREG]=0x00FF&temp;
+            pic->lram=P18_WREG;
           }
 	  break;
 	case 0x0400:
 //RLNCF  f, d, a 	Rotate Left f (No Carry)     1          0100 01da ffff ffff Z, N            1, 2
           if(print)printf("RLNCF %#06X,%d,%d\n",opc & 0x00FF,(opc & 0x0200)>>9,(opc & 0x0100)>>8);
 	  fraddr();
+          pic->rram=raddr;
 	  temp=(pic->ram[raddr])<<1;
 	  if((pic->ram[raddr]&0x80) ==0x80)temp|=0x0001;
 	    
@@ -1494,12 +1527,14 @@ pic_decode_18(_pic * pic,int print)
           else
 	  {
 	    pic->ram[P18_WREG]=0x00FF & temp;
+            pic->lram=P18_WREG;
           }
 	  break;
 	case 0x0800:
 //INFSNZ f, d, a 	Increment f, Skip if Not 0   1 (2 or 3) 0100 10da ffff ffff None            1, 2
           if(print)printf("INFSNZ %#06X,%d,%d\n",opc & 0x00FF,(opc & 0x0200)>>9,(opc & 0x0100)>>8);
           fraddr(); 
+          pic->rram=raddr; 
 	  if(opc & 0x0200)
 	  {
 	    pic->ram[raddr]++;
@@ -1524,6 +1559,7 @@ pic_decode_18(_pic * pic,int print)
 //DCFSNZ f, d, a 	Decrement f, Skip if Not 0   1 (2 or 3) 0100 11da ffff ffff None            1, 2
           if(print)printf("DCFSNZ %#06X,%d,%d\n",opc & 0x00FF,(opc & 0x0200)>>9,(opc & 0x0100)>>8);
           fraddr();
+          pic->rram=raddr;
           if(opc & 0x0200 )
 	  {
 	    pic->ram[raddr]--;
@@ -1581,6 +1617,7 @@ pic_decode_18(_pic * pic,int print)
 	    else   
 	       *status&=~0x10;
             pic->rram=raddr;
+            pic->lram=P18_WREG;
           }
           break;
 	case 0x0400:
@@ -1598,6 +1635,8 @@ pic_decode_18(_pic * pic,int print)
 	    *status&=~0x01;
 	  else   
 	    *status|=0x01;
+
+          pic->rram=raddr;
 
 	  ctemp=(unsigned char)(0x00FF &temp);
 
@@ -1631,6 +1670,7 @@ pic_decode_18(_pic * pic,int print)
 	       *status&=~0x08;
          */
 	    pic->ram[P18_WREG] = ctemp;
+            pic->lram=P18_WREG;
 	    if (pic->ram[P18_WREG] == 0) 
 	       *status|=0x04;
 	    else   
@@ -1641,7 +1681,7 @@ pic_decode_18(_pic * pic,int print)
 	       *status&=~0x10;
           }
           break;
-	case 0x0800:
+	case 0x0800: 
 //SUBWFB f, d, a 	Subtract WREG from f with b. 1          0101 10da ffff ffff C, DC, Z, OV, N 1, 2
           if(print)printf("SUBWFB %#06X,%d,%d\n",opc & 0x00FF,(opc & 0x0200)>>9, (opc & 0x0100)>>8);
 	  fraddr();	
@@ -1656,13 +1696,16 @@ pic_decode_18(_pic * pic,int print)
 	    *status&=~0x01;
 	  else   
 	    *status|=0x01;
+          
+          pic->rram=raddr;
 
 	  ctemp=(unsigned char)(0x00FF &temp);
 
           if(opc & 0x0200 )
 	  {
 	   *status&=~0x08;
-        /* incompleto
+        //FIXME  incompleto
+        /*
 	    if ((pic->ram[raddr] & 0x80)!=(ctemp&0x80))  
 	       *status|=0x08;
 	    else   
@@ -1682,13 +1725,15 @@ pic_decode_18(_pic * pic,int print)
           else      
 	  {
 	   *status&=~0x08;
-        /* incompleto
+        //FIXME  incompleto
+        /* 
 	    if ((pic->ram[P18_WREG] & 0x80)!=(ctemp&0x80))  
 	       *status|=0x08;
 	    else   
 	       *status&=~0x08;
          */
 	    pic->ram[P18_WREG] = ctemp;
+            pic->lram=P18_WREG;
 	    if (pic->ram[P18_WREG] == 0) 
 	       *status|=0x04;
 	    else   
@@ -1714,12 +1759,15 @@ pic_decode_18(_pic * pic,int print)
 	    *status&=~0x01;
 	  else   
 	    *status|=0x01;
+          
+          pic->rram=raddr;
 
 	  ctemp=(unsigned char)(0x00FF &temp);
           if(opc & 0x0200 )
 	  {
 	   *status&=~0x08;
-        /* incompleto
+        //FIXME  incompleto
+        /* 
 	    if ((pic->ram[raddr] & 0x80)!=(ctemp&0x80))  
 	       *status|=0x08;
 	    else   
@@ -1739,13 +1787,15 @@ pic_decode_18(_pic * pic,int print)
           else      
 	  {
 	   *status&=~0x08;
-        /* incompleto
+        //FIXME  incompleto
+         /*
 	    if ((pic->ram[P18_WREG] & 0x80)!=(ctemp&0x80))  
 	       *status|=0x08;
 	    else   
 	       *status&=~0x08;
          */
 	    pic->ram[P18_WREG] = ctemp;
+            pic->lram=P18_WREG;
 	    if (pic->ram[P18_WREG] == 0) 
 	       *status|=0x04;
 	    else   
@@ -1812,6 +1862,7 @@ pic_decode_18(_pic * pic,int print)
 //SETF   f, a    	Set f                        1          0110 100a ffff ffff None
           if(print)printf("SETF %#06X,%d \n",opc & 0x00FF, (opc & 0x0100)>>8);
           fraddr();
+          pic->rram=raddr;
           pic->lram=raddr;
           pic->ram[raddr]=0xFF;
           break; 
@@ -1819,6 +1870,7 @@ pic_decode_18(_pic * pic,int print)
 //CLRF   f, a    	Clear f                      1          0110 101a ffff ffff Z               2
           if(print)printf("CLRF %#06X,%d \n",opc & 0x00FF, (opc & 0x0100)>>8);
           fraddr();
+          pic->rram=raddr;
           pic->lram=raddr;
           pic->ram[raddr]=0;
 	  *status|=0x04;
@@ -1827,6 +1879,7 @@ pic_decode_18(_pic * pic,int print)
 //NEGF   f, a    	Negate f                     1          0110 110a ffff ffff C, DC, Z, OV, N 1, 2
           if(print)printf("NEGF %#06X,%d\n",opc & 0x00FF,(opc & 0x0100)>>8);
 	  fraddr();
+          pic->rram=raddr;
 	  if((0xF0&((0x0F&(~pic->ram[raddr]))+1)) !=0)
 	    *status|=0x02;
 	  else   
@@ -1862,6 +1915,7 @@ pic_decode_18(_pic * pic,int print)
 	  fraddr();
 	  pic->ram[raddr]=pic->ram[P18_WREG];
           pic->lram=raddr;
+          pic->rram=P18_WREG;
 	  break;
         default:
           //printf("unknown opcode!\n");
@@ -1869,9 +1923,10 @@ pic_decode_18(_pic * pic,int print)
       }
       break; 
     case 0x7000:
-//BTG    f, d, a 	Bit Toggle f                 1          0111 bbba ffff ffff None 1, 2
+//BTG    f, b, a 	Bit Toggle f                 1          0111 bbba ffff ffff None 1, 2
       if(print)printf("BTG %#06X,%d,%d\n",opc & 0x00FF,(opc & 0x0E00)>>9,(opc & 0x0100)>>8 );
       fraddr(); 
+      pic->rram=raddr;
       pic->ram[raddr]^=(0x01<<((opc & 0x0E00)>>9));
       pic->lram=raddr;
       break; 
@@ -1879,6 +1934,7 @@ pic_decode_18(_pic * pic,int print)
 //BSF    f, b, a 	Bit Set f                    1          1000 bbba ffff ffff None 1, 2
       if(print)printf("BSF %#06X,%d,%d\n",opc & 0x00FF,(opc & 0x0E00)>>9,(opc & 0x0100)>>8 );
       fraddr(); 
+      pic->rram=raddr;
       pic->ram[raddr]|=(0x01<<((opc & 0x0E00)>>9));
       pic->lram=raddr;
       break; 
@@ -1886,6 +1942,7 @@ pic_decode_18(_pic * pic,int print)
 //BCF    f, b, a 	Bit Clear f                  1          1001 bbba ffff ffff None 1, 2
       if(print)printf("BCF %#06X,%d,%d\n",opc & 0x00FF,(opc & 0x0E00)>>9,(opc & 0x0100)>>8 );
       fraddr(); 
+      pic->rram=raddr;
       pic->ram[raddr]&=~(0x01<<((opc & 0x0E00)>>9));
       pic->lram=raddr;
       break; 
@@ -2320,8 +2377,8 @@ pic_decode_18(_pic * pic,int print)
 
     pic->w=pic->ram[P18_WREG];
 
-  if((pic->rram != 0x8000)&&(print))printf("mem read  %#06X: %#06X\n",pic->rram,pic->ram[pic->rram]);
-  if((pic->lram != 0x8000)&&(print))printf("mem write %#06X: %#06X\n",pic->lram,pic->ram[pic->lram]);
+  if((print)&&(pic->rram != 0x8000))printf("mem read  %#06X (%s): %#06X\n",pic->rram,getFSRname_18(pic->rram),pic->ram[pic->rram]);
+  if((print)&&(pic->lram != 0x8000))printf("mem write %#06X (%s): %#06X\n",pic->lram,getFSRname_18(pic->lram),pic->ram[pic->lram]);
 /*
   if((pic->ram[P18_PCL]) != (pc_ant&0x00FF))
   {

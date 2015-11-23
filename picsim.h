@@ -230,6 +230,8 @@ int getprocbyname(char *str);
 int getfprocbyname(char *str);
 int getfprocbynumber(int proc);
 char * getnamebyproc(int proc,char *str);
+const char * getFSRname(unsigned int addr);
+const char * getFSRname_18(unsigned int addr);
 
 #include"p16fxxx_defs.h"
 
