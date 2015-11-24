@@ -23,8 +23,6 @@ all: all-lib picsim
 
 picsim: libpicsim.a picsim.c 
 	$(CC) $(FLAGS) picsim.c -o picsim  libpicsim.a 
-	$(CC) $(FLAGS) picsim_.c -o picsim_  libpicsim.a 
-	$(CC) $(FLAGS) picsim18.c -o picsim18  libpicsim.a 
 
 
 %.o: %.c  
@@ -83,7 +81,7 @@ uninstall:
 
 
 clean:  clean-lib
-	rm -f picsim picsim_ picsim18 libpicsim.a $(OBJS)
+	rm -f picsim  libpicsim.a $(OBJS)
 	rm -f examples/*_sdcc*/*.asm
 	rm -f share/examples/*_mikroc_pro*/*.asm
 	rm -f examples/*/*.adb

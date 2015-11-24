@@ -81,6 +81,7 @@ pic_decode_18(_pic * pic,int print)
   
   if(pic->sleep == 1)
   {
+    if(print)printf("sleep WDT=%i wdt=%f ms=%i\n",((pic->config[0] & 0x04) == 0x04 ),pic->twdt,pic->wdt); 
     return;
   }
   
@@ -676,15 +677,16 @@ pic_decode_18(_pic * pic,int print)
               
 	      pic->s2=1;
 
-              if(pic->intlv &0x01)
-              { 
-	        *intcon|=0x80;
-                pic->intlv&=~0x01;
-              }
-              else if(pic->intlv &0x02)
+            
+              if(pic->intlv &0x02)
               {
 	        *intcon|=0x40;
                 pic->intlv&=~0x02;
+              }
+              else  
+              { 
+	        *intcon|=0x80;
+                pic->intlv&=~0x01;
               }
 
               if(opc & 0x0001 )
@@ -2257,7 +2259,10 @@ pic_decode_18(_pic * pic,int print)
       pic->ram[afsr2+((char)pic->ram[P18_WREG])]=pic->ram[P18_PLUSW2];
       pic->lram=afsr2+((char)pic->ram[P18_WREG]);
       break;
-      
+  }   
+  //second pass with new lram    
+  switch(pic->lram)
+  {   
     case P18_STKPTR:
       if((pic->ram[P18_STKPTR] & 0x1F) >0)
       {
@@ -2320,45 +2325,76 @@ pic_decode_18(_pic * pic,int print)
   {
   switch(pic->rram)
   {
+    case P18_INDF0:
+      pic->rram=afsr0;  
+      break;  
     case P18_POSTINC0:
       pic->ram[P18_FSR0H]=((afsr0+1)&0xFF00)>>8;
       pic->ram[P18_FSR0L]=(afsr0+1)&0x00FF;
+      pic->rram=afsr0;
       break;
     case P18_POSTDEC0:
       pic->ram[P18_FSR0H]=((afsr0-1)&0xFF00)>>8;
       pic->ram[P18_FSR0L]=(afsr0-1)&0x00FF;
+      pic->rram=afsr0;
       break;
     case P18_PREINC0:
       pic->ram[P18_FSR0H]=((afsr0+1)&0xFF00)>>8;
       pic->ram[P18_FSR0L]=(afsr0+1)&0x00FF;
+      pic->rram=afsr0+1;
       break;
+    case P18_PLUSW0:
+      pic->rram=afsr0+((char)pic->ram[P18_WREG]);  
+      break;  
 
+    case P18_INDF1:
+      pic->rram=afsr1;  
+      break;   
     case P18_POSTINC1:
       pic->ram[P18_FSR1H]=((afsr1+1)&0xFF00)>>8;
       pic->ram[P18_FSR1L]=(afsr1+1)&0x00FF;
+      pic->rram=afsr1;
       break;
     case P18_POSTDEC1:
       pic->ram[P18_FSR1H]=((afsr1-1)&0xFF00)>>8;
       pic->ram[P18_FSR1L]=(afsr1-1)&0x00FF;
+      pic->rram=afsr1;
       break;
     case P18_PREINC1:
       pic->ram[P18_FSR1H]=((afsr1+1)&0xFF00)>>8;
       pic->ram[P18_FSR1L]=(afsr1+1)&0x00FF;
+      pic->rram=afsr1+1;
       break;
+    case P18_PLUSW1:
+      pic->rram=afsr1+((char)pic->ram[P18_WREG]);  
+      break;  
     
+    case P18_INDF2:
+      pic->rram=afsr2;  
+      break;   
     case P18_POSTINC2:
       pic->ram[P18_FSR2H]=((afsr2+1)&0xFF00)>>8;
       pic->ram[P18_FSR2L]=(afsr2+1)&0x00FF;
+      pic->rram=afsr2;
       break;
     case P18_POSTDEC2:
       pic->ram[P18_FSR2H]=((afsr2-1)&0xFF00)>>8;
       pic->ram[P18_FSR2L]=(afsr2-1)&0x00FF;
+      pic->rram=afsr2;
       break;
     case P18_PREINC2:
       pic->ram[P18_FSR2H]=((afsr2+1)&0xFF00)>>8;
       pic->ram[P18_FSR2L]=(afsr2+1)&0x00FF;
+      pic->rram=afsr2+1;
       break;
-      
+    case P18_PLUSW2:
+      pic->rram=afsr2+((char)pic->ram[P18_WREG]);  
+      break;  
+  }
+  
+  //second pass with new rram
+  switch(pic->rram)
+  {    
     case P18_TOSL:
        if((pic->ram[P18_STKPTR] & 0x1F) >0) 
        {
@@ -2377,8 +2413,8 @@ pic_decode_18(_pic * pic,int print)
 
     pic->w=pic->ram[P18_WREG];
 
-  if((print)&&(pic->rram != 0x8000))printf("mem read  %#06X (%s): %#06X\n",pic->rram,getFSRname_18(pic->rram),pic->ram[pic->rram]);
-  if((print)&&(pic->lram != 0x8000))printf("mem write %#06X (%s): %#06X\n",pic->lram,getFSRname_18(pic->lram),pic->ram[pic->lram]);
+  if((print)&&(pic->rram != 0x8000))printf("mem read  %#06X: %10s= %#06X\n",pic->rram,getFSRname_18(pic->rram),pic->ram[pic->rram]);
+  if((print)&&(pic->lram != 0x8000))printf("mem write %#06X: %10s= %#06X\n",pic->lram,getFSRname_18(pic->lram),pic->ram[pic->lram]);
 /*
   if((pic->ram[P18_PCL]) != (pc_ant&0x00FF))
   {

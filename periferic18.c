@@ -91,13 +91,15 @@ int interrupt18(_pic * pic,int print)
       //SSPIE
       if((pic->ram[P18_PIE1] & 0x08)&&(pic->ram[P18_PIR1] & 0x08)&&(pic->ram[P18_IPR1] & 0x08)) return 1;
       //CCP1IE CCP1IF
-      //if((pic->ram[P18_PIE1] & 0x04)&&(pic->ram[P18_PIR1] & 0x04)&&(pic->ram[P18_IPR1] & 0x04)) return 1;
+      if((pic->ram[P18_PIE1] & 0x04)&&(pic->ram[P18_PIR1] & 0x04)&&(pic->ram[P18_IPR1] & 0x04)) return 1;
       //TMR2IE TMR2IF
       if((pic->ram[P18_PIE1] & 0x02)&&(pic->ram[P18_PIR1] & 0x02)&&(pic->ram[P18_IPR1] & 0x02)) return 1;
       //TMR1IE TMR1IF
       if((pic->ram[P18_PIE1] & 0x01)&&(pic->ram[P18_PIR1] & 0x01)&&(pic->ram[P18_IPR1] & 0x01)) return 1;
       //TMR3IE TMR3IF
       if((pic->ram[P18_PIE2] & 0x02)&&(pic->ram[P18_PIR2] & 0x02)&&(pic->ram[P18_IPR2] & 0x02)) return 1;
+      //CCP2IE CCP2IF
+      if((pic->ram[P18_PIE2] & 0x01)&&(pic->ram[P18_PIR2] & 0x01)&&(pic->ram[P18_IPR2] & 0x01)) return 1;
       //INT1E INT1F
       if((pic->ram[P18_INTCON3] & 0x08)&&(pic->ram[P18_INTCON3] & 0x01)&&(pic->ram[P18_INTCON3] & 0x40)) return 1;
       //INT2E INT2F
@@ -122,11 +124,13 @@ int interrupt18(_pic * pic,int print)
       //SSPIE
       if((pic->ram[P18_PIE1] & 0x08)&&(pic->ram[P18_PIR1] & 0x08)&&(!(pic->ram[P18_IPR1] & 0x08))) return 2;
       //CCP1IE CCP1IF
-      //if((pic->ram[P18_PIE1] & 0x04)&&(pic->ram[P18_PIR1] & 0x04)&&(!(pic->ram[P18_IPR1] & 0x04))) return 2;
+      if((pic->ram[P18_PIE1] & 0x04)&&(pic->ram[P18_PIR1] & 0x04)&&(!(pic->ram[P18_IPR1] & 0x04))) return 2;
       //TMR2IE TMR2IF
       if((pic->ram[P18_PIE1] & 0x02)&&(pic->ram[P18_PIR1] & 0x02)&&(!(pic->ram[P18_IPR1] & 0x02))) return 2;
       //TMR1IE TMR1IF
       if((pic->ram[P18_PIE1] & 0x01)&&(pic->ram[P18_PIR1] & 0x01)&&(!(pic->ram[P18_IPR1] & 0x01))) return 2;
+      //CCP2IE CCP2IF      
+      if((pic->ram[P18_PIE2] & 0x01)&&(pic->ram[P18_PIR2] & 0x01)&&(!(pic->ram[P18_IPR2] & 0x01))) return 2;
       //TMR3IE TMR3IF
       if((pic->ram[P18_PIE2] & 0x02)&&(pic->ram[P18_PIR2] & 0x02)&&(!(pic->ram[P18_IPR2] & 0x02))) return 2;
       //INT1E INT1F
@@ -167,13 +171,15 @@ int interrupt18(_pic * pic,int print)
         //SSPIE
         if((pic->ram[P18_PIE1] & 0x08)&&(pic->ram[P18_PIR1] & 0x08)) return 1;
         //CCP1IE CCP1IF
-        //if((pic->ram[P18_PIE1] & 0x04)&&(pic->ram[P18_PIR1] & 0x04)) return 1;
+        if((pic->ram[P18_PIE1] & 0x04)&&(pic->ram[P18_PIR1] & 0x04)) return 1;
         //TMR2IE TMR2IF
         if((pic->ram[P18_PIE1] & 0x02)&&(pic->ram[P18_PIR1] & 0x02)) return 1;
         //TMR1IE TMR1IF
         if((pic->ram[P18_PIE1] & 0x01)&&(pic->ram[P18_PIR1] & 0x01)) return 1;
         //TMR3IE TMR3IF
         if((pic->ram[P18_PIE2] & 0x02)&&(pic->ram[P18_PIR2] & 0x02)) return 1;
+        //CCP2IE CCP2IF
+        if((pic->ram[P18_PIE2] & 0x01)&&(pic->ram[P18_PIR2] & 0x01)) return 1;
       }
     }
   }
@@ -910,6 +916,68 @@ if(pic->portbm)
        }
        pic->cp1=0;
      }
+ 
+   //CCP - only when TMR1 is ON
+   //CCP1 compare modes 
+     if((pic->CCPCOUNT >= 1)&&(pic->ccp[0] > 0)&&((pic->ram[P18_CCP1CON] & 0x0C) == 0x08)&&(!(pic->ram[P18_T3CON] & 0x40)))   
+     {
+       if((pic->ram[P18_TMR1H]==pic->ram[P18_CCPR1H])&&(pic->ram[P18_TMR1L]==pic->ram[P18_CCPR1L]))//match !!
+       {
+          pic->ram[P18_PIR1]|=0x04;//CCP1IF
+          switch(pic->ram[P18_CCP1CON] & 0x03)
+          {
+            case 0://set output
+              if(pic->pins[pic->ccp[0]-1].dir == PD_OUT)
+                pic->ram[pic->pins[(pic->ccp[0]-1)].port]|=0x01<<(pic->pins[(pic->ccp[0]-1)].pord);
+              break;
+            case 1://clear output
+              if(pic->pins[pic->ccp[0]-1].dir == PD_OUT)
+                pic->ram[pic->pins[(pic->ccp[0]-1)].port]&=~(0x01<<(pic->pins[(pic->ccp[0]-1)].pord));
+              break;
+            case 2://software interrupt
+              break;
+            case 3://trigger special event
+              pic->ram[P18_TMR1H]=0;
+              pic->ram[P18_TMR1L]=0;
+              break;
+          }
+       }
+     }
+//CCP2 compare modes 
+     if((pic->CCPCOUNT >= 2)&&(pic->ccp[1] > 0)&&((pic->ram[P18_CCP2CON] & 0x0C) == 0x08)&&(!(pic->ram[P18_T3CON] & 0x48)))
+     {
+       if((pic->ram[P18_TMR1H]==pic->ram[P18_CCPR2H])&&(pic->ram[P18_TMR1L]==pic->ram[P18_CCPR2L]))//match !!
+       {
+          pic->ram[P18_PIR2]|=0x01;//CCP2IF
+          switch(pic->ram[P18_CCP2CON] & 0x03)
+          {
+            case 0://set output
+              if(pic->pins[pic->ccp[1]-1].dir == PD_OUT)
+                pic->ram[pic->pins[(pic->ccp[1]-1)].port]|=0x01<<(pic->pins[(pic->ccp[1]-1)].pord);
+              break;
+            case 1://clear output
+              if(pic->pins[pic->ccp[1]-1].dir == PD_OUT)
+                pic->ram[pic->pins[(pic->ccp[1]-1)].port]&=~(0x01<<(pic->pins[(pic->ccp[1]-1)].pord));
+              break;
+            case 2://software interrupt
+              break;
+            case 3://trigger special event
+              pic->ram[P18_TMR1H]=0;
+              pic->ram[P18_TMR1L]=0;
+              if(pic->processor == P18F452)
+              {
+                if(pic->ram[P18_ADCON0] & 0x01)pic->ram[P18_ADCON0]|=0x04; //if ad on, enable one conversion
+              }
+              else
+              {
+                if(pic->ram[P18_ADCON0] & 0x01)pic->ram[P18_ADCON0]|=0x02; //if ad on, enable one conversion  
+              }
+              break;
+          }
+       }
+     }
+
+  
 
   } 
   
@@ -930,6 +998,69 @@ if(pic->portbm)
        pic->cp3=0;
      }
 
+   //CCP - only when TMR3 is ON
+   //CCP3 compare modes 
+     if((pic->CCPCOUNT >= 1)&&(pic->ccp[0] > 0)&&((pic->ram[P18_CCP1CON] & 0x0C) == 0x08)&&(pic->ram[P18_T3CON] & 0x40))   
+     {
+       if((pic->ram[P18_TMR3H]==pic->ram[P18_CCPR1H])&&(pic->ram[P18_TMR3L]==pic->ram[P18_CCPR1L]))//match !!
+       {
+          pic->ram[P18_PIR1]|=0x04;//CCP1IF
+          switch(pic->ram[P18_CCP1CON] & 0x03)
+          {
+            case 0://set output
+              if(pic->pins[pic->ccp[0]-1].dir == PD_OUT)
+                pic->ram[pic->pins[(pic->ccp[0]-1)].port]|=0x01<<(pic->pins[(pic->ccp[0]-1)].pord);
+              break;
+            case 1://clear output
+              if(pic->pins[pic->ccp[0]-1].dir == PD_OUT)
+                pic->ram[pic->pins[(pic->ccp[0]-1)].port]&=~(0x01<<(pic->pins[(pic->ccp[0]-1)].pord));
+              break;
+            case 2://software interrupt
+              break;
+            case 3://trigger special event
+              pic->ram[P18_TMR3H]=0;
+              pic->ram[P18_TMR3L]=0;
+              break;
+          }
+       }
+     }
+//CCP2 compare modes 
+     if((pic->CCPCOUNT >= 2)&&(pic->ccp[1] > 0)&&((pic->ram[P18_CCP2CON] & 0x0C) == 0x08)&&(pic->ram[P18_T3CON] & 0x48))
+     {
+       if((pic->ram[P18_TMR3H]==pic->ram[P18_CCPR2H])&&(pic->ram[P18_TMR3L]==pic->ram[P18_CCPR2L]))//match !!
+       {
+          pic->ram[P18_PIR2]|=0x01;//CCP2IF
+          switch(pic->ram[P18_CCP2CON] & 0x03)
+          {
+            case 0://set output
+              if(pic->pins[pic->ccp[1]-1].dir == PD_OUT)
+                pic->ram[pic->pins[(pic->ccp[1]-1)].port]|=0x01<<(pic->pins[(pic->ccp[1]-1)].pord);
+              break;
+            case 1://clear output
+              if(pic->pins[pic->ccp[1]-1].dir == PD_OUT)
+                pic->ram[pic->pins[(pic->ccp[1]-1)].port]&=~(0x01<<(pic->pins[(pic->ccp[1]-1)].pord));
+              break;
+            case 2://software interrupt
+              break;
+            case 3://trigger special event
+              pic->ram[P18_TMR3H]=0;
+              pic->ram[P18_TMR3L]=0;
+              if(pic->processor == P18F452)
+              {
+                if(pic->ram[P18_ADCON0] & 0x01)pic->ram[P18_ADCON0]|=0x04; //if ad on, enable one conversion
+              }
+              else
+              {
+                if(pic->ram[P18_ADCON0] & 0x01)pic->ram[P18_ADCON0]|=0x02; //if ad on, enable one conversion  
+              }
+              break;
+          }
+       }
+     }
+   
+     
+     
+     
   } 
 
   pic->t1cki_=pic->pins[pic->t1cki-1].value; 
@@ -1323,6 +1454,7 @@ unsigned short tris;
   pic->trisd=pic->ram[P18_TRISD];
   pic->trise=pic->ram[P18_TRISE];
 
+  
 //interrupt
 if(pic->s2 == 0)
 {
@@ -1354,6 +1486,7 @@ if(pic->s2 == 0)
      pic->ram[P18_STATUSS]=pic->ram[P18_STATUS];
      pic->ram[P18_BSRS]=pic->ram[P18_BSR];
 
+     
      if(iret ==  2)
      {
        pic->ram[P18_INTCON]&=~0x40;//GIEL

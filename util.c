@@ -128,6 +128,7 @@ int getfprocbynumber(int proc)
   return 0;
 }
 
+char FSRname[20];
 
 const char * getFSRname(unsigned int addr)
 {
@@ -203,7 +204,9 @@ const char * getFSRname(unsigned int addr)
     case 0x10F: return "P877_EEADRH";  
     case 0x18C: return "P877_EECON1";  
     case 0x18D: return "P877_EECON2";  
-    default:  return "_";
+    default:
+        sprintf(FSRname,"0x%03X",addr);
+        return FSRname;
    }
 
 }
@@ -372,6 +375,8 @@ const char * getFSRname_18(unsigned int addr)
     case 0xF00: return "WS";		
     case 0xF01: return "STATUSS";	
     case 0xF02: return "BSRS";	
-    default:  return "_";
+    default:
+        sprintf(FSRname,"0x%03X",addr);
+        return FSRname;
   }
 }

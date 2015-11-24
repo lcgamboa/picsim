@@ -53,6 +53,7 @@ pic_decode_16(_pic * pic,int print)
   
   if(pic->sleep == 1)
   {
+    if(print)printf("sleep WDT=%i wdt=%f ms=%i\n",((pic->config[0] & 0x04) == 0x04 ),pic->twdt,pic->wdt); 
     return;
   }
   
@@ -757,8 +758,8 @@ pic_decode_16(_pic * pic,int print)
     pic->pc=((pic->ram[bank|(PCLATH & 0x007F)]&0x1F)<<8)|pic->ram[bank|(PCL& 0x007F)];
   }
 
-  if((pic->rram != 0x8000)&&(print))printf("mem read  %#06X (%s): %#06X\n",pic->rram,getFSRname(pic->rram),pic->ram[pic->rram]);
-  if((pic->lram != 0x8000)&&(print))printf("mem write %#06X (%s): %#06X\n",pic->lram,getFSRname(pic->lram),pic->ram[pic->lram]);
+  if((pic->rram != 0x8000)&&(print))printf("mem read  %#06X: %10s= %#06X\n",pic->rram,getFSRname(pic->rram),pic->ram[pic->rram]);
+  if((pic->lram != 0x8000)&&(print))printf("mem write %#06X: %10s= %#06X\n",pic->lram,getFSRname(pic->lram),pic->ram[pic->lram]);
   
 
 }
