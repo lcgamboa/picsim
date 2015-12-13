@@ -120,6 +120,7 @@ pic->cp3=0;
 pic->t2pr=0;
 
 pic->adcstep=0;
+pic->adcon1=0xFF;
 
 pic->twdt=0;
 
@@ -137,7 +138,7 @@ pic->trisc=129;
 pic->trisd=129;
 pic->trise=129;
 
-pic->adcon1=64;
+
 
 pic->ssp_sck=0;
 pic->ssp_scka=0;
@@ -432,10 +433,10 @@ if((pic->processor == P16F877)||(pic->processor == P16F877A)||(pic->processor ==
 //ADC
 
 
-  if((pic->ADCCOUNT > 0)&&((pic->ram[ADCON0] & 0x01) == 0x01) )  //ADON
+  if(pic->ADCCOUNT > 0 )  
   {
 
-  if((pic->ram[ADCON0] & 0x04 ) == 0x04) //GO/DONE
+  if((pic->ram[ADCON0] & 0x05 ) == 0x05) // ADON amd GO/DONE
   {
    pic->adcstep++;
    if(pic->adcstep > 10 )
@@ -484,10 +485,11 @@ if((pic->processor == P16F877)||(pic->processor == P16F877A)||(pic->processor ==
      // printf("AD0=%02X AD1=%02X\n",pic->ram[ADCON0],pic->ram[ADCON1]);
      // printf("ADC conversion channel (%i)=%#04X (%08.3f)\n",chn,dval,val); 
     }
+  }  
+  else
+  {
+   pic->adcstep=0;
   }
-   
-
- 
     
   if((pic->ram[ADCON1]&0x0F) != pic->adcon1)
   {
@@ -900,12 +902,6 @@ if((pic->processor == P16F877)||(pic->processor == P16F877A)||(pic->processor ==
     pic->adcon1=pic->ram[ADCON1]&0x0F;	
    }
   
-  
-  }
-  else
-  {
-   pic->adcon1=64;
-   pic->adcstep=0;
   };
 
 }//endif P16F877 P16F877A P16F777
@@ -1502,7 +1498,7 @@ int temp;
 //               if((pic->ram[RCSTA] & 0x80)==0x80)break; 
 //	    case 17:
 //              if((pic->ram[RCSTA] & 0x80)==0x80)break;
-	   if(pic->pins[i].ptype > 2)break;	 
+//	   if(pic->pins[i].ptype > 2)break;	 
               val=0x01<<(pic->pins[i].pord);
               port=pic->pins[i].port;
               pic->pins[i].value= ((pic->ram[port] & val) != 0);
@@ -1512,7 +1508,10 @@ int temp;
               val=0x01<<(pic->pins[i].pord);
               port=pic->pins[i].port;
               pic->pins[i].lvalue= ((pic->ram[port] & val) != 0); //latch
-              pic_wr_pin(pic,i+1,pic->pins[i].value);
+  	      if(pic->pins[i].ptype > 2)
+                pic_wr_pin(pic,i+1, 0);
+              else
+                pic_wr_pin(pic,i+1,pic->pins[i].value);
 	break;
 	default:
 	break;

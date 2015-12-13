@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2008-2015  Luis Claudio Gambôa Lopes
+   Copyright (c) : 2008-2015  Luis Claudio GambÃ´a Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -202,6 +202,7 @@ pic->cp3=0;
 pic->t2pr=0;
 
 pic->adcstep=0;
+pic->adcon1=0xFF;
 
 pic->twdt=0;
 
@@ -219,7 +220,6 @@ pic->trisc=129;
 pic->trisd=129;
 pic->trise=129;
 
-pic->adcon1=64;
 
 pic->ssp_sck=0;
 pic->ssp_scka=0;
@@ -513,10 +513,10 @@ short dval;
 if(pic->processor == P18F452)
 {
 
-  if((pic->ADCCOUNT > 0)&&((pic->ram[P18_ADCON0] & 0x01) == 0x01) )  //ADON
+  if(pic->ADCCOUNT > 0 )  
   {
 
-  if((pic->ram[P18_ADCON0] & 0x04 ) == 0x04) //GO/DONE
+  if((pic->ram[P18_ADCON0] & 0x05 ) == 0x05) // ADON and GO/DONE
   {
    pic->adcstep++;
    if(pic->adcstep > 10 )
@@ -554,7 +554,10 @@ if(pic->processor == P18F452)
       pic->adcstep=0;
     }
   }
-   
+  else
+  {
+   pic->adcstep=0;
+  }
 
  
     
@@ -718,21 +721,15 @@ if(pic->processor == P18F452)
     pic->adcon1=pic->ram[P18_ADCON1]&0x0F;	
    }
   
-  
-  }
-  else
-  {
-   pic->adcon1=64;
-   pic->adcstep=0;
   };
 }
 else //PIC18F4620 PIC18F4520 and PIC18F4550
 {
 
-  if((pic->ADCCOUNT > 0)&&((pic->ram[P18_ADCON0] & 0x01) == 0x01) )  //ADON
+  if(pic->ADCCOUNT > 0 )  
   {
 
-  if((pic->ram[P18_ADCON0] & 0x02 ) == 0x02) //GO/DONE
+  if((pic->ram[P18_ADCON0] & 0x03 ) == 0x03) //ADON and GO/DONE
   {
    pic->adcstep++;
    if(pic->adcstep > 10 )
@@ -750,13 +747,13 @@ else //PIC18F4620 PIC18F4520 and PIC18F4550
 
       dval=((1023*val)/5.0);
    
-      if((pic->ram[P18_ADCON2]&0x80) == 0x80)//ADFM
-      { 
+      if(pic->ram[P18_ADCON2]&0x80)//ADFM
+      { //Rigth
         pic->ram[P18_ADRESH]=(dval & 0xFF00)>>8;   	
         pic->ram[P18_ADRESL]=(dval & 0x00FF);   	
       }
       else
-      {
+      { //left
         dval= dval <<6;	
         pic->ram[P18_ADRESH]=(dval & 0xFF00)>>8;   	
         pic->ram[P18_ADRESL]=(dval & 0x00FF);   	
@@ -769,8 +766,11 @@ else //PIC18F4620 PIC18F4520 and PIC18F4550
 
       pic->adcstep=0;
     }
+  }  
+  else
+  {
+   pic->adcstep=0;
   }
-   
 
  
     
@@ -793,12 +793,7 @@ else //PIC18F4620 PIC18F4520 and PIC18F4550
     pic->adcon1=pic->ram[P18_ADCON1]&0x0F;	
    }
   
-  
-  }
-  else
-  {
-   pic->adcon1=64;
-   pic->adcstep=0;
+ 
   };
 
 }
@@ -1395,7 +1390,7 @@ unsigned short tris;
 //               if((pic->ram[P18_RCSTA] & 0x80)==0x80)break; 
 //	    case 17:
 //              if((pic->ram[P18_RCSTA] & 0x80)==0x80)break;
-	   if(pic->pins[i].ptype > 2)break;	 
+//	   if(pic->pins[i].ptype > 2)break;	 
               val=0x01<<(pic->pins[i].pord);
               port=pic->pins[i].port;
               pic->pins[i].value= ((pic->ram[port] & val) != 0);
@@ -1405,7 +1400,10 @@ unsigned short tris;
               val=0x01<<(pic->pins[i].pord);
               port=pic->pins[i].port;
               pic->pins[i].lvalue= ((pic->ram[port] & val) != 0); //latch
-              pic18_wr_pin(pic,i+1,pic->pins[i].value);
+  	      if(pic->pins[i].ptype > 2)	 
+                pic18_wr_pin(pic,i+1, 0);
+              else  
+                pic18_wr_pin(pic,i+1,pic->pins[i].value);
 	break;
 	default:
 	break;
