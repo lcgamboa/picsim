@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2008-2015  Luis Claudio Gambôa Lopes
+   Copyright (c) : 2008-2015  Luis Claudio GambÃ´a Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@
 int getprocbyname(char *str)
 {
 
+  if(!strcmp("PIC16F84A" ,str))return P16F84A;
   if(!strcmp("PIC16F628" ,str))return P16F628;
   if(!strcmp("PIC16F628A",str))return P16F628A;	
   if(!strcmp("PIC16F648A",str))return P16F648A;	
@@ -40,6 +41,7 @@ int getprocbyname(char *str)
   if(!strcmp("PIC16F777" ,str))return P16F777;
 
   if(!strcmp("PIC18F452" ,str))return P18F452;
+  if(!strcmp("PIC18F4520" ,str))return P18F4520;
   if(!strcmp("PIC18F4620" ,str))return P18F4620;
   if(!strcmp("PIC18F4550" ,str))return P18F4550;
 
@@ -50,6 +52,9 @@ char * getnamebyproc(int proc,char *str)
 {
   switch(proc)
   {
+    case P16F84A:
+        strcpy(str,"PIC16F84A");
+        break;
     case P16F628:
         strcpy(str,"PIC16F628");
         break;
@@ -76,6 +81,10 @@ char * getnamebyproc(int proc,char *str)
         strcpy(str,"PIC18F452");
         break;
     
+    case P18F4520:
+        strcpy(str,"PIC18F4520");
+        break;
+    
     case P18F4620:
         strcpy(str,"PIC18F4620");
         break;
@@ -94,6 +103,7 @@ char * getnamebyproc(int proc,char *str)
 int getfprocbyname(char *str)
 {
 
+  if(!strcmp("PIC16F84A" ,str))return P16;
   if(!strcmp("PIC16F628" ,str))return P16;
   if(!strcmp("PIC16F628A",str))return P16;	
   if(!strcmp("PIC16F648A",str))return P16;	
@@ -103,6 +113,7 @@ int getfprocbyname(char *str)
   if(!strcmp("PIC16F777" ,str))return P16;
 
   if(!strcmp("PIC18F452" ,str))return P18;
+  if(!strcmp("PIC18F4520" ,str))return P18;
   if(!strcmp("PIC18F4620" ,str))return P18;
   if(!strcmp("PIC18F4550" ,str))return P18;
 
@@ -113,6 +124,7 @@ int getfprocbyname(char *str)
 int getfprocbynumber(int proc)
 {
 
+  if(P16F84A == proc)return P16;
   if(P16F628 == proc)return P16;
   if(P16F628A == proc)return P16;	
   if(P16F648A == proc)return P16;	
@@ -122,6 +134,7 @@ int getfprocbynumber(int proc)
   if(P16F777 == proc)return P16;
 
   if(P18F452 == proc)return P18;
+  if(P18F4520 == proc)return P18;
   if(P18F4620 == proc)return P18;
   if(P18F4550 == proc)return P18;
 

@@ -260,9 +260,9 @@ main(int argc,char** argv)
    {
      printf("use: %s PICXXFXXX file.hex\n",argv[0]);
      printf("supported processors PIC16:\n");
-     printf("         PIC16F628 PIC16F628A PIC16F877 PIC16F877A PIC16F648A PIC16F777\n");     
+     printf("         PIC16F84A PIC16F628 PIC16F628A PIC16F877 PIC16F877A PIC16F648A PIC16F777\n");     
      printf("supported processors PIC18:\n");
-     printf("         PIC18F452 PIC18F4620 PIC18F4550\n");
+     printf("         PIC18F452 PIC18F4520 PIC18F4620 PIC18F4550\n");
 
 #ifdef _WIN_
     system("PAUSE");

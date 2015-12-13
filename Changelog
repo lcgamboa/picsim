@@ -1,5 +1,5 @@
 
-
+12/13/2015 PIC16F84A and PIC18F4520 support
 11/24/2015 PIC18F interrupt bug fix
 11/23/2015 PIC18F CCP1 compare modes implemented  
 11/05/2015 STACK support of PIC18F reimplemented 

@@ -726,7 +726,7 @@ if(pic->processor == P18F452)
    pic->adcstep=0;
   };
 }
-else //PIC18F4620 and PIC18F4550
+else //PIC18F4620 PIC18F4520 and PIC18F4550
 {
 
   if((pic->ADCCOUNT > 0)&&((pic->ram[P18_ADCON0] & 0x01) == 0x01) )  //ADON

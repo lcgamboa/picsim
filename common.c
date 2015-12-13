@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2008-2015  Luis Claudio Gamb�a Lopes
+   Copyright (c) : 2008-2015  Luis Claudio Gambôa Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -67,11 +67,23 @@ pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, fl
    case P16: 
      switch(processor)
      {
+       case P16F84A:
+         pic->ROMSIZE=1024;          //size in WORDS
+         pic->EEPROMSIZE=64;
+         pic->RAMSIZE=256;           //two banks
+         pic->PINCOUNT=18;
+         pic->IDSIZE=8;
+         pic->CONFIGSIZE=1;
+         pic->STACKSIZE=8;
+         pic->CCPCOUNT=1;
+         pic->ADCCOUNT=0;
+         pic->WDT_MS=18;
+       break;  
        case P16F628:
        case P16F628A:
          pic->ROMSIZE=2048;          //size in WORDS
          pic->EEPROMSIZE=128;
-         pic->RAMSIZE=512;
+         pic->RAMSIZE=512;           //four banks
          pic->PINCOUNT=18;
          pic->IDSIZE=8;
          pic->CONFIGSIZE=1;
@@ -140,6 +152,19 @@ pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, fl
            pic->ADCCOUNT=8;
            pic->WDT_MS=18;
            break;
+         case P18F4520:
+           pic->ROMSIZE=16384;
+           pic->EEPROMSIZE=256;
+         //  pic->RAMSIZE=1536;
+           pic->RAMSIZE=4096;//for linear bank 15
+           pic->STACKSIZE=31;
+           pic->PINCOUNT=40;
+           pic->IDSIZE=4;
+           pic->CONFIGSIZE=7;
+           pic->CCPCOUNT=2;
+           pic->ADCCOUNT=13;
+           pic->WDT_MS=4;
+           break;
          case P18F4620:
            pic->ROMSIZE=32768;
            pic->EEPROMSIZE=1024;
@@ -187,7 +212,7 @@ pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, fl
    pic->adc=calloc(pic->ADCCOUNT,sizeof(char));
    pic->usart=calloc(2,sizeof(char));
 
-   /*zerar memória*/
+   /*zerar memÃ³ria*/
    switch(family)
    {
      case P16:
@@ -283,6 +308,7 @@ pic_reset(_pic * pic, int flags)
    case P16: 
    switch(pic->processor)
    {
+     case P16F84A:
      case P16F628:
      case P16F628A:
      case P16F648A:
@@ -485,8 +511,11 @@ pic_reset(_pic * pic, int flags)
      {
        pic->ram[(0x0000)|(STATUS & 0x007F)]=0x18;
        pic->ram[(0x0080)|(STATUS & 0x007F)]=0x18;
-       pic->ram[(0x0100)|(STATUS & 0x007F)]=0x18;
-       pic->ram[(0x0180)|(STATUS & 0x007F)]=0x18;
+       if(pic->processor != P16F84A)
+       {
+         pic->ram[(0x0100)|(STATUS & 0x007F)]=0x18;
+         pic->ram[(0x0180)|(STATUS & 0x007F)]=0x18;
+       } 
      }	
 
      pic->ram[TRISA]=0xFF; 
@@ -573,6 +602,7 @@ pic_reset(_pic * pic, int flags)
        pic->int2=35;
 
        break;
+     case P18F4520:
      case P18F4620:
        pic->pins[ 0].port=P18_PORTE;pic->pins[ 0].pord=3;
        pic->pins[ 1].port=P18_PORTA;pic->pins[ 1].pord=0;

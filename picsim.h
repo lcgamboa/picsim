@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2008-2015  Luis Claudio Gambôa Lopes
+   Copyright (c) : 2008-2015  Luis Claudio GambÃ´a Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -64,6 +64,7 @@ unsigned char ovalue;    //defaut open pin value
 #define P18 2
 
 //P16 processors
+#define P16F84A     0x0560
 #define P16F628     0x07C0
 #define P16F877     0x09A0
 #define P16F628A    0x1060	
@@ -74,6 +75,7 @@ unsigned char ovalue;    //defaut open pin value
 
 //P18 processors
 #define P18F452     0x0420
+#define P18F4520    0x1080
 #define P18F4620    0x0C00
 #define P18F4550    0x1200
 

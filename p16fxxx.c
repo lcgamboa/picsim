@@ -86,18 +86,22 @@ pic_decode_16(_pic * pic,int print)
   temp = pic->pc&0x00FF;
   pic->ram[(0x0000)|(PCL & 0x007F)]=temp;
   pic->ram[(0x0080)|(PCL & 0x007F)]=temp;
-  pic->ram[(0x0100)|(PCL & 0x007F)]=temp;
-  pic->ram[(0x0180)|(PCL & 0x007F)]=temp;
-  
+  if(pic->processor != P16F84A)
+  {
+    pic->ram[(0x0100)|(PCL & 0x007F)]=temp;
+    pic->ram[(0x0180)|(PCL & 0x007F)]=temp;
+  }  
   //pc_ant = temp;
   
 
   temp=pic->ram[afsr];
   pic->ram[(0x0000)|(INDF & 0x007F)]=temp;
   pic->ram[(0x0080)|(INDF & 0x007F)]=temp;
-  pic->ram[(0x0100)|(INDF & 0x007F)]=temp;
-  pic->ram[(0x0180)|(INDF & 0x007F)]=temp;
-
+  if(pic->processor != P16F84A)
+  {
+    pic->ram[(0x0100)|(INDF & 0x007F)]=temp;
+    pic->ram[(0x0180)|(INDF & 0x007F)]=temp;
+  }
 
   switch(opc & 0x3000)
   {
@@ -670,7 +674,8 @@ pic_decode_16(_pic * pic,int print)
   /*faz espelhamento de memória*/
   
 
-
+  if(pic->processor != P16F84A)
+  {
   temp = pic->ram[bank|(STATUS & 0x007F)];
   pic->ram[(0x0000)|(STATUS & 0x007F)]=temp;
   pic->ram[(0x0080)|(STATUS & 0x007F)]=temp;
@@ -751,6 +756,51 @@ pic_decode_16(_pic * pic,int print)
     pic->ram[0x0170|(0x007F&pic->lram)]=temp;
     pic->ram[0x01F0|(0x007F&pic->lram)]=temp;
   }
+  }
+  else  //PIC16F84A
+  {
+  temp = pic->ram[bank|(STATUS & 0x007F)];
+  pic->ram[(0x0000)|(STATUS & 0x007F)]=temp;
+  pic->ram[(0x0080)|(STATUS & 0x007F)]=temp;
+
+  temp = pic->ram[bank|(INTCON & 0x007F)];
+  pic->ram[(0x0000)|(INTCON & 0x007F)]=temp;
+  pic->ram[(0x0080)|(INTCON & 0x007F)]=temp;
+ 
+  temp = pic->ram[bank|(PCLATH & 0x007F)];
+  pic->ram[(0x0000)|(PCLATH & 0x007F)]=temp;
+  pic->ram[(0x0080)|(PCLATH & 0x007F)]=temp;
+  
+  temp = pic->ram[bank|(PCL & 0x007F)];
+  pic->ram[(0x0000)|(PCL & 0x007F)]=temp;
+  pic->ram[(0x0080)|(PCL & 0x007F)]=temp;
+ 
+  temp = pic->ram[bank|(FSR & 0x007F)];
+  pic->ram[(0x0000)|(FSR & 0x007F)]=temp;
+  pic->ram[(0x0080)|(FSR & 0x007F)]=temp;
+
+  if((bank|(PCL & 0x007F)) == pic->rram)
+  {
+     temp=(pic->pc&0x1F00)>>8; 
+     pic->ram[0x0000|(PCLATH & 0x007F)]=temp;
+     pic->ram[0x0080|(PCLATH & 0x007F)]=temp;
+  }
+
+/*
+  
+  if(0x0070 != (bank|0x70)) memcpy(&pic->ram[0x0070],&pic->ram[bank|0x70],16);
+  if(0x00F0 != (bank|0x70)) memcpy(&pic->ram[0x00F0],&pic->ram[bank|0x70],16);
+  //printf("\n"); 
+*/  
+  if((pic->lram & 0x007F) >= 0x0070)
+  {
+    temp=pic->ram[pic->lram];
+    pic->ram[0x0070|(0x007F&pic->lram)]=temp;
+    pic->ram[0x00F0|(0x007F&pic->lram)]=temp;
+  }
+
+  }//final espelhamento 
+
  
   //if((pic->ram[bank|(PCL & 0x007F)]) != (pc_ant&0x00FF))
   if((bank|(PCL & 0x007F)) == pic->lram)

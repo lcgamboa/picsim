@@ -50,7 +50,8 @@ pic_wr_pin(_pic * pic,unsigned char pin,unsigned char value)
                 pic->ram[pic->pins[(pin-1)].port]|=val;
               else	
                 pic->ram[pic->pins[(pin-1)].port]&=~val;
-	      pic->ram[pic->pins[(pin-1)].port | 0x100]=pic->ram[pic->pins[(pin-1)].port]; //espelhamento bank2 = bank0
+              if(pic->processor != P16F84A)
+	        pic->ram[pic->pins[(pin-1)].port | 0x100]=pic->ram[pic->pins[(pin-1)].port]; //espelhamento bank2 = bank0
 	   }
 
      return 1;
@@ -176,6 +177,10 @@ short dval;
    pic->ram[TRISB]|=0xC0;
  } 
 
+
+
+if((pic->processor == P16F877)||(pic->processor == P16F877A)||(pic->processor == P16F777))
+{
 //MSSP
 
  if((pic->ram[SSPCON] & 0x20) ==0x20) //SSPEN
@@ -903,6 +908,9 @@ short dval;
    pic->adcstep=0;
   };
 
+}//endif P16F877 P16F877A P16F777
+
+
 //INT
  
    if((pic->pins[pic->int0-1].dir == PD_IN)&&(pic->pins[pic->int0-1].value  != pic->int0v))
@@ -940,8 +948,11 @@ if(pic->portbm)
 {
   pic->ram[(0x0000)|(INTCON & 0x007F)]|=0x01;//RBIF
   pic->ram[(0x0080)|(INTCON & 0x007F)]|=0x01;
-  pic->ram[(0x0100)|(INTCON & 0x007F)]|=0x01;
-  pic->ram[(0x0180)|(INTCON & 0x007F)]|=0x01;
+  if(pic->processor != P16F84A)
+  {
+    pic->ram[(0x0100)|(INTCON & 0x007F)]|=0x01;
+    pic->ram[(0x0180)|(INTCON & 0x007F)]|=0x01;
+  }
 }  
 
 
@@ -965,8 +976,11 @@ if(pic->portbm)
         {
              pic->ram[(0x0000)|(INTCON & 0x007F)]|=0x04;//T0IF
              pic->ram[(0x0080)|(INTCON & 0x007F)]|=0x04;
-             pic->ram[(0x0100)|(INTCON & 0x007F)]|=0x04;
-             pic->ram[(0x0180)|(INTCON & 0x007F)]|=0x04;
+             if(pic->processor != P16F84A)
+             { 
+               pic->ram[(0x0100)|(INTCON & 0x007F)]|=0x04;
+               pic->ram[(0x0180)|(INTCON & 0x007F)]|=0x04;
+             }; 
         }
         pic->ram[TMR0]++;
         pic->cp0=0;
@@ -979,8 +993,11 @@ if(pic->portbm)
           {
              pic->ram[(0x0000)|(INTCON & 0x007F)]|=0x04;//T0IF
              pic->ram[(0x0080)|(INTCON & 0x007F)]|=0x04;
-             pic->ram[(0x0100)|(INTCON & 0x007F)]|=0x04;
-             pic->ram[(0x0180)|(INTCON & 0x007F)]|=0x04;
+             if(pic->processor != P16F84A)
+             { 
+               pic->ram[(0x0100)|(INTCON & 0x007F)]|=0x04;
+               pic->ram[(0x0180)|(INTCON & 0x007F)]|=0x04;
+             }
           }
           pic->ram[TMR0]++;
           pic->cp0=0;
@@ -989,6 +1006,9 @@ if(pic->portbm)
   } 
   pic->t0cki_=pic->pins[pic->t0cki-1].value;
 
+
+if(pic->processor != P16F84A)
+{
 //TMR1
 
   if(((pic->ram[T1CON] & 0x03) == 0x01 )||  //TMRICS=FOSC/4 TMREN=1
@@ -1183,6 +1203,7 @@ if(pic->portbm)
   } 
 
 
+} //end if P16F84A
 
 //EEPROM
 
@@ -1231,7 +1252,7 @@ if((pic->processor == P16F628)||(pic->processor == P16F628A))
     }
   } 
 }
-else //P16F877 P16F877A
+else if((pic->processor == P16F877)||(pic->processor == P16F877A))
 {
 
   if((pic->ram[P877_EECON1] & 0x04) == 0x04 )
@@ -1391,6 +1412,7 @@ else //P16F877 P16F877A
    };
 */
 
+if(pic->processor != P16F84A)
    serial(pic,print);
 };
 
