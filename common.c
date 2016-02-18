@@ -143,7 +143,7 @@ pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, fl
          pic->WDT_MS=1;
        break;       
        default:
-         printf("unknow processor!\n");
+         printf("unknown processor! 0x%04X\n",processor);
          return 0;
        break;
       }
@@ -205,12 +205,12 @@ pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, fl
            pic->WDT_MS=4;
            break;
          default:
-           printf("unknow processor!\n");
+           printf("unknown processor 0x%04X!\n",processor);
            return 0;
         }
         break;
      default:
-       printf("unknow family!\n");
+       printf("unknown family %d of processor 0X%04X!\n",family,processor);
        return 0;
      }
 

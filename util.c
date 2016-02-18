@@ -29,8 +29,7 @@
 #include "picsim.h"
 
 int getprocbyname(char *str)
-{
-  str="";  
+{  
 
   if(!strcmp("PIC16F84A" ,str))return P16F84A;
   if(!strcmp("PIC16F628" ,str))return P16F628;
