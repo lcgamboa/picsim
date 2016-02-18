@@ -130,6 +130,18 @@ pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, fl
          pic->ADCCOUNT=14;
          pic->WDT_MS=18;
        break;
+       case P16F1619:
+         pic->ROMSIZE=8192;
+         pic->EEPROMSIZE=128;
+         pic->RAMSIZE=1024;// 32 banks !!!!
+         pic->PINCOUNT=20;
+         pic->IDSIZE=8;
+         pic->CONFIGSIZE=3;
+         pic->STACKSIZE=16;
+         pic->CCPCOUNT=2;
+         pic->ADCCOUNT=12;
+         pic->WDT_MS=1;
+       break;       
        default:
          printf("unknow processor!\n");
          return 0;
@@ -179,6 +191,7 @@ pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, fl
            pic->WDT_MS=4;
            break;
          case P18F4550:
+         case P18F45K50:             
            pic->ROMSIZE=16384;
            pic->EEPROMSIZE=256;
          //  pic->RAMSIZE=2048;
@@ -330,7 +343,7 @@ pic_reset(_pic * pic, int flags)
        pic->pins[14].port=PORTA;pic->pins[14].pord=6;
        pic->pins[15].port=PORTA;pic->pins[15].pord=7;
        pic->pins[16].port=PORTA;pic->pins[16].pord=0;
-       pic->pins[17].port=PORTA;pic->pins[17].pord=1;
+       pic->pins[17].port=PORTA;pic->pins[17].pord=1; 
 
        pic->ccp[0]= 9;
       
@@ -503,6 +516,52 @@ pic_reset(_pic * pic, int flags)
        pic->int1=0;
        pic->int2=0;
 
+       break;
+     case P16F1619:
+       pic->pins[ 0].port=0    ;pic->pins[ 0].pord=-1;
+       pic->pins[ 1].port=PORTA;pic->pins[ 1].pord=5;
+       pic->pins[ 2].port=PORTA;pic->pins[ 2].pord=4;
+       pic->pins[ 3].port=PORTA;pic->pins[ 3].pord=3;
+       pic->pins[ 4].port=PORTC;pic->pins[ 4].pord=5;
+       pic->pins[ 5].port=PORTC;pic->pins[ 5].pord=4;
+       pic->pins[ 6].port=PORTC;pic->pins[ 6].pord=3;
+       pic->pins[ 7].port=PORTC;pic->pins[ 7].pord=6;
+       pic->pins[ 8].port=PORTC;pic->pins[ 8].pord=7;
+       pic->pins[ 9].port=PORTB;pic->pins[ 9].pord=7;
+       pic->pins[10].port=PORTB;pic->pins[10].pord=6;
+       pic->pins[11].port=PORTB;pic->pins[11].pord=5;
+       pic->pins[12].port=PORTB;pic->pins[12].pord=4;
+       pic->pins[13].port=PORTC;pic->pins[13].pord=2;
+       pic->pins[14].port=PORTC;pic->pins[14].pord=1;
+       pic->pins[15].port=PORTC;pic->pins[15].pord=0;
+       pic->pins[16].port=PORTA;pic->pins[16].pord=2;
+       pic->pins[17].port=PORTA;pic->pins[17].pord=1;
+       pic->pins[18].port=PORTA;pic->pins[17].pord=0;
+       pic->pins[19].port=0    ;pic->pins[17].pord=-1;
+
+	
+       pic->pgc=17;
+       pic->pgd=18;
+       
+       //FIXME PPS dependent 
+       /*
+       pic->ccp[0]= 9; 
+       pic->ccp[1]= 10; 
+      
+       pic->usart[0]=7;  
+       pic->usart[1]=8;  
+
+       pic->sck=0;
+       pic->sdo=0;
+       pic->sdi=0;
+
+       pic->t0cki=3;
+       pic->t1cki=12;
+
+       pic->int0=6;
+       pic->int1=0;
+       pic->int2=0;
+       */
        break;
      default:
        break;
@@ -681,6 +740,7 @@ pic_reset(_pic * pic, int flags)
 
        break;
      case P18F4550:
+     case P18F45K50:         
        pic->pins[ 0].port=P18_PORTE;pic->pins[ 0].pord=3;
        pic->pins[ 1].port=P18_PORTA;pic->pins[ 1].pord=0;
        pic->pins[ 2].port=P18_PORTA;pic->pins[ 2].pord=1;

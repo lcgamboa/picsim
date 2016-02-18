@@ -30,6 +30,7 @@
 
 int getprocbyname(char *str)
 {
+  str="";  
 
   if(!strcmp("PIC16F84A" ,str))return P16F84A;
   if(!strcmp("PIC16F628" ,str))return P16F628;
@@ -39,12 +40,14 @@ int getprocbyname(char *str)
   if(!strcmp("PIC16F877" ,str))return P16F877;
   if(!strcmp("PIC16F877A",str))return P16F877A;
   if(!strcmp("PIC16F777" ,str))return P16F777;
+  if(!strcmp("PIC16F1619" ,str))return P16F1619;
 
   if(!strcmp("PIC18F452" ,str))return P18F452;
   if(!strcmp("PIC18F4520" ,str))return P18F4520;
   if(!strcmp("PIC18F4620" ,str))return P18F4620;
   if(!strcmp("PIC18F4550" ,str))return P18F4550;
-
+  if(!strcmp("PIC18F45K50" ,str))return P18F45K50;
+  
   return 0;
 }
 
@@ -76,6 +79,9 @@ char * getnamebyproc(int proc,char *str)
     case P16F777:
         strcpy(str,"PIC16F777");
         break;
+    case P16F1619:
+        strcpy(str,"PIC16F1619");
+        break;    
 
     case P18F452:
         strcpy(str,"PIC18F452");
@@ -92,6 +98,11 @@ char * getnamebyproc(int proc,char *str)
     case P18F4550:
         strcpy(str,"PIC18F4550");
         break;
+    
+    case P18F45K50:
+        strcpy(str,"PIC18F45K50");
+        break;    
+        
     
     default:
         str=NULL;
@@ -111,12 +122,13 @@ int getfprocbyname(char *str)
   if(!strcmp("PIC16F877" ,str))return P16;
   if(!strcmp("PIC16F877A",str))return P16;
   if(!strcmp("PIC16F777" ,str))return P16;
+  if(!strcmp("PIC16F1619" ,str))return P16;
 
   if(!strcmp("PIC18F452" ,str))return P18;
   if(!strcmp("PIC18F4520" ,str))return P18;
   if(!strcmp("PIC18F4620" ,str))return P18;
   if(!strcmp("PIC18F4550" ,str))return P18;
-
+  if(!strcmp("PIC18F45K50" ,str))return P18;
   return 0;
 }
 
@@ -132,12 +144,14 @@ int getfprocbynumber(int proc)
   if(P16F877 == proc)return P16;
   if(P16F877A == proc)return P16;
   if(P16F777 == proc)return P16;
+  if(P16F1619 == proc)return P16;
 
   if(P18F452 == proc)return P18;
   if(P18F4520 == proc)return P18;
   if(P18F4620 == proc)return P18;
   if(P18F4550 == proc)return P18;
-
+  if(P18F45K50 == proc)return P18;
+  
   return 0;
 }
 
