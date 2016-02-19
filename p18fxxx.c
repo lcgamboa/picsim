@@ -792,7 +792,7 @@ pic_decode_18(_pic * pic,int print)
 		return;
 	      break;
             default:
-              //printf("unknown opcode!\n");
+              printf("unknown opcode 0x%04X!\n",opc);
               break; 
           }
 	  break;
@@ -1017,7 +1017,7 @@ pic_decode_18(_pic * pic,int print)
 	     *status&=~0x10;
 	  break;
         default:
-          //printf("unknown opcode!\n");
+          printf("unknown opcode 0x%04X!\n",opc);
           break; 
       }
       break; 
@@ -1153,7 +1153,7 @@ pic_decode_18(_pic * pic,int print)
           }
           break;
         default:
-          //printf("unknown opcode!\n");
+          printf("unknown opcode 0x%04X!\n",opc);
           break; 
       }
       break; 
@@ -1350,7 +1350,7 @@ pic_decode_18(_pic * pic,int print)
           }
           break;
         default:
-          //printf("unknown opcode!\n");
+          printf("unknown opcode 0x%04X!\n",opc);
           break; 
       }
       break; 
@@ -1466,7 +1466,7 @@ pic_decode_18(_pic * pic,int print)
           }
 	  break;
         default:
-          //printf("unknown opcode!\n");
+          printf("unknown opcode 0x%04X!\n",opc);
           break; 
       }
       break; 
@@ -1583,7 +1583,7 @@ pic_decode_18(_pic * pic,int print)
           }
           break;
         default:
-          //printf("unknown opcode!\n");
+          printf("unknown opcode 0x%04X!\n",opc);
           break; 
       }
       break; 
@@ -1809,7 +1809,7 @@ pic_decode_18(_pic * pic,int print)
           }
           break;
         default:
-          //printf("unknown opcode!\n");
+          printf("unknown opcode 0x%04X!\n",opc);
           break; 
       }
       break; 
@@ -1920,7 +1920,7 @@ pic_decode_18(_pic * pic,int print)
           pic->rram=P18_WREG;
 	  break;
         default:
-          //printf("unknown opcode!\n");
+          printf("unknown opcode 0x%04X!\n",opc);
           break; 
       }
       break; 
@@ -2004,7 +2004,7 @@ pic_decode_18(_pic * pic,int print)
 	break;
 	  break;
         default:
-          //printf("unknown opcode!\n");
+          printf("unknown opcode 0x%04X!\n",opc);
           break; 
       }
       break; 
@@ -2158,7 +2158,7 @@ pic_decode_18(_pic * pic,int print)
 	  pic->s2=1;
 	  break;
         default:
-          //printf("unknown opcode!\n");
+          printf("unknown opcode 0x%04X!\n",opc);
           break; 
       }
       break; 
@@ -2167,7 +2167,7 @@ pic_decode_18(_pic * pic,int print)
       if(print)printf("NOP\n");
       break;
     default:
-      //printf("unknown opcode!\n");
+      printf("unknown opcode 0x%04X!\n",opc);
       break; 
   }
 

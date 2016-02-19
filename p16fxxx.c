@@ -158,6 +158,9 @@ pic_decode_16(_pic * pic,int print)
 	          pic->s2=1;
 	          *intcon|=0x80;
                 break;
+              default:
+                printf("unknown opcode 0x%04X!\n",opc);
+                break;
               };
 	    break;
 	    case 0x0080:
@@ -166,6 +169,9 @@ pic_decode_16(_pic * pic,int print)
 	      pic->ram[bank|(opc & 0x007F)]=pic->w;
               pic->lram=bank|(opc & 0x007F);
 	    break;
+          default:
+            printf("unknown opcode 0x%04X!\n",opc);
+            break;
 	  }
 	break;
 	case 0x0100:
@@ -182,6 +188,9 @@ pic_decode_16(_pic * pic,int print)
               pic->ram[bank|(opc & 0x007F) ]=0;
               pic->lram=bank|(opc & 0x007F);
 	    break;
+          default:
+            printf("unknown opcode 0x%04X!\n",opc);
+            break;
 	  };
 	break;
 	case 0x0200:
@@ -503,6 +512,9 @@ pic_decode_16(_pic * pic,int print)
 	    };
 	  };     
         break;
+      default:
+        printf("unknown opcode 0x%04X!\n",opc);
+        break;
       }
     break; 
     case 0x1000:
@@ -538,6 +550,9 @@ pic_decode_16(_pic * pic,int print)
 	      pic->s2=1;
 	}
         break;
+      default:
+        printf("unknown opcode 0x%04X!\n",opc);
+        break;
       };
     break; 
     case 0x2000:
@@ -562,6 +577,9 @@ pic_decode_16(_pic * pic,int print)
             pic->jpc=((pic->ram[bank|(PCLATH & 0x007F)]&0x18)<<8)|(opc & 0x07FF);
 	  pic->s2=1;
   	break;
+      default:
+        printf("unknown opcode 0x%04X!\n",opc);
+        break;
       }
     break; 
     case 0x3000:
@@ -661,8 +679,14 @@ pic_decode_16(_pic * pic,int print)
 	else   
 	  *status&=~0x04;
         break;
+      default:
+        printf("unknown opcode 0x%04X!\n",opc);
+        break;
       }
     break;
+    default:
+      printf("unknown opcode 0x%04X!\n",opc);
+      break;
   }
   
 
@@ -808,8 +832,8 @@ pic_decode_16(_pic * pic,int print)
     pic->pc=((pic->ram[bank|(PCLATH & 0x007F)]&0x1F)<<8)|pic->ram[bank|(PCL& 0x007F)];
   }
 
-  if((pic->rram != 0x8000)&&(print))printf("mem read  %#06X: %10s= %#06X\n",pic->rram,getFSRname(pic->rram),pic->ram[pic->rram]);
-  if((pic->lram != 0x8000)&&(print))printf("mem write %#06X: %10s= %#06X\n",pic->lram,getFSRname(pic->lram),pic->ram[pic->lram]);
+  if((pic->rram != 0x8000)&&(print))printf("mem read  %#06X: %10s= %#06X\n",pic->rram,getFSRname_16(pic->rram),pic->ram[pic->rram]);
+  if((pic->lram != 0x8000)&&(print))printf("mem write %#06X: %10s= %#06X\n",pic->lram,getFSRname_16(pic->lram),pic->ram[pic->lram]);
   
 
 }

@@ -39,6 +39,7 @@ int getprocbyname(char *str)
   if(!strcmp("PIC16F877" ,str))return P16F877;
   if(!strcmp("PIC16F877A",str))return P16F877A;
   if(!strcmp("PIC16F777" ,str))return P16F777;
+
   if(!strcmp("PIC16F1619" ,str))return P16F1619;
 
   if(!strcmp("PIC18F452" ,str))return P18F452;
@@ -78,6 +79,7 @@ char * getnamebyproc(int proc,char *str)
     case P16F777:
         strcpy(str,"PIC16F777");
         break;
+
     case P16F1619:
         strcpy(str,"PIC16F1619");
         break;    
@@ -121,7 +123,8 @@ int getfprocbyname(char *str)
   if(!strcmp("PIC16F877" ,str))return P16;
   if(!strcmp("PIC16F877A",str))return P16;
   if(!strcmp("PIC16F777" ,str))return P16;
-  if(!strcmp("PIC16F1619" ,str))return P16;
+
+  if(!strcmp("PIC16F1619" ,str))return P16E;
 
   if(!strcmp("PIC18F452" ,str))return P18;
   if(!strcmp("PIC18F4520" ,str))return P18;
@@ -143,7 +146,8 @@ int getfprocbynumber(int proc)
   if(P16F877 == proc)return P16;
   if(P16F877A == proc)return P16;
   if(P16F777 == proc)return P16;
-  if(P16F1619 == proc)return P16;
+
+  if(P16F1619 == proc)return P16E;
 
   if(P18F452 == proc)return P18;
   if(P18F4520 == proc)return P18;
@@ -156,7 +160,7 @@ int getfprocbynumber(int proc)
 
 char FSRname[20];
 
-const char * getFSRname(unsigned int addr)
+const char * getFSRname_16(unsigned int addr)
 {
 
   switch(addr)
@@ -235,6 +239,12 @@ const char * getFSRname(unsigned int addr)
         return FSRname;
    }
 
+}
+
+const char * getFSRname_16E(unsigned int addr)
+{
+  //TODO implement list
+  return "";
 }
 
 const char * getFSRname_18(unsigned int addr)

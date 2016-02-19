@@ -60,8 +60,9 @@ unsigned char ovalue;    //defaut open pin value
 
 
 //family
-#define P16 1
-#define P18 2
+#define P16  1
+#define P18  2
+#define P16E 3
 
 //P16 processors
 #define P16F84A      0x0560
@@ -72,6 +73,8 @@ unsigned char ovalue;    //defaut open pin value
 #define P16F648AICD  0x1120	
 #define P16F877A     0x0E20
 #define P16F777      0x0DE0
+
+//P16E processors
 #define P16F1619     0x307F
 
 //P18 processors
@@ -79,7 +82,7 @@ unsigned char ovalue;    //defaut open pin value
 #define P18F4520    0x1080
 #define P18F4620    0x0C00
 #define P18F4550    0x1200
-#define P18F45K50   0x1201
+#define P18F45K50   0x02E0
 
 //4K word
 #define BUFFMAX 8192 
@@ -234,7 +237,8 @@ int getprocbyname(char *str);
 int getfprocbyname(char *str);
 int getfprocbynumber(int proc);
 char * getnamebyproc(int proc,char *str);
-const char * getFSRname(unsigned int addr);
+const char * getFSRname_16(unsigned int addr);
+const char * getFSRname_16E(unsigned int addr);
 const char * getFSRname_18(unsigned int addr);
 
 #include"p16fxxx_defs.h"

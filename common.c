@@ -130,6 +130,15 @@ pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, fl
          pic->ADCCOUNT=14;
          pic->WDT_MS=18;
        break;
+       default:
+         printf("unknown processor! 0x%04X\n",processor);
+         return 0;
+       break;
+      }
+     break;
+     case P16E:
+       switch(processor)
+       {
        case P16F1619:
          pic->ROMSIZE=8192;
          pic->EEPROMSIZE=128;
@@ -147,7 +156,7 @@ pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, fl
          return 0;
        break;
       }
-     break;
+     break; 
      case P18:
        switch(processor)
        {
@@ -229,9 +238,11 @@ pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, fl
    switch(family)
    {
      case P16:
+     case P16E: //FIXME verificar 
        memsets(pic->prog,0x3FFF,pic->ROMSIZE); 
        memsets(pic->config,0x3FFF,pic->CONFIGSIZE); 
        memsets(pic->id,0x3FFF,pic->IDSIZE); 
+       break;
        break;
      case P18:
        memsets(pic->prog,0xFFFF,pic->ROMSIZE); 
@@ -265,6 +276,7 @@ pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, fl
      switch(family)
      {
        case P16: 
+       case P16E: //FIXME verificar 
          return read_ihx(pic,fname,lrom);
          break; 
        case P18: 
@@ -517,6 +529,32 @@ pic_reset(_pic * pic, int flags)
        pic->int2=0;
 
        break;
+     default:
+       break;
+    }
+     if(abs(flags) == 1)
+     {
+       pic->ram[(0x0000)|(STATUS & 0x007F)]=0x18;
+       pic->ram[(0x0080)|(STATUS & 0x007F)]=0x18;
+       if(pic->processor != P16F84A)
+       {
+         pic->ram[(0x0100)|(STATUS & 0x007F)]=0x18;
+         pic->ram[(0x0180)|(STATUS & 0x007F)]=0x18;
+       } 
+     }	
+
+     pic->ram[TRISA]=0xFF; 
+     pic->ram[TRISB]=0xFF; 
+     pic->ram[TRISC]=0xFF; 
+     pic->ram[TRISD]=0xFF; 
+     pic->ram[TRISE]=0x07; 
+     pic->ram[PR2]=0xFF; 
+     periferic_rst(pic);
+
+     break;
+    case P16E:  //FIXME verify
+    switch(pic->processor)
+    {
      case P16F1619:
        pic->pins[ 0].port=0    ;pic->pins[ 0].pord=-1;
        pic->pins[ 1].port=PORTA;pic->pins[ 1].pord=5;
@@ -570,11 +608,8 @@ pic_reset(_pic * pic, int flags)
      {
        pic->ram[(0x0000)|(STATUS & 0x007F)]=0x18;
        pic->ram[(0x0080)|(STATUS & 0x007F)]=0x18;
-       if(pic->processor != P16F84A)
-       {
-         pic->ram[(0x0100)|(STATUS & 0x007F)]=0x18;
-         pic->ram[(0x0180)|(STATUS & 0x007F)]=0x18;
-       } 
+       pic->ram[(0x0100)|(STATUS & 0x007F)]=0x18;
+       pic->ram[(0x0180)|(STATUS & 0x007F)]=0x18;
      }	
 
      pic->ram[TRISA]=0xFF; 
@@ -585,7 +620,7 @@ pic_reset(_pic * pic, int flags)
      pic->ram[PR2]=0xFF; 
      periferic_rst(pic);
 
-     break;
+     break; 
     case P18:
     switch(pic->processor)
     {
@@ -852,17 +887,19 @@ pic_reset(_pic * pic, int flags)
 void
 pic_step(_pic * pic,int print)
 {
-  if(pic->family == P16)
+  switch(pic->family)
   { 
-    periferic_step_in(pic,print);
-    pic_decode_16(pic,print);
-    periferic_step_out(pic,print);
-  }
-  else
-  {
-    periferic18_step_in(pic,print);
-    pic_decode_18(pic,print);
-    periferic18_step_out(pic,print);
+    case P16:
+    case P16E: 
+      periferic_step_in(pic,print);
+      pic_decode_16(pic,print);
+      periferic_step_out(pic,print);
+      break;
+    case P18:
+      periferic18_step_in(pic,print);
+      pic_decode_18(pic,print);
+      periferic18_step_out(pic,print);
+      break;
   }
 }
 
@@ -924,16 +961,18 @@ pic_set_pin(_pic * pic,unsigned char pin,unsigned char value)
                 pic->ram[pic->pins[(pin-1)].port]|=val;
               else	
                 pic->ram[pic->pins[(pin-1)].port]&=~val;
-	     if(pic->family == P16)
+	     switch(pic->family)
              {
+                case P16:
+                case P16E: //FIXME verificar
                   pic->ram[pic->pins[(pin-1)].port | 0x100]=pic->ram[pic->pins[(pin-1)].port]; //espelhamento bank2 = bank0
-             }
-             else
-             {
+                  break;
+                case P18: 
                   if((pic->pins[(pin-1)].port == P18_PORTB)&&(pic->ram[P18_DEBUG] & 0x80)) 
                   {  
                     pic->ram[P18_DEBUG]= (pic->ram[P18_DEBUG]&0xF3)|((pic->ram[P18_PORTB] &0xC0)>>4) ; //espelhamento debug
                   } 
+                  break;  
              }  
 	   }
 
