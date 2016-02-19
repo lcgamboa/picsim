@@ -243,8 +243,138 @@ const char * getFSRname_16(unsigned int addr)
 
 const char * getFSRname_16E(unsigned int addr)
 {
-  //TODO implement list
-  return "";
+    
+  switch(addr)
+  {     
+//bank 0    
+//core    
+      case 0x000: return "INDF0";	
+      case 0x001: return "INDF1";	
+      case 0x002: return "PCL";	
+      case 0x003: return "STATUS";	
+      case 0x004: return "FSR0L";	
+      case 0x005: return "FSR0H";	
+      case 0x006: return "FSR1L";	
+      case 0x007: return "FSR1H";	
+      case 0x008: return "BSR";	
+      case 0x009: return "WREG";	
+      case 0x00A: return "PCLATH";	
+      case 0x00B: return "INTCON";     
+    
+      case 0x00C: return "PORTA";	
+      case 0x00D: return "PORTB";	
+      case 0x00E: return "PORTC";	
+      case 0x00F: return "PORTD";	
+      case 0x010: return "PIR1";	
+      case 0x011: return "PIR2";	
+      case 0x012: return "PIR3";	
+      case 0x013: return "PIR4";       
+      case 0x014: return "PIR5";       
+      case 0x015: return "TMR0";	
+      case 0x016: return "TMR1L"; 	
+      case 0x017: return "TMR1H";	
+      case 0x018: return "T1CON";	
+      case 0x019: return "T1GCON";	
+      case 0x01A: return "TMR2";	
+      case 0x01B: return "PR2";	
+      case 0x01C: return "T2CON"; 	
+      case 0x01D: return "T2HLT";	
+      case 0x01E: return "T2CLKCON";   
+      case 0x01F: return "T2RST";      
+
+ //bank 1   
+      case 0x08C: return "TRISA";	
+      case 0x08D: return "TRISB";	
+      case 0x08E: return "TRISC";	
+      case 0x08F: return "TRISD";	
+      case 0x090: return "PIE1";         
+      case 0x091: return "PIE2";       
+      case 0x092: return "PIE3";	
+      case 0x093: return "PIE4";       
+      case 0x094: return "PIE5";       
+      case 0x095: return "OPTION_REG"; 
+      case 0x096: return "PCON";       
+//    
+      case 0x098: return "OSCTUNE";	
+      case 0x099: return "OSCCON";	
+      case 0x09A: return "OSCSTAT";    
+      case 0x09B: return "ADRESL";     
+      case 0x09C: return "ADRESH";     
+      case 0x09D: return "ADCON0";     
+      case 0x09E: return "ADCON1";     
+      case 0x09F: return "ADCON2";     
+    
+//bank 2
+      case 0x10C: return "LATA";          
+      case 0x10D: return "LATB";         
+      case 0x10E: return "LATC";         
+      case 0x10F: return "LATD";         
+    
+//bank 3
+      case 0x18C: return "ANSELA";         
+      case 0x18D: return "ANSELB";      
+      case 0x18E: return "ANSELC";       
+  
+      case 0x199: return "RC1REG";     
+      case 0x19A: return "TX1REG";     
+      case 0x19B: return "SP1BGRL";    
+      case 0x19C: return "SP1BGRH";    
+      case 0x19D: return "RC1STA";     
+      case 0x19E: return "TX1STA";     
+      case 0x19F: return "BAUD1CON";       
+
+    
+//bank 4   
+//bank 5
+//bank 6
+//bank 7
+//bank 8
+//bank 9
+//bank 10
+//bank 11
+//bank 12
+//bank 13
+//bank 14
+      case 0x711: return "WDTCON0";    
+      case 0x712: return "WDTCON1";    
+      case 0x713: return "WDTPSL";     
+      case 0x714: return "WDTPSH";     
+      case 0x715: return "WDTTMR";         
+//bank 15
+//bank 16
+//bank 17
+//bank 18  Unimplemented
+//bank 19  Unimplemented
+//bank 20  Unimplemented
+//bank 21  Unimplemented
+//bank 22  Unimplemented
+//bank 23  Unimplemented
+//bank 24  Unimplemented
+//bank 25  Unimplemented
+//bank 26  Unimplemented
+//bank 27
+//bank 28
+//bank 29
+//bank 30
+//bank 31
+      case 0xFE4: return "STATUS_SHAD";      
+      case 0xFE5: return "WREG_SHAD";      
+      case 0xFE6: return "BSR_SHAD";       
+      case 0xFE7: return "PCLATH_SHAD";    
+      case 0xFE8: return "FSR0L_SHAD";     
+      case 0xFE9: return "FSR0H_SHAD";         
+      case 0xFEA: return "FSR1L_SHAD";     
+      case 0xFEB: return "FSR1H_SHAD";     
+//
+      case 0xFED: return "STKPTR";         
+      case 0xFEE: return "TSOL";           
+      case 0xFEF: return "TOSH";               
+        
+      default:
+        sprintf(FSRname,"0x%03X",addr);
+        return FSRname;
+   }        
+    
 }
 
 const char * getFSRname_18(unsigned int addr)
