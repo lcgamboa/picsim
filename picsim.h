@@ -75,14 +75,14 @@ unsigned char ovalue;    //defaut open pin value
 #define P16F777      0x0DE0
 
 //P16E processors
-#define P16F1619     0x307F
+#define P16F1619     0x307D
 
 //P18 processors
 #define P18F452     0x0420
 #define P18F4520    0x1080
 #define P18F4620    0x0C00
 #define P18F4550    0x1200
-#define P18F45K50   0x02E0
+#define P18F45K50   0x5C00
 
 //4K word
 #define BUFFMAX 8192 
@@ -242,6 +242,8 @@ const char * getFSRname_16E(unsigned int addr);
 const char * getFSRname_18(unsigned int addr);
 
 #include"p16fxxx_defs.h"
+
+#include"p16fxxxe_defs.h"
 
 #include"p18fxxx_defs.h"
 

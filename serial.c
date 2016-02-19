@@ -42,7 +42,7 @@
 #endif
 
 #include "picsim.h"
-#include "periferic.h"
+#include "periferic16.h"
 #include "periferic18.h"
         
 #define _POSIX_SOURCE 1 /* POSIX compliant source */
@@ -119,15 +119,15 @@ serial_cfg(_pic * pic)
 {
     unsigned int BAUDRATE;
    
-    if(pic->family == P16)
+    if(pic->family == P16)//FIXME for P16E
     { 
-      if(pic->ram[TXSTA] & 0x04) //BRGH=1 
+      if(pic->ram[P16_TXSTA] & 0x04) //BRGH=1 
       {
-         pic->serialexbaud=pic->freq/(16*(pic->ram[SPBRG]+1));
+         pic->serialexbaud=pic->freq/(16*(pic->ram[P16_SPBRG]+1));
       }
       else
       {
-        pic->serialexbaud=pic->freq/(64*(pic->ram[SPBRG]+1));
+        pic->serialexbaud=pic->freq/(64*(pic->ram[P16_SPBRG]+1));
       }
     }
     else
@@ -412,12 +412,12 @@ int i;
 
 
 
-void serial(_pic * pic,int print)
+void serial16(_pic * pic,int print)
 {
   unsigned char rctemp;
 
 
-  if((pic->ram[RCSTA] & 0x80)==0x80)
+  if((pic->ram[P16_RCSTA] & 0x80)==0x80)
   {
     if(pic->s_open == 0) 
     {
@@ -433,8 +433,8 @@ void serial(_pic * pic,int print)
         if(print)printf("#Erro Open Port:%s!\n",pic->SERIALDEVICE);
         pic->s_open=-1;
       }
-      pic->ram[TXSTA]|=0x02; //TRMT=1 empty 
-      pic->ram[PIR1]|=0x10; //TXIF=1  
+      pic->ram[P16_TXSTA]|=0x02; //TRMT=1 empty 
+      pic->ram[P16_PIR1]|=0x10; //TXIF=1  
     }
    pic->pins[pic->usart[0]-1].ptype=PT_USART;
    pic->pins[pic->usart[1]-1].ptype=PT_USART;
@@ -453,35 +453,35 @@ void serial(_pic * pic,int print)
   }
   
 
-   if(pic->lram == TXREG)    
+   if(pic->lram == P16_TXREG)    
     { 
-      pic->txtemp=pic->ram[TXREG];
-      pic->ram[TXSTA]&=~0x02; //TRMT=0 full   
-      pic->ram[PIR1]&=~0x10; //TXIF=0 trasmiting 
+      pic->txtemp=pic->ram[P16_TXREG];
+      pic->ram[P16_TXSTA]&=~0x02; //TRMT=0 full   
+      pic->ram[P16_PIR1]&=~0x10; //TXIF=0 trasmiting 
     }
    
 
-   if(pic->lram == RCSTA)
+   if(pic->lram == P16_RCSTA)
    {               //CREN 
-      if((pic->ram[RCSTA] & 0x10) == 0)
+      if((pic->ram[P16_RCSTA] & 0x10) == 0)
       {  
-       pic->ram[RCSTA]&=~0x02; //clear OERR
+       pic->ram[P16_RCSTA]&=~0x02; //clear OERR
        pic->serialc=0;
       }
    }    
 
 
-   if(pic->rram == RCREG)    
+   if(pic->rram == P16_RCREG)    
     { 
       switch(pic->recb)
       {
         case 1:
-          pic->ram[RCREG]=0;
-          pic->ram[PIR1]&=~0x20; //clear RCIF
+          pic->ram[P16_RCREG]=0;
+          pic->ram[P16_PIR1]&=~0x20; //clear RCIF
           pic->recb--;    
           break;
         case 2:
-          pic->ram[RCREG]=pic->RCREG2;
+          pic->ram[P16_RCREG]=pic->RCREG2;
           pic->RCREG2=0; 
 	  pic->recb--;    
           break;
@@ -494,15 +494,15 @@ void serial(_pic * pic,int print)
 
     pic->serialc++;
 
-    if((pic->ram[TXSTA] & 0x04) == 0x04)
+    if((pic->ram[P16_TXSTA] & 0x04) == 0x04)
     {
        //BRGH=1  start + 8 bits + stop
-       if(pic->serialc >= ((pic->ram[SPBRG]+1)*40))pic->sr =1;
+       if(pic->serialc >= ((pic->ram[P16_SPBRG]+1)*40))pic->sr =1;
     }
     else
     {
        //BRGH=0  start + 8 bits + stop
-       if(pic->serialc >= ((pic->ram[SPBRG]+1)*160))pic->sr =1;
+       if(pic->serialc >= ((pic->ram[P16_SPBRG]+1)*160))pic->sr =1;
     }
 
   
@@ -518,12 +518,12 @@ void serial(_pic * pic,int print)
       if(serial_recbuff(pic,&rctemp) == 1)
       {
 
-        if((pic->ram[RCSTA] & 0x12) == 0x10)//CREN=1  OERR=0 
+        if((pic->ram[P16_RCSTA] & 0x12) == 0x10)//CREN=1  OERR=0 
         { 
          switch(pic->recb)
          {
          case 0: 
-           pic->ram[RCREG]=rctemp;
+           pic->ram[P16_RCREG]=rctemp;
 	   pic->RCREG2=0;
            pic->recb++;
            break;
@@ -532,33 +532,33 @@ void serial(_pic * pic,int print)
            pic->recb++;
            break; 
          default: 
-           pic->ram[RCSTA]|=0x02; //set OERR
+           pic->ram[P16_RCSTA]|=0x02; //set OERR
            break; 
           }
         }
         
    //       printf("reb=%i temp=%02X RCREG=%02X RECREG2=%02X  RCSTA=%02X\n",pic->recb,rctemp,pic->ram[RCREG],pic->RCREG2,pic->ram[RCSTA]);
         
-         if(((pic->ram[PIE1] & 0x20) == 0x20)&&((pic->ram[PIR1] & 0x20) != 0x20))
+         if(((pic->ram[P16_PIE1] & 0x20) == 0x20)&&((pic->ram[P16_PIR1] & 0x20) != 0x20))
          {
            if(print)printf("serial rx interrupt (%#04X)\n",rctemp);
          }
          //set RCIF
-         pic->ram[PIR1]|=0x20;  
+         pic->ram[P16_PIR1]|=0x20;  
       }
      } 
     
       //if(((pic->ram[TXSTA] & 0x02) == 0 )&&((pic->ram[pic->pins[pic->usart[1]-1].port+0x80] &  (0x01 << pic->pins[pic->usart[1]-1].pord)) != 0))
-      if((pic->ram[TXSTA] & 0x02) == 0 )
+      if((pic->ram[P16_TXSTA] & 0x02) == 0 )
       {   
         if(pic->s_open == 1 ) serial_send(pic,pic->txtemp);
-        pic->ram[TXSTA]|=0x02; //TRMT=1 empty  
+        pic->ram[P16_TXSTA]|=0x02; //TRMT=1 empty  
     
-        if(((pic->ram[PIE1] & 0x10) == 0x10)&&((pic->ram[PIR1] & 0x10) != 0x10))
+        if(((pic->ram[P16_PIE1] & 0x10) == 0x10)&&((pic->ram[P16_PIR1] & 0x10) != 0x10))
         {
           if(print)printf("serial tx interrupt (%#04X)\n",pic->txtemp);
         }
-        pic->ram[PIR1]|=0x10; //TXIF=1  
+        pic->ram[P16_PIR1]|=0x10; //TXIF=1  
       }   
       pic->sr=0;
     }

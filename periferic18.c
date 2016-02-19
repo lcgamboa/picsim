@@ -1358,10 +1358,10 @@ unsigned short tris;
            if(!pic->pins[pic->pgd-1].dir)pic->pins[pic->pgd-1].value=(pic->ram[P18_DEBUG]&0x08)>>3;
            if(!pic->pins[pic->pgc-1].dir)pic->pins[pic->pgc-1].value=(pic->ram[P18_DEBUG]&0x04)>>2;
 */
-           pic->ram[TRISB]= (pic->ram[TRISB]&0x3F)| ((pic->ram[P18_DEBUG] &0x03)<<6);
+           pic->ram[P18_TRISB]= (pic->ram[P18_TRISB]&0x3F)| ((pic->ram[P18_DEBUG] &0x03)<<6);
            
-           if(!(pic->ram[P18_DEBUG] &0x02))pic->ram[PORTB]=(pic->ram[PORTB]&0x7F)| ((pic->ram[P18_DEBUG] &0x08)<<4); 
-           if(!(pic->ram[P18_DEBUG] &0x01))pic->ram[PORTB]=(pic->ram[PORTB]&0xBF)| ((pic->ram[P18_DEBUG] &0x04)<<4); 
+           if(!(pic->ram[P18_DEBUG] &0x02))pic->ram[P18_PORTB]=(pic->ram[P18_PORTB]&0x7F)| ((pic->ram[P18_DEBUG] &0x08)<<4); 
+           if(!(pic->ram[P18_DEBUG] &0x01))pic->ram[P18_PORTB]=(pic->ram[P18_PORTB]&0xBF)| ((pic->ram[P18_DEBUG] &0x04)<<4); 
                 
           };
         }; 

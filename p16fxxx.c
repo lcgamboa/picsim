@@ -28,17 +28,17 @@
 #include<string.h>
 
 #include"picsim.h"
-#include"periferic.h"
+#include"periferic16.h"
 
 void
 pic_decode_16(_pic * pic,int print)
 {
   unsigned short temp;
   unsigned short opc;
-  unsigned short bank= (pic->ram[STATUS] & 0x0060) <<2;
-  unsigned char * status = &pic->ram[bank|(STATUS & 0x007F)];
-  unsigned char * intcon = &pic->ram[bank|(INTCON & 0x007F)];
-  unsigned short  afsr=((pic->ram[STATUS] & 0x0080)<<1)|pic->ram[bank|(FSR &0x007F)];
+  unsigned short bank= (pic->ram[P16_STATUS] & 0x0060) <<2;
+  unsigned char * status = &pic->ram[bank|(P16_STATUS & 0x007F)];
+  unsigned char * intcon = &pic->ram[bank|(P16_INTCON & 0x007F)];
+  unsigned short  afsr=((pic->ram[P16_STATUS] & 0x0080)<<1)|pic->ram[bank|(P16_FSR &0x007F)];
 //  unsigned short  pc_ant;
 
 
@@ -84,23 +84,23 @@ pic_decode_16(_pic * pic,int print)
 
 //pc
   temp = pic->pc&0x00FF;
-  pic->ram[(0x0000)|(PCL & 0x007F)]=temp;
-  pic->ram[(0x0080)|(PCL & 0x007F)]=temp;
+  pic->ram[(0x0000)|(P16_PCL & 0x007F)]=temp;
+  pic->ram[(0x0080)|(P16_PCL & 0x007F)]=temp;
   if(pic->processor != P16F84A)
   {
-    pic->ram[(0x0100)|(PCL & 0x007F)]=temp;
-    pic->ram[(0x0180)|(PCL & 0x007F)]=temp;
+    pic->ram[(0x0100)|(P16_PCL & 0x007F)]=temp;
+    pic->ram[(0x0180)|(P16_PCL & 0x007F)]=temp;
   }  
   //pc_ant = temp;
   
 
   temp=pic->ram[afsr];
-  pic->ram[(0x0000)|(INDF & 0x007F)]=temp;
-  pic->ram[(0x0080)|(INDF & 0x007F)]=temp;
+  pic->ram[(0x0000)|(P16_INDF & 0x007F)]=temp;
+  pic->ram[(0x0080)|(P16_INDF & 0x007F)]=temp;
   if(pic->processor != P16F84A)
   {
-    pic->ram[(0x0100)|(INDF & 0x007F)]=temp;
-    pic->ram[(0x0180)|(INDF & 0x007F)]=temp;
+    pic->ram[(0x0100)|(P16_INDF & 0x007F)]=temp;
+    pic->ram[(0x0180)|(P16_INDF & 0x007F)]=temp;
   }
 
   switch(opc & 0x3000)
@@ -133,7 +133,7 @@ pic_decode_16(_pic * pic,int print)
 	          pic->debug=0;
                   pic->sstep=0;          
                   pic->dbg=0;          
-	          pic->ram[ICKBUG]&=~0x80;
+	          pic->ram[P16_ICKBUG]&=~0x80;
                 break;
 		case 0x0063:
 //SLEEP   --  	Go into Standby mode         1     0000000 1100011   	TO,PD
@@ -564,17 +564,17 @@ pic_decode_16(_pic * pic,int print)
           for(temp=7;temp>0;temp--)
 	    pic->stack[temp]=pic->stack[temp-1];
 	  pic->stack[0]=pic->pc;
-	  pic->jpc=((pic->ram[bank|(PCLATH & 0x007F)]&0x18)<<8)|(opc & 0x07FF);
+	  pic->jpc=((pic->ram[bank|(P16_PCLATH & 0x007F)]&0x18)<<8)|(opc & 0x07FF);
 	  pic->s2=1;
         break;
 	case 0x0800:
 //GOTO    k  	Go to address                2     101 kkkkkkkkkkk
           if(print)printf("GOTO %#05X\n",opc & 0x07FF);
-          if(((pic->config[0] & 0x0800) == 0)&&(((pic->ram[ICKBUG])&0x80)== 0x80) )//DEBUG ON
+          if(((pic->config[0] & 0x0800) == 0)&&(((pic->ram[P16_ICKBUG])&0x80)== 0x80) )//DEBUG ON
 //	    pic->jpc=((0x18)<<8)|(opc & 0x07FF);
 	    pic->jpc=(pic->ROMSIZE-1)&(((0xF8)<<8)|(opc & 0x07FF));
 	  else  
-            pic->jpc=((pic->ram[bank|(PCLATH & 0x007F)]&0x18)<<8)|(opc & 0x07FF);
+            pic->jpc=((pic->ram[bank|(P16_PCLATH & 0x007F)]&0x18)<<8)|(opc & 0x07FF);
 	  pic->s2=1;
   	break;
       default:
@@ -690,9 +690,9 @@ pic_decode_16(_pic * pic,int print)
   }
   
 
-  if(pic->lram == (bank|(INDF & 0x007F)))
+  if(pic->lram == (bank|(P16_INDF & 0x007F)))
   {
-     pic->ram[afsr]=pic->ram[bank|(INDF & 0x007F)];
+     pic->ram[afsr]=pic->ram[bank|(P16_INDF & 0x007F)];
      pic->lram=afsr;
   }
   /*faz espelhamento de memória*/
@@ -700,69 +700,69 @@ pic_decode_16(_pic * pic,int print)
 
   if(pic->processor != P16F84A)
   {
-  temp = pic->ram[bank|(STATUS & 0x007F)];
-  pic->ram[(0x0000)|(STATUS & 0x007F)]=temp;
-  pic->ram[(0x0080)|(STATUS & 0x007F)]=temp;
-  pic->ram[(0x0100)|(STATUS & 0x007F)]=temp;
-  pic->ram[(0x0180)|(STATUS & 0x007F)]=temp;
+  temp = pic->ram[bank|(P16_STATUS & 0x007F)];
+  pic->ram[(0x0000)|(P16_STATUS & 0x007F)]=temp;
+  pic->ram[(0x0080)|(P16_STATUS & 0x007F)]=temp;
+  pic->ram[(0x0100)|(P16_STATUS & 0x007F)]=temp;
+  pic->ram[(0x0180)|(P16_STATUS & 0x007F)]=temp;
 
-  temp = pic->ram[bank|(INTCON & 0x007F)];
-  pic->ram[(0x0000)|(INTCON & 0x007F)]=temp;
-  pic->ram[(0x0080)|(INTCON & 0x007F)]=temp;
-  pic->ram[(0x0100)|(INTCON & 0x007F)]=temp;
-  pic->ram[(0x0180)|(INTCON & 0x007F)]=temp;
+  temp = pic->ram[bank|(P16_INTCON & 0x007F)];
+  pic->ram[(0x0000)|(P16_INTCON & 0x007F)]=temp;
+  pic->ram[(0x0080)|(P16_INTCON & 0x007F)]=temp;
+  pic->ram[(0x0100)|(P16_INTCON & 0x007F)]=temp;
+  pic->ram[(0x0180)|(P16_INTCON & 0x007F)]=temp;
  
-  temp = pic->ram[bank|(PCLATH & 0x007F)];
-  pic->ram[(0x0000)|(PCLATH & 0x007F)]=temp;
-  pic->ram[(0x0080)|(PCLATH & 0x007F)]=temp;
-  pic->ram[(0x0100)|(PCLATH & 0x007F)]=temp;
-  pic->ram[(0x0180)|(PCLATH & 0x007F)]=temp;
+  temp = pic->ram[bank|(P16_PCLATH & 0x007F)];
+  pic->ram[(0x0000)|(P16_PCLATH & 0x007F)]=temp;
+  pic->ram[(0x0080)|(P16_PCLATH & 0x007F)]=temp;
+  pic->ram[(0x0100)|(P16_PCLATH & 0x007F)]=temp;
+  pic->ram[(0x0180)|(P16_PCLATH & 0x007F)]=temp;
   
-  temp = pic->ram[bank|(PCL & 0x007F)];
-  pic->ram[(0x0000)|(PCL & 0x007F)]=temp;
-  pic->ram[(0x0080)|(PCL & 0x007F)]=temp;
-  pic->ram[(0x0100)|(PCL & 0x007F)]=temp;
-  pic->ram[(0x0180)|(PCL & 0x007F)]=temp;
+  temp = pic->ram[bank|(P16_PCL & 0x007F)];
+  pic->ram[(0x0000)|(P16_PCL & 0x007F)]=temp;
+  pic->ram[(0x0080)|(P16_PCL & 0x007F)]=temp;
+  pic->ram[(0x0100)|(P16_PCL & 0x007F)]=temp;
+  pic->ram[(0x0180)|(P16_PCL & 0x007F)]=temp;
  
-  temp = pic->ram[bank|(FSR & 0x007F)];
-  pic->ram[(0x0000)|(FSR & 0x007F)]=temp;
-  pic->ram[(0x0080)|(FSR & 0x007F)]=temp;
-  pic->ram[(0x0100)|(FSR & 0x007F)]=temp;
-  pic->ram[(0x0180)|(FSR & 0x007F)]=temp;
+  temp = pic->ram[bank|(P16_FSR & 0x007F)];
+  pic->ram[(0x0000)|(P16_FSR & 0x007F)]=temp;
+  pic->ram[(0x0080)|(P16_FSR & 0x007F)]=temp;
+  pic->ram[(0x0100)|(P16_FSR & 0x007F)]=temp;
+  pic->ram[(0x0180)|(P16_FSR & 0x007F)]=temp;
 
-  if((bank|(PCL & 0x007F)) == pic->rram)
+  if((bank|(P16_PCL & 0x007F)) == pic->rram)
   {
      temp=(pic->pc&0x1F00)>>8; 
-     pic->ram[0x0000|(PCLATH & 0x007F)]=temp;
-     pic->ram[0x0080|(PCLATH & 0x007F)]=temp;
-     pic->ram[0x0100|(PCLATH & 0x007F)]=temp;
-     pic->ram[0x0180|(PCLATH & 0x007F)]=temp;
+     pic->ram[0x0000|(P16_PCLATH & 0x007F)]=temp;
+     pic->ram[0x0080|(P16_PCLATH & 0x007F)]=temp;
+     pic->ram[0x0100|(P16_PCLATH & 0x007F)]=temp;
+     pic->ram[0x0180|(P16_PCLATH & 0x007F)]=temp;
   }
 
 
   if((bank == 0x000)||(bank == 0x100))
   {
-    temp = pic->ram[bank|(PORTA & 0x007F)];
-    pic->ram[(0x0000)|(PORTA & 0x007F)]=temp;
-    pic->ram[(0x0100)|(PORTA & 0x007F)]=temp;
-    temp = pic->ram[bank|(PORTB & 0x007F)];
-    pic->ram[(0x0000)|(PORTB & 0x007F)]=temp;
-    pic->ram[(0x0100)|(PORTB & 0x007F)]=temp;
-    temp = pic->ram[bank|(PORTC & 0x007F)];
-    pic->ram[(0x0000)|(PORTC & 0x007F)]=temp;
-    pic->ram[(0x0100)|(PORTC & 0x007F)]=temp;
+    temp = pic->ram[bank|(P16_PORTA & 0x007F)];
+    pic->ram[(0x0000)|(P16_PORTA & 0x007F)]=temp;
+    pic->ram[(0x0100)|(P16_PORTA & 0x007F)]=temp;
+    temp = pic->ram[bank|(P16_PORTB & 0x007F)];
+    pic->ram[(0x0000)|(P16_PORTB & 0x007F)]=temp;
+    pic->ram[(0x0100)|(P16_PORTB & 0x007F)]=temp;
+    temp = pic->ram[bank|(P16_PORTC & 0x007F)];
+    pic->ram[(0x0000)|(P16_PORTC & 0x007F)]=temp;
+    pic->ram[(0x0100)|(P16_PORTC & 0x007F)]=temp;
   }
   else
   {
-    temp = pic->ram[bank|(TRISA & 0x007F)];
-    pic->ram[(0x0080)|(TRISA & 0x007F)]=temp;
-    pic->ram[(0x0180)|(TRISA & 0x007F)]=temp;
-    temp = pic->ram[bank|(TRISB & 0x007F)];
-    pic->ram[(0x0080)|(TRISB & 0x007F)]=temp;
-    pic->ram[(0x0180)|(TRISB & 0x007F)]=temp;
-    temp = pic->ram[bank|(TRISC & 0x007F)];
-    pic->ram[(0x0080)|(TRISC & 0x007F)]=temp;
-    pic->ram[(0x0180)|(TRISC & 0x007F)]=temp;
+    temp = pic->ram[bank|(P16_TRISA & 0x007F)];
+    pic->ram[(0x0080)|(P16_TRISA & 0x007F)]=temp;
+    pic->ram[(0x0180)|(P16_TRISA & 0x007F)]=temp;
+    temp = pic->ram[bank|(P16_TRISB & 0x007F)];
+    pic->ram[(0x0080)|(P16_TRISB & 0x007F)]=temp;
+    pic->ram[(0x0180)|(P16_TRISB & 0x007F)]=temp;
+    temp = pic->ram[bank|(P16_TRISC & 0x007F)];
+    pic->ram[(0x0080)|(P16_TRISC & 0x007F)]=temp;
+    pic->ram[(0x0180)|(P16_TRISC & 0x007F)]=temp;
   }
 /*
   
@@ -783,31 +783,31 @@ pic_decode_16(_pic * pic,int print)
   }
   else  //PIC16F84A
   {
-  temp = pic->ram[bank|(STATUS & 0x007F)];
-  pic->ram[(0x0000)|(STATUS & 0x007F)]=temp;
-  pic->ram[(0x0080)|(STATUS & 0x007F)]=temp;
+  temp = pic->ram[bank|(P16_STATUS & 0x007F)];
+  pic->ram[(0x0000)|(P16_STATUS & 0x007F)]=temp;
+  pic->ram[(0x0080)|(P16_STATUS & 0x007F)]=temp;
 
-  temp = pic->ram[bank|(INTCON & 0x007F)];
-  pic->ram[(0x0000)|(INTCON & 0x007F)]=temp;
-  pic->ram[(0x0080)|(INTCON & 0x007F)]=temp;
+  temp = pic->ram[bank|(P16_INTCON & 0x007F)];
+  pic->ram[(0x0000)|(P16_INTCON & 0x007F)]=temp;
+  pic->ram[(0x0080)|(P16_INTCON & 0x007F)]=temp;
  
-  temp = pic->ram[bank|(PCLATH & 0x007F)];
-  pic->ram[(0x0000)|(PCLATH & 0x007F)]=temp;
-  pic->ram[(0x0080)|(PCLATH & 0x007F)]=temp;
+  temp = pic->ram[bank|(P16_PCLATH & 0x007F)];
+  pic->ram[(0x0000)|(P16_PCLATH & 0x007F)]=temp;
+  pic->ram[(0x0080)|(P16_PCLATH & 0x007F)]=temp;
   
-  temp = pic->ram[bank|(PCL & 0x007F)];
-  pic->ram[(0x0000)|(PCL & 0x007F)]=temp;
-  pic->ram[(0x0080)|(PCL & 0x007F)]=temp;
+  temp = pic->ram[bank|(P16_PCL & 0x007F)];
+  pic->ram[(0x0000)|(P16_PCL & 0x007F)]=temp;
+  pic->ram[(0x0080)|(P16_PCL & 0x007F)]=temp;
  
-  temp = pic->ram[bank|(FSR & 0x007F)];
-  pic->ram[(0x0000)|(FSR & 0x007F)]=temp;
-  pic->ram[(0x0080)|(FSR & 0x007F)]=temp;
+  temp = pic->ram[bank|(P16_FSR & 0x007F)];
+  pic->ram[(0x0000)|(P16_FSR & 0x007F)]=temp;
+  pic->ram[(0x0080)|(P16_FSR & 0x007F)]=temp;
 
-  if((bank|(PCL & 0x007F)) == pic->rram)
+  if((bank|(P16_PCL & 0x007F)) == pic->rram)
   {
      temp=(pic->pc&0x1F00)>>8; 
-     pic->ram[0x0000|(PCLATH & 0x007F)]=temp;
-     pic->ram[0x0080|(PCLATH & 0x007F)]=temp;
+     pic->ram[0x0000|(P16_PCLATH & 0x007F)]=temp;
+     pic->ram[0x0080|(P16_PCLATH & 0x007F)]=temp;
   }
 
 /*
@@ -827,9 +827,9 @@ pic_decode_16(_pic * pic,int print)
 
  
   //if((pic->ram[bank|(PCL & 0x007F)]) != (pc_ant&0x00FF))
-  if((bank|(PCL & 0x007F)) == pic->lram)
+  if((bank|(P16_PCL & 0x007F)) == pic->lram)
   {
-    pic->pc=((pic->ram[bank|(PCLATH & 0x007F)]&0x1F)<<8)|pic->ram[bank|(PCL& 0x007F)];
+    pic->pc=((pic->ram[bank|(P16_PCLATH & 0x007F)]&0x1F)<<8)|pic->ram[bank|(P16_PCL& 0x007F)];
   }
 
   if((pic->rram != 0x8000)&&(print))printf("mem read  %#06X: %10s= %#06X\n",pic->rram,getFSRname_16(pic->rram),pic->ram[pic->rram]);

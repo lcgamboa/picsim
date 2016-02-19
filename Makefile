@@ -17,7 +17,7 @@ bindir = ${exec_prefix}/bin
 libdir = ${exec_prefix}/lib
 
 
-OBJS= common.o p16fxxx.o p18fxxx.o hexfile.o periferic.o periferic18.o serial.o icsp.o icsp18.o util.o 
+OBJS= common.o p16fxxx.o p16fxxxe.o p18fxxx.o hexfile.o periferic16.o periferic16e.o periferic18.o serial.o icsp.o icsp18.o util.o 
 
 all: all-lib picsim
 
@@ -41,7 +41,7 @@ LIBTARGETS := $(LIBSHLIBNAME) $(LIBSHSONAME) $(LIBSHBASENAME)
 
 
 
-LIBHEADERFILES := p16fxxx_defs.h  p18fxxx_defs.h periferic18.h periferic.h picsim.h 
+LIBHEADERFILES := p16fxxx_defs.h  p16fxxxe_defs.h p18fxxx_defs.h periferic18.h periferic16.h picsim.h 
 
 # How to create the shared library
 $(LIBSHLIBNAME): $(OBJS)

@@ -28,7 +28,8 @@
 #include<string.h>
 
 #include"picsim.h"
-#include"periferic.h"
+#include"periferic16.h"
+#include"periferic16e.h"
 #include"periferic18.h"
 
 
@@ -41,6 +42,7 @@ extern int read_ihx_18(_pic * pic,const char * fname,int lrom);
 
 
 extern void pic_decode_16(_pic * pic,int print);
+extern void pic_decode_16E(_pic * pic,int print);
 extern void pic_decode_18(_pic * pic,int print);
 
 
@@ -140,9 +142,9 @@ pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, fl
        switch(processor)
        {
        case P16F1619:
-         pic->ROMSIZE=8192;
-         pic->EEPROMSIZE=128;
-         pic->RAMSIZE=1024;// 32 banks !!!!
+         pic->ROMSIZE=4096;
+         pic->EEPROMSIZE=0;
+         pic->RAMSIZE=4096;// 1024 32 banks !!!!
          pic->PINCOUNT=20;
          pic->IDSIZE=8;
          pic->CONFIGSIZE=3;
@@ -238,7 +240,7 @@ pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, fl
    switch(family)
    {
      case P16:
-     case P16E: //FIXME verificar 
+     case P16E: //FIXME verificar P16E
        memsets(pic->prog,0x3FFF,pic->ROMSIZE); 
        memsets(pic->config,0x3FFF,pic->CONFIGSIZE); 
        memsets(pic->id,0x3FFF,pic->IDSIZE); 
@@ -276,7 +278,7 @@ pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, fl
      switch(family)
      {
        case P16: 
-       case P16E: //FIXME verificar 
+       case P16E: //FIXME verificar P16E 
          return read_ihx(pic,fname,lrom);
          break; 
        case P18: 
@@ -338,24 +340,24 @@ pic_reset(_pic * pic, int flags)
      case P16F628A:
      case P16F648A:
      case P16F648AICD:
-       pic->pins[ 0].port=PORTA;pic->pins[ 0].pord=2;
-       pic->pins[ 1].port=PORTA;pic->pins[ 1].pord=3;
-       pic->pins[ 2].port=PORTA;pic->pins[ 2].pord=4;
-       pic->pins[ 3].port=PORTA;pic->pins[ 3].pord=5;
+       pic->pins[ 0].port=P16_PORTA;pic->pins[ 0].pord=2;
+       pic->pins[ 1].port=P16_PORTA;pic->pins[ 1].pord=3;
+       pic->pins[ 2].port=P16_PORTA;pic->pins[ 2].pord=4;
+       pic->pins[ 3].port=P16_PORTA;pic->pins[ 3].pord=5;
        pic->pins[ 4].port=0    ;pic->pins[ 4].pord=-1;
-       pic->pins[ 5].port=PORTB;pic->pins[ 5].pord=0;
-       pic->pins[ 6].port=PORTB;pic->pins[ 6].pord=1;
-       pic->pins[ 7].port=PORTB;pic->pins[ 7].pord=2;
-       pic->pins[ 8].port=PORTB;pic->pins[ 8].pord=3;
-       pic->pins[ 9].port=PORTB;pic->pins[ 9].pord=4;
-       pic->pins[10].port=PORTB;pic->pins[10].pord=5;
-       pic->pins[11].port=PORTB;pic->pins[11].pord=6;
-       pic->pins[12].port=PORTB;pic->pins[12].pord=7;
+       pic->pins[ 5].port=P16_PORTB;pic->pins[ 5].pord=0;
+       pic->pins[ 6].port=P16_PORTB;pic->pins[ 6].pord=1;
+       pic->pins[ 7].port=P16_PORTB;pic->pins[ 7].pord=2;
+       pic->pins[ 8].port=P16_PORTB;pic->pins[ 8].pord=3;
+       pic->pins[ 9].port=P16_PORTB;pic->pins[ 9].pord=4;
+       pic->pins[10].port=P16_PORTB;pic->pins[10].pord=5;
+       pic->pins[11].port=P16_PORTB;pic->pins[11].pord=6;
+       pic->pins[12].port=P16_PORTB;pic->pins[12].pord=7;
        pic->pins[13].port=0    ;pic->pins[13].pord=-1;
-       pic->pins[14].port=PORTA;pic->pins[14].pord=6;
-       pic->pins[15].port=PORTA;pic->pins[15].pord=7;
-       pic->pins[16].port=PORTA;pic->pins[16].pord=0;
-       pic->pins[17].port=PORTA;pic->pins[17].pord=1; 
+       pic->pins[14].port=P16_PORTA;pic->pins[14].pord=6;
+       pic->pins[15].port=P16_PORTA;pic->pins[15].pord=7;
+       pic->pins[16].port=P16_PORTA;pic->pins[16].pord=0;
+       pic->pins[17].port=P16_PORTA;pic->pins[17].pord=1; 
 
        pic->ccp[0]= 9;
       
@@ -380,45 +382,45 @@ pic_reset(_pic * pic, int flags)
      case P16F877:
      case P16F877A:
        pic->pins[ 0].port=0   ;pic->pins[ 0].pord=-1;
-       pic->pins[ 1].port=PORTA;pic->pins[ 1].pord=0;
-       pic->pins[ 2].port=PORTA;pic->pins[ 2].pord=1;
-       pic->pins[ 3].port=PORTA;pic->pins[ 3].pord=2;
-       pic->pins[ 4].port=PORTA;pic->pins[ 4].pord=3;
-       pic->pins[ 5].port=PORTA;pic->pins[ 5].pord=4;
-       pic->pins[ 6].port=PORTA;pic->pins[ 6].pord=5;
-       pic->pins[ 7].port=PORTE;pic->pins[ 7].pord=0;
-       pic->pins[ 8].port=PORTE;pic->pins[ 8].pord=1;
-       pic->pins[ 9].port=PORTE;pic->pins[ 9].pord=2;
+       pic->pins[ 1].port=P16_PORTA;pic->pins[ 1].pord=0;
+       pic->pins[ 2].port=P16_PORTA;pic->pins[ 2].pord=1;
+       pic->pins[ 3].port=P16_PORTA;pic->pins[ 3].pord=2;
+       pic->pins[ 4].port=P16_PORTA;pic->pins[ 4].pord=3;
+       pic->pins[ 5].port=P16_PORTA;pic->pins[ 5].pord=4;
+       pic->pins[ 6].port=P16_PORTA;pic->pins[ 6].pord=5;
+       pic->pins[ 7].port=P16_PORTE;pic->pins[ 7].pord=0;
+       pic->pins[ 8].port=P16_PORTE;pic->pins[ 8].pord=1;
+       pic->pins[ 9].port=P16_PORTE;pic->pins[ 9].pord=2;
        pic->pins[10].port=0    ;pic->pins[10].pord=-1;
        pic->pins[11].port=0    ;pic->pins[11].pord=-1;
        pic->pins[12].port=0    ;pic->pins[12].pord=-1;
        pic->pins[13].port=0    ;pic->pins[13].pord=-1;
-       pic->pins[14].port=PORTC;pic->pins[14].pord=0;
-       pic->pins[15].port=PORTC;pic->pins[15].pord=1;
-       pic->pins[16].port=PORTC;pic->pins[16].pord=2;
-       pic->pins[17].port=PORTC;pic->pins[17].pord=3;
-       pic->pins[18].port=PORTD;pic->pins[18].pord=0;
-       pic->pins[19].port=PORTD;pic->pins[19].pord=1;
-       pic->pins[20].port=PORTD;pic->pins[20].pord=2;
-       pic->pins[21].port=PORTD;pic->pins[21].pord=3;
-       pic->pins[22].port=PORTC;pic->pins[22].pord=4;
-       pic->pins[23].port=PORTC;pic->pins[23].pord=5;
-       pic->pins[24].port=PORTC;pic->pins[24].pord=6;
-       pic->pins[25].port=PORTC;pic->pins[25].pord=7;
-       pic->pins[26].port=PORTD;pic->pins[26].pord=4;
-       pic->pins[27].port=PORTD;pic->pins[27].pord=5;
-       pic->pins[28].port=PORTD;pic->pins[28].pord=6;
-       pic->pins[29].port=PORTD;pic->pins[29].pord=7;
+       pic->pins[14].port=P16_PORTC;pic->pins[14].pord=0;
+       pic->pins[15].port=P16_PORTC;pic->pins[15].pord=1;
+       pic->pins[16].port=P16_PORTC;pic->pins[16].pord=2;
+       pic->pins[17].port=P16_PORTC;pic->pins[17].pord=3;
+       pic->pins[18].port=P16_PORTD;pic->pins[18].pord=0;
+       pic->pins[19].port=P16_PORTD;pic->pins[19].pord=1;
+       pic->pins[20].port=P16_PORTD;pic->pins[20].pord=2;
+       pic->pins[21].port=P16_PORTD;pic->pins[21].pord=3;
+       pic->pins[22].port=P16_PORTC;pic->pins[22].pord=4;
+       pic->pins[23].port=P16_PORTC;pic->pins[23].pord=5;
+       pic->pins[24].port=P16_PORTC;pic->pins[24].pord=6;
+       pic->pins[25].port=P16_PORTC;pic->pins[25].pord=7;
+       pic->pins[26].port=P16_PORTD;pic->pins[26].pord=4;
+       pic->pins[27].port=P16_PORTD;pic->pins[27].pord=5;
+       pic->pins[28].port=P16_PORTD;pic->pins[28].pord=6;
+       pic->pins[29].port=P16_PORTD;pic->pins[29].pord=7;
        pic->pins[30].port=0    ;pic->pins[30].pord=-1;
        pic->pins[31].port=0    ;pic->pins[31].pord=-1;
-       pic->pins[32].port=PORTB;pic->pins[32].pord=0;
-       pic->pins[33].port=PORTB;pic->pins[33].pord=1;
-       pic->pins[34].port=PORTB;pic->pins[34].pord=2;
-       pic->pins[35].port=PORTB;pic->pins[35].pord=3;
-       pic->pins[36].port=PORTB;pic->pins[36].pord=4;
-       pic->pins[37].port=PORTB;pic->pins[37].pord=5;
-       pic->pins[38].port=PORTB;pic->pins[38].pord=6;
-       pic->pins[39].port=PORTB;pic->pins[39].pord=7;
+       pic->pins[32].port=P16_PORTB;pic->pins[32].pord=0;
+       pic->pins[33].port=P16_PORTB;pic->pins[33].pord=1;
+       pic->pins[34].port=P16_PORTB;pic->pins[34].pord=2;
+       pic->pins[35].port=P16_PORTB;pic->pins[35].pord=3;
+       pic->pins[36].port=P16_PORTB;pic->pins[36].pord=4;
+       pic->pins[37].port=P16_PORTB;pic->pins[37].pord=5;
+       pic->pins[38].port=P16_PORTB;pic->pins[38].pord=6;
+       pic->pins[39].port=P16_PORTB;pic->pins[39].pord=7;
        
        pic->ccp[0]=  17;
        pic->ccp[1]=  16;
@@ -452,45 +454,45 @@ pic_reset(_pic * pic, int flags)
        break;
      case P16F777:
        pic->pins[ 0].port=0   ;pic->pins[ 0].pord=-1;
-       pic->pins[ 1].port=PORTA;pic->pins[ 1].pord=0;
-       pic->pins[ 2].port=PORTA;pic->pins[ 2].pord=1;
-       pic->pins[ 3].port=PORTA;pic->pins[ 3].pord=2;
-       pic->pins[ 4].port=PORTA;pic->pins[ 4].pord=3;
-       pic->pins[ 5].port=PORTA;pic->pins[ 5].pord=4;
-       pic->pins[ 6].port=PORTA;pic->pins[ 6].pord=5;
-       pic->pins[ 7].port=PORTE;pic->pins[ 7].pord=0;
-       pic->pins[ 8].port=PORTE;pic->pins[ 8].pord=1;
-       pic->pins[ 9].port=PORTE;pic->pins[ 9].pord=2;
+       pic->pins[ 1].port=P16_PORTA;pic->pins[ 1].pord=0;
+       pic->pins[ 2].port=P16_PORTA;pic->pins[ 2].pord=1;
+       pic->pins[ 3].port=P16_PORTA;pic->pins[ 3].pord=2;
+       pic->pins[ 4].port=P16_PORTA;pic->pins[ 4].pord=3;
+       pic->pins[ 5].port=P16_PORTA;pic->pins[ 5].pord=4;
+       pic->pins[ 6].port=P16_PORTA;pic->pins[ 6].pord=5;
+       pic->pins[ 7].port=P16_PORTE;pic->pins[ 7].pord=0;
+       pic->pins[ 8].port=P16_PORTE;pic->pins[ 8].pord=1;
+       pic->pins[ 9].port=P16_PORTE;pic->pins[ 9].pord=2;
        pic->pins[10].port=0    ;pic->pins[10].pord=-1;
        pic->pins[11].port=0    ;pic->pins[11].pord=-1;
        pic->pins[12].port=0    ;pic->pins[12].pord=-1;
        pic->pins[13].port=0    ;pic->pins[13].pord=-1;
-       pic->pins[14].port=PORTC;pic->pins[14].pord=0;
-       pic->pins[15].port=PORTC;pic->pins[15].pord=1;
-       pic->pins[16].port=PORTC;pic->pins[16].pord=2;
-       pic->pins[17].port=PORTC;pic->pins[17].pord=3;
-       pic->pins[18].port=PORTD;pic->pins[18].pord=0;
-       pic->pins[19].port=PORTD;pic->pins[19].pord=1;
-       pic->pins[20].port=PORTD;pic->pins[20].pord=2;
-       pic->pins[21].port=PORTD;pic->pins[21].pord=3;
-       pic->pins[22].port=PORTC;pic->pins[22].pord=4;
-       pic->pins[23].port=PORTC;pic->pins[23].pord=5;
-       pic->pins[24].port=PORTC;pic->pins[24].pord=6;
-       pic->pins[25].port=PORTC;pic->pins[25].pord=7;
-       pic->pins[26].port=PORTD;pic->pins[26].pord=4;
-       pic->pins[27].port=PORTD;pic->pins[27].pord=5;
-       pic->pins[28].port=PORTD;pic->pins[28].pord=6;
-       pic->pins[29].port=PORTD;pic->pins[29].pord=7;
+       pic->pins[14].port=P16_PORTC;pic->pins[14].pord=0;
+       pic->pins[15].port=P16_PORTC;pic->pins[15].pord=1;
+       pic->pins[16].port=P16_PORTC;pic->pins[16].pord=2;
+       pic->pins[17].port=P16_PORTC;pic->pins[17].pord=3;
+       pic->pins[18].port=P16_PORTD;pic->pins[18].pord=0;
+       pic->pins[19].port=P16_PORTD;pic->pins[19].pord=1;
+       pic->pins[20].port=P16_PORTD;pic->pins[20].pord=2;
+       pic->pins[21].port=P16_PORTD;pic->pins[21].pord=3;
+       pic->pins[22].port=P16_PORTC;pic->pins[22].pord=4;
+       pic->pins[23].port=P16_PORTC;pic->pins[23].pord=5;
+       pic->pins[24].port=P16_PORTC;pic->pins[24].pord=6;
+       pic->pins[25].port=P16_PORTC;pic->pins[25].pord=7;
+       pic->pins[26].port=P16_PORTD;pic->pins[26].pord=4;
+       pic->pins[27].port=P16_PORTD;pic->pins[27].pord=5;
+       pic->pins[28].port=P16_PORTD;pic->pins[28].pord=6;
+       pic->pins[29].port=P16_PORTD;pic->pins[29].pord=7;
        pic->pins[30].port=0    ;pic->pins[30].pord=-1;
        pic->pins[31].port=0    ;pic->pins[31].pord=-1;
-       pic->pins[32].port=PORTB;pic->pins[32].pord=0;
-       pic->pins[33].port=PORTB;pic->pins[33].pord=1;
-       pic->pins[34].port=PORTB;pic->pins[34].pord=2;
-       pic->pins[35].port=PORTB;pic->pins[35].pord=3;
-       pic->pins[36].port=PORTB;pic->pins[36].pord=4;
-       pic->pins[37].port=PORTB;pic->pins[37].pord=5;
-       pic->pins[38].port=PORTB;pic->pins[38].pord=6;
-       pic->pins[39].port=PORTB;pic->pins[39].pord=7;
+       pic->pins[32].port=P16_PORTB;pic->pins[32].pord=0;
+       pic->pins[33].port=P16_PORTB;pic->pins[33].pord=1;
+       pic->pins[34].port=P16_PORTB;pic->pins[34].pord=2;
+       pic->pins[35].port=P16_PORTB;pic->pins[35].pord=3;
+       pic->pins[36].port=P16_PORTB;pic->pins[36].pord=4;
+       pic->pins[37].port=P16_PORTB;pic->pins[37].pord=5;
+       pic->pins[38].port=P16_PORTB;pic->pins[38].pord=6;
+       pic->pins[39].port=P16_PORTB;pic->pins[39].pord=7;
        
        pic->ccp[0]=  17;
        pic->ccp[1]=  16;
@@ -534,54 +536,54 @@ pic_reset(_pic * pic, int flags)
     }
      if(abs(flags) == 1)
      {
-       pic->ram[(0x0000)|(STATUS & 0x007F)]=0x18;
-       pic->ram[(0x0080)|(STATUS & 0x007F)]=0x18;
+       pic->ram[(0x0000)|(P16_STATUS & 0x007F)]=0x18;
+       pic->ram[(0x0080)|(P16_STATUS & 0x007F)]=0x18;
        if(pic->processor != P16F84A)
        {
-         pic->ram[(0x0100)|(STATUS & 0x007F)]=0x18;
-         pic->ram[(0x0180)|(STATUS & 0x007F)]=0x18;
+         pic->ram[(0x0100)|(P16_STATUS & 0x007F)]=0x18;
+         pic->ram[(0x0180)|(P16_STATUS & 0x007F)]=0x18;
        } 
      }	
 
-     pic->ram[TRISA]=0xFF; 
-     pic->ram[TRISB]=0xFF; 
-     pic->ram[TRISC]=0xFF; 
-     pic->ram[TRISD]=0xFF; 
-     pic->ram[TRISE]=0x07; 
-     pic->ram[PR2]=0xFF; 
-     periferic_rst(pic);
+     pic->ram[P16_TRISA]=0xFF; 
+     pic->ram[P16_TRISB]=0xFF; 
+     pic->ram[P16_TRISC]=0xFF; 
+     pic->ram[P16_TRISD]=0xFF; 
+     pic->ram[P16_TRISE]=0x07; 
+     pic->ram[P16_PR2]=0xFF; 
+     periferic16_rst(pic);
 
      break;
-    case P16E:  //FIXME verify
+    case P16E:  //FIXME verify P16E
     switch(pic->processor)
     {
      case P16F1619:
        pic->pins[ 0].port=0    ;pic->pins[ 0].pord=-1;
-       pic->pins[ 1].port=PORTA;pic->pins[ 1].pord=5;
-       pic->pins[ 2].port=PORTA;pic->pins[ 2].pord=4;
-       pic->pins[ 3].port=PORTA;pic->pins[ 3].pord=3;
-       pic->pins[ 4].port=PORTC;pic->pins[ 4].pord=5;
-       pic->pins[ 5].port=PORTC;pic->pins[ 5].pord=4;
-       pic->pins[ 6].port=PORTC;pic->pins[ 6].pord=3;
-       pic->pins[ 7].port=PORTC;pic->pins[ 7].pord=6;
-       pic->pins[ 8].port=PORTC;pic->pins[ 8].pord=7;
-       pic->pins[ 9].port=PORTB;pic->pins[ 9].pord=7;
-       pic->pins[10].port=PORTB;pic->pins[10].pord=6;
-       pic->pins[11].port=PORTB;pic->pins[11].pord=5;
-       pic->pins[12].port=PORTB;pic->pins[12].pord=4;
-       pic->pins[13].port=PORTC;pic->pins[13].pord=2;
-       pic->pins[14].port=PORTC;pic->pins[14].pord=1;
-       pic->pins[15].port=PORTC;pic->pins[15].pord=0;
-       pic->pins[16].port=PORTA;pic->pins[16].pord=2;
-       pic->pins[17].port=PORTA;pic->pins[17].pord=1;
-       pic->pins[18].port=PORTA;pic->pins[17].pord=0;
+       pic->pins[ 1].port=P16_PORTA;pic->pins[ 1].pord=5;
+       pic->pins[ 2].port=P16_PORTA;pic->pins[ 2].pord=4;
+       pic->pins[ 3].port=P16_PORTA;pic->pins[ 3].pord=3;
+       pic->pins[ 4].port=P16_PORTC;pic->pins[ 4].pord=5;
+       pic->pins[ 5].port=P16_PORTC;pic->pins[ 5].pord=4;
+       pic->pins[ 6].port=P16_PORTC;pic->pins[ 6].pord=3;
+       pic->pins[ 7].port=P16_PORTC;pic->pins[ 7].pord=6;
+       pic->pins[ 8].port=P16_PORTC;pic->pins[ 8].pord=7;
+       pic->pins[ 9].port=P16_PORTB;pic->pins[ 9].pord=7;
+       pic->pins[10].port=P16_PORTB;pic->pins[10].pord=6;
+       pic->pins[11].port=P16_PORTB;pic->pins[11].pord=5;
+       pic->pins[12].port=P16_PORTB;pic->pins[12].pord=4;
+       pic->pins[13].port=P16_PORTC;pic->pins[13].pord=2;
+       pic->pins[14].port=P16_PORTC;pic->pins[14].pord=1;
+       pic->pins[15].port=P16_PORTC;pic->pins[15].pord=0;
+       pic->pins[16].port=P16_PORTA;pic->pins[16].pord=2;
+       pic->pins[17].port=P16_PORTA;pic->pins[17].pord=1;
+       pic->pins[18].port=P16_PORTA;pic->pins[17].pord=0;
        pic->pins[19].port=0    ;pic->pins[17].pord=-1;
 
 	
        pic->pgc=17;
        pic->pgd=18;
        
-       //FIXME PPS dependent 
+       //FIXME P16E PPS dependent 
        /*
        pic->ccp[0]= 9; 
        pic->ccp[1]= 10; 
@@ -606,19 +608,19 @@ pic_reset(_pic * pic, int flags)
     }
      if(abs(flags) == 1)
      {
-       pic->ram[(0x0000)|(STATUS & 0x007F)]=0x18;
-       pic->ram[(0x0080)|(STATUS & 0x007F)]=0x18;
-       pic->ram[(0x0100)|(STATUS & 0x007F)]=0x18;
-       pic->ram[(0x0180)|(STATUS & 0x007F)]=0x18;
+       pic->ram[(0x0000)|(P16_STATUS & 0x007F)]=0x18;
+       pic->ram[(0x0080)|(P16_STATUS & 0x007F)]=0x18;
+       pic->ram[(0x0100)|(P16_STATUS & 0x007F)]=0x18;
+       pic->ram[(0x0180)|(P16_STATUS & 0x007F)]=0x18;
      }	
 
-     pic->ram[TRISA]=0xFF; 
-     pic->ram[TRISB]=0xFF; 
-     pic->ram[TRISC]=0xFF; 
-     pic->ram[TRISD]=0xFF; 
-     pic->ram[TRISE]=0x07; 
-     pic->ram[PR2]=0xFF; 
-     periferic_rst(pic);
+     pic->ram[P16_TRISA]=0xFF; 
+     pic->ram[P16_TRISB]=0xFF; 
+     pic->ram[P16_TRISC]=0xFF; 
+     pic->ram[P16_TRISD]=0xFF; 
+     pic->ram[P16_TRISE]=0x07; 
+     pic->ram[P16_PR2]=0xFF; 
+     periferic16_rst(pic);
 
      break; 
     case P18:
@@ -890,11 +892,15 @@ pic_step(_pic * pic,int print)
   switch(pic->family)
   { 
     case P16:
-    case P16E: 
-      periferic_step_in(pic,print);
+      periferic16_step_in(pic,print);
       pic_decode_16(pic,print);
-      periferic_step_out(pic,print);
+      periferic16_step_out(pic,print);
       break;
+    case P16E:  
+      periferic16E_step_in(pic,print);
+      pic_decode_16E(pic,print);
+      periferic16E_step_out(pic,print);
+      break;  
     case P18:
       periferic18_step_in(pic,print);
       pic_decode_18(pic,print);
@@ -964,7 +970,7 @@ pic_set_pin(_pic * pic,unsigned char pin,unsigned char value)
 	     switch(pic->family)
              {
                 case P16:
-                case P16E: //FIXME verificar
+                case P16E: //FIXME verificar P16E
                   pic->ram[pic->pins[(pin-1)].port | 0x100]=pic->ram[pic->pins[(pin-1)].port]; //espelhamento bank2 = bank0
                   break;
                 case P18: 

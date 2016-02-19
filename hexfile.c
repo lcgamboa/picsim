@@ -504,7 +504,7 @@ write_ihx18(_pic * pic,const char * fname)
 
   if(fout)
   {
-//program memory  //TODO only address < 64K bytes  
+  //program memory  //TODO only address < 64K bytes  
     nb=0;
     sum=0;
     fprintf(fout,":020000040000FA\n");
