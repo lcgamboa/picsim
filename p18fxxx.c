@@ -2279,7 +2279,15 @@ pic_decode_18(_pic * pic,int print)
       break;
     case P18_TOSL:
       if((pic->ram[P18_STKPTR] & 0x1F) > 0)  
-        pic->stack[(pic->ram[P18_STKPTR] & 0x1F)-1]= ((pic->ram[P18_TOSU]&0x1F)<<16) |((pic->ram[P18_TOSH])<<8)|pic->ram[P18_TOSL];
+        pic->stack[(pic->ram[P18_STKPTR] & 0x1F)-1]= (pic->stack[(pic->ram[P18_STKPTR] & 0x1F)-1] && 0x1FFF00)|pic->ram[P18_TOSL];
+      break;
+    case P18_TOSH:
+      if((pic->ram[P18_STKPTR] & 0x1F) > 0)  
+        pic->stack[(pic->ram[P18_STKPTR] & 0x1F)-1]= (pic->stack[(pic->ram[P18_STKPTR] & 0x1F)-1] && 0x1F00FF)|(pic->ram[P18_TOSH]<<8);
+      break;
+    case P18_TOSU:
+      if((pic->ram[P18_STKPTR] & 0x1F) > 0)  
+        pic->stack[(pic->ram[P18_STKPTR] & 0x1F)-1]= (pic->stack[(pic->ram[P18_STKPTR] & 0x1F)-1] && 0x00FFFF)|((pic->ram[P18_TOSH]&0x1F)<<16);
       break;
       
     case P18_LATA:
@@ -2395,14 +2403,6 @@ pic_decode_18(_pic * pic,int print)
   //second pass with new rram
   switch(pic->rram)
   {    
-    case P18_TOSL:
-       if((pic->ram[P18_STKPTR] & 0x1F) >0) 
-       {
-         pic->ram[P18_TOSU]=((pic->stack[(pic->ram[P18_STKPTR] & 0x1F)-1])&0x1F0000)>>16; 
-         pic->ram[P18_TOSH]=((pic->stack[(pic->ram[P18_STKPTR] & 0x1F)-1])&0x00FF00)>>8;      
-       } 
-     break;
-     
      case P18_PCL:
   //    printf("###############PCL read\n");
       pic->ram[P18_PCLATU]=(pic->pc&0x1F0000)>>16;
