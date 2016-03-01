@@ -29,7 +29,7 @@
 
 
 
-const int fpw2[8]={1,2,4,8,16,32,64,128};
+const int fpw2[]={1,2,4,8,16,32,64,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288};
 
 
 extern void pic_decode_16(_pic * pic,int print);
@@ -436,7 +436,7 @@ if((pic->processor == P16F877)||(pic->processor == P16F877A)||(pic->processor ==
   if(pic->ADCCOUNT > 0 )  
   {
 
-  if((pic->ram[P16_ADCON0] & 0x05 ) == 0x05) // ADON amd GO/DONE
+  if((pic->ram[P16_ADCON0] & 0x05 ) == 0x05) // ADON and GO/DONE
   {
    pic->adcstep++;
    if(pic->adcstep > 10 )

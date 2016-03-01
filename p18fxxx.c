@@ -788,6 +788,7 @@ pic_decode_18(_pic * pic,int print)
 
 //RESET       		Software device RESET        1     	0000 0000 1111 1111 All
             case 0x00FF:
+                if(print)printf("RESET\n");                
 		pic_reset(pic,0);
 		return;
 	      break;
@@ -1706,7 +1707,7 @@ pic_decode_18(_pic * pic,int print)
           if(opc & 0x0200 )
 	  {
 	   *status&=~0x08;
-        //FIXME  incompleto
+        //TODO P18 incompleto SUBWFB flags
         /*
 	    if ((pic->ram[raddr] & 0x80)!=(ctemp&0x80))  
 	       *status|=0x08;
@@ -1727,7 +1728,7 @@ pic_decode_18(_pic * pic,int print)
           else      
 	  {
 	   *status&=~0x08;
-        //FIXME  incompleto
+        //TODO P18  incompleto  SUBWFB flags
         /* 
 	    if ((pic->ram[P18_WREG] & 0x80)!=(ctemp&0x80))  
 	       *status|=0x08;
@@ -1768,7 +1769,7 @@ pic_decode_18(_pic * pic,int print)
           if(opc & 0x0200 )
 	  {
 	   *status&=~0x08;
-        //FIXME  incompleto
+        //TODO P18  incompleto  SUBWF flags
         /* 
 	    if ((pic->ram[raddr] & 0x80)!=(ctemp&0x80))  
 	       *status|=0x08;
@@ -1789,7 +1790,7 @@ pic_decode_18(_pic * pic,int print)
           else      
 	  {
 	   *status&=~0x08;
-        //FIXME  incompleto
+        //TODO  P18 incompleto SUBWF flags
          /*
 	    if ((pic->ram[P18_WREG] & 0x80)!=(ctemp&0x80))  
 	       *status|=0x08;

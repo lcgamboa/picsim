@@ -68,6 +68,8 @@ pic_decode_16(_pic * pic,int print)
     return;
   };
   
+  
+
  
   //print (Address)
   if(print)
@@ -137,6 +139,7 @@ pic_decode_16(_pic * pic,int print)
                 break;
 		case 0x0063:
 //SLEEP   --  	Go into Standby mode         1     0000000 1100011   	TO,PD
+                  if(print)printf("SLEEP\n");   
   		  pic->wdt=0;
   		  pic->sleep=1;
 	          *status&=~0x08;
@@ -144,6 +147,7 @@ pic_decode_16(_pic * pic,int print)
                 break;
 		case 0x0064:
 //CLRWDT  --  	Clear Watchdog Timer         1     0000000 1100100   	TO,PD
+                  if(print)printf("CLRWDT\n");    
   		  pic->wdt=0;
 	          *status|=0x08;
 	          *status|=0x10;
@@ -157,6 +161,7 @@ pic_decode_16(_pic * pic,int print)
 		  pic->stack[7]=0;
 	          pic->s2=1;
 	          *intcon|=0x80;
+                  pic->lram=P16_INTCON;
                 break;
               default:
                 printf("unknown opcode 0x%04X!\n",opc);
