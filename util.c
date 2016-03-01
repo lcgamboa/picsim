@@ -325,7 +325,25 @@ const char * getFSRname_16E(unsigned int addr)
 
     
 //bank 4   
+      case 0x20C: return "WPUA"; 
+      case 0x20D: return "WPUB"; 
+      case 0x20E: return "WPUC";          
 //bank 5
+      case 0x28C: return "P16E_ODCONA";         
+      case 0x28D: return "P16E_ODCONB";      
+      case 0x28E: return "P16E_ODCONC";      
+
+      case 0x291: return "P16E_CCP1RL";     
+      case 0x292: return "P16E_CCP1RH";     
+      case 0x293: return "P16E_CCP1CON";    
+      case 0x294: return "P16E_CCP1CAP";    
+
+      case 0x298: return "P16E_CCP2RL";     
+      case 0x299: return "P16E_CCP2RH";     
+      case 0x29A: return "P16E_CCP2CON";    
+      case 0x29B: return "P16E_CCP2CAP";    
+
+#define P16E_CCPTMRS    0x29E       
 //bank 6
 //bank 7
 //bank 8
@@ -367,7 +385,7 @@ const char * getFSRname_16E(unsigned int addr)
       case 0xFEB: return "FSR1H_SHAD";     
 //
       case 0xFED: return "STKPTR";         
-      case 0xFEE: return "TSOL";           
+      case 0xFEE: return "TOSL";           
       case 0xFEF: return "TOSH";               
         
       default:

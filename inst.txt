@@ -1,7 +1,7 @@
  NOP     --  	No Operation                 1     0000000 xx00000  
  RETURN  --  	Return from Subroutine       2     0000000 0001000
-SLEEP   --  	Go into Standby mode         1     0000000 1100011   	TO,PD
-CLRWDT  --  	Clear Watchdog Timer         1     0000000 1100100   	TO,PD
+ SLEEP   --  	Go into Standby mode         1     0000000 1100011   	TO,PD
+ CLRWDT  --  	Clear Watchdog Timer         1     0000000 1100100   	TO,PD
  RETFIE  --  	Return from interrupt        2     0000000 0001001                                                         
  MOVWF   f  	Move W to f                  1     0000001 fffffff
  CLRW    --  	Clear W                      1     0000010 xxxxxxx 	Z	
@@ -33,3 +33,26 @@ CLRWDT  --  	Clear Watchdog Timer         1     0000000 1100100   	TO,PD
  XORLW   k  	Exclusive OR literal with W  1     111010 kkkkkkkk   	Z
  SUBLW   k  	Subtract W from literal      1     11110x kkkkkkkk   	C,DC,Z
  ADDLW   k  	Add literal and W            1     11111x kkkkkkkk   	C,DC,Z
+
+#Enhanced
+         
+ MOVLB    k     Move literal to BSR                1    00 0000 001k kkkk 
+ MOVLP    k     Move literal to PCLATH             1    11 0001 1kkk kkkk           
+ ADDWFC   f,d   Add W and f                        1    11 1101 dfff ffff     C, DC, Z    2 
+ SUBWFB   f,d   Subtract with Borrow W from f      1    11 1011 dfff ffff     C, DC, Z    2
+ LSLF     f,d   Logical Left Shift                 1    11 0101 dfff ffff     C, Z        2 
+ LSRF     f,d   Logical Right Shift                1    11 0110 dfff ffff     C, Z        2
+ BRA      k     Relative Branch                    2    11 001k kkkk kkkk
+ CALLW    -     Call Subroutine with W             2    00 0000 0000 1010
+ MOVIW    n,m   Move Indirect FSRn to W with       1    00 0000 0001 0nmm   Z
+               pre/post inc/dec modifier, mm
+ MOVIW    k[n]  Move INDFn to W, Indexed Indirect  1    11 1111 0nkk kkkk   Z
+ MOVWI    n,m   Move W to Indirect FSRn with       1    00 0000 0001 1nmm   
+               pre/post inc/dec modifier, mm
+ MOVWI    k[n]  Move W to INDFn, Indexed Indirect  1    11 1111 1nkk kkkk  
+ ASRF     f,d   Arithmetic Right Shift             1    11 0111 dfff ffff     C, Z        2
+ BRW      -     Relative Branch with W             2    00 0000 0000 1011
+ OPTION   -     Load OPTION_REG register with W    1    00 0000 0110 0010
+ RESET    -     Software device Reset              1    00 0000 0000 0001
+ TRIS     f     Load TRIS register with W          1    00 0000 0110 01ff   
+ ADDFSR   n,k   Add Literal k to FSRn              1    11 0001 0nkk kkkk   

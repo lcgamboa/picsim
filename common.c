@@ -236,11 +236,11 @@ pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, fl
    pic->adc=calloc(pic->ADCCOUNT,sizeof(char));
    pic->usart=calloc(2,sizeof(char));
 
-   /*zerar memÃ³ria*/
+   /*zerar mem�ria*/
    switch(family)
    {
      case P16:
-     case P16E: //FIXME verificar P16E
+     case P16E: 
        memsets(pic->prog,0x3FFF,pic->ROMSIZE); 
        memsets(pic->config,0x3FFF,pic->CONFIGSIZE); 
        memsets(pic->id,0x3FFF,pic->IDSIZE); 
@@ -278,7 +278,7 @@ pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, fl
      switch(family)
      {
        case P16: 
-       case P16E: //FIXME verificar P16E 
+       case P16E: 
          return read_ihx(pic,fname,lrom);
          break; 
        case P18: 
@@ -554,7 +554,7 @@ pic_reset(_pic * pic, int flags)
      periferic16_rst(pic);
 
      break;
-    case P16E:  //FIXME verify P16E
+    case P16E:  
     switch(pic->processor)
     {
      case P16F1619:
@@ -583,25 +583,40 @@ pic_reset(_pic * pic, int flags)
        pic->pgc=17;
        pic->pgd=18;
        
-       //FIXME P16E PPS dependent 
-       /*
-       pic->ccp[0]= 9; 
-       pic->ccp[1]= 10; 
+       pic->adc[0]=19;
+       pic->adc[1]=18;
+       pic->adc[2]=17;
+       pic->adc[3]=3;
+       pic->adc[4]=16;
+       pic->adc[5]=15;
+       pic->adc[6]=14;
+       pic->adc[7]=7;
+       pic->adc[8]=8;
+       pic->adc[9]=9;
+       pic->adc[10]=13;
+       pic->adc[11]=12;
+       
+       //Default values
+       
+       pic->ccp[0]= 5; 
+       pic->ccp[1]= 7; 
       
-       pic->usart[0]=7;  
-       pic->usart[1]=8;  
+       pic->usart[0]=12;  
+       pic->usart[1]=0;  
 
-       pic->sck=0;
+       pic->sck=11;
        pic->sdo=0;
-       pic->sdi=0;
+       pic->sdi=13;
 
-       pic->t0cki=3;
-       pic->t1cki=12;
-
+       pic->t0cki=17;
+       pic->t1cki=2;
+       //FIXME P16E pin interrupt support
+/*
        pic->int0=6;
        pic->int1=0;
        pic->int2=0;
-       */
+ */      
+       
        break;
      default:
        break;
@@ -970,7 +985,7 @@ pic_set_pin(_pic * pic,unsigned char pin,unsigned char value)
 	     switch(pic->family)
              {
                 case P16:
-                case P16E: //FIXME verificar P16E
+                case P16E: //FIXME verificar P16E set pin with ansel
                   pic->ram[pic->pins[(pin-1)].port | 0x100]=pic->ram[pic->pins[(pin-1)].port]; //espelhamento bank2 = bank0
                   break;
                 case P18: 

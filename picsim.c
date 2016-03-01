@@ -134,7 +134,12 @@ main(int argc,char** argv)
           case P16E:   
             printf("PC=0x%04X W=\033[1;32m 0x%#02X \033[0m STATUS=0x%02X PORTA=0x%02X PORTB=0x%02X INTCON=\033[1;32m 0x%02X \033[0m TMR0=0x%02X TMR1H=0x%04X TMR1L=0x%04X OPTION=0x%04X\n",pic1.pc,pic1.w,
             pic1.ram[P16E_STATUS],pic1.ram[P16E_PORTA],pic1.ram[P16E_PORTB],pic1.ram[P16E_INTCON],pic1.ram[P16E_TMR0],pic1.ram[P16E_TMR1H],  
-            pic1.ram[P16E_TMR1L],pic1.ram[P16E_OPTION_REG]); 
+            pic1.ram[P16E_TMR1L],pic1.ram[P16E_OPTION_REG]);
+ 
+	    printf("BSR=0x%02X INDF0=0x%02X INDF1=0x%02X afsr0=0x%04X afsr1=0x%04X\n",
+            pic1.ram[P16E_BSR],pic1.ram[P16E_INDF0],pic1.ram[P16E_INDF1],
+            ((pic1.ram[P16E_FSR0H]&0xFF)<<8) |pic1.ram[P16E_FSR0L],
+            ((pic1.ram[P16E_FSR1H]&0xFF)<<8) |pic1.ram[P16E_FSR1L]);
 
             for(i=0;i<16;i++)
 	      printf("%#04X   ",pic1.ram[i]);

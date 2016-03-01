@@ -43,6 +43,7 @@
 
 #include "picsim.h"
 #include "periferic16.h"
+#include "periferic16e.h"
 #include "periferic18.h"
         
 #define _POSIX_SOURCE 1 /* POSIX compliant source */
@@ -119,28 +120,42 @@ serial_cfg(_pic * pic)
 {
     unsigned int BAUDRATE;
    
-    if(pic->family == P16)//FIXME for P16E
+    
+    switch(pic->family)
     { 
-      if(pic->ram[P16_TXSTA] & 0x04) //BRGH=1 
-      {
-         pic->serialexbaud=pic->freq/(16*(pic->ram[P16_SPBRG]+1));
-      }
-      else
-      {
-        pic->serialexbaud=pic->freq/(64*(pic->ram[P16_SPBRG]+1));
-      }
-    }
-    else
-    {
-      if(pic->ram[P18_TXSTA] & 0x04) //BRGH=1 
-      {
-         pic->serialexbaud=pic->freq/(16*(pic->ram[P18_SPBRG]+1));
-      }
-      else
-      {
-        pic->serialexbaud=pic->freq/(64*(pic->ram[P18_SPBRG]+1));
-      }
-
+      case P16:  
+        if(pic->ram[P16_TXSTA] & 0x04) //BRGH=1 
+        {
+          pic->serialexbaud=pic->freq/(16*(pic->ram[P16_SPBRG]+1));
+        }
+        else
+        {
+          pic->serialexbaud=pic->freq/(64*(pic->ram[P16_SPBRG]+1));
+        }
+      break;
+      case P16E:
+          //FIXME P16 serial brg
+          /*
+        if(pic->ram[P16E_TX1STA] & 0x04) //BRGH=1 
+        {
+          pic->serialexbaud=pic->freq/(16*(pic->ram[P16E_SP1BRG]+1));
+        }
+        else
+        {
+          pic->serialexbaud=pic->freq/(64*(pic->ram[P16E_SP1BRG]+1));
+        }
+           */ 
+      break;
+      case P18:
+        if(pic->ram[P18_TXSTA] & 0x04) //BRGH=1 
+        {
+           pic->serialexbaud=pic->freq/(16*(pic->ram[P18_SPBRG]+1));
+        }
+        else
+        {
+          pic->serialexbaud=pic->freq/(64*(pic->ram[P18_SPBRG]+1));
+        }
+      break;
     }
 
 
@@ -568,6 +583,166 @@ void serial16(_pic * pic,int print)
 
 
 }
+
+void serial16E(_pic * pic,int print)
+{
+  unsigned char rctemp;
+
+
+  if((pic->ram[P16E_RC1STA] & 0x80)==0x80)
+  {
+    if(pic->s_open == 0) 
+    {
+
+      if(pic->serialfd > 0)
+      {
+        serial_cfg(pic);
+        pic->s_open=1;
+       if(print)printf("#Open Port:%s!\n",pic->SERIALDEVICE);
+      }
+      else
+      {
+        if(print)printf("#Erro Open Port:%s!\n",pic->SERIALDEVICE);
+        pic->s_open=-1;
+      }
+      pic->ram[P16E_TX1STA]|=0x02; //TRMT=1 empty 
+      pic->ram[P16E_PIR1]|=0x10; //TXIF=1  
+    }
+   pic->pins[pic->usart[0]-1].ptype=PT_USART;
+   pic->pins[pic->usart[1]-1].ptype=PT_USART;
+   
+   if(pic->flowcontrol)pic_set_pin(pic, pic->rtspin,0); //enable send
+  }
+  else
+  {
+    if(pic->s_open == 1)
+    {
+      pic->s_open=0;
+    }
+   pic->pins[pic->usart[0]-1].ptype=PT_CMOS;
+   pic->pins[pic->usart[1]-1].ptype=PT_CMOS;
+   if(pic->flowcontrol)pic_set_pin(pic, pic->rtspin,1); //disable send
+  }
+  
+
+   if(pic->lram == P16E_TX1REG)    
+    { 
+      pic->txtemp=pic->ram[P16E_TX1REG];
+      pic->ram[P16E_TX1STA]&=~0x02; //TRMT=0 full   
+      pic->ram[P16E_PIR1]&=~0x10; //TXIF=0 trasmiting 
+    }
+   
+
+   if(pic->lram == P16E_RC1STA)
+   {               //CREN 
+      if((pic->ram[P16E_RC1STA] & 0x10) == 0)
+      {  
+       pic->ram[P16E_RC1STA]&=~0x02; //clear OERR
+       pic->serialc=0;
+      }
+   }    
+
+
+   if(pic->rram == P16E_RC1REG)    
+    { 
+      switch(pic->recb)
+      {
+        case 1:
+          pic->ram[P16E_RC1REG]=0;
+          pic->ram[P16E_PIR1]&=~0x20; //clear RCIF
+          pic->recb--;    
+          break;
+        case 2:
+          pic->ram[P16E_RC1REG]=pic->RCREG2;
+          pic->RCREG2=0; 
+	  pic->recb--;    
+          break;
+        default:
+        break; 
+      }
+
+    }
+
+
+    pic->serialc++;
+    //FIXME P16 serial brg
+    /*
+    if((pic->ram[P16E_TX1STA] & 0x04) == 0x04)
+    {
+       //BRGH=1  start + 8 bits + stop
+       if(pic->serialc >= ((pic->ram[P16E_SP1BRG]+1)*40))pic->sr =1;
+    }
+    else
+    {
+       //BRGH=0  start + 8 bits + stop
+       if(pic->serialc >= ((pic->ram[P16E_SP1BRG]+1)*160))pic->sr =1;
+    }
+    */
+  
+    if(pic->sr ==1 )
+    {
+    
+     pic->serialc=0;
+     
+     
+     
+     if((pic->s_open != 0)&&((pic->ram[pic->pins[pic->usart[0]-1].port+0x80] &  (0x01 << pic->pins[pic->usart[0]-1].pord)) != 0))//work only if RX TRIS is set
+     {
+      if(serial_recbuff(pic,&rctemp) == 1)
+      {
+
+        if((pic->ram[P16E_RC1STA] & 0x12) == 0x10)//CREN=1  OERR=0 
+        { 
+         switch(pic->recb)
+         {
+         case 0: 
+           pic->ram[P16E_RC1REG]=rctemp;
+	   pic->RCREG2=0;
+           pic->recb++;
+           break;
+         case 1: 
+           pic->RCREG2=rctemp;
+           pic->recb++;
+           break; 
+         default: 
+           pic->ram[P16E_RC1STA]|=0x02; //set OERR
+           break; 
+          }
+        }
+        
+   //       printf("reb=%i temp=%02X RCREG=%02X RECREG2=%02X  RCSTA=%02X\n",pic->recb,rctemp,pic->ram[RCREG],pic->RCREG2,pic->ram[RCSTA]);
+        
+         if(((pic->ram[P16E_PIE1] & 0x20) == 0x20)&&((pic->ram[P16E_PIR1] & 0x20) != 0x20))
+         {
+           if(print)printf("serial rx interrupt (%#04X)\n",rctemp);
+         }
+         //set RCIF
+         pic->ram[P16E_PIR1]|=0x20;  
+      }
+     } 
+    
+      //if(((pic->ram[TXSTA] & 0x02) == 0 )&&((pic->ram[pic->pins[pic->usart[1]-1].port+0x80] &  (0x01 << pic->pins[pic->usart[1]-1].pord)) != 0))
+      if((pic->ram[P16E_TX1STA] & 0x02) == 0 )
+      {   
+        if(pic->s_open == 1 ) serial_send(pic,pic->txtemp);
+        pic->ram[P16E_TX1STA]|=0x02; //TRMT=1 empty  
+    
+        if(((pic->ram[P16E_PIE1] & 0x10) == 0x10)&&((pic->ram[P16E_PIR1] & 0x10) != 0x10))
+        {
+          if(print)printf("serial tx interrupt (%#04X)\n",pic->txtemp);
+        }
+        pic->ram[P16E_PIR1]|=0x10; //TXIF=1  
+      }   
+      pic->sr=0;
+    }
+
+//Hardware flowcontrol
+
+
+
+}
+
+
 
 void serial18(_pic * pic,int print)
 {
