@@ -88,7 +88,7 @@ main(int argc,char** argv)
             
     pic_set_serial(&pic1,"/dev/tnt2",0,0,0);
     
-    pic_init(&pic1,family,proc,argv[2],1,20e6);
+    pic_init(&pic1,proc,argv[2],1,20e6);
 
    /* 
    if(family == P16)
@@ -132,6 +132,7 @@ main(int argc,char** argv)
             printf("\n");
             break; 
           case P16E:   
+          case P16E2:     
             printf("PC=0x%04X W=\033[1;32m 0x%#02X \033[0m STATUS=0x%02X PORTA=0x%02X PORTB=0x%02X INTCON=\033[1;32m 0x%02X \033[0m TMR0=0x%02X TMR1H=0x%04X TMR1L=0x%04X OPTION=0x%04X\n",pic1.pc,pic1.w,
             pic1.ram[P16E_STATUS],pic1.ram[P16E_PORTA],pic1.ram[P16E_PORTB],pic1.ram[P16E_INTCON],pic1.ram[P16E_TMR0],pic1.ram[P16E_TMR1H],  
             pic1.ram[P16E_TMR1L],pic1.ram[P16E_OPTION_REG]);

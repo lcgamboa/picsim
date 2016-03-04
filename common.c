@@ -30,6 +30,7 @@
 #include"picsim.h"
 #include"periferic16.h"
 #include"periferic16e.h"
+#include"periferic16e2.h"
 #include"periferic18.h"
 
 
@@ -56,15 +57,15 @@ unsigned short * memsets(unsigned short * mem,unsigned short value, unsigned lon
 }
 
 int 
-pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, float freq)
+pic_init(_pic * pic, int processor, const char * fname, int lrom, float freq)
 {
    int i;
 
    pic->freq=freq;
    pic->processor=processor;
-   pic->family=family;
+   pic->family=getfprocbynumber(processor);
 
-   switch(family)
+   switch(pic->family)
    { 
    case P16: 
      switch(processor)
@@ -152,7 +153,28 @@ pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, fl
          pic->CCPCOUNT=2;
          pic->ADCCOUNT=12;
          pic->WDT_MS=1;
-       break;       
+       break;
+       default:
+         printf("unknown processor! 0x%04X\n",processor);
+         return 0;
+       break;
+       }
+     break;
+     case P16E2:
+       switch(processor)
+       {  
+       case P16F18855:
+         pic->ROMSIZE=8192;
+         pic->EEPROMSIZE=256;
+         pic->RAMSIZE=32768;// debug  banks !!!!
+         pic->PINCOUNT=28;
+         pic->IDSIZE=8;
+         pic->CONFIGSIZE=5;
+         pic->STACKSIZE=16;
+         pic->CCPCOUNT=5;
+         pic->ADCCOUNT=24;
+         pic->WDT_MS=1;
+       break;
        default:
          printf("unknown processor! 0x%04X\n",processor);
          return 0;
@@ -221,7 +243,7 @@ pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, fl
         }
         break;
      default:
-       printf("unknown family %d of processor 0X%04X!\n",family,processor);
+       printf("unknown family %d of processor 0X%04X!\n",pic->family,processor);
        return 0;
      }
 
@@ -237,14 +259,14 @@ pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, fl
    pic->usart=calloc(2,sizeof(char));
 
    /*zerar memória*/
-   switch(family)
+   switch(pic->family)
    {
      case P16:
      case P16E: 
+     case P16E2:    
        memsets(pic->prog,0x3FFF,pic->ROMSIZE); 
        memsets(pic->config,0x3FFF,pic->CONFIGSIZE); 
        memsets(pic->id,0x3FFF,pic->IDSIZE); 
-       break;
        break;
      case P18:
        memsets(pic->prog,0xFFFF,pic->ROMSIZE); 
@@ -275,10 +297,11 @@ pic_init(_pic * pic,char family, int processor, const char * fname, int lrom, fl
      return 0;
    }
    else
-     switch(family)
+     switch(pic->family)
      {
        case P16: 
        case P16E: 
+       case P16E2:     
          return read_ihx(pic,fname,lrom);
          break; 
        case P18: 
@@ -597,7 +620,7 @@ pic_reset(_pic * pic, int flags)
        pic->adc[11]=12;
        
        //Default values
-       
+     
        pic->ccp[0]= 5; 
        pic->ccp[1]= 7; 
       
@@ -610,6 +633,117 @@ pic_reset(_pic * pic, int flags)
 
        pic->t0cki=17;
        pic->t1cki=2;
+       
+       //FIXME P16E pin interrupt support
+/*
+       pic->int0=6;
+       pic->int1=0;
+       pic->int2=0;
+ */      
+       
+       break;
+     default:
+       break;
+    }
+    if(abs(flags) == 1)
+     {
+       pic->ram[(0x0000)|(P16_STATUS & 0x007F)]=0x18;
+       pic->ram[(0x0080)|(P16_STATUS & 0x007F)]=0x18;
+       pic->ram[(0x0100)|(P16_STATUS & 0x007F)]=0x18;
+       pic->ram[(0x0180)|(P16_STATUS & 0x007F)]=0x18;
+     }	
+
+     pic->ram[P16_TRISA]=0xFF; 
+     pic->ram[P16_TRISB]=0xFF; 
+     pic->ram[P16_TRISC]=0xFF; 
+     pic->ram[P16_TRISD]=0xFF; 
+     pic->ram[P16_TRISE]=0x07; 
+     pic->ram[P16_PR2]=0xFF; 
+     periferic16E_rst(pic);
+     break;
+    case P16E2:  
+    switch(pic->processor)
+    {   
+     case P16F18855: //QFN !!!!
+       pic->pins[ 0].port=P16E_PORTA;pic->pins[ 0].pord=2;
+       pic->pins[ 1].port=P16E_PORTA;pic->pins[ 1].pord=3;
+       pic->pins[ 2].port=P16E_PORTA;pic->pins[ 2].pord=4;
+       pic->pins[ 3].port=P16E_PORTA;pic->pins[ 3].pord=5;
+       pic->pins[ 4].port=0         ;pic->pins[ 4].pord=-1;
+       pic->pins[ 5].port=P16E_PORTA;pic->pins[ 5].pord=6;
+       pic->pins[ 6].port=P16E_PORTA;pic->pins[ 6].pord=7;
+       pic->pins[ 7].port=P16E_PORTC;pic->pins[ 7].pord=0;
+       pic->pins[ 8].port=P16E_PORTC;pic->pins[ 8].pord=1;
+       pic->pins[ 9].port=P16E_PORTC;pic->pins[ 9].pord=2;
+       pic->pins[10].port=P16E_PORTC;pic->pins[10].pord=3;
+       pic->pins[11].port=P16E_PORTC;pic->pins[11].pord=4;
+       pic->pins[12].port=P16E_PORTC;pic->pins[12].pord=5;
+       pic->pins[13].port=P16E_PORTC;pic->pins[13].pord=6;
+       pic->pins[14].port=P16E_PORTC;pic->pins[14].pord=7;
+       pic->pins[15].port=0         ;pic->pins[15].pord=-1;
+       pic->pins[16].port=0         ;pic->pins[16].pord=-1;
+       pic->pins[17].port=P16E_PORTB;pic->pins[17].pord=0;
+       pic->pins[18].port=P16E_PORTB;pic->pins[18].pord=1;
+       pic->pins[19].port=P16E_PORTB;pic->pins[19].pord=2;
+       pic->pins[20].port=P16E_PORTB;pic->pins[20].pord=3;
+       pic->pins[21].port=P16E_PORTB;pic->pins[21].pord=4;
+       pic->pins[22].port=P16E_PORTB;pic->pins[22].pord=5;
+       pic->pins[23].port=P16E_PORTB;pic->pins[23].pord=6;
+       pic->pins[24].port=P16E_PORTB;pic->pins[24].pord=7;
+       //pic->pins[25].port=P16E_PORTE;pic->pins[25].pord=3; //FIXME P16F18855 memory map is different of P16F1619 map!!!
+       pic->pins[26].port=P16E_PORTA;pic->pins[26].pord=0;
+       pic->pins[27].port=P16E_PORTA;pic->pins[27].pord=1;
+
+	
+       pic->pgc=17;
+       pic->pgd=18;
+       
+       pic->adc[0]=27;
+       pic->adc[1]=28;
+       pic->adc[2]=1;
+       pic->adc[3]=2;
+       pic->adc[4]=3;
+       pic->adc[5]=4;
+       pic->adc[6]=7;
+       pic->adc[7]=6;
+
+       pic->adc[8]=18;
+       pic->adc[9]=19;
+       pic->adc[10]=20;
+       pic->adc[11]=21;
+       pic->adc[12]=22;
+       pic->adc[13]=23;
+       pic->adc[14]=24;
+       pic->adc[15]=25;
+       
+       pic->adc[16]=8;
+       pic->adc[17]=9;
+       pic->adc[18]=10;
+       pic->adc[19]=11;
+       pic->adc[20]=12;
+       pic->adc[21]=13;
+       pic->adc[22]=14;
+       pic->adc[23]=15;
+
+
+       //Default values
+
+       pic->ccp[0]= 10; 
+       pic->ccp[1]= 9; 
+       pic->ccp[2]= 23; 
+       pic->ccp[3]= 18; 
+       pic->ccp[4]= 3; 
+      
+       pic->usart[0]=15;  
+       pic->usart[1]=0;  
+
+       pic->sck=11;
+       pic->sdo=0;
+       pic->sdi=12;
+
+       pic->t0cki=3;
+       pic->t1cki=8;
+       
        //FIXME P16E pin interrupt support
 /*
        pic->int0=6;
@@ -635,7 +769,7 @@ pic_reset(_pic * pic, int flags)
      pic->ram[P16_TRISD]=0xFF; 
      pic->ram[P16_TRISE]=0x07; 
      pic->ram[P16_PR2]=0xFF; 
-     periferic16_rst(pic);
+     periferic16E2_rst(pic);
 
      break; 
     case P18:
@@ -916,6 +1050,11 @@ pic_step(_pic * pic,int print)
       pic_decode_16E(pic,print);
       periferic16E_step_out(pic,print);
       break;  
+    case P16E2:  
+      periferic16E2_step_in(pic,print);
+      pic_decode_16E(pic,print);
+      periferic16E2_step_out(pic,print);
+      break;    
     case P18:
       periferic18_step_in(pic,print);
       pic_decode_18(pic,print);
@@ -986,6 +1125,7 @@ pic_set_pin(_pic * pic,unsigned char pin,unsigned char value)
              {
                 case P16:
                 case P16E: //FIXME verificar P16E set pin with ansel
+                case P16E2: //FIXME verificar P16E set pin with ansel    
                   pic->ram[pic->pins[(pin-1)].port | 0x100]=pic->ram[pic->pins[(pin-1)].port]; //espelhamento bank2 = bank0
                   break;
                 case P18: 

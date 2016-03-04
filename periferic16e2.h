@@ -26,12 +26,12 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-    
-void periferic16E_rst(_pic * pic);
-void periferic16E_step_in(_pic * pic,int print);
-void periferic16E_step_out(_pic * pic,int print);
 
-void serial16E(_pic * pic,int print);
+void periferic16E2_rst(_pic * pic);
+void periferic16E2_step_in(_pic * pic,int print);
+void periferic16E2_step_out(_pic * pic,int print);
+
+//void serial16E2(_pic * pic,int print);
 
 #ifdef __cplusplus
 }

@@ -60,9 +60,10 @@ unsigned char ovalue;    //defaut open pin value
 
 
 //family
-#define P16  1
-#define P18  2
-#define P16E 3
+#define P16   1
+#define P18   2
+#define P16E  3
+#define P16E2 4
 
 //P16 processors
 #define P16F84A      0x0560
@@ -76,6 +77,7 @@ unsigned char ovalue;    //defaut open pin value
 
 //P16E processors
 #define P16F1619     0x307D
+#define P16F18855    0X306C
 
 //P18 processors
 #define P18F452     0x0420
@@ -211,7 +213,7 @@ unsigned char ssp_bit;
 
 
 void pic_set_serial(_pic * pic, char * name, int flowcontrol,int ctspin,int  rtspin);
-int pic_init(_pic * pic,char family, int processor, const char * fname, int lrom,float freq);
+int pic_init(_pic * pic, int processor, const char * fname, int lrom,float freq);
 int pic_reset(_pic * pic,int flags);
 void pic_step(_pic * pic,int print);
 void pic_end(_pic * pic);
@@ -239,11 +241,14 @@ int getfprocbynumber(int proc);
 char * getnamebyproc(int proc,char *str);
 const char * getFSRname_16(unsigned int addr);
 const char * getFSRname_16E(unsigned int addr);
+const char * getFSRname_16E2(unsigned int addr);
 const char * getFSRname_18(unsigned int addr);
 
 #include"p16fxxx_defs.h"
 
 #include"p16fxxxe_defs.h"
+
+#include"p16fxxxe2_defs.h"
 
 #include"p18fxxx_defs.h"
 

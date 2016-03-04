@@ -28,7 +28,6 @@
 #include<string.h>
 
 #include"picsim.h"
-#include"periferic16e.h"
 
 
 void ReadIndf(_pic * pic, unsigned short *afsr)
@@ -1436,7 +1435,10 @@ pic_decode_16E(_pic * pic,int print)
   {
     if(pic->rram <= 0x0FFF)
     {
-      printf("mem read  %#06X: %10s= %#06X\n",pic->rram,getFSRname_16E(pic->rram),pic->ram[pic->rram]);
+      if(pic->family == P16E)  
+        printf("mem read  %#06X: %10s= %#06X\n",pic->rram,getFSRname_16E(pic->rram),pic->ram[pic->rram]);
+      else
+        printf("mem read  %#06X: %10s= %#06X\n",pic->rram,getFSRname_16E2(pic->rram),pic->ram[pic->rram]);  
     }
     else
     {
@@ -1462,7 +1464,10 @@ pic_decode_16E(_pic * pic,int print)
   {
     if(pic->lram <= 0x0FFF)  
     {
-      printf("mem write %#06X: %10s= %#06X\n",pic->lram,getFSRname_16E(pic->lram),pic->ram[pic->lram]);
+      if(pic->family == P16E)    
+        printf("mem write %#06X: %10s= %#06X\n",pic->lram,getFSRname_16E(pic->lram),pic->ram[pic->lram]);
+      else
+        printf("mem write %#06X: %10s= %#06X\n",pic->lram,getFSRname_16E2(pic->lram),pic->ram[pic->lram]);          
     }
     else
     {

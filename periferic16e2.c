@@ -35,7 +35,7 @@ extern const int fpw2[];
 extern void pic_decode_16E(_pic * pic,int print);
 
 int 
-pic_wr_pin16E(_pic * pic,unsigned char pin,unsigned char value)
+pic_wr_pin16E2(_pic * pic,unsigned char pin,unsigned char value)
 {
    unsigned char val;
 
@@ -60,44 +60,44 @@ pic_wr_pin16E(_pic * pic,unsigned char pin,unsigned char value)
 
 
 
-int interrupt16E(_pic * pic,int print)
+int interrupt16E2(_pic * pic,int print)
 {
 //interrupt
   //GIE
-  if(pic->ram[P16E_INTCON] & 0x80)
+  if(pic->ram[P16E2_INTCON] & 0x80)
   {
     //T0IE  T0IF
-    if((pic->ram[P16E_INTCON]&0x20)&&(pic->ram[P16E_INTCON]&0x04)) return 1;
+    if((pic->ram[P16E2_INTCON]&0x20)&&(pic->ram[P16E2_INTCON]&0x04)) return 1;
     //INTE INTF
-    if((pic->ram[P16E_INTCON]&0x10)&&(pic->ram[P16E_INTCON]&0x02)) return 1;
+    if((pic->ram[P16E2_INTCON]&0x10)&&(pic->ram[P16E2_INTCON]&0x02)) return 1;
     //RBIE
-    if((pic->ram[P16E_INTCON]&0x08)&&(pic->ram[P16E_INTCON]&0x01)) return 1;
+    if((pic->ram[P16E2_INTCON]&0x08)&&(pic->ram[P16E2_INTCON]&0x01)) return 1;
     //PEIE	
-    if(pic->ram[P16E_INTCON] & 0x40)
+    if(pic->ram[P16E2_INTCON] & 0x40)
     {
       //EEIE
-      //if((pic->ram[P16E_PIE1] & 0x80)&&(pic->ram[P16E_PIR1] & 0x80)) return 1;
+      //if((pic->ram[P16E2_PIE1] & 0x80)&&(pic->ram[P16E2_PIR1] & 0x80)) return 1;
       //CMIE CMIF
-      //if((pic->ram[P16E_PIE1] & 0x40)&&(pic->ram[P16E_PIR1] & 0x40)) return 1;
+      //if((pic->ram[P16E2_PIE1] & 0x40)&&(pic->ram[P16E2_PIR1] & 0x40)) return 1;
       //ADIE ADIF 
-      if((pic->ram[P16E_PIE1] & 0x40)&&(pic->ram[P16E_PIR1] & 0x40)) return 1;
+      if((pic->ram[P16E2_PIE1] & 0x40)&&(pic->ram[P16E2_PIR1] & 0x40)) return 1;
       //RCIE RCIF
-      if((pic->ram[P16E_PIE1] & 0x20)&&(pic->ram[P16E_PIR1] & 0x20)) return 1;
+      if((pic->ram[P16E2_PIE1] & 0x20)&&(pic->ram[P16E2_PIR1] & 0x20)) return 1;
       //TXIE TXIF
-      if((pic->ram[P16E_PIE1] & 0x10)&&(pic->ram[P16E_PIR1] & 0x10)) return 1;
+      if((pic->ram[P16E2_PIE1] & 0x10)&&(pic->ram[P16E2_PIR1] & 0x10)) return 1;
       //SSPIE
-      if((pic->ram[P16E_PIE1] & 0x08)&&(pic->ram[P16E_PIR1] & 0x08)) return 1;
+      if((pic->ram[P16E2_PIE1] & 0x08)&&(pic->ram[P16E2_PIR1] & 0x08)) return 1;
       //CCP1IE CCP1IF
-      if((pic->ram[P16E_PIE1] & 0x04)&&(pic->ram[P16E_PIR1] & 0x04)) return 1;
+      if((pic->ram[P16E2_PIE1] & 0x04)&&(pic->ram[P16E2_PIR1] & 0x04)) return 1;
       //TMR2IE TMR2IF
-      if((pic->ram[P16E_PIE1] & 0x02)&&(pic->ram[P16E_PIR1] & 0x02)) return 1;
+      if((pic->ram[P16E2_PIE1] & 0x02)&&(pic->ram[P16E2_PIR1] & 0x02)) return 1;
       //TMR1IE TMR1IF
-      if((pic->ram[P16E_PIE1] & 0x01)&&(pic->ram[P16E_PIR1] & 0x01)) return 1;
+      if((pic->ram[P16E2_PIE1] & 0x01)&&(pic->ram[P16E2_PIR1] & 0x01)) return 1;
 
       //CCP2IE CCP2IF
-      if((pic->ram[P16E_PIE2] & 0x01)&&(pic->ram[P16E_PIR2] & 0x01)) return 1;
+      if((pic->ram[P16E2_PIE2] & 0x01)&&(pic->ram[P16E2_PIR2] & 0x01)) return 1;
       //CCP3IE CCP3IF
-      if((pic->ram[P16E_PIE2] & 0x02)&&(pic->ram[P16E_PIR2] & 0x02)) return 1;
+      if((pic->ram[P16E2_PIE2] & 0x02)&&(pic->ram[P16E2_PIR2] & 0x02)) return 1;
     }
   
   }
@@ -106,7 +106,7 @@ int interrupt16E(_pic * pic,int print)
 }
 
 void
-periferic16E_rst(_pic * pic)
+periferic16E2_rst(_pic * pic)
 {
 
 pic->debug=0;
@@ -163,7 +163,7 @@ pic->frst=1;
 
 
 void 
-periferic16E_step_in(_pic * pic,int print)
+periferic16E2_step_in(_pic * pic,int print)
 {
 //int i;
 float val;
@@ -174,8 +174,8 @@ short dval;
 //DEBUG
  if((pic->config[0] & 0x0800) == 0) //DEBUG ON
  {
-   if(pic->debug == 1)pic->ram[P16E_ICKBUG]|=0x80;
-   pic->ram[P16E_TRISB]|=0xC0;
+   if(pic->debug == 1)pic->ram[P16E2_ICKBUG]|=0x80;
+   pic->ram[P16E2_TRISB]|=0xC0;
  } 
 */
 
@@ -184,17 +184,17 @@ if((pic->processor == P16F877)||(pic->processor == P16F877A)||(pic->processor ==
 {
 //MSSP
 
- if((pic->ram[P16E_SSPCON] & 0x20) ==0x20) //SSPEN
+ if((pic->ram[P16E2_SSPCON] & 0x20) ==0x20) //SSPEN
  {
     
-    if((pic->ram[P16E_SSPCON] & 0x0F) ==0x05)//SLAVE Without SS
+    if((pic->ram[P16E2_SSPCON] & 0x0F) ==0x05)//SLAVE Without SS
     {
    
       pic->pins[pic->sdi-1].dir=PD_IN; 	
  
-      if(pic->rram == P16E_SSPBUF)
+      if(pic->rram == P16E2_SSPBUF)
       {
-         pic->ram[P16E_SSPSTAT]&=~0x01; //BF
+         pic->ram[P16E2_SSPSTAT]&=~0x01; //BF
       } 	
 
         pic->ssp_scka=pic->ssp_sck; 
@@ -203,7 +203,7 @@ if((pic->processor == P16F877)||(pic->processor == P16F877A)||(pic->processor ==
 
 	if((pic->ssp_scka == 0)&&(pic->ssp_sck == 1)) //CKP =0 CKE =0     //coloca saida na borda de subida
         {
-           pic_wr_pin(pic,pic->sdo, ((pic->ram[P16E_SSPBUF] & (1 <<(7-pic->ssp_bit))) > 0));
+           pic_wr_pin(pic,pic->sdo, ((pic->ram[P16E2_SSPBUF] & (1 <<(7-pic->ssp_bit))) > 0));
         }
 
 
@@ -219,26 +219,26 @@ if((pic->processor == P16F877)||(pic->processor == P16F877A)||(pic->processor ==
 	if(pic->ssp_bit >= 8)
         {
 //	   printf("MSSP TX=%#02X  RX=%#02X\n",pic->ram[SSPBUF],pic->sspsr);
-           pic->ram[P16E_SSPBUF]=pic->sspsr;
+           pic->ram[P16E2_SSPBUF]=pic->sspsr;
            pic->sspsr =0;
-	   pic->ram[P16E_SSPSTAT]|=0x01; //BF
+	   pic->ram[P16E2_SSPSTAT]|=0x01; //BF
            
            //PSPIF
-           pic->ram[P16E_PIR1]|=0x08;
+           pic->ram[P16E2_PIR1]|=0x08;
 	   pic->ssp_bit=0;
         }
 	
 
     }
-    else if((pic->ram[P16E_SSPCON] & 0x0F) ==0x08)//MASTER i2c
+    else if((pic->ram[P16E2_SSPCON] & 0x0F) ==0x08)//MASTER i2c
     {
       
        pic->ssp_sck++;
 
-       if(pic->ssp_sck == ((pic->ram[P16E_SSPADD]+1/2)-1))
+       if(pic->ssp_sck == ((pic->ram[P16E2_SSPADD]+1/2)-1))
        {
        
-         if((pic->ram[P16E_SSPCON2] & 0x01)) //start
+         if((pic->ram[P16E2_SSPCON2] & 0x01)) //start
          {
            pic->pins[pic->sck-1].dir=PD_OUT; 	
            pic->pins[pic->sdi-1].dir=PD_OUT; 	
@@ -247,14 +247,14 @@ if((pic->processor == P16F877)||(pic->processor == P16F877A)||(pic->processor ==
         
            //printf("I2C_start 1\n");
          }
-         else if((pic->ram[P16E_SSPCON2] & 0x02)) //restart
+         else if((pic->ram[P16E2_SSPCON2] & 0x02)) //restart
          {
            pic->pins[pic->sdi-1].dir=PD_OUT; 	
            pic->pins[pic->sdi-1].value=1;
            pic->pins[pic->sck-1].value=1;
            //printf("restar1\n");
          } 
-         else if((pic->ram[P16E_SSPCON2] & 0x04)) //stop
+         else if((pic->ram[P16E2_SSPCON2] & 0x04)) //stop
          {
            pic->pins[pic->sdi-1].dir=PD_OUT; 	
            pic->pins[pic->sdi-1].value=0;
@@ -263,29 +263,29 @@ if((pic->processor == P16F877)||(pic->processor == P16F877A)||(pic->processor ==
          } 
        }
 
-       if(pic->ssp_sck == ((pic->ram[P16E_SSPADD]+1/2)+1))
+       if(pic->ssp_sck == ((pic->ram[P16E2_SSPADD]+1/2)+1))
        {
        
-         if((pic->ram[P16E_SSPCON2] & 0x01)) //start
+         if((pic->ram[P16E2_SSPCON2] & 0x01)) //start
          {
-           pic->ram[P16E_SSPCON2] &=~ 0x01;
+           pic->ram[P16E2_SSPCON2] &=~ 0x01;
            
            pic->pins[pic->sdi-1].value=0;
            pic->pins[pic->sck-1].value=1;
            
            //printf("start 2\n");
          }
-         else if((pic->ram[P16E_SSPCON2] & 0x02)) //restart
+         else if((pic->ram[P16E2_SSPCON2] & 0x02)) //restart
          {
-           pic->ram[P16E_SSPCON2] &=~ 0x02;
+           pic->ram[P16E2_SSPCON2] &=~ 0x02;
 
            pic->pins[pic->sdi-1].value=0;
            pic->pins[pic->sck-1].value=1;
            //printf("restart 2\n");
          } 
-         else if((pic->ram[P16E_SSPCON2] & 0x04)) //stop
+         else if((pic->ram[P16E2_SSPCON2] & 0x04)) //stop
          {
-           pic->ram[P16E_SSPCON2] &=~ 0x04;
+           pic->ram[P16E2_SSPCON2] &=~ 0x04;
          
            pic->ssp_bit=10;
 
@@ -298,44 +298,44 @@ if((pic->processor == P16F877)||(pic->processor == P16F877A)||(pic->processor ==
  
 
 
-        if(pic->lram == P16E_SSPBUF)
+        if(pic->lram == P16E2_SSPBUF)
         {
-         pic->ram[P16E_SSPSTAT]|=0x04; //R/W
+         pic->ram[P16E2_SSPSTAT]|=0x04; //R/W
          //printf("SPPBUF write (%#02X)!!!!\n",pic->ram[SSPBUF]);	
          pic->ssp_bit=0;
          pic->pins[pic->sdi-1].dir=PD_OUT; 	
-         pic->ram[P16E_SSPSTAT]|=0x01; //BF
+         pic->ram[P16E2_SSPSTAT]|=0x01; //BF
         } 	
        
-        if(!(pic->ram[P16E_SSPCON2] & 0x08)) pic->ssp_scka=0;
+        if(!(pic->ram[P16E2_SSPCON2] & 0x08)) pic->ssp_scka=0;
 
-        if((pic->ram[P16E_SSPCON2] & 0x08) && (pic->ssp_scka == 0))
+        if((pic->ram[P16E2_SSPCON2] & 0x08) && (pic->ssp_scka == 0))
         {
           pic->ssp_bit=0;
 
           //printf("read\n");
-          pic->ram[P16E_SSPBUF]=0;
+          pic->ram[P16E2_SSPBUF]=0;
           pic->pins[pic->sdi-1].dir=PD_IN; 	
           pic->ssp_ck=pic->pins[pic->sck-1].value;
-          pic->ram[P16E_SSPSTAT]&=~0x01; //BF
+          pic->ram[P16E2_SSPSTAT]&=~0x01; //BF
 
           pic->ssp_scka=1;
         }
 
 
-       if(pic->ssp_sck > pic->ram[P16E_SSPADD])
+       if(pic->ssp_sck > pic->ram[P16E2_SSPADD])
        {
           pic->ssp_sck=0;
 
         //write
-        if(( (pic->ram[P16E_SSPSTAT] & 0x04) )&&( pic->ssp_bit <= 9))
+        if(( (pic->ram[P16E2_SSPSTAT] & 0x04) )&&( pic->ssp_bit <= 9))
         {
            pic->pins[pic->sck-1].value^=0x01;
 
 
            if((pic->pins[pic->sck-1].value == 0)&&(pic->ssp_bit <= 8))
            {
-             pic->pins[pic->sdi-1].value=(pic->ram[P16E_SSPBUF] & (0x01<<(7-pic->ssp_bit))) >0; 
+             pic->pins[pic->sdi-1].value=(pic->ram[P16E2_SSPBUF] & (0x01<<(7-pic->ssp_bit))) >0; 
              pic->ssp_bit++;
              if(pic->ssp_bit ==9)
              { 
@@ -347,13 +347,13 @@ if((pic->processor == P16F877)||(pic->processor == P16F877A)||(pic->processor ==
            if((pic->pins[pic->sck-1].value == 1)&&(pic->ssp_bit  > 8))
            {
              if(pic->pins[pic->sdi-1].value)
-               pic->ram[P16E_SSPCON2]|=0x40; //ACKSTAT
+               pic->ram[P16E2_SSPCON2]|=0x40; //ACKSTAT
              else
-               pic->ram[P16E_SSPCON2]&=~0x40; //ACKSTAT
+               pic->ram[P16E2_SSPCON2]&=~0x40; //ACKSTAT
 
-             pic->ram[P16E_SSPSTAT]&=~0x04; //R/W
-             pic->ram[P16E_PIR1]|=0x08;//SSPIF
-             pic->ram[P16E_SSPSTAT]&=~0x01; //BF
+             pic->ram[P16E2_SSPSTAT]&=~0x04; //R/W
+             pic->ram[P16E2_PIR1]|=0x08;//SSPIF
+             pic->ram[P16E2_SSPSTAT]&=~0x01; //BF
              pic->ssp_bit++;
            }
 
@@ -361,7 +361,7 @@ if((pic->processor == P16F877)||(pic->processor == P16F877A)||(pic->processor ==
         }
        
       //read 
-        if(((pic->ram[P16E_SSPCON2] & 0x08)||(pic->ram[P16E_SSPCON2]& 0x10))&&( pic->ssp_bit <= 9))
+        if(((pic->ram[P16E2_SSPCON2] & 0x08)||(pic->ram[P16E2_SSPCON2]& 0x10))&&( pic->ssp_bit <= 9))
         {
            //printf("sck 1 =%i\n", pic->pins[pic->sck-1].value);
            pic->ssp_ck^=0x01;
@@ -375,27 +375,27 @@ if((pic->processor == P16F877)||(pic->processor == P16F877A)||(pic->processor ==
 
            if((pic->pins[pic->sck-1].value == 1)&&(pic->ssp_bit <= 8))
            {
-             pic->ram[P16E_SSPBUF]|=(pic->pins[pic->sdi-1].value << (8 -pic->ssp_bit));             
+             pic->ram[P16E2_SSPBUF]|=(pic->pins[pic->sdi-1].value << (8 -pic->ssp_bit));             
              if(pic->ssp_bit == 8)
              {
-                pic->ram[P16E_SSPCON2]&=~0x10;//ACKDT
-                pic->ram[P16E_PIR1]|=0x08;//SSPIF
+                pic->ram[P16E2_SSPCON2]&=~0x10;//ACKDT
+                pic->ram[P16E2_PIR1]|=0x08;//SSPIF
                 pic->ssp_bit++;
                
-                 pic->ram[P16E_SSPCON2]&=~0x08;
-                pic->ram[P16E_SSPSTAT]|=0x01; //BF
+                 pic->ram[P16E2_SSPCON2]&=~0x08;
+                pic->ram[P16E2_SSPSTAT]|=0x01; //BF
                 //printf("recebido1 %02X\n",pic->ram[SSPBUF]);
              }
            }
 
-           if((pic->ram[P16E_SSPCON2]& 0x10)&&(pic->pins[pic->sck-1].value == 1)&&(pic->ssp_bit  > 8))
+           if((pic->ram[P16E2_SSPCON2]& 0x10)&&(pic->pins[pic->sck-1].value == 1)&&(pic->ssp_bit  > 8))
            {
              pic->pins[pic->sdi-1].dir=PD_OUT; 	
-             pic->pins[pic->sdi-1].value=(pic->ram[P16E_SSPCON2]&0x20) >0 ;
-             pic->ram[P16E_PIR1]|=0x08;//SSPIF
+             pic->pins[pic->sdi-1].value=(pic->ram[P16E2_SSPCON2]&0x20) >0 ;
+             pic->ram[P16E2_PIR1]|=0x08;//SSPIF
              pic->ssp_bit++;
 
-             pic->ram[P16E_SSPCON2]&=~0x10;//ACKDT
+             pic->ram[P16E2_SSPCON2]&=~0x10;//ACKDT
 
            }
 
@@ -417,7 +417,7 @@ if((pic->processor == P16F877)||(pic->processor == P16F877A)||(pic->processor ==
     }
     else //Unknown
     {
-	printf(" %#02X SPI mode not implemented!\n",(pic->ram[P16E_SSPCON] & 0x0F));
+	printf(" %#02X SPI mode not implemented!\n",(pic->ram[P16E2_SSPCON] & 0x0F));
 	
     } 
  }
@@ -437,14 +437,14 @@ if((pic->processor == P16F877)||(pic->processor == P16F877A)||(pic->processor ==
   if(pic->ADCCOUNT > 0 )  
   {
 
-  if((pic->ram[P16E_ADCON0] & 0x03 ) == 0x03) // ADON and GO/DONE
+  if((pic->ram[P16E2_ADCON0] & 0x03 ) == 0x03) // ADON and GO/DONE
   {
    pic->adcstep++;
    if(pic->adcstep > 10 )
    {
 
  
-     chn=(pic->ram[P16E_ADCON0]&0x7C)>>2;
+     chn=(pic->ram[P16E2_ADCON0]&0x7C)>>2;
  
      if(pic->pins[pic->adc[chn]-1].ptype == PT_ANALOG)  
      {
@@ -457,22 +457,22 @@ if((pic->processor == P16F877)||(pic->processor == P16F877A)||(pic->processor ==
 
       dval=((1023*val)/5.0);
    
-      if((pic->ram[P16E_ADCON1]&0x80) == 0x80)
+      if((pic->ram[P16E2_ADCON1]&0x80) == 0x80)
       { 
-        pic->ram[P16E_ADRESH]=(dval & 0xFF00)>>8;   	
-        pic->ram[P16E_ADRESL]=(dval & 0x00FF);   	
+        pic->ram[P16E2_ADRESH]=(dval & 0xFF00)>>8;   	
+        pic->ram[P16E2_ADRESL]=(dval & 0x00FF);   	
       }
       else
       {
         dval= dval <<6;	
-        pic->ram[P16E_ADRESH]=(dval & 0xFF00)>>8;   	
-        pic->ram[P16E_ADRESL]=(dval & 0x00FF);   	
+        pic->ram[P16E2_ADRESH]=(dval & 0xFF00)>>8;   	
+        pic->ram[P16E2_ADRESL]=(dval & 0x00FF);   	
       }
     
-      pic->ram[P16E_ADCON0]&= ~0x02;
+      pic->ram[P16E2_ADCON0]&= ~0x02;
  
       //ADIF
-      pic->ram[P16E_PIR1]|=0x40; 
+      pic->ram[P16E2_PIR1]|=0x40; 
 
       pic->adcstep=0;
 
@@ -489,10 +489,10 @@ if((pic->processor == P16F877)||(pic->processor == P16F877A)||(pic->processor ==
   //FIXME P16E ADC replace for ANSELX
   pic->pins[pic->adc[4]-1].ptype=PT_ANALOG; //REMOVE THIS, ONLY for test
 /*  
-  if((pic->ram[P16E_ADCON1]&0x0F) != pic->adcon1)
+  if((pic->ram[P16E2_ADCON1]&0x0F) != pic->adcon1)
   {
 
-    switch(pic->ram[P16E_ADCON1]&0x0F)
+    switch(pic->ram[P16E2_ADCON1]&0x0F)
     {
       case 0:
 	pic->pins[pic->adc[0]-1].ptype=PT_ANALOG;
@@ -647,7 +647,7 @@ if((pic->processor == P16F877)||(pic->processor == P16F877A)||(pic->processor ==
 	break;
    } 
 
-    pic->adcon1=pic->ram[P16E_ADCON1]&0x0F;	
+    pic->adcon1=pic->ram[P16E2_ADCON1]&0x0F;	
    }
   
   };
@@ -661,12 +661,12 @@ if((pic->processor == P16F877)||(pic->processor == P16F877A)||(pic->processor ==
  
    if((pic->pins[pic->int0-1].dir == PD_IN)&&(pic->pins[pic->int0-1].value  != pic->int0v))
    {
-     if(((!pic->int0v) &&(pic->ram[P16E_OPTION] & 0x40))||((pic->int0v) && (!(pic->ram[P16E_OPTION] & 0x40))))
+     if(((!pic->int0v) &&(pic->ram[P16E2_OPTION] & 0x40))||((pic->int0v) && (!(pic->ram[P16E2_OPTION] & 0x40))))
      {
-        pic->ram[(0x0000)|(P16E_INTCON & 0x007F)]|=0x02;//INTF
-        pic->ram[(0x0080)|(P16E_INTCON & 0x007F)]|=0x02;
-        pic->ram[(0x0100)|(P16E_INTCON & 0x007F)]|=0x02;
-        pic->ram[(0x0180)|(P16E_INTCON & 0x007F)]|=0x02;
+        pic->ram[(0x0000)|(P16E2_INTCON & 0x007F)]|=0x02;//INTF
+        pic->ram[(0x0080)|(P16E2_INTCON & 0x007F)]|=0x02;
+        pic->ram[(0x0100)|(P16E2_INTCON & 0x007F)]|=0x02;
+        pic->ram[(0x0180)|(P16E2_INTCON & 0x007F)]|=0x02;
      } 
    } 
    pic->int0v=pic->pins[pic->int0-1].value;
@@ -674,13 +674,13 @@ if((pic->processor == P16F877)||(pic->processor == P16F877A)||(pic->processor ==
 
 /*
 //PORTB
-if((pic->ram[P16E_PORTB]&pic->ram[P16E_TRISB]&0xF0) != (pic->portb&pic->ram[P16E_TRISB]&0xF0)) 
+if((pic->ram[P16E2_PORTB]&pic->ram[P16E2_TRISB]&0xF0) != (pic->portb&pic->ram[P16E2_TRISB]&0xF0)) 
 {
   pic->portbm=1;
 }
 
 
-if(pic->rram == P16E_PORTB)
+if(pic->rram == P16E2_PORTB)
 {
   pic->portbm=0;
   //Only disable mismatch
@@ -693,12 +693,12 @@ if(pic->rram == P16E_PORTB)
 
 if(pic->portbm)
 {
-  pic->ram[(0x0000)|(P16E_INTCON & 0x007F)]|=0x01;//RBIF
-  pic->ram[(0x0080)|(P16E_INTCON & 0x007F)]|=0x01;
+  pic->ram[(0x0000)|(P16E2_INTCON & 0x007F)]|=0x01;//RBIF
+  pic->ram[(0x0080)|(P16E2_INTCON & 0x007F)]|=0x01;
   if(pic->processor != P16F84A)
   {
-    pic->ram[(0x0100)|(P16E_INTCON & 0x007F)]|=0x01;
-    pic->ram[(0x0180)|(P16E_INTCON & 0x007F)]|=0x01;
+    pic->ram[(0x0100)|(P16E2_INTCON & 0x007F)]|=0x01;
+    pic->ram[(0x0180)|(P16E2_INTCON & 0x007F)]|=0x01;
   }
 }  
 
@@ -706,83 +706,83 @@ if(pic->portbm)
 
  
 
-
+/*
 //TMR0
 
-  if(((pic->ram[P16E_OPTION_REG] & 0x20) == 0x00 )||  //TOCS=FOSC/4
-    (((pic->ram[P16E_OPTION_REG] & 0x30) == 0x20 )&&((pic->t0cki_ == 0)&&(pic->pins[pic->t0cki-1].value == 1)))|| //T0CS=t0cki  T0SE =0
-    (((pic->ram[P16E_OPTION_REG] & 0x30) == 0x30 )&&((pic->t0cki_ == 1)&&(pic->pins[pic->t0cki-1].value == 0))))  //T0CS=t0cki  T0SE =1
+  if(((pic->ram[P16E2_OPTION_REG] & 0x20) == 0x00 )||  //TOCS=FOSC/4
+    (((pic->ram[P16E2_OPTION_REG] & 0x30) == 0x20 )&&((pic->t0cki_ == 0)&&(pic->pins[pic->t0cki-1].value == 1)))|| //T0CS=t0cki  T0SE =0
+    (((pic->ram[P16E2_OPTION_REG] & 0x30) == 0x30 )&&((pic->t0cki_ == 1)&&(pic->pins[pic->t0cki-1].value == 0))))  //T0CS=t0cki  T0SE =1
   { 
      pic->cp0++;
 
-     if(pic->lram == P16E_TMR0)pic->cp0=0; //RESET prescaler	 
+     if(pic->lram == P16E2_TMR0)pic->cp0=0; //RESET prescaler	 
 
-     if((pic->ram[P16E_OPTION_REG] & 0x08) == 0x08) //PSA
+     if((pic->ram[P16E2_OPTION_REG] & 0x08) == 0x08) //PSA
      {            
         //Without prescaler  
-        if(((pic->ram[P16E_TMR0]+1) == 0x100))
+        if(((pic->ram[P16E2_TMR0]+1) == 0x100))
         {
-             pic->ram[(0x0000)|(P16E_INTCON & 0x007F)]|=0x04;//T0IF
-             pic->ram[(0x0080)|(P16E_INTCON & 0x007F)]|=0x04;
+             pic->ram[(0x0000)|(P16E2_INTCON & 0x007F)]|=0x04;//T0IF
+             pic->ram[(0x0080)|(P16E2_INTCON & 0x007F)]|=0x04;
              if(pic->processor != P16F84A)
              { 
-               pic->ram[(0x0100)|(P16E_INTCON & 0x007F)]|=0x04;
-               pic->ram[(0x0180)|(P16E_INTCON & 0x007F)]|=0x04;
+               pic->ram[(0x0100)|(P16E2_INTCON & 0x007F)]|=0x04;
+               pic->ram[(0x0180)|(P16E2_INTCON & 0x007F)]|=0x04;
              }; 
         }
-        pic->ram[P16E_TMR0]++;
+        pic->ram[P16E2_TMR0]++;
         pic->cp0=0;
      }
      else
      {  
         //With prescaler 
-        if(pic->cp0 >= 2*(fpw2[pic->ram[P16E_OPTION_REG]&0x07]) )
+        if(pic->cp0 >= 2*(fpw2[pic->ram[P16E2_OPTION_REG]&0x07]) )
         {
-          if(((pic->ram[P16E_TMR0]+1) == 0x100))
+          if(((pic->ram[P16E2_TMR0]+1) == 0x100))
           {
-             pic->ram[(0x0000)|(P16E_INTCON & 0x007F)]|=0x04;//T0IF
-             pic->ram[(0x0080)|(P16E_INTCON & 0x007F)]|=0x04;
+             pic->ram[(0x0000)|(P16E2_INTCON & 0x007F)]|=0x04;//T0IF
+             pic->ram[(0x0080)|(P16E2_INTCON & 0x007F)]|=0x04;
              if(pic->processor != P16F84A)
              { 
-               pic->ram[(0x0100)|(P16E_INTCON & 0x007F)]|=0x04;
-               pic->ram[(0x0180)|(P16E_INTCON & 0x007F)]|=0x04;
+               pic->ram[(0x0100)|(P16E2_INTCON & 0x007F)]|=0x04;
+               pic->ram[(0x0180)|(P16E2_INTCON & 0x007F)]|=0x04;
              }
           }
-          pic->ram[P16E_TMR0]++;
+          pic->ram[P16E2_TMR0]++;
           pic->cp0=0;
         }
      }
   } 
   pic->t0cki_=pic->pins[pic->t0cki-1].value;
-
+*/
 
 
 //TMR1
 
-  if(((pic->ram[P16E_T1CON] & 0x03) == 0x01 )||  //TMRICS=FOSC/4 TMREN=1
-    (((pic->ram[P16E_T1CON] & 0x03) == 0x03 )&&((pic->t1cki_ == 0)&&(pic->pins[pic->t1cki-1].value == 1)))) //TMRICS=t1cki  TMREN=1
+  if(((pic->ram[P16E2_T1CON] & 0x03) == 0x01 )||  //TMRICS=FOSC/4 TMREN=1
+    (((pic->ram[P16E2_T1CON] & 0x03) == 0x03 )&&((pic->t1cki_ == 0)&&(pic->pins[pic->t1cki-1].value == 1)))) //TMRICS=t1cki  TMREN=1
   {
      pic->cp1++;
      
-     if(pic->cp1 >= fpw2[(pic->ram[P16E_T1CON]&0x30)>>4]) 
+     if(pic->cp1 >= fpw2[(pic->ram[P16E2_T1CON]&0x30)>>4]) 
      {
-       pic->ram[P16E_TMR1L]++;
-       if(pic->ram[P16E_TMR1L] == 0)
+       pic->ram[P16E2_TMR1L]++;
+       if(pic->ram[P16E2_TMR1L] == 0)
        {
-        if((pic->ram[P16E_TMR1H]+1) == 0x100)pic->ram[P16E_PIR1]|=0x01;//TMR1IF
-        pic->ram[P16E_TMR1H]++;
+        if((pic->ram[P16E2_TMR1H]+1) == 0x100)pic->ram[P16E2_PIR1]|=0x01;//TMR1IF
+        pic->ram[P16E2_TMR1H]++;
        }
        pic->cp1=0;
      }
 
 //CCP - only when TMR1 is ON
 //CCP1 compare modes 
-     if((pic->CCPCOUNT >= 1)&&(pic->ccp[0] > 0)&&((pic->ram[P16E_CCP1CON] & 0x0C) == 0x08))
+     if((pic->CCPCOUNT >= 1)&&(pic->ccp[0] > 0)&&((pic->ram[P16E2_CCP1CON] & 0x0C) == 0x08))
      {
-       if((pic->ram[P16E_TMR1H]==pic->ram[P16E_CCP1RH])&&(pic->ram[P16E_TMR1L]==pic->ram[P16E_CCP1RL]))//match !!
+       if((pic->ram[P16E2_TMR1H]==pic->ram[P16E2_CCPR1H])&&(pic->ram[P16E2_TMR1L]==pic->ram[P16E2_CCPR1L]))//match !!
        {
-          pic->ram[P16E_PIR1]|=0x04;//CCP1IF
-          switch(pic->ram[P16E_CCP1CON] & 0x03)
+          pic->ram[P16E2_PIR1]|=0x04;//CCP1IF
+          switch(pic->ram[P16E2_CCP1CON] & 0x03)
           {
             case 0://set output
               if(pic->pins[pic->ccp[0]-1].dir == PD_OUT)
@@ -795,19 +795,19 @@ if(pic->portbm)
             case 2://software interrupt
               break;
             case 3://trigger special event
-              pic->ram[P16E_TMR1H]=0;
-              pic->ram[P16E_TMR1L]=0;
+              pic->ram[P16E2_TMR1H]=0;
+              pic->ram[P16E2_TMR1L]=0;
               break;
           }
        }
      }
 //CCP2 compare modes 
-     if((pic->CCPCOUNT >= 2)&&(pic->ccp[1] > 0)&&((pic->ram[P16E_CCP2CON] & 0x0C) == 0x08))
+     if((pic->CCPCOUNT >= 2)&&(pic->ccp[1] > 0)&&((pic->ram[P16E2_CCP2CON] & 0x0C) == 0x08))
      {
-       if((pic->ram[P16E_TMR1H]==pic->ram[P16E_CCP2RH])&&(pic->ram[P16E_TMR1L]==pic->ram[P16E_CCP2RL]))//match !!
+       if((pic->ram[P16E2_TMR1H]==pic->ram[P16E2_CCPR2H])&&(pic->ram[P16E2_TMR1L]==pic->ram[P16E2_CCPR2L]))//match !!
        {
-          pic->ram[P16E_PIR2]|=0x01;//CCP2IF
-          switch(pic->ram[P16E_CCP2CON] & 0x03)
+          pic->ram[P16E2_PIR2]|=0x01;//CCP2IF
+          switch(pic->ram[P16E2_CCP2CON] & 0x03)
           {
             case 0://set output
               if(pic->pins[pic->ccp[1]-1].dir == PD_OUT)
@@ -820,21 +820,21 @@ if(pic->portbm)
             case 2://software interrupt
               break;
             case 3://trigger special event
-              pic->ram[P16E_TMR1H]=0;
-              pic->ram[P16E_TMR1L]=0;
-              if(pic->ram[P16E_ADCON0] & 0x01)pic->ram[P16E_ADCON0]|=0x04; //if ad on, enable one conversion
+              pic->ram[P16E2_TMR1H]=0;
+              pic->ram[P16E2_TMR1L]=0;
+              if(pic->ram[P16E2_ADCON0] & 0x01)pic->ram[P16E2_ADCON0]|=0x04; //if ad on, enable one conversion
               break;
           }
        }
      }
 /*     
 //CCP3 compare modes 
-     if((pic->CCPCOUNT >= 3)&&(pic->ccp[2] > 0)&&((pic->ram[P16E_CCP3CON] & 0x0C) == 0x08))
+     if((pic->CCPCOUNT >= 3)&&(pic->ccp[2] > 0)&&((pic->ram[P16E2_CCP3CON] & 0x0C) == 0x08))
      {
-       if((pic->ram[P16E_TMR1H]==pic->ram[P16E_CCP3RH])&&(pic->ram[P16E_TMR1L]==pic->ram[P16E_CCP3RL]))//match !!
+       if((pic->ram[P16E2_TMR1H]==pic->ram[P16E2_CCP3RH])&&(pic->ram[P16E2_TMR1L]==pic->ram[P16E2_CCP3RL]))//match !!
        {
-          pic->ram[P16E_PIR2]|=0x02;//CCP3IF
-          switch(pic->ram[P16E_CCP3CON] & 0x03)
+          pic->ram[P16E2_PIR2]|=0x02;//CCP3IF
+          switch(pic->ram[P16E2_CCP3CON] & 0x03)
           {
             case 0://set output
               if(pic->pins[pic->ccp[2]-1].dir == PD_OUT)
@@ -847,8 +847,8 @@ if(pic->portbm)
             case 2://software interrupt
               break;
             case 3://trigger special event
-              pic->ram[P16E_TMR1H]=0;
-              pic->ram[P16E_TMR1L]=0;
+              pic->ram[P16E2_TMR1H]=0;
+              pic->ram[P16E2_TMR1L]=0;
               break;
           }
        }
@@ -861,15 +861,15 @@ if(pic->portbm)
  
 //TMR2
 
-  if((pic->ram[P16E_T2CON] & 0x04) == 0x04 )  //TMR2EN
+  if((pic->ram[P16E2_T2CON] & 0x04) == 0x04 )  //TMR2EN
   {
      pic->cp2++;
      
-     if((pic->ram[P16E_T2CON]&0x02) == 0x02)
+     if((pic->ram[P16E2_T2CON]&0x02) == 0x02)
      {
        pic->t2pr=16;
      }
-     else if ((pic->ram[P16E_T2CON]&0x01) == 0x01)
+     else if ((pic->ram[P16E2_T2CON]&0x01) == 0x01)
      {
        pic->t2pr=4;
      }
@@ -880,37 +880,37 @@ if(pic->portbm)
 
      if(pic->cp2 >= pic->t2pr) 
      {
-       pic->ram[P16E_TMR2]++;
-       if(pic->ram[P16E_TMR2] == pic->ram[P16E_PR2])
+       pic->ram[P16E2_T2TMR]++;
+       if(pic->ram[P16E2_T2TMR] == pic->ram[P16E2_T2PR])
        {
-         pic->ram[P16E_TMR2]=0;
+         pic->ram[P16E2_T2TMR]=0;
          pic->cp2_++;
 
-         if(pic->cp2_ >= (((pic->ram[P16E_T2CON]&0x78)>>3)+1) )
+         if(pic->cp2_ >= (((pic->ram[P16E2_T2CON]&0x78)>>3)+1) )
          { 
-           pic->ram[P16E_PIR1]|=0x02;//TMR2IF
+           pic->ram[P16E2_PIR1]|=0x02;//TMR2IF
            pic->cp2_=0;
          }
 
          //PWM
           	
-	 if((pic->CCPCOUNT >= 1)&&(pic->ccp[0] > 0)&&(pic->ram[P16E_CCP1CON]& 0x0C) == 0x0C)
+	 if((pic->CCPCOUNT >= 1)&&(pic->ccp[0] > 0)&&(pic->ram[P16E2_CCP1CON]& 0x0C) == 0x0C)
          {
-           pic->ram[P16E_CCP1RH]=pic->ram[P16E_CCP1RL];
+           pic->ram[P16E2_CCPR1H]=pic->ram[P16E2_CCPR1L];
            if(pic->pins[pic->ccp[0]-1].dir == PD_OUT)
              pic->ram[pic->pins[(pic->ccp[0]-1)].port]|=0x01<<(pic->pins[(pic->ccp[0]-1)].pord);
          } 
 	 
-         if((pic->CCPCOUNT >= 2)&&(pic->ccp[1] > 0)&&(pic->ram[P16E_CCP2CON]& 0x0C) == 0x0C)
+         if((pic->CCPCOUNT >= 2)&&(pic->ccp[1] > 0)&&(pic->ram[P16E2_CCP2CON]& 0x0C) == 0x0C)
          {
-           pic->ram[P16E_CCP2RH]=pic->ram[P16E_CCP2RL];
+           pic->ram[P16E2_CCPR2H]=pic->ram[P16E2_CCPR2L];
            if(pic->pins[pic->ccp[1]-1].dir == PD_OUT)
              pic->ram[pic->pins[(pic->ccp[1]-1)].port]|=0x01<<(pic->pins[(pic->ccp[1]-1)].pord);
          } 
 /*         
-         if((pic->CCPCOUNT >= 3)&&(pic->ccp[2] > 0)&&(pic->ram[P16E_CCP3CON]& 0x0C) == 0x0C)
+         if((pic->CCPCOUNT >= 3)&&(pic->ccp[2] > 0)&&(pic->ram[P16E2_CCP3CON]& 0x0C) == 0x0C)
          {
-           pic->ram[P16E_CCPR3H]=pic->ram[P16E_CCPR3L];
+           pic->ram[P16E2_CCPR3H]=pic->ram[P16E2_CCPR3L];
            if(pic->pins[pic->ccp[2]-1].dir == PD_OUT)
              pic->ram[pic->pins[(pic->ccp[2]-1)].port]|=0x01<<(pic->pins[(pic->ccp[2]-1)].pord);
          } 
@@ -921,27 +921,27 @@ if(pic->portbm)
 //PWM - only if TMR2 is on
 
 //only use 8 bits ! not 10 bits  
-   if((pic->CCPCOUNT >= 1)&&(pic->ccp[0] > 0)&&(pic->ram[P16E_CCP1CON]& 0x0C) == 0x0C)
+   if((pic->CCPCOUNT >= 1)&&(pic->ccp[0] > 0)&&(pic->ram[P16E2_CCP1CON]& 0x0C) == 0x0C)
    {
-      if(pic->ram[P16E_TMR2] >=  pic->ram[P16E_CCP1RH])
+      if(pic->ram[P16E2_T2TMR] >=  pic->ram[P16E2_CCPR1H])
       {
         if(pic->pins[pic->ccp[0]-1].dir == PD_OUT)
           pic->ram[pic->pins[(pic->ccp[0]-1)].port]&=~(0x01<<(pic->pins[(pic->ccp[0]-1)].pord));
       }
    }	
    
-   if((pic->CCPCOUNT >= 2)&&(pic->ccp[1] > 0)&&(pic->ram[P16E_CCP2CON]& 0x0C) == 0x0C)
+   if((pic->CCPCOUNT >= 2)&&(pic->ccp[1] > 0)&&(pic->ram[P16E2_CCP2CON]& 0x0C) == 0x0C)
    {
-      if(pic->ram[P16E_TMR2] >=  pic->ram[P16E_CCP2RH])
+      if(pic->ram[P16E2_T2TMR] >=  pic->ram[P16E2_CCPR2H])
       {
         if(pic->pins[pic->ccp[1]-1].dir == PD_OUT)
           pic->ram[pic->pins[(pic->ccp[1]-1)].port]&=~(0x01<<(pic->pins[(pic->ccp[1]-1)].pord));
       }
    }	
 /*   
-   if((pic->CCPCOUNT >= 3)&&(pic->ccp[2] > 0)&&(pic->ram[P16E_CCP3CON]& 0x0C) == 0x0C)
+   if((pic->CCPCOUNT >= 3)&&(pic->ccp[2] > 0)&&(pic->ram[P16E2_CCP3CON]& 0x0C) == 0x0C)
    {
-      if(pic->ram[P16E_TMR2] >=  pic->ram[P16E_CCP3RH])
+      if(pic->ram[P16E2_TMR2] >=  pic->ram[P16E2_CCP3RH])
       {
         if(pic->pins[pic->ccp[2]-1].dir == PD_OUT)
           pic->ram[pic->pins[(pic->ccp[2]-1)].port]&=~(0x01<<(pic->pins[(pic->ccp[2]-1)].pord));
@@ -957,44 +957,44 @@ if(pic->portbm)
 
 if((pic->processor == P16F628)||(pic->processor == P16F628A))
 {
-  if((pic->ram[P16E_P628_EECON1] & 0x04) == 0x04 )
+  if((pic->ram[P16E2_P628_EECON1] & 0x04) == 0x04 )
   {
-    if(pic->ram[P16E_P628_EECON2] != 0 )
+    if(pic->ram[P16E2_P628_EECON2] != 0 )
     {
-      if(pic->ram[P16E_P628_EECON2] == 0x55 )
+      if(pic->ram[P16E2_P628_EECON2] == 0x55 )
       {
-        pic->ram[P16E_P628_EECON2] = 0; 
+        pic->ram[P16E2_P628_EECON2] = 0; 
         pic->ee_wr=-1;
       }
       else
       {
-        if((pic->ram[P16E_P628_EECON2] == 0xAA )&&(pic->ee_wr == -1))
+        if((pic->ram[P16E2_P628_EECON2] == 0xAA )&&(pic->ee_wr == -1))
         {
-          pic->ram[P16E_P628_EECON2] = 0; 
+          pic->ram[P16E2_P628_EECON2] = 0; 
           pic->ee_wr=1;
         }
         else
         {
-          pic->ram[P16E_P628_EECON2] = 0; 
+          pic->ram[P16E2_P628_EECON2] = 0; 
           pic->ee_wr=0;
         }
       }
     }    
   }
 
-  if((pic->ram[P16E_P628_EECON1] & 0x03) != 0x00 )
+  if((pic->ram[P16E2_P628_EECON1] & 0x03) != 0x00 )
   {
-    if((pic->ram[P16E_P628_EECON1] & 0x01) == 0x01 ) //RD
+    if((pic->ram[P16E2_P628_EECON1] & 0x01) == 0x01 ) //RD
     {
-      pic->ram[P16E_P628_EEDATA]= pic->eeprom[pic->ram[P16E_P628_EEADR]];
-      pic->ram[P16E_P628_EECON1]&=~0x01;  
+      pic->ram[P16E2_P628_EEDATA]= pic->eeprom[pic->ram[P16E2_P628_EEADR]];
+      pic->ram[P16E2_P628_EECON1]&=~0x01;  
     }
     else
     {
       if(pic->ee_wr == 1)
       {
-        pic->eeprom[pic->ram[P16E_P628_EEADR]]=pic->ram[P16E_P628_EEDATA];       
-        pic->ram[P16E_P628_EECON1]&=~0x02; 
+        pic->eeprom[pic->ram[P16E2_P628_EEADR]]=pic->ram[P16E2_P628_EEDATA];       
+        pic->ram[P16E2_P628_EECON1]&=~0x02; 
         pic->ee_wr=0;
       } 
     }
@@ -1003,25 +1003,25 @@ if((pic->processor == P16F628)||(pic->processor == P16F628A))
 else if((pic->processor == P16F877)||(pic->processor == P16F877A))
 {
 
-  if((pic->ram[P16E_P877_EECON1] & 0x04) == 0x04 )
+  if((pic->ram[P16E2_P877_EECON1] & 0x04) == 0x04 )
   {
-    if(pic->ram[P16E_P877_EECON2] != 0 )
+    if(pic->ram[P16E2_P877_EECON2] != 0 )
     {
-      if(pic->ram[P16E_P877_EECON2] == 0x55 )
+      if(pic->ram[P16E2_P877_EECON2] == 0x55 )
       {
-        pic->ram[P16E_P877_EECON2] = 0; 
+        pic->ram[P16E2_P877_EECON2] = 0; 
         pic->ee_wr=-1;
       }
       else
       {
-        if((pic->ram[P16E_P877_EECON2] == 0xAA )&&(pic->ee_wr == -1))
+        if((pic->ram[P16E2_P877_EECON2] == 0xAA )&&(pic->ee_wr == -1))
         {
-          pic->ram[P16E_P877_EECON2] = 0; 
+          pic->ram[P16E2_P877_EECON2] = 0; 
           pic->ee_wr=1;
         }
         else
         {
-          pic->ram[P16E_P877_EECON2] = 0; 
+          pic->ram[P16E2_P877_EECON2] = 0; 
           pic->ee_wr=0;
         }
       }
@@ -1030,37 +1030,37 @@ else if((pic->processor == P16F877)||(pic->processor == P16F877A))
 
 
 
-  if((pic->ram[P16E_P877_EECON1] & 0x03) != 0x00 )
+  if((pic->ram[P16E2_P877_EECON1] & 0x03) != 0x00 )
   {
-    if((pic->ram[P16E_P877_EECON1] & 0x01) == 0x01 ) //RD
+    if((pic->ram[P16E2_P877_EECON1] & 0x01) == 0x01 ) //RD
     { 
-      if((pic->ram[P16E_P877_EECON1] & 0x80) == 0)
+      if((pic->ram[P16E2_P877_EECON1] & 0x80) == 0)
       {  
-         pic->ram[P16E_P877_EEDATA]= pic->eeprom[pic->ram[P16E_P877_EEADR]];
+         pic->ram[P16E2_P877_EEDATA]= pic->eeprom[pic->ram[P16E2_P877_EEADR]];
       }
       else
       {
-         pic->ram[P16E_P877_EEDATA]=   (pic->prog[(pic->ram[P16E_P877_EEADRH]<<8)|pic->ram[P16E_P877_EEADR]])&0x00FF;
-         pic->ram[P16E_P877_EEDATAH]= ((pic->prog[(pic->ram[P16E_P877_EEADRH]<<8)|pic->ram[P16E_P877_EEADR]])&0xFF00)>>8;
+         pic->ram[P16E2_P877_EEDATA]=   (pic->prog[(pic->ram[P16E2_P877_EEADRH]<<8)|pic->ram[P16E2_P877_EEADR]])&0x00FF;
+         pic->ram[P16E2_P877_EEDATAH]= ((pic->prog[(pic->ram[P16E2_P877_EEADRH]<<8)|pic->ram[P16E2_P877_EEADR]])&0xFF00)>>8;
   //       printf("Reading %04X=%04X\n",(pic->ram[P877_EEADRH]<<8)|pic->ram[P877_EEADR],(pic->ram[P877_EEDATAH]<<8) | pic->ram[P877_EEDATA]);
       }
-      pic->ram[P16E_P877_EECON1]&=~0x01;  
+      pic->ram[P16E2_P877_EECON1]&=~0x01;  
     }
     else
     {
       if(pic->ee_wr == 1)
       {
-        if((pic->ram[P16E_P877_EECON1] & 0x80) == 0)
+        if((pic->ram[P16E2_P877_EECON1] & 0x80) == 0)
         { 
-          pic->eeprom[pic->ram[P16E_P877_EEADR]]=pic->ram[P16E_P877_EEDATA];
+          pic->eeprom[pic->ram[P16E2_P877_EEADR]]=pic->ram[P16E2_P877_EEDATA];
         }
         else
         {
-          pic->prog[(pic->ram[P16E_P877_EEADRH]<<8)|pic->ram[P16E_P877_EEADR]] = (pic->ram[P16E_P877_EEDATAH]<<8) | pic->ram[P16E_P877_EEDATA];
+          pic->prog[(pic->ram[P16E2_P877_EEADRH]<<8)|pic->ram[P16E2_P877_EEADR]] = (pic->ram[P16E2_P877_EEDATAH]<<8) | pic->ram[P16E2_P877_EEDATA];
 
     //      printf("Writing %04X=%04X\n",(pic->ram[P877_EEADRH]<<8)|pic->ram[P877_EEADR],(pic->ram[P877_EEDATAH]<<8) | pic->ram[P877_EEDATA]);
         }       
-        pic->ram[P16E_P877_EECON1]&=~0x02; 
+        pic->ram[P16E2_P877_EECON1]&=~0x02; 
         pic->ee_wr=0;
       } 
     }
@@ -1082,7 +1082,7 @@ else if((pic->processor == P16F877)||(pic->processor == P16F877A))
   
   if(((pic->config[2] &  0x0060) == 0x60 )||     //Enabled
   (((pic->config[2] &  0x0060) == 0x40 )&& pic->sleep)||     //Enabled and disabled in sleep    
-  (((pic->config[2] &  0x0060) == 0x20 )&&(pic->ram[P16E_WDTCON0] & 0x01)))     //Software Enable
+  (((pic->config[2] &  0x0060) == 0x20 )&&(pic->ram[P16E2_WDTCON0] & 0x01)))     //Software Enable
   {
       pic->twdt+=4.0/pic->freq;
        
@@ -1090,7 +1090,7 @@ else if((pic->processor == P16F877)||(pic->processor == P16F877A))
       
       if(  (pic->config[2] &  0x001F) == 0x1F )//software controlled
       {
-        div=(pic->ram[P16E_WDTCON0] & 0x3E )>>1;
+        div=(pic->ram[P16E2_WDTCON0] & 0x3E )>>1;
       }
       else //configuration controlled
       {
@@ -1110,8 +1110,8 @@ else if((pic->processor == P16F877)||(pic->processor == P16F877A))
    
         unsigned char temp;        
         int bk;  
-        int offset=0x007F& P16E_STATUS;
-        temp=pic->ram[P16E_STATUS];
+        int offset=0x007F& P16E2_STATUS;
+        temp=pic->ram[P16E2_STATUS];
         temp&=~0x10;
     
         for(bk=0;bk<32;bk++)
@@ -1160,11 +1160,11 @@ else if((pic->processor == P16F877)||(pic->processor == P16F877A))
    };
 */
 
- serial16E(pic,print);
+ //serial16E2(pic,print);
 };
 
 void 
-periferic16E_step_out(_pic * pic,int print)
+periferic16E2_step_out(_pic * pic,int print)
 {
 int i,val;
 
@@ -1192,14 +1192,14 @@ unsigned char tris;
         pic->ocd_pgc=pic->pins[pic->pgc-1].value;
 
  
-        if((pic->ram[P16E_ICKBUG] & 0x80) == 0)
+        if((pic->ram[P16E2_ICKBUG] & 0x80) == 0)
         {
           pic->dbg++; 
-          if((pic->ram[P16E_ICKBUG]&0x20) == 0x20) pic->sstep++;          
+          if((pic->ram[P16E2_ICKBUG]&0x20) == 0x20) pic->sstep++;          
  
           if(((pic->ocd_pgca ==1)&&(pic->ocd_pgc == 0)) ||                               //HardWare
-              ((pic->pc ==   ((((pic->ram[P16E_ICKBUG]&0x1F)<<8) |  pic->ram[P16E_BIGBUG])+1))&&(pic->dbg > 3 ))||    //Break Point  
-              (((pic->ram[P16E_ICKBUG]&0x20) == 0x20)&&(pic->sstep== 3))                               )          //step 
+              ((pic->pc ==   ((((pic->ram[P16E2_ICKBUG]&0x1F)<<8) |  pic->ram[P16E2_BIGBUG])+1))&&(pic->dbg > 3 ))||    //Break Point  
+              (((pic->ram[P16E2_ICKBUG]&0x20) == 0x20)&&(pic->sstep== 3))                               )          //step 
           {
           //printf("Debug Halt (%04X)   ",pic->pc);
           
@@ -1214,9 +1214,9 @@ unsigned char tris;
 	    pic->stack[temp]=pic->stack[temp-1];
 	  pic->stack[0]=pic->pc;
 	  
-	  pic->ram[P16E_ICKBUG]|=0x80;
-	  pic->ram[P16E_ICKBUG]= (pic->ram[P16E_ICKBUG]&0xE0)|((pic->pc & 0x1F00)>>8);
-	  pic->ram[P16E_BIGBUG]=pic->pc & 0x00FF;
+	  pic->ram[P16E2_ICKBUG]|=0x80;
+	  pic->ram[P16E2_ICKBUG]= (pic->ram[P16E2_ICKBUG]&0xE0)|((pic->pc & 0x1F00)>>8);
+	  pic->ram[P16E2_BIGBUG]=pic->pc & 0x00FF;
 	  pic->pc=0x2004;
 	  pic->s2=1;
           pic->debug=1;
@@ -1234,10 +1234,10 @@ unsigned char tris;
 
 //PINOUTS
   
- if((pic->ram[P16E_PORTA] != pic->porta)||
-    (pic->ram[P16E_PORTB] != pic->portb)||
-    (pic->ram[P16E_PORTC] != pic->portc)||
-    (pic->ram[P16E_PORTD] != pic->portd))
+ if((pic->ram[P16E2_PORTA] != pic->porta)||
+    (pic->ram[P16E2_PORTB] != pic->portb)||
+    (pic->ram[P16E2_PORTC] != pic->portc)||
+    (pic->ram[P16E2_PORTD] != pic->portd))
  {
    for(i=0;i<pic->PINCOUNT;i++)
    {
@@ -1260,9 +1260,9 @@ unsigned char tris;
               port=pic->pins[i].port;
               pic->pins[i].lvalue= ((pic->ram[port] & val) != 0); //latch
   	      if(pic->pins[i].ptype > 2)
-                pic_wr_pin16E(pic,i+1, 0);
+                pic_wr_pin16E2(pic,i+1, 0);
               else
-                pic_wr_pin16E(pic,i+1,pic->pins[i].value);
+                pic_wr_pin16E2(pic,i+1,pic->pins[i].value);
 	break;
 	default:
 	break;
@@ -1270,15 +1270,15 @@ unsigned char tris;
     } 
   }
 
-  pic->porta=pic->ram[P16E_PORTA];
-  pic->portb=pic->ram[P16E_PORTB];
-  pic->portc=pic->ram[P16E_PORTC];
-  pic->portd=pic->ram[P16E_PORTD];
+  pic->porta=pic->ram[P16E2_PORTA];
+  pic->portb=pic->ram[P16E2_PORTB];
+  pic->portc=pic->ram[P16E2_PORTC];
+  pic->portd=pic->ram[P16E2_PORTD];
 
- if((pic->ram[P16E_TRISA] != pic->trisa)||
-    (pic->ram[P16E_TRISB] != pic->trisb)||
-    (pic->ram[P16E_TRISC] != pic->trisc)||
-    (pic->ram[P16E_TRISD] != pic->trisd))
+ if((pic->ram[P16E2_TRISA] != pic->trisa)||
+    (pic->ram[P16E2_TRISB] != pic->trisb)||
+    (pic->ram[P16E2_TRISC] != pic->trisc)||
+    (pic->ram[P16E2_TRISD] != pic->trisd))
  {
    for(i=0;i<pic->PINCOUNT;i++)
    {
@@ -1289,51 +1289,51 @@ unsigned char tris;
      if((pic->ram[tris] & val)==0)
      {
        pic->pins[i].dir=PD_OUT;
-       pic_wr_pin16E(pic,i+1,pic->pins[i].lvalue);
+       pic_wr_pin16E2(pic,i+1,pic->pins[i].lvalue);
      }
      else
      {
        val=pic->pins[i].dir;
        pic->pins[i].dir=PD_IN;
-       if(val != PD_IN)pic_wr_pin16E(pic,i+1,pic->pins[i].ovalue);
+       if(val != PD_IN)pic_wr_pin16E2(pic,i+1,pic->pins[i].ovalue);
      }
      }
    };
  };
 
 
-  pic->trisa=pic->ram[P16E_TRISA];
-  pic->trisb=pic->ram[P16E_TRISB];
-  pic->trisc=pic->ram[P16E_TRISC];
-  pic->trisd=pic->ram[P16E_TRISD];
+  pic->trisa=pic->ram[P16E2_TRISA];
+  pic->trisb=pic->ram[P16E2_TRISB];
+  pic->trisc=pic->ram[P16E2_TRISC];
+  pic->trisd=pic->ram[P16E2_TRISD];
 
 //interrupt
 if(pic->s2 == 0)
 {
-  if (interrupt16E(pic,print) )
+  if (interrupt16E2(pic,print) )
   {
        pic->sleep=0; 
 
-       pic->ram[P16E_INTCON]&=~0x80;
+       pic->ram[P16E2_INTCON]&=~0x80;
        
         unsigned char temp;        
         int bk;  
-        int offset=0x007F& P16E_INTCON;
-        temp=pic->ram[P16E_INTCON];
+        int offset=0x007F& P16E2_INTCON;
+        temp=pic->ram[P16E2_INTCON];
         temp&=~0x80;
     
         for(bk=0;bk<32;bk++)
            pic->ram[(0x0080*bk)|offset]=temp;
         
         //save shadow
-        pic->ram[P16E_STATUS_SHAD]=pic->ram[P16E_STATUS];  
-        pic->ram[P16E_WREG_SHAD]=pic->ram[P16E_WREG];      
-        pic->ram[P16E_BSR_SHAD]= pic->ram[P16E_BSR];       
-        pic->ram[P16E_PCLATH_SHAD]=pic->ram[P16E_PCLATH];   
-        pic->ram[P16E_FSR0L_SHAD]=pic->ram[P16E_FSR0L];     
-        pic->ram[P16E_FSR0H_SHAD]=pic->ram[P16E_FSR0H];         
-        pic->ram[P16E_FSR1L_SHAD]=pic->ram[P16E_FSR1L];     
-        pic->ram[P16E_FSR1H_SHAD]=pic->ram[P16E_FSR1H];               
+        pic->ram[P16E2_STATUS_SHAD]=pic->ram[P16E2_STATUS];  
+        pic->ram[P16E2_WREG_SHAD]=pic->ram[P16E2_WREG];      
+        pic->ram[P16E2_BSR_SHAD]= pic->ram[P16E2_BSR];       
+        pic->ram[P16E2_PCLATH_SHAD]=pic->ram[P16E2_PCLATH];   
+        pic->ram[P16E2_FSR0L_SHAD]=pic->ram[P16E2_FSR0L];     
+        pic->ram[P16E2_FSR0H_SHAD]=pic->ram[P16E2_FSR0H];         
+        pic->ram[P16E2_FSR1L_SHAD]=pic->ram[P16E2_FSR1L];     
+        pic->ram[P16E2_FSR1H_SHAD]=pic->ram[P16E2_FSR1H];               
         
 
        if(print)printf("interrupt!");

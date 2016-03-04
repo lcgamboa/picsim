@@ -28,7 +28,6 @@
 #include<string.h>
 
 #include"picsim.h"
-#include"periferic16.h"
 
 void
 pic_decode_16(_pic * pic,int print)

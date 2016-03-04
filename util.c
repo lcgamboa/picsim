@@ -41,6 +41,8 @@ int getprocbyname(char *str)
   if(!strcmp("PIC16F777" ,str))return P16F777;
 
   if(!strcmp("PIC16F1619" ,str))return P16F1619;
+  
+  if(!strcmp("PIC16F18855" ,str))return P16F18855;
 
   if(!strcmp("PIC18F452" ,str))return P18F452;
   if(!strcmp("PIC18F4520" ,str))return P18F4520;
@@ -83,6 +85,10 @@ char * getnamebyproc(int proc,char *str)
     case P16F1619:
         strcpy(str,"PIC16F1619");
         break;    
+        
+    case P16F18855:
+        strcpy(str,"PIC16F18855");
+        break;      
 
     case P18F452:
         strcpy(str,"PIC18F452");
@@ -125,6 +131,7 @@ int getfprocbyname(char *str)
   if(!strcmp("PIC16F777" ,str))return P16;
 
   if(!strcmp("PIC16F1619" ,str))return P16E;
+  if(!strcmp("PIC16F18855" ,str))return P16E2;
 
   if(!strcmp("PIC18F452" ,str))return P18;
   if(!strcmp("PIC18F4520" ,str))return P18;
@@ -148,6 +155,7 @@ int getfprocbynumber(int proc)
   if(P16F777 == proc)return P16;
 
   if(P16F1619 == proc)return P16E;
+  if(P16F18855 == proc)return P16E2;
 
   if(P18F452 == proc)return P18;
   if(P18F4520 == proc)return P18;
@@ -329,21 +337,21 @@ const char * getFSRname_16E(unsigned int addr)
       case 0x20D: return "WPUB"; 
       case 0x20E: return "WPUC";          
 //bank 5
-      case 0x28C: return "P16E_ODCONA";         
-      case 0x28D: return "P16E_ODCONB";      
-      case 0x28E: return "P16E_ODCONC";      
+      case 0x28C: return "ODCONA";         
+      case 0x28D: return "ODCONB";      
+      case 0x28E: return "ODCONC";      
 
-      case 0x291: return "P16E_CCP1RL";     
-      case 0x292: return "P16E_CCP1RH";     
-      case 0x293: return "P16E_CCP1CON";    
-      case 0x294: return "P16E_CCP1CAP";    
+      case 0x291: return "CCP1RL";     
+      case 0x292: return "CCP1RH";     
+      case 0x293: return "CCP1CON";    
+      case 0x294: return "CCP1CAP";    
 
-      case 0x298: return "P16E_CCP2RL";     
-      case 0x299: return "P16E_CCP2RH";     
-      case 0x29A: return "P16E_CCP2CON";    
-      case 0x29B: return "P16E_CCP2CAP";    
+      case 0x298: return "CCP2RL";     
+      case 0x299: return "CCP2RH";     
+      case 0x29A: return "CCP2CON";    
+      case 0x29B: return "CCP2CAP";    
 
-#define P16E_CCPTMRS    0x29E       
+      case 0x29E: return "CCPTMRS";           
 //bank 6
 //bank 7
 //bank 8
@@ -394,6 +402,176 @@ const char * getFSRname_16E(unsigned int addr)
    }        
     
 }
+
+const char * getFSRname_16E2(unsigned int addr)
+{
+    
+  switch(addr)
+  {     
+//bank 0    
+//core    
+      case 0x000: return "INDF0";	
+      case 0x001: return "INDF1";	
+      case 0x002: return "PCL";	
+      case 0x003: return "STATUS";	
+      case 0x004: return "FSR0L";	
+      case 0x005: return "FSR0H";	
+      case 0x006: return "FSR1L";	
+      case 0x007: return "FSR1H";	
+      case 0x008: return "BSR";	
+      case 0x009: return "WREG";	
+      case 0x00A: return "PCLATH";	
+      case 0x00B: return "INTCON";     
+      
+      
+      case 0x00C: return "PORTA";	
+      case 0x00D: return "PORTB";	
+      case 0x00E: return "PORTC";	
+      case 0x00F: return "PORTD";	
+      case 0x010: return "PORTE";	
+      case 0x011: return "TRISA";	
+      case 0x012: return "TRISB";	
+      case 0x013: return "TRISC";    
+      case 0x014: return "TRISD";     
+      case 0x015: return "TRISE";	
+      case 0x016: return "LATA"; 	
+      case 0x017: return "LATB";	
+      case 0x018: return "LATC";	
+      case 0x019: return "LATD";	
+      case 0x01A: return "LATE";	
+//
+      case 0x01C: return "TMR0L"; 	
+      case 0x01D: return "TMR0H";	
+      case 0x01E: return "T0CON0";    
+      case 0x01F: return "T0CON1";    
+
+//bank 1   
+      case 0x08C: return "ADRESL";    
+      case 0x08D: return "ADRESH";    
+      case 0x08E: return "ADPREVL";   
+      case 0x08F: return "ADPRVH";    
+      case 0x090: return "ADACCL";    
+      case 0x091: return "ADACCH";    
+//
+      case 0x093  : return "ADCON0";      
+      case 0x094: return "ADCON1";    
+      case 0x095: return "ADCON2";    
+      case 0x096: return "ADCON3";    
+      case 0x097: return "ADSTAT";        
+      case 0x098: return "ADCLK";     
+      case 0x099: return "ADACT";     
+      case 0x09A: return "ADREF";     
+      case 0x09B: return "ADCAP";     
+      case 0x09C: return "ADPRE";     
+      case 0x09D: return "ASACQ";     
+      case 0x09E: return "ADPCH";     
+    
+//bank 2
+    
+//bank 3
+
+//bank 4   
+      case 0x20C: return "TMR1L";     
+      case 0x20D: return "TMR1H";     
+      case 0x20E: return "T1CON";     
+    
+//bank 5
+      case 0x28C: return "T2TMR";     
+      case 0x28D: return "T2PR";      
+      case 0x28E: return "T2CON";     
+    
+//bank 6
+      case 0x30C: return "CCPR1L";    
+      case 0x30D: return "CCPR1H";    
+      case 0x30E: return "CCP1CON";   
+      case 0x30F: return "CCP1CAP";   
+      case 0x310: return "CCPR2L";    
+      case 0x311: return "CCPR2H";    
+      case 0x312: return "CCP2CON";   
+      case 0x313: return "CCP2CAP";   
+      case 0x314: return "CCPR3L";    
+      case 0x315: return "CCPR3H";    
+      case 0x316: return "CCP3CON";   
+      case 0x317: return "CCP3CAP";   
+      case 0x318: return "CCPR4L";    
+      case 0x319: return "CCPR4H";    
+      case 0x31A: return "CCP4CON";   
+      case 0x31B: return "CCP4CAP";   
+      case 0x31C: return "CCPR5L";    
+      case 0x31D: return "CCPR5H";    
+      case 0x31E: return "CCP5CON";   
+      case 0x31F: return "CCP5CAP";   
+
+//bank 7
+//bank 8
+//bank 9
+//bank 10
+//bank 11
+//bank 12
+//bank 13
+//bank 14 
+      case 0x70C: return "PIR0"; 
+      case 0x70D: return "PIR1";        
+      case 0x70E: return "PIR2"; 
+      case 0x70F: return "PIR3"; 
+      case 0x710: return "PIR4"; 
+      case 0x711: return "PIR5"; 
+      case 0x712: return "PIR6"; 
+      case 0x713: return "PIR7"; 
+      case 0x714: return "PIR8"; 
+//
+      case 0x716: return "PIE0"; 
+      case 0x717: return "PIE1"; 
+      case 0x718: return "PIE2"; 
+      case 0x719: return "PIE3"; 
+      case 0x71A: return "PIE4"; 
+      case 0x71B: return "PIE5"; 
+      case 0x71C: return "PIE6"; 
+      case 0x71D: return "PIE7"; 
+      case 0x71E: return "PIE8"; 
+    
+//bank 15
+//bank 16
+      case 0x80C: return "WDTCON0"; 
+      case 0x80D: return "WDTCON1";   
+      case 0x80E: return "WDTPSL";  
+      case 0x80F: return "WDTPSH";  
+      case 0x810: return "WDTTMR";  
+      case 0x811: return "BORCON";     
+    
+//bank 17
+//bank 18 
+//bank 19  
+//bank 20  Unimplemented
+//bank 21  Unimplemented
+//bank 22  Unimplemented
+//bank 23  Unimplemented
+//bank 24  Unimplemented
+//bank 25  Unimplemented
+//bank 26  Unimplemented
+//bank 27  Unimplemented
+//bank 28
+//bank 29
+//bank 30
+//bank 31
+      case 0xFE4: return "STATUS_SHAD";      
+      case 0xFE5: return "WREG_SHAD";      
+      case 0xFE6: return "BSR_SHAD";       
+      case 0xFE7: return "PCLATH_SHAD";    
+      case 0xFE8: return "FSR0L_SHAD";     
+      case 0xFE9: return "FSR0H_SHAD";         
+      case 0xFEA: return "FSR1L_SHAD";     
+      case 0xFEB: return "FSR1H_SHAD";     
+//
+      case 0xFED: return "STKPTR";         
+      case 0xFEE: return "TOSL";           
+      case 0xFEF: return "TOSH";               
+        
+      default:
+        sprintf(FSRname,"0x%03X",addr);
+        return FSRname;
+   } 
+  }
 
 const char * getFSRname_18(unsigned int addr)
 {

@@ -28,11 +28,6 @@
 #include<string.h>
 
 #include"picsim.h"
-#include"periferic18.h"
-
-
-#include "ansi.h"
-
 
 
 void
