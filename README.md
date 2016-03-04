@@ -5,6 +5,7 @@ PICsim emulates a microcontroller PIC16F84A/16F628/16F777/16F877A/18F452/18F4520
 
 
 
+
 Pic supported hardware:
         ADC
 	Interrupts
@@ -19,6 +20,7 @@ Pic supported hardware:
 	EEPROM
 	IO PORTS
 
+![PICsim Hardware Support](doc/support.png?raw=true "PICsim Hardware support")
 
 Utils:
 
