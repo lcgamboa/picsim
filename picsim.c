@@ -132,7 +132,6 @@ main(int argc,char** argv)
             printf("\n");
             break; 
           case P16E:   
-          case P16E2:     
             printf("PC=0x%04X W=\033[1;32m 0x%#02X \033[0m STATUS=0x%02X PORTA=0x%02X PORTB=0x%02X INTCON=\033[1;32m 0x%02X \033[0m TMR0=0x%02X TMR1H=0x%04X TMR1L=0x%04X OPTION=0x%04X\n",pic1.pc,pic1.w,
             pic1.ram[P16E_STATUS],pic1.ram[P16E_PORTA],pic1.ram[P16E_PORTB],pic1.ram[P16E_INTCON],pic1.ram[P16E_TMR0],pic1.ram[P16E_TMR1H],  
             pic1.ram[P16E_TMR1L],pic1.ram[P16E_OPTION_REG]);
@@ -145,7 +144,21 @@ main(int argc,char** argv)
             for(i=0;i<16;i++)
 	      printf("%#04X   ",pic1.ram[i]);
             printf("\n");
-            break; 
+            break;    
+          case P16E2:     
+            printf("PC=0x%04X W=\033[1;32m 0x%#02X \033[0m STATUS=0x%02X PORTA=0x%02X PORTB=0x%02X INTCON=\033[1;32m 0x%02X \033[0m TMR0L=0x%02X TMR1H=0x%04X TMR1L=0x%04X T1CON=0x%04X\n",pic1.pc,pic1.w,
+            pic1.ram[P16E2_STATUS],pic1.ram[P16E2_PORTA],pic1.ram[P16E2_PORTB],pic1.ram[P16E2_INTCON],pic1.ram[P16E2_TMR0L],pic1.ram[P16E2_TMR1H],  
+            pic1.ram[P16E2_TMR1L],pic1.ram[P16E2_T1CON]);
+ 
+	    printf("BSR=0x%02X INDF0=0x%02X INDF1=0x%02X afsr0=0x%04X afsr1=0x%04X\n",
+            pic1.ram[P16E2_BSR],pic1.ram[P16E2_INDF0],pic1.ram[P16E2_INDF1],
+            ((pic1.ram[P16E2_FSR0H]&0xFF)<<8) |pic1.ram[P16E2_FSR0L],
+            ((pic1.ram[P16E2_FSR1H]&0xFF)<<8) |pic1.ram[P16E2_FSR1L]);
+
+            for(i=0;i<16;i++)
+	      printf("%#04X   ",pic1.ram[i]);
+            printf("\n");
+            break;             
           case P18:
               printf("PC    =0x%04X W=\033[1;32m 0x%02X \033[0m  STKPTR=0x%02X TOS=0x%06X PORTB=0x%02X PORTE=0x%02X status=\033[1;32m 0x%02X \033[0m INTCON=0x%02X afsr0=0x%04X afsr1=0x%04X afsr2=0x%04X\n",pic1.pc,pic1.w,
                 pic1.ram[P18_STKPTR],pic1.ram[P18_TOSU]<<16|pic1.ram[P18_TOSH]<<8|pic1.ram[P18_TOSL],pic1.ram[P18_PORTB],pic1.ram[P18_PORTE],pic1.ram[P18_STATUS],pic1.ram[P18_INTCON],  
@@ -275,7 +288,7 @@ main(int argc,char** argv)
    {
      printf("use: %s PICXXFXXX file.hex\n",argv[0]);
      printf("supported processors PIC16:\n");
-     printf("         PIC16F84A PIC16F628 PIC16F628A PIC16F877 PIC16F877A PIC16F648A PIC16F777 PIC16F1619\n");     
+     printf("         PIC16F84A PIC16F628 PIC16F628A PIC16F877 PIC16F877A PIC16F648A PIC16F777 PIC16F1619 PIC16F18855\n");     
      printf("supported processors PIC18:\n");
      printf("         PIC18F452 PIC18F4520 PIC18F4620 PIC18F4550 PIC18F45K50\n");
 

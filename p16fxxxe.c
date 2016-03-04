@@ -1369,6 +1369,17 @@ pic_decode_16E(_pic * pic,int print)
       break;
 
     
+    case P16E_PCL:
+      pic->pc=  ((pic->ram[P16E_PCLATH])<<8)|pic->ram[P16E_PCL];
+//	      printf("###############PCL write  (%#04X %#04X %#04X) %#08X\n",(pic->ram[P16E_PCLATU]&0x1F)<<16,(pic->ram[P16E_PCLATH])<<8,pic->ram[P16E_PCL],pic->pc);
+      break; 
+  }
+  
+   //second pass with new lram  family dependent   
+  if(pic->family == P16E)
+  {
+    switch(pic->lram)
+    {    
     case P16E_LATA:
       pic->ram[P16E_PORTA]=pic->ram[P16E_LATA];
       break;	
@@ -1394,12 +1405,46 @@ pic_decode_16E(_pic * pic,int print)
     case P16E_PORTD:
       pic->ram[P16E_LATD]=pic->ram[P16E_PORTD];
       break;	
-    
-    case P16E_PCL:
-      pic->pc=  ((pic->ram[P16E_PCLATH])<<8)|pic->ram[P16E_PCL];
-//	      printf("###############PCL write  (%#04X %#04X %#04X) %#08X\n",(pic->ram[P16E_PCLATU]&0x1F)<<16,(pic->ram[P16E_PCLATH])<<8,pic->ram[P16E_PCL],pic->pc);
-      break; 
+    }
   }
+  else  //P16E2
+  {
+    switch(pic->lram)
+    {    
+    case P16E2_LATA:
+      pic->ram[P16E2_PORTA]=pic->ram[P16E2_LATA];
+      break;	
+    case P16E2_LATB:
+      pic->ram[P16E2_PORTB]=pic->ram[P16E2_LATB];
+      break;	
+    case P16E2_LATC:
+      pic->ram[P16E2_PORTC]=pic->ram[P16E2_LATC];
+      break;	
+    case P16E2_LATD:
+      pic->ram[P16E2_PORTD]=pic->ram[P16E2_LATD];
+      break;	
+    case P16E2_LATE:
+      pic->ram[P16E2_PORTE]=pic->ram[P16E2_LATE];
+      break;  
+  
+    case P16E2_PORTA:
+      pic->ram[P16E2_LATA]=pic->ram[P16E2_PORTA];
+      break;	
+    case P16E2_PORTB:
+      pic->ram[P16E2_LATB]=pic->ram[P16E2_PORTB];
+      break;	
+    case P16E2_PORTC:
+      pic->ram[P16E2_LATC]=pic->ram[P16E2_PORTC];
+      break;	
+    case P16E2_PORTD:
+      pic->ram[P16E2_LATD]=pic->ram[P16E2_PORTD];
+      break;	
+    case P16E2_PORTE:
+      pic->ram[P16E2_LATE]=pic->ram[P16E2_PORTE];
+      break;  
+    }
+  }      
+ 
   }
   
   if(pic->rram != 0x8000)

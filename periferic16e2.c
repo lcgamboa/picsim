@@ -67,11 +67,11 @@ int interrupt16E2(_pic * pic,int print)
   if(pic->ram[P16E2_INTCON] & 0x80)
   {
     //T0IE  T0IF
-    if((pic->ram[P16E2_INTCON]&0x20)&&(pic->ram[P16E2_INTCON]&0x04)) return 1;
+    if((pic->ram[P16E2_PIE0]&0x20)&&(pic->ram[P16E2_PIR0]&0x20)) return 1;  
     //INTE INTF
-    if((pic->ram[P16E2_INTCON]&0x10)&&(pic->ram[P16E2_INTCON]&0x02)) return 1;
+    //if((pic->ram[P16E2_INTCON]&0x10)&&(pic->ram[P16E2_INTCON]&0x02)) return 1;
     //RBIE
-    if((pic->ram[P16E2_INTCON]&0x08)&&(pic->ram[P16E2_INTCON]&0x01)) return 1;
+    //if((pic->ram[P16E2_INTCON]&0x08)&&(pic->ram[P16E2_INTCON]&0x01)) return 1;
     //PEIE	
     if(pic->ram[P16E2_INTCON] & 0x40)
     {
@@ -80,24 +80,24 @@ int interrupt16E2(_pic * pic,int print)
       //CMIE CMIF
       //if((pic->ram[P16E2_PIE1] & 0x40)&&(pic->ram[P16E2_PIR1] & 0x40)) return 1;
       //ADIE ADIF 
-      if((pic->ram[P16E2_PIE1] & 0x40)&&(pic->ram[P16E2_PIR1] & 0x40)) return 1;
+      //if((pic->ram[P16E2_PIE1] & 0x40)&&(pic->ram[P16E2_PIR1] & 0x40)) return 1;
       //RCIE RCIF
-      if((pic->ram[P16E2_PIE1] & 0x20)&&(pic->ram[P16E2_PIR1] & 0x20)) return 1;
+      //if((pic->ram[P16E2_PIE1] & 0x20)&&(pic->ram[P16E2_PIR1] & 0x20)) return 1;
       //TXIE TXIF
-      if((pic->ram[P16E2_PIE1] & 0x10)&&(pic->ram[P16E2_PIR1] & 0x10)) return 1;
+      //if((pic->ram[P16E2_PIE1] & 0x10)&&(pic->ram[P16E2_PIR1] & 0x10)) return 1;
       //SSPIE
-      if((pic->ram[P16E2_PIE1] & 0x08)&&(pic->ram[P16E2_PIR1] & 0x08)) return 1;
+      //if((pic->ram[P16E2_PIE1] & 0x08)&&(pic->ram[P16E2_PIR1] & 0x08)) return 1;
       //CCP1IE CCP1IF
-      if((pic->ram[P16E2_PIE1] & 0x04)&&(pic->ram[P16E2_PIR1] & 0x04)) return 1;
+      //if((pic->ram[P16E2_PIE1] & 0x04)&&(pic->ram[P16E2_PIR1] & 0x04)) return 1;
       //TMR2IE TMR2IF
-      if((pic->ram[P16E2_PIE1] & 0x02)&&(pic->ram[P16E2_PIR1] & 0x02)) return 1;
+      //if((pic->ram[P16E2_PIE1] & 0x02)&&(pic->ram[P16E2_PIR1] & 0x02)) return 1;
       //TMR1IE TMR1IF
-      if((pic->ram[P16E2_PIE1] & 0x01)&&(pic->ram[P16E2_PIR1] & 0x01)) return 1;
+      //if((pic->ram[P16E2_PIE1] & 0x01)&&(pic->ram[P16E2_PIR1] & 0x01)) return 1;
 
       //CCP2IE CCP2IF
-      if((pic->ram[P16E2_PIE2] & 0x01)&&(pic->ram[P16E2_PIR2] & 0x01)) return 1;
+      //if((pic->ram[P16E2_PIE2] & 0x01)&&(pic->ram[P16E2_PIR2] & 0x01)) return 1;
       //CCP3IE CCP3IF
-      if((pic->ram[P16E2_PIE2] & 0x02)&&(pic->ram[P16E2_PIR2] & 0x02)) return 1;
+      //if((pic->ram[P16E2_PIE2] & 0x02)&&(pic->ram[P16E2_PIR2] & 0x02)) return 1;
     }
   
   }
@@ -704,59 +704,41 @@ if(pic->portbm)
 
 */
 
- 
 
-/*
 //TMR0
-
-  if(((pic->ram[P16E2_OPTION_REG] & 0x20) == 0x00 )||  //TOCS=FOSC/4
-    (((pic->ram[P16E2_OPTION_REG] & 0x30) == 0x20 )&&((pic->t0cki_ == 0)&&(pic->pins[pic->t0cki-1].value == 1)))|| //T0CS=t0cki  T0SE =0
-    (((pic->ram[P16E2_OPTION_REG] & 0x30) == 0x30 )&&((pic->t0cki_ == 1)&&(pic->pins[pic->t0cki-1].value == 0))))  //T0CS=t0cki  T0SE =1
-  { 
+  if(pic->ram[P16E2_T0CON0] & 0x80) //TMR0ON
+  {
+  if(((pic->ram[P16E2_T0CON1] & 0xE0) == 0x40 )||  //TOCS=FOSC/4
+    (((pic->ram[P16E2_T0CON1] & 0xE0) == 0x20 )&&((pic->t0cki_ == 0)&&(pic->pins[pic->t0cki-1].value==1)))|| //T0CS=t0cki  T0SE =0
+    (((pic->ram[P16E2_T0CON1] & 0xE0) == 0x00 )&&((pic->t0cki_ == 1)&&(pic->pins[pic->t0cki-1].value==0))))  //T0CS=t0cki  T0SE =1
+    {
      pic->cp0++;
 
-     if(pic->lram == P16E2_TMR0)pic->cp0=0; //RESET prescaler	 
+     if(pic->lram == P16E2_TMR0L)pic->cp0=0; //RESET prescaler	 
 
-     if((pic->ram[P16E2_OPTION_REG] & 0x08) == 0x08) //PSA
-     {            
-        //Without prescaler  
-        if(((pic->ram[P16E2_TMR0]+1) == 0x100))
-        {
-             pic->ram[(0x0000)|(P16E2_INTCON & 0x007F)]|=0x04;//T0IF
-             pic->ram[(0x0080)|(P16E2_INTCON & 0x007F)]|=0x04;
-             if(pic->processor != P16F84A)
-             { 
-               pic->ram[(0x0100)|(P16E2_INTCON & 0x007F)]|=0x04;
-               pic->ram[(0x0180)|(P16E2_INTCON & 0x007F)]|=0x04;
-             }; 
-        }
-        pic->ram[P16E2_TMR0]++;
-        pic->cp0=0;
-     }
-     else
-     {  
-        //With prescaler 
-        if(pic->cp0 >= 2*(fpw2[pic->ram[P16E2_OPTION_REG]&0x07]) )
-        {
-          if(((pic->ram[P16E2_TMR0]+1) == 0x100))
-          {
-             pic->ram[(0x0000)|(P16E2_INTCON & 0x007F)]|=0x04;//T0IF
-             pic->ram[(0x0080)|(P16E2_INTCON & 0x007F)]|=0x04;
-             if(pic->processor != P16F84A)
-             { 
-               pic->ram[(0x0100)|(P16E2_INTCON & 0x007F)]|=0x04;
-               pic->ram[(0x0180)|(P16E2_INTCON & 0x007F)]|=0x04;
-             }
-          }
-          pic->ram[P16E2_TMR0]++;
-          pic->cp0=0;
-        }
-     }
+  
+     if(pic->cp0 >= fpw2[pic->ram[P16E2_T0CON1]&0x0F] )
+     {
+       //TODO postscaler!!!
+       //8 bit mode   
+       if((pic->ram[P16E2_T0CON0] & 0x10)&& ((pic->ram[P16E2_TMR0L]+1) == 0x100))pic->ram[P16E2_PIR0]|=0x20;//T0IF
+          
+       pic->ram[P16E2_TMR0L]++;
+       
+       //16 bit mode
+       if((!pic->ram[P16E2_TMR0L])&&(!(pic->ram[P16E2_T0CON0] & 0x10)))
+       {
+         if((pic->ram[P16E2_TMR0H]+1) == 0x100)pic->ram[P16E2_PIR0]|=0x20;//T0IF
+         pic->ram[P16E2_TMR0H]++;
+       }
+       pic->cp0=0;
+      }
+    }
   } 
-  pic->t0cki_=pic->pins[pic->t0cki-1].value;
-*/
+  pic->t0cki_=pic->pins[pic->t0cki-1].value; 
 
-
+  
+  
 //TMR1
 
   if(((pic->ram[P16E2_T1CON] & 0x03) == 0x01 )||  //TMRICS=FOSC/4 TMREN=1

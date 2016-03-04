@@ -665,34 +665,34 @@ pic_reset(_pic * pic, int flags)
     switch(pic->processor)
     {   
      case P16F18855: //QFN !!!!
-       pic->pins[ 0].port=P16E_PORTA;pic->pins[ 0].pord=2;
-       pic->pins[ 1].port=P16E_PORTA;pic->pins[ 1].pord=3;
-       pic->pins[ 2].port=P16E_PORTA;pic->pins[ 2].pord=4;
-       pic->pins[ 3].port=P16E_PORTA;pic->pins[ 3].pord=5;
+       pic->pins[ 0].port=P16E2_PORTA;pic->pins[ 0].pord=2;
+       pic->pins[ 1].port=P16E2_PORTA;pic->pins[ 1].pord=3;
+       pic->pins[ 2].port=P16E2_PORTA;pic->pins[ 2].pord=4;
+       pic->pins[ 3].port=P16E2_PORTA;pic->pins[ 3].pord=5;
        pic->pins[ 4].port=0         ;pic->pins[ 4].pord=-1;
-       pic->pins[ 5].port=P16E_PORTA;pic->pins[ 5].pord=6;
-       pic->pins[ 6].port=P16E_PORTA;pic->pins[ 6].pord=7;
-       pic->pins[ 7].port=P16E_PORTC;pic->pins[ 7].pord=0;
-       pic->pins[ 8].port=P16E_PORTC;pic->pins[ 8].pord=1;
-       pic->pins[ 9].port=P16E_PORTC;pic->pins[ 9].pord=2;
-       pic->pins[10].port=P16E_PORTC;pic->pins[10].pord=3;
-       pic->pins[11].port=P16E_PORTC;pic->pins[11].pord=4;
-       pic->pins[12].port=P16E_PORTC;pic->pins[12].pord=5;
-       pic->pins[13].port=P16E_PORTC;pic->pins[13].pord=6;
-       pic->pins[14].port=P16E_PORTC;pic->pins[14].pord=7;
+       pic->pins[ 5].port=P16E2_PORTA;pic->pins[ 5].pord=6;
+       pic->pins[ 6].port=P16E2_PORTA;pic->pins[ 6].pord=7;
+       pic->pins[ 7].port=P16E2_PORTC;pic->pins[ 7].pord=0;
+       pic->pins[ 8].port=P16E2_PORTC;pic->pins[ 8].pord=1;
+       pic->pins[ 9].port=P16E2_PORTC;pic->pins[ 9].pord=2;
+       pic->pins[10].port=P16E2_PORTC;pic->pins[10].pord=3;
+       pic->pins[11].port=P16E2_PORTC;pic->pins[11].pord=4;
+       pic->pins[12].port=P16E2_PORTC;pic->pins[12].pord=5;
+       pic->pins[13].port=P16E2_PORTC;pic->pins[13].pord=6;
+       pic->pins[14].port=P16E2_PORTC;pic->pins[14].pord=7;
        pic->pins[15].port=0         ;pic->pins[15].pord=-1;
        pic->pins[16].port=0         ;pic->pins[16].pord=-1;
-       pic->pins[17].port=P16E_PORTB;pic->pins[17].pord=0;
-       pic->pins[18].port=P16E_PORTB;pic->pins[18].pord=1;
-       pic->pins[19].port=P16E_PORTB;pic->pins[19].pord=2;
-       pic->pins[20].port=P16E_PORTB;pic->pins[20].pord=3;
-       pic->pins[21].port=P16E_PORTB;pic->pins[21].pord=4;
-       pic->pins[22].port=P16E_PORTB;pic->pins[22].pord=5;
-       pic->pins[23].port=P16E_PORTB;pic->pins[23].pord=6;
-       pic->pins[24].port=P16E_PORTB;pic->pins[24].pord=7;
-       //pic->pins[25].port=P16E_PORTE;pic->pins[25].pord=3; //FIXME P16F18855 memory map is different of P16F1619 map!!!
-       pic->pins[26].port=P16E_PORTA;pic->pins[26].pord=0;
-       pic->pins[27].port=P16E_PORTA;pic->pins[27].pord=1;
+       pic->pins[17].port=P16E2_PORTB;pic->pins[17].pord=0;
+       pic->pins[18].port=P16E2_PORTB;pic->pins[18].pord=1;
+       pic->pins[19].port=P16E2_PORTB;pic->pins[19].pord=2;
+       pic->pins[20].port=P16E2_PORTB;pic->pins[20].pord=3;
+       pic->pins[21].port=P16E2_PORTB;pic->pins[21].pord=4;
+       pic->pins[22].port=P16E2_PORTB;pic->pins[22].pord=5;
+       pic->pins[23].port=P16E2_PORTB;pic->pins[23].pord=6;
+       pic->pins[24].port=P16E2_PORTB;pic->pins[24].pord=7;
+       pic->pins[25].port=P16E2_PORTE;pic->pins[25].pord=3; 
+       pic->pins[26].port=P16E2_PORTA;pic->pins[26].pord=0;
+       pic->pins[27].port=P16E2_PORTA;pic->pins[27].pord=1;
 
 	
        pic->pgc=17;
