@@ -742,3 +742,112 @@ const char * getFSRname_18(unsigned int addr)
         return FSRname;
   }
 }
+
+
+const char * 
+getPinName(_pic * pic,int pin, char * pname)
+{
+    pin=pin-1;
+    switch(pic->family)
+    {
+        case P16:
+            switch(pic->pins[pin].port)
+            {
+                case P16_PORTA:
+                  sprintf(pname,"RA%i",pic->pins[pin].pord);  
+                  break;
+                case P16_PORTB:
+                  sprintf(pname,"RB%i",pic->pins[pin].pord);
+                  break;
+                case P16_PORTC:
+                  sprintf(pname,"RC%i",pic->pins[pin].pord);
+                  break;
+                case P16_PORTD:
+                  sprintf(pname,"RD%i",pic->pins[pin].pord);
+                  break;
+                case P16_PORTE:
+                  sprintf(pname,"RE%i",pic->pins[pin].pord);
+                  break;
+                default:
+                  strcpy(pname,"error");
+                  break;  
+            }
+            break;
+        case P16E:
+            switch(pic->pins[pin].port)
+            {
+                case P16E_PORTA:
+                  sprintf(pname,"RA%i",pic->pins[pin].pord);  
+                  break;
+                case P16E_PORTB:
+                  sprintf(pname,"RB%i",pic->pins[pin].pord);
+                  break;
+                case P16E_PORTC:
+                  sprintf(pname,"RC%i",pic->pins[pin].pord);
+                  break;
+                case P16E_PORTD:
+                  sprintf(pname,"RD%i",pic->pins[pin].pord);
+                  break;
+                /*  
+                case P16E_PORTE:
+                  sprintf(pname,"RE%i",pic->pins[pin].pord);
+                  break;
+                 */ 
+                default:
+                  strcpy(pname,"error");
+                  break;  
+            }
+            break;
+        case P16E2:
+            switch(pic->pins[pin].port)
+            {
+                case P16E2_PORTA:
+                  sprintf(pname,"RA%i",pic->pins[pin].pord);  
+                  break;
+                case P16E2_PORTB:
+                  sprintf(pname,"RB%i",pic->pins[pin].pord);
+                  break;
+                case P16E2_PORTC:
+                  sprintf(pname,"RC%i",pic->pins[pin].pord);
+                  break;
+                case P16E2_PORTD:
+                  sprintf(pname,"RD%i",pic->pins[pin].pord);
+                  break;
+                case P16E2_PORTE:
+                  sprintf(pname,"RE%i",pic->pins[pin].pord);
+                  break;
+                default:
+                  strcpy(pname,"error");
+                  break;  
+            }
+            break;    
+        case P18:
+            switch(pic->pins[pin].port)
+            {
+                case P18_PORTA:
+                  sprintf(pname,"RA%i",pic->pins[pin].pord);  
+                  break;
+                case P18_PORTB:
+                  sprintf(pname,"RB%i",pic->pins[pin].pord);
+                  break;
+                case P18_PORTC:
+                  sprintf(pname,"RC%i",pic->pins[pin].pord);
+                  break;
+                case P18_PORTD:
+                  sprintf(pname,"RD%i",pic->pins[pin].pord);
+                  break;
+                case P18_PORTE:
+                  sprintf(pname,"RE%i",pic->pins[pin].pord);
+                  break;
+                default:
+                  strcpy(pname,"error");
+                  break;  
+            }
+            break;
+        default:
+            strcpy(pname,"error");
+            break;
+    } 
+
+    return pname;
+}

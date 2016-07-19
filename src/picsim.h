@@ -243,6 +243,7 @@ const char * getFSRname_16(unsigned int addr);
 const char * getFSRname_16E(unsigned int addr);
 const char * getFSRname_16E2(unsigned int addr);
 const char * getFSRname_18(unsigned int addr);
+const char * getPinName(_pic * pic,int pin, char * pname);
 
 #include"p16fxxx_defs.h"
 
