@@ -232,6 +232,9 @@ int pic_icsp(_pic * pic, int print);
 void pic_icsp_init18(_pic * pic);
 int pic_icsp18(_pic * pic, int print);
 
+int read_ihx(_pic * pic,const char * fname, int leeprom);
+int read_ihx_18(_pic * pic,const char * fname, int leeprom);
+
 int write_ihx(_pic * pic,const char * fname);
 int write_ihx18(_pic * pic,const char * fname);
 

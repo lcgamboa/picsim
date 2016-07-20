@@ -59,7 +59,7 @@ checksum(char* str)
 
 
 int
-read_ihx(_pic * pic,const char * fname, int lrom)
+read_ihx(_pic * pic,const char * fname, int leeprom)
 {
   FILE* fin;
   int  lc=0;
@@ -114,7 +114,7 @@ read_ihx(_pic * pic,const char * fname, int lrom)
               if((((addrh<<16)|addrl)<<1) >= 0x4200 )
               { 
                 //EEPROM
-                if(lrom == 1) 
+                if(leeprom == 1) 
                 for(bc=0;bc < nbytes;bc+=2)
 	        {
                   addrx= (((addrh<<16)|addr)+bc-0x4200)/2;
@@ -178,7 +178,7 @@ read_ihx(_pic * pic,const char * fname, int lrom)
 
 
 int
-read_ihx_18(_pic * pic,const char * fname, int lrom)
+read_ihx_18(_pic * pic,const char * fname, int leeprom)
 {
   FILE* fin;
   int  lc=0;
@@ -233,7 +233,7 @@ read_ihx_18(_pic * pic,const char * fname, int lrom)
               if(addrh == 0x00F0 )
               { 
                 //EEPROM
-                if(lrom == 1) 
+                if(leeprom == 1) 
                 for(bc=0;bc < nbytes;bc++)
 	        {
                   addrx= addr+bc;
