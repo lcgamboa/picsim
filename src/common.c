@@ -290,6 +290,71 @@ pic_init(_pic * pic, int processor, const char * fname, int lrom, float freq)
      pic->pins[i].ovalue=1;  //put default pin values to 1  
    }  
 
+   
+
+  /*serial config*/
+   switch(pic->family)
+   {
+     case P16:
+       pic->serial_PIR1=&pic->ram[P16_PIR1];
+       pic->serial_PIE1=&pic->ram[P16_PIE1];
+       pic->serial_TXSTA=&pic->ram[P16_TXSTA];
+       pic->serial_RCSTA=&pic->ram[P16_RCSTA];
+       pic->serial_SPBRG=&pic->ram[P16_SPBRG];
+       pic->serial_RCREG=&pic->ram[P16_RCREG];
+       pic->serial_TXREG=&pic->ram[P16_TXREG];
+       pic->serial_TXREG_ADDR=P16_TXREG;
+       pic->serial_RCSTA_ADDR=P16_RCSTA;
+       pic->serial_RCREG_ADDR=P16_RCREG;         
+       pic->serial_TRIS_RX=&pic->ram[pic->pins[pic->usart[0]-1].port+0x80];
+       pic->serial_TRIS_RX_MASK=(0x01 << pic->pins[pic->usart[0]-1].pord);
+       break;  
+     case P16E:
+       pic->serial_PIR1=&pic->ram[P16E_PIR1];
+       pic->serial_PIE1=&pic->ram[P16E_PIE1];
+       pic->serial_TXSTA=&pic->ram[P16E_TX1STA];
+       pic->serial_RCSTA=&pic->ram[P16E_RC1STA];
+       pic->serial_SPBRG=&pic->ram[P16E_SP1BGRL];//FIXME 16bits SPBRG
+       pic->serial_RCREG=&pic->ram[P16E_RC1REG];
+       pic->serial_TXREG=&pic->ram[P16E_TX1REG];
+       pic->serial_TXREG_ADDR=P16E_TX1REG;
+       pic->serial_RCSTA_ADDR=P16E_RC1STA;
+       pic->serial_RCREG_ADDR=P16E_RC1REG;       
+       pic->serial_TRIS_RX=&pic->ram[pic->pins[pic->usart[0]-1].port+0x80];
+       pic->serial_TRIS_RX_MASK=(0x01 << pic->pins[pic->usart[0]-1].pord);
+       break;  
+     case P16E2:
+     /* //TODO not implemented yet   
+       pic->serial_PIR1=&pic->ram[P16E2_PIR1];
+       pic->serial_PIE1=&pic->ram[P16E2_PIE1];
+       pic->serial_TXSTA=&pic->ram[P16E2_TXSTA];
+       pic->serial_RCSTA=&pic->ram[P16E2_RCSTA];
+       pic->serial_SPBRG=&pic->ram[P16E2_SPBRG];
+       pic->serial_RCREG=&pic->ram[P16E2_RCREG];
+       pic->serial_TXREG=&pic->ram[P16E2_TXREG];
+       pic->serial_TXREG_ADDR=P16E2_TXREG;
+       pic->serial_RCSTA_ADDR=P16E2_RCSTA;
+       pic->serial_RCREG_ADDR=P16E2_RCREG;       
+      */ 
+       break;
+     case P18:
+       pic->serial_PIR1=&pic->ram[P18_PIR1];
+       pic->serial_PIE1=&pic->ram[P18_PIE1];
+       pic->serial_TXSTA=&pic->ram[P18_TXSTA];
+       pic->serial_RCSTA=&pic->ram[P18_RCSTA];
+       pic->serial_SPBRG=&pic->ram[P18_SPBRG];
+       pic->serial_RCREG=&pic->ram[P18_RCREG];
+       pic->serial_TXREG=&pic->ram[P18_TXREG];
+       pic->serial_TXREG_ADDR=P18_TXREG;
+       pic->serial_RCSTA_ADDR=P18_RCSTA;
+       pic->serial_RCREG_ADDR=P18_RCREG;     
+       pic->serial_TRIS_RX=&pic->ram[pic->pins[pic->usart[0]-1].port+0x12];
+       pic->serial_TRIS_RX_MASK=(0x01 << pic->pins[pic->usart[0]-1].pord);
+       break;
+     default:
+       break;
+   }
+   
    serial_open(pic);
   
    if(fname == NULL)
@@ -1041,23 +1106,23 @@ pic_step(_pic * pic,int print)
   switch(pic->family)
   { 
     case P16:
-      periferic16_step_in(pic,print);
       pic_decode_16(pic,print);
+      periferic16_step_in(pic,print);
       periferic16_step_out(pic,print);
       break;
     case P16E:  
-      periferic16E_step_in(pic,print);
       pic_decode_16E(pic,print);
+      periferic16E_step_in(pic,print);
       periferic16E_step_out(pic,print);
       break;  
     case P16E2:  
-      periferic16E2_step_in(pic,print);
       pic_decode_16E(pic,print);
+      periferic16E2_step_in(pic,print);
       periferic16E2_step_out(pic,print);
       break;    
     case P18:
-      periferic18_step_in(pic,print);
       pic_decode_18(pic,print);
+      periferic18_step_in(pic,print);
       periferic18_step_out(pic,print);
       break;
   }

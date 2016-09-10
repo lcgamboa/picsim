@@ -190,7 +190,8 @@ unsigned char ssp_bit;
   int sr; 
   unsigned char recb;
   int serialc;
-  unsigned char txtemp;
+  unsigned char txtemp[2];
+  unsigned char txtc;
   unsigned char RCREG2;
 //serial emulation
   char SERIALDEVICE[100];
@@ -208,11 +209,23 @@ unsigned char ssp_bit;
   int rtspin;		
   unsigned char buff[BUFFMAX];
   int bc;
+  unsigned char * serial_PIR1;
+  unsigned char * serial_TXSTA;
+  unsigned char * serial_PIE1;
+  unsigned char * serial_RCSTA;
+  unsigned char * serial_SPBRG;
+  unsigned char * serial_RCREG;
+  unsigned char * serial_TXREG;
+  unsigned short  serial_TXREG_ADDR;
+  unsigned short  serial_RCSTA_ADDR;
+  unsigned short  serial_RCREG_ADDR;
+  unsigned char * serial_TRIS_RX;
+  unsigned char   serial_TRIS_RX_MASK;
 } _pic;
 
 
 
-void pic_set_serial(_pic * pic, char * name, int flowcontrol,int ctspin,int  rtspin);
+void pic_set_serial(_pic * pic, const char * name, int flowcontrol,int ctspin,int  rtspin);
 int pic_init(_pic * pic, int processor, const char * fname, int lrom,float freq);
 int pic_reset(_pic * pic,int flags);
 void pic_step(_pic * pic,int print);

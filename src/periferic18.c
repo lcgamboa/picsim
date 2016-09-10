@@ -1245,7 +1245,7 @@ if(pic->portbm)
 
 
 
-   serial18( pic,print);
+   serial( pic,print);
 
 };
 

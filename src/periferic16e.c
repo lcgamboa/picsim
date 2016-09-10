@@ -1160,7 +1160,7 @@ else if((pic->processor == P16F877)||(pic->processor == P16F877A))
    };
 */
 
- serial16E(pic,print);
+ serial(pic,print);
 };
 
 void 
