@@ -107,14 +107,16 @@ main(int argc,char** argv)
 
       if(fst)
       {
-        pic_step(&pic1,0);
+        pic1.print=0;  
+        pic_step(&pic1);
       }
       else
       { 
 #ifndef _WIN_      
         ANSI_FG_HCOLOR(RED);
 #endif 
-        pic_step(&pic1,1);
+        pic1.print=1;
+        pic_step(&pic1);
 
 #ifndef _WIN_      
         ANSI_DEFAULT(); 

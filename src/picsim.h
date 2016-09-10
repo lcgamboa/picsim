@@ -91,6 +91,7 @@ unsigned char ovalue;    //defaut open pin value
 
 typedef struct 
 {
+  unsigned char print;//print information ON/OFF  
   unsigned int  RAMSIZE;
   unsigned int  ROMSIZE;
   unsigned int  EEPROMSIZE;
@@ -228,7 +229,7 @@ unsigned char ssp_bit;
 void pic_set_serial(_pic * pic, const char * name, int flowcontrol,int ctspin,int  rtspin);
 int pic_init(_pic * pic, int processor, const char * fname, int lrom,float freq);
 int pic_reset(_pic * pic,int flags);
-void pic_step(_pic * pic,int print);
+void pic_step(_pic * pic);
 void pic_end(_pic * pic);
 
 unsigned char pic_get_pin(_pic * pic, unsigned char pin);
@@ -240,10 +241,10 @@ unsigned char pic_get_pin_DOV(_pic * pic, unsigned char pin);//get default open 
 int pic_set_pin_DOV(_pic * pic,unsigned char pin,unsigned char value);//set default open value
 
 void pic_icsp_init(_pic * pic);
-int pic_icsp(_pic * pic, int print);
+int pic_icsp(_pic * pic);
 
 void pic_icsp_init18(_pic * pic);
-int pic_icsp18(_pic * pic, int print);
+int pic_icsp18(_pic * pic);
 
 int read_ihx(_pic * pic,const char * fname, int leeprom);
 int read_ihx_18(_pic * pic,const char * fname, int leeprom);

@@ -32,7 +32,7 @@
 const int fpw2_[8]={1,2,4,8,16,32,64,128};
 
 
-extern void pic_decode_18(_pic * pic,int print);
+extern void pic_decode_18(_pic * pic);
 
 int 
 pic18_wr_pin(_pic * pic,unsigned char pin,unsigned char value)
@@ -63,7 +63,7 @@ pic18_wr_pin(_pic * pic,unsigned char pin,unsigned char value)
      return 0;
 };
 
-int interrupt18(_pic * pic,int print)
+int interrupt18(_pic * pic)
 {
 //interrupt
 
@@ -244,7 +244,7 @@ pic->frst=1;
 
 
 void 
-periferic18_step_in(_pic * pic,int print)
+periferic18_step_in(_pic * pic)
 {
 //int i;
 float val;
@@ -1245,12 +1245,12 @@ if(pic->portbm)
 
 
 
-   serial( pic,print);
+   serial( pic);
 
 };
 
 void 
-periferic18_step_out(_pic * pic,int print)
+periferic18_step_out(_pic * pic)
 {
 int i,val;
 
@@ -1316,7 +1316,7 @@ unsigned short tris;
  //         if((pic->pc>>1) ==   ((((pic->ram[P18_BDMSR2]&0x0F)<<16)|(pic->ram[P18_BDMSR1]<<8)|pic->ram[P18_BDMSR0])/*+1*/ )) printf("Break Point\n");      //Break Point  
 //          if((pic->ram[P18_DEBUG]&0x20) == 0x20) printf("sstep!\n");  
           
-          if(pic->s2 !=0)pic_decode_18(pic,print);
+          if(pic->s2 !=0)pic_decode_18(pic);
 
           if(pic->pc != 0x00000)
           {
@@ -1456,11 +1456,11 @@ unsigned short tris;
 //interrupt
 if(pic->s2 == 0)
 {
-  int iret=interrupt18(pic,print); 
+  int iret=interrupt18(pic); 
   if (iret)
   {
      pic->sleep=0; 
-     if(print)printf("interrupt!\n");
+     if(pic->print)printf("interrupt!\n");
      if((pic->ram[P18_STKPTR] & 0x1F) < 31 )
      {
        pic->stack[pic->ram[P18_STKPTR]& 0x1F]=pic->pc;

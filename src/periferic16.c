@@ -32,7 +32,7 @@
 const int fpw2[]={1,2,4,8,16,32,64,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288};
 
 
-extern void pic_decode_16(_pic * pic,int print);
+extern void pic_decode_16(_pic * pic);
 
 int 
 pic_wr_pin16(_pic * pic,unsigned char pin,unsigned char value)
@@ -60,7 +60,7 @@ pic_wr_pin16(_pic * pic,unsigned char pin,unsigned char value)
      return 0;
 };
 
-int interrupt16(_pic * pic,int print)
+int interrupt16(_pic * pic)
 {
 //interrupt
   //GIE
@@ -163,7 +163,7 @@ pic->frst=1;
 
 
 void 
-periferic16_step_in(_pic * pic,int print)
+periferic16_step_in(_pic * pic)
 {
 //int i;
 float val;
@@ -1409,11 +1409,11 @@ else if((pic->processor == P16F877)||(pic->processor == P16F877A))
 */
 
 if(pic->processor != P16F84A)
-   serial(pic,print);
+   serial(pic);
 };
 
 void 
-periferic16_step_out(_pic * pic,int print)
+periferic16_step_out(_pic * pic)
 {
 int i,val;
 
@@ -1455,7 +1455,7 @@ int temp;
          // if(pic->pc ==   ((((pic->ram[ICKBUG]&0x1F)<<8) |  pic->ram[BIGBUG])+1)) printf("Break Point\n");      //Break Point  
          // if((pic->ram[ICKBUG]&0x20) == 0x20) printf("sstep!\n");  
           
-          if(pic->s2 !=0)pic_decode_16(pic,print);
+          if(pic->s2 !=0)pic_decode_16(pic);
 
 
           for(temp=7;temp>0;temp--)
@@ -1562,7 +1562,7 @@ int temp;
 //interrupt
 if(pic->s2 == 0)
 {
-  if (interrupt16(pic,print) )
+  if (interrupt16(pic) )
   {
        pic->sleep=0; 
 
@@ -1571,7 +1571,7 @@ if(pic->s2 == 0)
        pic->ram[(0x0100)|(P16_INTCON & 0x007F)]&=~0x80;
        pic->ram[(0x0180)|(P16_INTCON & 0x007F)]&=~0x80;
 
-       if(print)printf("interrupt!");
+       if(pic->print)printf("interrupt!");
        for(i=7;i>0;i--)
          pic->stack[i]=pic->stack[i-1];
        pic->stack[0]=pic->pc;

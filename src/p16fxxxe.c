@@ -91,7 +91,7 @@ void ReadIndf(_pic * pic, unsigned short *afsr)
 }
 
 void
-pic_decode_16E(_pic * pic,int print)
+pic_decode_16E(_pic * pic)
 {
   unsigned short temp;
   unsigned short opc;
@@ -112,7 +112,7 @@ pic_decode_16E(_pic * pic,int print)
   
   if(pic->sleep == 1)
   {
-    if(print)printf("sleep WDT=%i wdt=%f ms=%i\n",((pic->config[0] & 0x04) == 0x04 ),pic->twdt,pic->wdt); 
+    if(pic->print)printf("sleep WDT=%i wdt=%f ms=%i\n",((pic->config[0] & 0x04) == 0x04 ),pic->twdt,pic->wdt); 
     return;
   }
   
@@ -128,7 +128,7 @@ pic_decode_16E(_pic * pic,int print)
   };
   
   //print (Address)
-  if(print)
+  if(pic->print)
   {
     printf("pc=%#06X\t",pic->pc); 
     if(pic->pc != 0x2004) 
@@ -168,16 +168,16 @@ pic_decode_16E(_pic * pic,int print)
               { 
                 case 0x0000:
 //NOP     --  	No Operation                 1     0000000 0000000  
-                  if(print)printf("NOP\n");
+                  if(pic->print)printf("NOP\n");
 		break;
                 case 0x0001:
 //RESET    -     Software device Reset              1    00 0000 0000 0001  
-                  if(print)printf("RESET\n");                
+                  if(pic->print)printf("RESET\n");                
 		  pic_reset(pic,0);  
                 break;
 		case 0x0008:
 ///RETURN  --  	Return from Subroutine       2     0000000 0001000
-                  if(print)printf("RETURN\n");
+                  if(pic->print)printf("RETURN\n");
 	          pic->jpc=pic->stack[0];
                   for(temp=0;temp<15;temp++)
 	            pic->stack[temp]=pic->stack[temp+1];
@@ -192,7 +192,7 @@ pic_decode_16E(_pic * pic,int print)
                 break;
 		case 0x0009:
 //RETFIE  --  	Return from interrupt        2     0000000 0001001                                                         
-                  if(print)printf("RETFIE\n");
+                  if(pic->print)printf("RETFIE\n");
 	          pic->jpc=pic->stack[0];
                   for(temp=0;temp<15;temp++)
 	            pic->stack[temp]=pic->stack[temp+1];
@@ -254,7 +254,7 @@ pic_decode_16E(_pic * pic,int print)
                 break;
                 case 0x000A:
 //CALLW    -     Call Subroutine with W             2    00 0000 0000 1010    
-                  if(print)printf("CALLW\n");
+                  if(pic->print)printf("CALLW\n");
                   for(temp=15;temp>0;temp--)
 	            pic->stack[temp]=pic->stack[temp-1];  //TODO P16E implement acess to stack  and STKPTR
 	          pic->stack[0]=pic->pc;
@@ -263,7 +263,7 @@ pic_decode_16E(_pic * pic,int print)
                 break;     
                 case 0x000B:
 //BRW      -     Relative Branch with W             2    00 0000 0000 1011   
-                  if(print)printf("BRW\n");
+                  if(pic->print)printf("BRW\n");
 //TODO P16E DEBUG
 /*          
         if(((pic->config[0] & 0x0800) == 0)&&(((pic->ram[P16E_ICKBUG])&0x80)== 0x80) )//DEBUG ON
@@ -277,7 +277,7 @@ pic_decode_16E(_pic * pic,int print)
                 case 0x0010 ... 0x0017:
 //MOVIW    n,m   Move Indirect FSRn to W with       1    00 0000 0001 0nmm   Z   
 //               pre/post inc/dec modifier, mm  
-                 if(print)printf("MOVIW FSR%i, %i\n",(opc & 0x0004) != 0,opc & 0x0003 );   
+                 if(pic->print)printf("MOVIW FSR%i, %i\n",(opc & 0x0004) != 0,opc & 0x0003 );   
                  pic->lram=P16E_WREG;   
                  if(opc & 0x0004)//INDF1
                  {
@@ -355,7 +355,7 @@ pic_decode_16E(_pic * pic,int print)
                 case 0x0018 ... 0x001F:
 //MOVWI    n,m   Move W to Indirect FSRn with       1    00 0000 0001 1nmm   
 //               pre/post inc/dec modifier, mm       
-                 if(print)printf("MOVWI FSR%i, %i\n",(opc & 0x0004) != 0,opc & 0x0003 );   
+                 if(pic->print)printf("MOVWI FSR%i, %i\n",(opc & 0x0004) != 0,opc & 0x0003 );   
                  pic->rram=P16E_WREG;   
                  if(opc & 0x0004)//INDF1
                  {
@@ -424,13 +424,13 @@ pic_decode_16E(_pic * pic,int print)
                 break;      
                 case 0x0020 ... 0x003F:
 //MOVLB    k     Move literal to BSR                1    00 0000 001k kkkk                      
-                  if(print)printf("MOVLB %#04X\n",opc & 0x001F);
+                  if(pic->print)printf("MOVLB %#04X\n",opc & 0x001F);
 	          pic->ram[P16E_BSR]= (opc & 0x001F);
                   pic->lram=P16E_BSR;
                 break;    
                 case 0x0063:
 //SLEEP   --  	Go into Standby mode         1     0000000 1100011   	TO,PD
-                  if(print)printf("SLEEP\n");   
+                  if(pic->print)printf("SLEEP\n");   
   		  pic->wdt=0;
   		  pic->sleep=1;
 	          *status&=~0x08;
@@ -438,14 +438,14 @@ pic_decode_16E(_pic * pic,int print)
                 break;
 		case 0x0064:
 //CLRWDT  --  	Clear Watchdog Timer         1     0000000 1100100   	TO,PD
-                  if(print)printf("CLRWDT\n");   
+                  if(pic->print)printf("CLRWDT\n");   
   		  pic->wdt=0;
 	          *status|=0x08;
 	          *status|=0x10;
   		break;
                 case 0x0065 ... 0x0067:
 //TRIS     f     Load TRIS register with W          1    00 0000 0110 01ff                
-                  if(print)printf("TRIS %#04X\n",opc & 0x0007);
+                  if(pic->print)printf("TRIS %#04X\n",opc & 0x0007);
                   switch(opc&0x0003)
                   {
                       case 1:
@@ -464,7 +464,7 @@ pic_decode_16E(_pic * pic,int print)
                 break;                  
                 case 0x006A:
 //OPTION   -     Load OPTION_REG register with W    1    00 0000 0110 0010     
-                  if(print)printf("OPTION\n");
+                  if(pic->print)printf("OPTION\n");
 	          pic->ram[P16E_OPTION_REG]= pic->ram[P16E_WREG];
                   pic->lram=P16E_OPTION_REG; 
                 break;    
@@ -475,7 +475,7 @@ pic_decode_16E(_pic * pic,int print)
 	    break;
 	    case 0x0080:
 //MOVWF   f  	Move W to f                  1     0000001 fffffff
-              if(print)printf("MOVWF %#04X\n",opc & 0x007F);
+              if(pic->print)printf("MOVWF %#04X\n",opc & 0x007F);
 	      pic->ram[bank|(opc & 0x007F)]=pic->ram[P16E_WREG];
               pic->lram=bank|(opc & 0x007F);
 	    break;
@@ -489,13 +489,13 @@ pic_decode_16E(_pic * pic,int print)
           {
             case 0x0000:
 //CLRW    --  	Clear W                      1     0000010 00000xx 	Z	
-              if(print)printf("CLRW\n");
+              if(pic->print)printf("CLRW\n");
               pic->ram[P16E_WREG]=0;
               pic->lram=P16E_WREG;
             break;
 	    case 0x0080:
 //CLRF    f  	Clear f                      1     0000011 fffffff 	Z       2
-              if(print)printf("CLRF %#04X\n",opc & 0x007F);
+              if(pic->print)printf("CLRF %#04X\n",opc & 0x007F);
               pic->ram[bank|(opc & 0x007F) ]=0;
               pic->lram=bank|(opc & 0x007F);
 	    break;
@@ -506,7 +506,7 @@ pic_decode_16E(_pic * pic,int print)
 	break;
 	case 0x0200:
 //SUBWF   f, d 	Subtract W from f            1     000010 dfffffff 	C,DC,Z  1, 2
-          if(print)printf("SUBWF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+          if(pic->print)printf("SUBWF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
 	
 	  if((0xF0&((0x0F&(~pic->ram[P16E_WREG]))+1+(0x0F&pic->ram[bank|(opc & 0x007F)]))) !=0)
 	    *status|=0x02;
@@ -541,7 +541,7 @@ pic_decode_16E(_pic * pic,int print)
         break;
 	case 0x0300:
 //DECF    f, d 	Decrement f                  1     000011 dfffffff  	Z       1, 2
-          if(print)printf("DECF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+          if(pic->print)printf("DECF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
           if((opc & 0x0080) == 0 )
 	  {
 	    pic->ram[P16E_WREG]=pic->ram[bank|(opc & 0x007F)]-1;
@@ -563,7 +563,7 @@ pic_decode_16E(_pic * pic,int print)
         break;
 	case 0x0400:
 //IORWF   f, d 	Inclusive OR W with f        1     000100 dfffffff   	Z       1, 2
-          if(print)printf("IORWF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+          if(pic->print)printf("IORWF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
           if((opc & 0x0080) == 0 )
 	  {
 	    pic->ram[P16E_WREG]= pic->ram[P16E_WREG] | pic->ram[bank|(opc & 0x007F)];
@@ -585,7 +585,7 @@ pic_decode_16E(_pic * pic,int print)
         break;
 	case 0x0500:
 //ANDWF   f, d 	AND W with f                 1     000101 dfffffff	Z       1, 2
-          if(print)printf("ANDWF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+          if(pic->print)printf("ANDWF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
           if((opc & 0x0080) == 0 )
 	  {
 	    pic->ram[P16E_WREG]= pic->ram[P16E_WREG] & pic->ram[bank|(opc & 0x007F)];
@@ -607,7 +607,7 @@ pic_decode_16E(_pic * pic,int print)
         break;
 	case 0x0600:
 //XORWF   f, d 	Exclusive OR W with f        1     000110 dfffffff  	Z       1, 2
-          if(print)printf("XORWF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+          if(pic->print)printf("XORWF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
           if((opc & 0x0080) == 0 )
 	  {
 	    pic->ram[P16E_WREG]= pic->ram[P16E_WREG] ^ pic->ram[bank|(opc & 0x007F)];
@@ -629,7 +629,7 @@ pic_decode_16E(_pic * pic,int print)
         break;
 	case 0x0700:
 //ADDWF	f, d 	Add W and f                  1     000111 dfffffff	C,DC,Z  1, 2
-          if(print)printf("ADDWF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+          if(pic->print)printf("ADDWF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
 	
 	  if((0xF0&((0x0F&pic->ram[P16E_WREG])+(0x0F&pic->ram[bank|(opc & 0x007F)]))) !=0)
 	    *status|=0x02;
@@ -664,7 +664,7 @@ pic_decode_16E(_pic * pic,int print)
         break;
 	case 0x0800:
 //MOVF    f, d 	Move f                       1     001000 dfffffff 	Z       1, 2
-          if(print)printf("MOVF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+          if(pic->print)printf("MOVF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
           if((opc & 0x0080) == 0 )
 	  {
 	    pic->ram[P16E_WREG]=pic->ram[bank|(opc & 0x007F)];
@@ -687,7 +687,7 @@ pic_decode_16E(_pic * pic,int print)
         break;
 	case 0x0900:
 //COMF    f, d 	Complement f                 1     001001 dfffffff 	Z       1, 2
-          if(print)printf("COMF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+          if(pic->print)printf("COMF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
           if((opc & 0x0080) == 0 )
 	  {
 	    pic->ram[P16E_WREG]=~pic->ram[bank|(opc & 0x007F)];
@@ -709,7 +709,7 @@ pic_decode_16E(_pic * pic,int print)
         break;
 	case 0x0A00:
 //INCF    f, d 	Increment f                  1     001010 dfffffff	Z       1, 2
-          if(print)printf("INCF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+          if(pic->print)printf("INCF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
           if((opc & 0x0080) == 0 )
 	  {
 	    pic->ram[P16E_WREG]=pic->ram[bank|(opc & 0x007F)]+1;
@@ -731,7 +731,7 @@ pic_decode_16E(_pic * pic,int print)
         break;
 	case 0x0B00:
 //DECFSZ  f, d 	Decrement f, Skip if 0       1(2)  001011 dfffffff 		1, 2, 3  
-          if(print)printf("DECFSZ %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+          if(pic->print)printf("DECFSZ %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
           if((opc & 0x0080) == 0 )
 	  {
 	    pic->ram[P16E_WREG]=pic->ram[bank|(opc & 0x007F)]-1;
@@ -755,7 +755,7 @@ pic_decode_16E(_pic * pic,int print)
         break;
 	case 0x0C00:
 //RRF     f, d 	Rotate Right f through Carry 1     001100 dfffffff	C       1, 2
-          if(print)printf("RRF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+          if(pic->print)printf("RRF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
 	  temp=(pic->ram[bank|(opc & 0x007F)]);
 	  if((*status&0x01) ==0x01)temp|=0x0100;
 	  if((temp&0x0001) ==0x01)
@@ -776,7 +776,7 @@ pic_decode_16E(_pic * pic,int print)
         break;
 	case 0x0D00:
 //RLF     f, d 	Rotate Left f through Carry  1     001101 dfffffff	C       1, 2                   
-          if(print)printf("RLF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+          if(pic->print)printf("RLF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
 	  temp=(pic->ram[bank|(opc & 0x007F)]);
 	  temp=temp<<1;
 	  if((*status&0x01) ==0x01)temp|=0x0001;
@@ -797,7 +797,7 @@ pic_decode_16E(_pic * pic,int print)
         break;
 	case 0x0E00:
 //SWAPF   f, d 	Swap nibbles in f            1     001110 dfffffff 		1, 2
-          if(print)printf("SWAPF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+          if(pic->print)printf("SWAPF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
           if((opc & 0x0080) == 0 )
 	  {
 	    pic->ram[P16E_WREG]=((pic->ram[bank|(opc & 0x007F)]&0x0F)<<4)|
@@ -814,7 +814,7 @@ pic_decode_16E(_pic * pic,int print)
         break;
 	case 0x0F00:
 //INCFSZ  f, d 	Increment f, Skip if 0       1(2)  001111 dfffffff		1, 2, 3 
-          if(print)printf("INCFSZ %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+          if(pic->print)printf("INCFSZ %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
           if((opc & 0x0080) == 0 )
 	  {
 	    pic->ram[P16E_WREG]=pic->ram[bank|(opc & 0x007F)]+1;
@@ -846,19 +846,19 @@ pic_decode_16E(_pic * pic,int print)
       {
         case 0x0000:
 //BCF     f, b 	Bit Clear f                  1     0100 bbbfffffff           1, 2
-          if(print)printf("BCF %#04X,%d\n",opc & 0x007F,(opc & 0x0380)>>7);
+          if(pic->print)printf("BCF %#04X,%d\n",opc & 0x007F,(opc & 0x0380)>>7);
 	  pic->ram[bank|(opc & 0x007F)]&=~(0x01<<((opc & 0x0380)>>7));
           pic->lram=bank|(opc & 0x007F);
 	break;
 	case 0x0400:
 //BSF     f, b 	Bit Set f                    1     0101 bbbfffffff           1, 2
-          if(print)printf("BSF %#04X,%d\n",opc & 0x007F,(opc & 0x0380)>>7);
+          if(pic->print)printf("BSF %#04X,%d\n",opc & 0x007F,(opc & 0x0380)>>7);
 	  pic->ram[bank|(opc & 0x007F)]|=(0x01<<((opc & 0x0380)>>7));
           pic->lram=bank|(opc & 0x007F);
         break;
 	case 0x0800:
 //BTFSC   f, b 	Bit Test f, Skip if Clear    1(2)  0110 bbbfffffff           3
-        if(print)printf("BTFSC %#04X,%d\n",opc & 0x007F,(opc & 0x0380)>>7);
+        if(pic->print)printf("BTFSC %#04X,%d\n",opc & 0x007F,(opc & 0x0380)>>7);
 	if((pic->ram[bank|(opc & 0x007F)] & (0x01<<((opc & 0x0380)>>7))) == 0)
 	{
 	      pic->jpc=pic->pc+1;
@@ -867,7 +867,7 @@ pic_decode_16E(_pic * pic,int print)
         break;
 	case 0x0C00:
 //BTFSS   f, b 	Bit Test f, Skip if Set      1(2)  0111 bbbfffffff           3
-        if(print)printf("BTFSS %#04X,%d\n",opc & 0x007F,(opc & 0x0380)>>7);
+        if(pic->print)printf("BTFSS %#04X,%d\n",opc & 0x007F,(opc & 0x0380)>>7);
 	if((pic->ram[bank|(opc & 0x007F)] & (0x01<<((opc & 0x0380)>>7))) != 0)
 	{
 	      pic->jpc=pic->pc+1;
@@ -884,7 +884,7 @@ pic_decode_16E(_pic * pic,int print)
       {
         case 0x0000:
 //CALL    k  	Call subroutine              2     100 kkkkkkkkkkk
-          if(print)printf("CALL %#05X\n",opc & 0x07FF);
+          if(pic->print)printf("CALL %#05X\n",opc & 0x07FF);
           for(temp=15;temp>0;temp--)
 	    pic->stack[temp]=pic->stack[temp-1];  //TODO P16E implement acess to stack  and STKPTR
 	  pic->stack[0]=pic->pc;
@@ -893,7 +893,7 @@ pic_decode_16E(_pic * pic,int print)
         break;
 	case 0x0800:
 //GOTO    k  	Go to address                2     101 kkkkkkkkkkk
-          if(print)printf("GOTO %#05X\n",opc & 0x07FF);
+          if(pic->print)printf("GOTO %#05X\n",opc & 0x07FF);
 //TODO P16E DEBUG
 /*          
           if(((pic->config[0] & 0x0800) == 0)&&(((pic->ram[P16E_ICKBUG])&0x80)== 0x80) )//DEBUG ON
@@ -914,7 +914,7 @@ pic_decode_16E(_pic * pic,int print)
       {
         case 0x0000:
 //MOVLW   k  	Move literal to W            1     110000 kkkkkkkk 
-        if(print)printf("MOVLW %#04X\n",opc & 0x00FF);
+        if(pic->print)printf("MOVLW %#04X\n",opc & 0x00FF);
 	pic->ram[P16E_WREG]= (opc & 0x00FF);
         pic->lram=P16E_WREG;
         break;
@@ -923,14 +923,14 @@ pic_decode_16E(_pic * pic,int print)
             {               
               case 0x0080:
 //MOVLP    k     Move literal to PCLATH             1    11 0001 1kkk kkkk                   
-                if(print)printf("MOVLP %#04X\n",opc & 0x007F);
+                if(pic->print)printf("MOVLP %#04X\n",opc & 0x007F);
 	        pic->ram[P16E_PCLATH]= (opc & 0x007F);
                 pic->lram=P16E_PCLATH;
                 break;      
               case 0x0000: 
 //ADDFSR   n,k   Add Literal k to FSRn              1    11 0001 0nkk kkkk  
                  jrange=(((short)((opc & 0x003F)<<10))/1024);   
-                 if(print)printf("ADDFSR FSR%i ,%i\n",(opc & 0x0040) != 0, jrange); 
+                 if(pic->print)printf("ADDFSR FSR%i ,%i\n",(opc & 0x0040) != 0, jrange); 
                  if(opc & 0x0040)//FSR1
                  {
                    afsr[1]+=jrange;
@@ -955,8 +955,8 @@ pic_decode_16E(_pic * pic,int print)
         case 0x0300:    
 //         BRA      k     Relative Branch                    2    11 001k kkkk kkkk
         jrange=(((short)((opc & 0x01FF)<<7))/64);    
-        //if(print)printf("BRA %#05X\n",opc & 0x01FF);
-        if(print)printf("BRA %#06X\n",(pic->pc+jrange)&((pic->ROMSIZE<<1)-1));
+        //if(pic->print)printf("BRA %#05X\n",opc & 0x01FF);
+        if(pic->print)printf("BRA %#06X\n",(pic->pc+jrange)&((pic->ROMSIZE<<1)-1));
 //TODO P16E DEBUG
 /*          
         if(((pic->config[0] & 0x0800) == 0)&&(((pic->ram[P16E_ICKBUG])&0x80)== 0x80) )//DEBUG ON
@@ -969,7 +969,7 @@ pic_decode_16E(_pic * pic,int print)
         break;    
 	case 0x0400:
 //RETLW   k  	Return with literal in W     2     110100 kkkkkkkk
-          if(print)printf("RETLW %#04X\n",opc & 0x00FF);
+          if(pic->print)printf("RETLW %#04X\n",opc & 0x00FF);
 	  pic->jpc=pic->stack[0];
           for(temp=0;temp<15;temp++)
 	    pic->stack[temp]=pic->stack[temp+1];
@@ -979,7 +979,7 @@ pic_decode_16E(_pic * pic,int print)
         break;     
 	case 0x0500:        
 //LSLF     f,d   Logical Left Shift                 1    11 0101 dfff ffff     C, Z        2             
-          if(print)printf("LSLF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+          if(pic->print)printf("LSLF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
 	  temp=(pic->ram[bank|(opc & 0x007F)]);
 	  temp=temp<<1;
 	  if((temp&0x0100) ==0x0100)
@@ -998,7 +998,7 @@ pic_decode_16E(_pic * pic,int print)
         break;     
 	case 0x0600:            
 //LSRF     f,d   Logical Right Shift                1    11 0110 dfff ffff     C, Z        2   
-          if(print)printf("LSRF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+          if(pic->print)printf("LSRF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
 	  temp=(pic->ram[bank|(opc & 0x007F)]);
 	  if((temp&0x0001) ==0x01)
 	    *status|=0x01;
@@ -1017,7 +1017,7 @@ pic_decode_16E(_pic * pic,int print)
         break;         
         case 0x0700:
 //ASRF     f,d   Arithmetic Right Shift             1    11 0111 dfff ffff     C, Z        2
-          if(print)printf("ASRF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+          if(pic->print)printf("ASRF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
 	  temp=(pic->ram[bank|(opc & 0x007F)]);
 	  if((temp&0x0001) ==0x01)
 	    *status|=0x01;
@@ -1036,7 +1036,7 @@ pic_decode_16E(_pic * pic,int print)
         break;    
 	case 0x0800:
 //IORLW   k  	Inclusive OR literal with W  1     111000 kkkkkkkk   	Z
-        if(print)printf("IORLW %#04X\n",opc & 0x00FF);
+        if(pic->print)printf("IORLW %#04X\n",opc & 0x00FF);
 	pic->ram[P16E_WREG] |= (opc & 0x00FF);
 	if (pic->ram[P16E_WREG] == 0) 
 	  *status|=0x04;
@@ -1045,7 +1045,7 @@ pic_decode_16E(_pic * pic,int print)
         break;
 	case 0x0900:
 //ANDLW   k 	AND literal with W           1     111001 kkkkkkkk   	Z
-        if(print)printf("ANDLW %#04X\n",opc & 0x00FF);
+        if(pic->print)printf("ANDLW %#04X\n",opc & 0x00FF);
 	pic->ram[P16E_WREG] &= (opc & 0x00FF);
 	if (pic->ram[P16E_WREG] == 0) 
 	  *status|=0x04;
@@ -1054,7 +1054,7 @@ pic_decode_16E(_pic * pic,int print)
         break;
 	case 0x0A00:
 //XORLW   k  	Exclusive OR literal with W  1     111010 kkkkkkkk   	Z
-        if(print)printf("XORLW %#04X\n",opc & 0x00FF);
+        if(pic->print)printf("XORLW %#04X\n",opc & 0x00FF);
 	pic->ram[P16E_WREG] ^= (opc & 0x00FF);
 	if (pic->ram[P16E_WREG] == 0) 
 	  *status|=0x04;
@@ -1063,7 +1063,7 @@ pic_decode_16E(_pic * pic,int print)
         break;
 	case 0x0B00:
 //SUBWFB   f,d   Subtract with Borrow W from f      1    11 1011 dfff ffff     C, DC, Z    2
-         if(print)printf("SUBWFB %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+         if(pic->print)printf("SUBWFB %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
 	 if((0xF0&((0x0F&(~pic->ram[P16E_WREG]))+(!(pic->ram[P16E_STATUS]&0x01))+1+(0x0F&pic->ram[bank|(opc & 0x007F)]))) !=0)
 	   *status|=0x02;
 	 else   
@@ -1096,7 +1096,7 @@ pic_decode_16E(_pic * pic,int print)
         break;
 	case 0x0C00:
 //SUBLW   k  	Subtract W from literal      1     111100 kkkkkkkk   	C,DC,Z
-        if(print)printf("SUBLW %#04X\n",opc & 0x00FF);
+        if(pic->print)printf("SUBLW %#04X\n",opc & 0x00FF);
 	
 	if((0xF0&((0x0F&(~pic->ram[P16E_WREG]))+1+(opc & 0x000F))) !=0)
 	  *status|=0x02;
@@ -1118,7 +1118,7 @@ pic_decode_16E(_pic * pic,int print)
         break;
         case 0x0D00:
 //ADDWFC   f,d   Add W and f and Carry                       1    11 1101 dfff ffff     C, DC, Z    2 
-          if(print)printf("ADDWFC %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+          if(pic->print)printf("ADDWFC %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
 	
 	  if((0xF0&((0x0F&pic->ram[P16E_WREG])+(0x0F&pic->ram[bank|(opc & 0x007F)])+(pic->ram[P16E_STATUS]&0x01))) !=0)
 	    *status|=0x02;
@@ -1152,7 +1152,7 @@ pic_decode_16E(_pic * pic,int print)
         break;              
 	case 0x0E00:
 //ADDLW   k  	Add literal and W            1     111110 kkkkkkkk   	C,DC,Z
-        if(print)printf("ADDLW %#04X\n",opc & 0x00FF);
+        if(pic->print)printf("ADDLW %#04X\n",opc & 0x00FF);
 	
 	if((0xF0&((0x0F&pic->ram[P16E_WREG])+(opc & 0x000F))) !=0)
 	  *status|=0x02;
@@ -1178,7 +1178,7 @@ pic_decode_16E(_pic * pic,int print)
             case 0x0000:
 //MOVIW    k[n]  Move INDFn to W, Indexed Indirect  1    11 1111 0nkk kkkk   Z  
               jrange=(((short)((opc & 0x003F)<<10))/1024);    
-              if(print)printf("MOVIW %i[FSR%i]\n",jrange, (opc & 0x0040) != 0 );   
+              if(pic->print)printf("MOVIW %i[FSR%i]\n",jrange, (opc & 0x0040) != 0 );   
               pic->lram=P16E_WREG;  
               if(opc & 0x0040)//INDF1
               {
@@ -1208,7 +1208,7 @@ pic_decode_16E(_pic * pic,int print)
             case 0x0080:
 //MOVWI    k[n]  Move W to INDFn, Indexed Indirect  1    11 1111 1nkk kkkk      
               jrange=(((short)((opc & 0x003F)<<10))/1024);    
-              if(print)printf("MOVWI %i[FSR%i]\n",jrange, (opc & 0x0040) != 0 );   
+              if(pic->print)printf("MOVWI %i[FSR%i]\n",jrange, (opc & 0x0040) != 0 );   
               pic->rram=P16E_WREG;    
               if(opc & 0x0040)//INDF1
               {
@@ -1476,7 +1476,7 @@ pic_decode_16E(_pic * pic,int print)
   
   pic->w=pic->ram[P16E_WREG];
 
-  if((pic->rram != 0x8000)&&(print))
+  if((pic->rram != 0x8000)&&(pic->print))
   {
     if(pic->rram <= 0x0FFF)
     {
@@ -1505,7 +1505,7 @@ pic_decode_16E(_pic * pic,int print)
     }
   }
   
-  if((pic->lram != 0x8000)&&(print))
+  if((pic->lram != 0x8000)&&(pic->print))
   {
     if(pic->lram <= 0x0FFF)  
     {

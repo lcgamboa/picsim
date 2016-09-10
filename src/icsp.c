@@ -79,7 +79,7 @@ pic_icsp_init(_pic * pic)
  
 
 int 
-pic_icsp(_pic * pic, int  print)
+pic_icsp(_pic * pic)
 {
  
   int icsp_scka=1;
@@ -119,7 +119,7 @@ pic_icsp(_pic * pic, int  print)
              break;
            case 0x06: //INC ADDR
               icsp_addr+=1; 
-	      if(print)printf  ("inc icsp_addr %#04X \n",icsp_addr);
+	      if(pic->print)printf  ("inc icsp_addr %#04X \n",icsp_addr);
 	      if(icsp_addr >= 0x2000)
               {
 		 if(icsp_addr > 0x3FFF)
@@ -163,7 +163,7 @@ pic_icsp(_pic * pic, int  print)
              pic->pins[(pic->pgd-1)].dir=PD_OUT;
              break;
            case 0x08: //Begin Prog cycle
-	      if(print)printf  ("Begin Prog cycle %i  (%i)\n",icsp_type,icsp_datac);
+	      if(pic->print)printf  ("Begin Prog cycle %i  (%i)\n",icsp_type,icsp_datac);
 
 	       switch(icsp_type)
                {
@@ -195,7 +195,7 @@ pic_icsp(_pic * pic, int  print)
               icsp_cmd=0;
              break;
            case 0x09: //Bulk erase PROGRAM
-	      if(print)printf  ("Bulk erase PROGRAM \n"); 
+	      if(pic->print)printf  ("Bulk erase PROGRAM \n"); 
               if(icsp_addr >= 0x2000) 
               {
  	        for(i=0;i<pic->CONFIGSIZE;i++)
@@ -215,7 +215,7 @@ pic_icsp(_pic * pic, int  print)
               icsp_cmd=0;
              break;
            case 0x0B: //Bulk erase DATA
-	      if(print)printf  ("Bulk erase DATA \n"); 
+	      if(pic->print)printf  ("Bulk erase DATA \n"); 
               for(i=0;i<pic->EEPROMSIZE;i++)
                 pic->eeprom[i]=0xFF;
 	      icsp_cmddata=0;
@@ -223,7 +223,7 @@ pic_icsp(_pic * pic, int  print)
               icsp_cmd=0;
              break;
            case 0x0F: //chip erase 
-	      if(print)printf  ("chip erase \n"); 
+	      if(pic->print)printf  ("chip erase \n"); 
                 for(i=0;i<pic->CONFIGSIZE;i++)
                    pic->config[i]=0x3FFF;
  	        for(i=0;i<pic->IDSIZE;i++)
@@ -237,14 +237,14 @@ pic_icsp(_pic * pic, int  print)
               icsp_cmd=0;
              break;
            case 0x07: //end programing 
-	      if(print)printf  ("end programing \n"); 
+	      if(pic->print)printf  ("end programing \n"); 
               icsp_datac=0;
               icsp_cmddata=0;
               icsp_bit=0;
               icsp_cmd=0;
               break;
            default:
-	      if(print)printf  ("Unknow Command %02X \n",(icsp_cmddata&0x00000F)); 
+	      if(pic->print)printf  ("Unknow Command %02X \n",(icsp_cmddata&0x00000F)); 
               icsp_cmddata=0;
               icsp_bit=0;
               icsp_cmd=0;
@@ -257,22 +257,22 @@ pic_icsp(_pic * pic, int  print)
          {
            case 0x00: //LOAD CFG
 	     icsp_addr=0x2000;  
-	     if(print)printf  ("LOAD CFG %#04X \n",(icsp_cmddata&0x001FFF80)>>7);	
+	     if(pic->print)printf  ("LOAD CFG %#04X \n",(icsp_cmddata&0x001FFF80)>>7);	
 	     icsp_data[0]=(icsp_cmddata&0x001FFF80)>>7; 
              break;
            case 0x02: //LOAD PROGRAM
-	     if(print)printf  ("LOAD PROG  %#04X \n",(icsp_cmddata&0x001FFF80)>>7);
+	     if(pic->print)printf  ("LOAD PROG  %#04X \n",(icsp_cmddata&0x001FFF80)>>7);
 	     icsp_data[icsp_datac++]=(icsp_cmddata&0x001FFF80)>>7; 
              break;
            case 0x03: //LOAD DATA
-	     if(print)printf  ("LOAD DATA %#04X \n",(icsp_cmddata&0x00007F80)>>7);
+	     if(pic->print)printf  ("LOAD DATA %#04X \n",(icsp_cmddata&0x00007F80)>>7);
 	     icsp_data[0]=(icsp_cmddata&0x00007F80)>>7; 
              break;
            case 0x04: //READ PROGRAM
-	     if(print)printf  ("READ PROGRAM  %#04X \n",(icsp_cmddata&0x001FFF80)>>7);
+	     if(pic->print)printf  ("READ PROGRAM  %#04X \n",(icsp_cmddata&0x001FFF80)>>7);
              break;
            case 0x05: //READ DATA
-	     if(print)printf  ("READ DATA %#04X \n",(icsp_cmddata&0x007F80)>>7); 
+	     if(pic->print)printf  ("READ DATA %#04X \n",(icsp_cmddata&0x007F80)>>7); 
              break;
            default:
              break;

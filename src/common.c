@@ -42,9 +42,9 @@ extern int read_ihx(_pic * pic,const char * fname,int lrom);
 extern int read_ihx_18(_pic * pic,const char * fname,int lrom);
 
 
-extern void pic_decode_16(_pic * pic,int print);
-extern void pic_decode_16E(_pic * pic,int print);
-extern void pic_decode_18(_pic * pic,int print);
+extern void pic_decode_16(_pic * pic);
+extern void pic_decode_16E(_pic * pic);
+extern void pic_decode_18(_pic * pic);
 
 
 unsigned short * memsets(unsigned short * mem,unsigned short value, unsigned long size)
@@ -61,6 +61,8 @@ pic_init(_pic * pic, int processor, const char * fname, int lrom, float freq)
 {
    int i;
 
+   pic->print=0;
+   
    pic->freq=freq;
    pic->processor=processor;
    pic->family=getfprocbynumber(processor);
@@ -1101,29 +1103,29 @@ pic_reset(_pic * pic, int flags)
 };
 
 void
-pic_step(_pic * pic,int print)
+pic_step(_pic * pic)
 {
   switch(pic->family)
   { 
     case P16:
-      pic_decode_16(pic,print);
-      periferic16_step_in(pic,print);
-      periferic16_step_out(pic,print);
+      pic_decode_16(pic);
+      periferic16_step_in(pic);
+      periferic16_step_out(pic);
       break;
     case P16E:  
-      pic_decode_16E(pic,print);
-      periferic16E_step_in(pic,print);
-      periferic16E_step_out(pic,print);
+      pic_decode_16E(pic);
+      periferic16E_step_in(pic);
+      periferic16E_step_out(pic);
       break;  
     case P16E2:  
-      pic_decode_16E(pic,print);
-      periferic16E2_step_in(pic,print);
-      periferic16E2_step_out(pic,print);
+      pic_decode_16E(pic);
+      periferic16E2_step_in(pic);
+      periferic16E2_step_out(pic);
       break;    
     case P18:
-      pic_decode_18(pic,print);
-      periferic18_step_in(pic,print);
-      periferic18_step_out(pic,print);
+      pic_decode_18(pic);
+      periferic18_step_in(pic);
+      periferic18_step_out(pic);
       break;
   }
 }

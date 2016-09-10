@@ -399,7 +399,7 @@ int i;
 
 
 
-void serial(_pic * pic,int print)
+void serial(_pic * pic)
 {
   unsigned char rctemp;
 
@@ -413,11 +413,11 @@ void serial(_pic * pic,int print)
       {
         serial_cfg(pic);
         pic->s_open=1;
-       if(print)printf("#Open Port:%s!\n",pic->SERIALDEVICE);
+       if(pic->print)printf("#Open Port:%s!\n",pic->SERIALDEVICE);
       }
       else
       {
-        if(print)printf("#Erro Open Port:%s!\n",pic->SERIALDEVICE);
+        if(pic->print)printf("#Erro Open Port:%s!\n",pic->SERIALDEVICE);
         pic->s_open=-1;
       }
       *pic->serial_TXSTA |=0x02; //TRMT=1 empty 
@@ -528,7 +528,7 @@ void serial(_pic * pic,int print)
         
          if(((*pic->serial_PIE1 & 0x20) == 0x20)&&((*pic->serial_PIR1 & 0x20) != 0x20))
          {
-           if(print)printf("serial rx interrupt (%#04X)\n",rctemp);
+           if(pic->print)printf("serial rx interrupt (%#04X)\n",rctemp);
          }
          //set RCIF
          *pic->serial_PIR1 |=0x20;  
@@ -543,7 +543,7 @@ void serial(_pic * pic,int print)
     
         if(((*pic->serial_PIE1 & 0x10) == 0x10)&&((*pic->serial_PIR1 & 0x10) != 0x10))
         {
-          if(print)printf("serial tx interrupt (%#04X)\n",pic->txtemp[0]);
+          if(pic->print)printf("serial tx interrupt (%#04X)\n",pic->txtemp[0]);
         }
         *pic->serial_PIR1 |=0x10; //TXIF=1  
       }   

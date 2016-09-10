@@ -7,7 +7,7 @@ MKDIR = mkdir -p
 
 LIBVER=0.6
 LIBMAINVER=0
-FLAGS= -Wall -O3 -fomit-frame-pointer -fpic
+FLAGS= -Wall -O3 -fomit-frame-pointer -fpic -Winline 
 
 prefix = /usr
 exec_prefix = ${prefix}
@@ -21,8 +21,9 @@ OBJS= common.o p16fxxx.o p16fxxxe.o p18fxxx.o hexfile.o periferic16.o periferic1
 
 all: all-lib picsim
 
-picsim: libpicsim.a picsim.c 
+picsim: libpicsim.a picsim.c gdb.c 
 	$(CC) $(FLAGS) picsim.c -o picsim  libpicsim.a 
+	$(CC) -Wall -ggdb  gdb.c -o gdb  libpicsim.a 
 
 
 %.o: %.c  

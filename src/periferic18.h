@@ -28,10 +28,10 @@ extern "C" {
 #endif
 
 void periferic18_rst(_pic * pic);
-void periferic18_step_in(_pic * pic,int print);
-void periferic18_step_out(_pic * pic,int print);
+void periferic18_step_in(_pic * pic);
+void periferic18_step_out(_pic * pic);
 
-void serial(_pic * pic,int print);
+void serial(_pic * pic);
 
 #ifdef __cplusplus
 }

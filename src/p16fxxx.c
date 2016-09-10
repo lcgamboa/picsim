@@ -30,7 +30,7 @@
 #include"picsim.h"
 
 void
-pic_decode_16(_pic * pic,int print)
+pic_decode_16(_pic * pic)
 {
   unsigned short temp;
   unsigned short opc;
@@ -52,7 +52,7 @@ pic_decode_16(_pic * pic,int print)
   
   if(pic->sleep == 1)
   {
-    if(print)printf("sleep WDT=%i wdt=%f ms=%i\n",((pic->config[0] & 0x04) == 0x04 ),pic->twdt,pic->wdt); 
+    if(pic->print)printf("sleep WDT=%i wdt=%f ms=%i\n",((pic->config[0] & 0x04) == 0x04 ),pic->twdt,pic->wdt); 
     return;
   }
   
@@ -71,7 +71,7 @@ pic_decode_16(_pic * pic,int print)
 
  
   //print (Address)
-  if(print)
+  if(pic->print)
   {
     printf("pc=%#06X\t",pic->pc); 
     if(pic->pc != 0x2004) 
@@ -120,11 +120,11 @@ pic_decode_16(_pic * pic,int print)
                 case 0x0040:
                 case 0x0060:
 //NOP     --  	No Operation                 1     0000000 xx00000  
-                  if(print)printf("NOP\n");
+                  if(pic->print)printf("NOP\n");
 		break;
 		case 0x0008:
 ///RETURN  --  	Return from Subroutine       2     0000000 0001000
-                  if(print)printf("RETURN\n");
+                  if(pic->print)printf("RETURN\n");
 	          pic->jpc=pic->stack[0];
                   for(temp=0;temp<7;temp++)
 	            pic->stack[temp]=pic->stack[temp+1];
@@ -138,7 +138,7 @@ pic_decode_16(_pic * pic,int print)
                 break;
 		case 0x0063:
 //SLEEP   --  	Go into Standby mode         1     0000000 1100011   	TO,PD
-                  if(print)printf("SLEEP\n");   
+                  if(pic->print)printf("SLEEP\n");   
   		  pic->wdt=0;
   		  pic->sleep=1;
 	          *status&=~0x08;
@@ -146,14 +146,14 @@ pic_decode_16(_pic * pic,int print)
                 break;
 		case 0x0064:
 //CLRWDT  --  	Clear Watchdog Timer         1     0000000 1100100   	TO,PD
-                  if(print)printf("CLRWDT\n");    
+                  if(pic->print)printf("CLRWDT\n");    
   		  pic->wdt=0;
 	          *status|=0x08;
 	          *status|=0x10;
   		break;
 		case 0x0009:
 //RETFIE  --  	Return from interrupt        2     0000000 0001001                                                         
-                  if(print)printf("RETFIE\n");
+                  if(pic->print)printf("RETFIE\n");
 	          pic->jpc=pic->stack[0];
                   for(temp=0;temp<7;temp++)
 	            pic->stack[temp]=pic->stack[temp+1];
@@ -169,7 +169,7 @@ pic_decode_16(_pic * pic,int print)
 	    break;
 	    case 0x0080:
 //MOVWF   f  	Move W to f                  1     0000001 fffffff
-              if(print)printf("MOVWF %#04X\n",opc & 0x007F);
+              if(pic->print)printf("MOVWF %#04X\n",opc & 0x007F);
 	      pic->ram[bank|(opc & 0x007F)]=pic->w;
               pic->lram=bank|(opc & 0x007F);
 	    break;
@@ -183,12 +183,12 @@ pic_decode_16(_pic * pic,int print)
           {
             case 0x0000:
 //CLRW    --  	Clear W                      1     0000010 xxxxxxx 	Z	
-              if(print)printf("CLRW\n");
+              if(pic->print)printf("CLRW\n");
               pic->w=0;
             break;
 	    case 0x0080:
 //CLRF    f  	Clear f                      1     0000011 fffffff 	Z       2
-              if(print)printf("CLRF %#04X\n",opc & 0x007F);
+              if(pic->print)printf("CLRF %#04X\n",opc & 0x007F);
               pic->ram[bank|(opc & 0x007F) ]=0;
               pic->lram=bank|(opc & 0x007F);
 	    break;
@@ -199,7 +199,7 @@ pic_decode_16(_pic * pic,int print)
 	break;
 	case 0x0200:
 //SUBWF   f, d 	Subtract W from f            1     000010 dfffffff 	C,DC,Z  1, 2
-          if(print)printf("SUBWF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+          if(pic->print)printf("SUBWF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
 	
 	  if((0xF0&((0x0F&(~pic->w))+1+(0x0F&pic->ram[bank|(opc & 0x007F)]))) !=0)
 	    *status|=0x02;
@@ -233,7 +233,7 @@ pic_decode_16(_pic * pic,int print)
         break;
 	case 0x0300:
 //DECF    f, d 	Decrement f                  1     000011 dfffffff  	Z       1, 2
-          if(print)printf("DECF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+          if(pic->print)printf("DECF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
           if((opc & 0x0080) == 0 )
 	  {
 	    pic->w=pic->ram[bank|(opc & 0x007F)]-1;
@@ -254,7 +254,7 @@ pic_decode_16(_pic * pic,int print)
         break;
 	case 0x0400:
 //IORWF   f, d 	Inclusive OR W with f        1     000100 dfffffff   	Z       1, 2
-          if(print)printf("IORWF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+          if(pic->print)printf("IORWF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
           if((opc & 0x0080) == 0 )
 	  {
 	    pic->w= pic->w | pic->ram[bank|(opc & 0x007F)];
@@ -275,7 +275,7 @@ pic_decode_16(_pic * pic,int print)
         break;
 	case 0x0500:
 //ANDWF   f, d 	AND W with f                 1     000101 dfffffff	Z       1, 2
-          if(print)printf("ANDWF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+          if(pic->print)printf("ANDWF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
           if((opc & 0x0080) == 0 )
 	  {
 	    pic->w= pic->w & pic->ram[bank|(opc & 0x007F)];
@@ -296,7 +296,7 @@ pic_decode_16(_pic * pic,int print)
         break;
 	case 0x0600:
 //XORWF   f, d 	Exclusive OR W with f        1     000110 dfffffff  	Z       1, 2
-          if(print)printf("XORWF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+          if(pic->print)printf("XORWF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
           if((opc & 0x0080) == 0 )
 	  {
 	    pic->w= pic->w ^ pic->ram[bank|(opc & 0x007F)];
@@ -317,7 +317,7 @@ pic_decode_16(_pic * pic,int print)
         break;
 	case 0x0700:
 //ADDWF	f, d 	Add W and f                  1     000111 dfffffff	C,DC,Z  1, 2
-          if(print)printf("ADDWF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+          if(pic->print)printf("ADDWF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
 	
 	  if((0xF0&((0x0F&pic->w)+(0x0F&pic->ram[bank|(opc & 0x007F)]))) !=0)
 	    *status|=0x02;
@@ -351,7 +351,7 @@ pic_decode_16(_pic * pic,int print)
         break;
 	case 0x0800:
 //MOVF    f, d 	Move f                       1     001000 dfffffff 	Z       1, 2
-          if(print)printf("MOVF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+          if(pic->print)printf("MOVF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
           if((opc & 0x0080) == 0 )
 	  {
 	    pic->w=pic->ram[bank|(opc & 0x007F)];
@@ -373,7 +373,7 @@ pic_decode_16(_pic * pic,int print)
         break;
 	case 0x0900:
 //COMF    f, d 	Complement f                 1     001001 dfffffff 	Z       1, 2
-          if(print)printf("COMF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+          if(pic->print)printf("COMF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
           if((opc & 0x0080) == 0 )
 	  {
 	    pic->w=~pic->ram[bank|(opc & 0x007F)];
@@ -394,7 +394,7 @@ pic_decode_16(_pic * pic,int print)
         break;
 	case 0x0A00:
 //INCF    f, d 	Increment f                  1     001010 dfffffff	Z       1, 2
-          if(print)printf("INCF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+          if(pic->print)printf("INCF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
           if((opc & 0x0080) == 0 )
 	  {
 	    pic->w=pic->ram[bank|(opc & 0x007F)]+1;
@@ -415,7 +415,7 @@ pic_decode_16(_pic * pic,int print)
         break;
 	case 0x0B00:
 //DECFSZ  f, d 	Decrement f, Skip if 0       1(2)  001011 dfffffff 		1, 2, 3  
-          if(print)printf("DECFSZ %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+          if(pic->print)printf("DECFSZ %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
           if((opc & 0x0080) == 0 )
 	  {
 	    pic->w=pic->ram[bank|(opc & 0x007F)]-1;
@@ -438,7 +438,7 @@ pic_decode_16(_pic * pic,int print)
         break;
 	case 0x0C00:
 //RRF     f, d 	Rotate Right f through Carry 1     001100 dfffffff	C       1, 2
-          if(print)printf("RRF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+          if(pic->print)printf("RRF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
 	  temp=(pic->ram[bank|(opc & 0x007F)]);
 	  if((*status&0x01) ==0x01)temp|=0x0100;
 	  if((temp&0x0001) ==0x01)
@@ -458,7 +458,7 @@ pic_decode_16(_pic * pic,int print)
         break;
 	case 0x0D00:
 //RLF     f, d 	Rotate Left f through Carry  1     001101 dfffffff	C       1, 2                   
-          if(print)printf("RLF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+          if(pic->print)printf("RLF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
 	  temp=(pic->ram[bank|(opc & 0x007F)]);
 	  temp=temp<<1;
 	  if((*status&0x01) ==0x01)temp|=0x0001;
@@ -478,7 +478,7 @@ pic_decode_16(_pic * pic,int print)
         break;
 	case 0x0E00:
 //SWAPF   f, d 	Swap nibbles in f            1     001110 dfffffff 		1, 2
-          if(print)printf("SWAPF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+          if(pic->print)printf("SWAPF %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
           if((opc & 0x0080) == 0 )
 	  {
 	    pic->w=((pic->ram[bank|(opc & 0x007F)]&0x0F)<<4)|
@@ -495,7 +495,7 @@ pic_decode_16(_pic * pic,int print)
         break;
 	case 0x0F00:
 //INCFSZ  f, d 	Increment f, Skip if 0       1(2)  001111 dfffffff		1, 2, 3 
-          if(print)printf("INCFSZ %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
+          if(pic->print)printf("INCFSZ %#04X,%d\n",opc & 0x007F,(opc & 0x0080)>>7);
           if((opc & 0x0080) == 0 )
 	  {
 	    pic->w=pic->ram[bank|(opc & 0x007F)]+1;
@@ -526,19 +526,19 @@ pic_decode_16(_pic * pic,int print)
       {
         case 0x0000:
 //BCF     f, b 	Bit Clear f                  1     0100 bbbfffffff           1, 2
-          if(print)printf("BCF %#04X,%d\n",opc & 0x007F,(opc & 0x0380)>>7);
+          if(pic->print)printf("BCF %#04X,%d\n",opc & 0x007F,(opc & 0x0380)>>7);
 	  pic->ram[bank|(opc & 0x007F)]&=~(0x01<<((opc & 0x0380)>>7));
           pic->lram=bank|(opc & 0x007F);
 	break;
 	case 0x0400:
 //BSF     f, b 	Bit Set f                    1     0101 bbbfffffff           1, 2
-          if(print)printf("BSF %#04X,%d\n",opc & 0x007F,(opc & 0x0380)>>7);
+          if(pic->print)printf("BSF %#04X,%d\n",opc & 0x007F,(opc & 0x0380)>>7);
 	  pic->ram[bank|(opc & 0x007F)]|=(0x01<<((opc & 0x0380)>>7));
           pic->lram=bank|(opc & 0x007F);
         break;
 	case 0x0800:
 //BTFSC   f, b 	Bit Test f, Skip if Clear    1(2)  0110 bbbfffffff           3
-        if(print)printf("BTFSC %#04X,%d\n",opc & 0x007F,(opc & 0x0380)>>7);
+        if(pic->print)printf("BTFSC %#04X,%d\n",opc & 0x007F,(opc & 0x0380)>>7);
 	if((pic->ram[bank|(opc & 0x007F)] & (0x01<<((opc & 0x0380)>>7))) == 0)
 	{
 	      pic->jpc=pic->pc+1;
@@ -547,7 +547,7 @@ pic_decode_16(_pic * pic,int print)
         break;
 	case 0x0C00:
 //BTFSS   f, b 	Bit Test f, Skip if Set      1(2)  0111 bbbfffffff           3
-        if(print)printf("BTFSS %#04X,%d\n",opc & 0x007F,(opc & 0x0380)>>7);
+        if(pic->print)printf("BTFSS %#04X,%d\n",opc & 0x007F,(opc & 0x0380)>>7);
 	if((pic->ram[bank|(opc & 0x007F)] & (0x01<<((opc & 0x0380)>>7))) != 0)
 	{
 	      pic->jpc=pic->pc+1;
@@ -564,7 +564,7 @@ pic_decode_16(_pic * pic,int print)
       {
         case 0x0000:
 //CALL    k  	Call subroutine              2     100 kkkkkkkkkkk
-          if(print)printf("CALL %#05X\n",opc & 0x07FF);
+          if(pic->print)printf("CALL %#05X\n",opc & 0x07FF);
           for(temp=7;temp>0;temp--)
 	    pic->stack[temp]=pic->stack[temp-1];
 	  pic->stack[0]=pic->pc;
@@ -573,7 +573,7 @@ pic_decode_16(_pic * pic,int print)
         break;
 	case 0x0800:
 //GOTO    k  	Go to address                2     101 kkkkkkkkkkk
-          if(print)printf("GOTO %#05X\n",opc & 0x07FF);
+          if(pic->print)printf("GOTO %#05X\n",opc & 0x07FF);
           if(((pic->config[0] & 0x0800) == 0)&&(((pic->ram[P16_ICKBUG])&0x80)== 0x80) )//DEBUG ON
 //	    pic->jpc=((0x18)<<8)|(opc & 0x07FF);
 	    pic->jpc=(pic->ROMSIZE-1)&(((0xF8)<<8)|(opc & 0x07FF));
@@ -594,7 +594,7 @@ pic_decode_16(_pic * pic,int print)
         case 0x0200:
         case 0x0300:
 //MOVLW   k  	Move literal to W            1     1100xx kkkkkkkk 
-        if(print)printf("MOVLW %#04X\n",opc & 0x00FF);
+        if(pic->print)printf("MOVLW %#04X\n",opc & 0x00FF);
 	pic->w= (opc & 0x00FF);
         break;
 	case 0x0400:
@@ -602,7 +602,7 @@ pic_decode_16(_pic * pic,int print)
 	case 0x0600:
 	case 0x0700:
 //RETLW   k  	Return with literal in W     2     1101xx kkkkkkkk
-          if(print)printf("RETLW %#04X\n",opc & 0x00FF);
+          if(pic->print)printf("RETLW %#04X\n",opc & 0x00FF);
 	  pic->jpc=pic->stack[0];
           for(temp=0;temp<7;temp++)
 	    pic->stack[temp]=pic->stack[temp+1];
@@ -612,7 +612,7 @@ pic_decode_16(_pic * pic,int print)
         break;
 	case 0x0800:
 //IORLW   k  	Inclusive OR literal with W  1     111000 kkkkkkkk   	Z
-        if(print)printf("IORLW %#04X\n",opc & 0x00FF);
+        if(pic->print)printf("IORLW %#04X\n",opc & 0x00FF);
 	pic->w |= (opc & 0x00FF);
 	if (pic->w == 0) 
 	  *status|=0x04;
@@ -621,7 +621,7 @@ pic_decode_16(_pic * pic,int print)
         break;
 	case 0x0900:
 //ANDLW   k 	AND literal with W           1     111001 kkkkkkkk   	Z
-        if(print)printf("ANDLW %#04X\n",opc & 0x00FF);
+        if(pic->print)printf("ANDLW %#04X\n",opc & 0x00FF);
 	pic->w &= (opc & 0x00FF);
 	if (pic->w == 0) 
 	  *status|=0x04;
@@ -630,7 +630,7 @@ pic_decode_16(_pic * pic,int print)
         break;
 	case 0x0A00:
 //XORLW   k  	Exclusive OR literal with W  1     111010 kkkkkkkk   	Z
-        if(print)printf("XORLW %#04X\n",opc & 0x00FF);
+        if(pic->print)printf("XORLW %#04X\n",opc & 0x00FF);
 	pic->w ^= (opc & 0x00FF);
 	if (pic->w == 0) 
 	  *status|=0x04;
@@ -640,7 +640,7 @@ pic_decode_16(_pic * pic,int print)
 	case 0x0C00:
 	case 0x0D00:
 //SUBLW   k  	Subtract W from literal      1     11110x kkkkkkkk   	C,DC,Z
-        if(print)printf("SUBLW %#04X\n",opc & 0x00FF);
+        if(pic->print)printf("SUBLW %#04X\n",opc & 0x00FF);
 	
 	if((0xF0&((0x0F&(~pic->w))+1+(opc & 0x000F))) !=0)
 	  *status|=0x02;
@@ -663,7 +663,7 @@ pic_decode_16(_pic * pic,int print)
 	case 0x0E00:
 	case 0x0F00:
 //ADDLW   k  	Add literal and W            1     11111x kkkkkkkk   	C,DC,Z
-        if(print)printf("ADDLW %#04X\n",opc & 0x00FF);
+        if(pic->print)printf("ADDLW %#04X\n",opc & 0x00FF);
 	
 	if((0xF0&((0x0F&pic->w)+(opc & 0x000F))) !=0)
 	  *status|=0x02;
@@ -836,8 +836,8 @@ pic_decode_16(_pic * pic,int print)
     pic->pc=((pic->ram[bank|(P16_PCLATH & 0x007F)]&0x1F)<<8)|pic->ram[bank|(P16_PCL& 0x007F)];
   }
 
-  if((pic->rram != 0x8000)&&(print))printf("mem read  %#06X: %10s= %#06X\n",pic->rram,getFSRname_16(pic->rram),pic->ram[pic->rram]);
-  if((pic->lram != 0x8000)&&(print))printf("mem write %#06X: %10s= %#06X\n",pic->lram,getFSRname_16(pic->lram),pic->ram[pic->lram]);
+  if((pic->rram != 0x8000)&&(pic->print))printf("mem read  %#06X: %10s= %#06X\n",pic->rram,getFSRname_16(pic->rram),pic->ram[pic->rram]);
+  if((pic->lram != 0x8000)&&(pic->print))printf("mem write %#06X: %10s= %#06X\n",pic->lram,getFSRname_16(pic->lram),pic->ram[pic->lram]);
   
 
 }

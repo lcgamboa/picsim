@@ -36,7 +36,7 @@
 #endif
 
 
-extern void pic_decode_18(_pic * pic,int print);
+extern void pic_decode_18(_pic * pic);
 
 
 #define ROM	0x01
@@ -80,7 +80,7 @@ pic_icsp_init18(_pic * pic)
  
 
 int 
-pic_icsp18(_pic * pic, int  print)
+pic_icsp18(_pic * pic)
 {
  
   int icsp_scka=1;
@@ -117,17 +117,17 @@ pic_icsp18(_pic * pic, int  print)
          {
 
 	   case 0x00: //Core Instruction                 0000
-	     if(print)printf("_Core Instruction\n");
+	     if(pic->print)printf("_Core Instruction\n");
              break;
            case 0x02: //Shift out TABLAT register        0010
-	     if(print)printf("_Shift out TABLAT register\n");
+	     if(pic->print)printf("_Shift out TABLAT register\n");
 	     icsp_cmddata|=(pic->ram[P18_TABLAT])<<11;
 	     icsp_mode=1;  	
              pic->pins[(pic->pgd-1)].dir=PD_OUT;
-             if(print)printf("TABLAT=0x%2X\n",pic->ram[P18_TABLAT]);
+             if(pic->print)printf("TABLAT=0x%2X\n",pic->ram[P18_TABLAT]);
              break;
            case 0x08: //Table Read                       1000
-	     if(print)printf("_Table Read\n");
+	     if(pic->print)printf("_Table Read\n");
 
               tblptr=(pic->ram[P18_TBLPTRU]<<16) | (pic->ram[P18_TBLPTRH]<<8) | pic->ram[P18_TBLPTRL];
               if((tblptr>>1) < pic->ROMSIZE)
@@ -172,13 +172,13 @@ pic_icsp18(_pic * pic, int  print)
               else  
 	        pic->ram[P18_TABLAT]=0;
 
-              if(print)printf("READ====0x%04lX ==========0x%04X\n",tblptr,(icsp_cmddata&0x00007F800)>>11); 
+              if(pic->print)printf("READ====0x%04lX ==========0x%04X\n",tblptr,(icsp_cmddata&0x00007F800)>>11); 
 
 	     icsp_mode=1;  	
              pic->pins[(pic->pgd-1)].dir=PD_OUT;
              break;
            case 0x09: //Table Read, post-increment       1001
-	     if(print)printf("_Table Read, post-increment\n");
+	     if(pic->print)printf("_Table Read, post-increment\n");
 
               tblptr=(pic->ram[P18_TBLPTRU]<<16) | (pic->ram[P18_TBLPTRH]<<8) | pic->ram[P18_TBLPTRL];
               if((tblptr>>1) < pic->ROMSIZE)
@@ -223,7 +223,7 @@ pic_icsp18(_pic * pic, int  print)
               else  
 	        pic->ram[P18_TABLAT]=0;
 
-              if(print)printf("READ====0x%04lX ==========0x%04X\n",tblptr,(icsp_cmddata&0x00007F800)>>11); 
+              if(pic->print)printf("READ====0x%04lX ==========0x%04X\n",tblptr,(icsp_cmddata&0x00007F800)>>11); 
 
               tblptr++;
               pic->ram[P18_TBLPTRU]=(tblptr&0x3F0000)>>16; 
@@ -235,7 +235,7 @@ pic_icsp18(_pic * pic, int  print)
 
              break;
            case 0x0A: //Table Read, post-decrement       1010
-	     if(print)printf("_Table Read, post-decrement\n");
+	     if(pic->print)printf("_Table Read, post-decrement\n");
 
               tblptr=(pic->ram[P18_TBLPTRU]<<16) | (pic->ram[P18_TBLPTRH]<<8) | pic->ram[P18_TBLPTRL];
               if((tblptr>>1) < pic->ROMSIZE)
@@ -280,7 +280,7 @@ pic_icsp18(_pic * pic, int  print)
               else  
 	        pic->ram[P18_TABLAT]=0;
 
-              if(print)printf("READ====0x%04lX ==========0x%04X\n",tblptr,(icsp_cmddata&0x00007F800)>>11); 
+              if(pic->print)printf("READ====0x%04lX ==========0x%04X\n",tblptr,(icsp_cmddata&0x00007F800)>>11); 
 
               tblptr--;
               pic->ram[P18_TBLPTRU]=(tblptr&0x3F0000)>>16; 
@@ -291,7 +291,7 @@ pic_icsp18(_pic * pic, int  print)
              pic->pins[(pic->pgd-1)].dir=PD_OUT;
              break;
            case 0x0B: //Table Read, pre-increment        1011
-	     if(print)printf("_Table Read, pre-increment\n");
+	     if(pic->print)printf("_Table Read, pre-increment\n");
 
               tblptr=(pic->ram[P18_TBLPTRU]<<16) | (pic->ram[P18_TBLPTRH]<<8) | pic->ram[P18_TBLPTRL];
               tblptr++;
@@ -338,7 +338,7 @@ pic_icsp18(_pic * pic, int  print)
               else  
 	        pic->ram[P18_TABLAT]=0;
 
-              if(print)printf("READ====0x%04lX ==========0x%04X\n",tblptr,(icsp_cmddata&0x00007F800)>>11); 
+              if(pic->print)printf("READ====0x%04lX ==========0x%04X\n",tblptr,(icsp_cmddata&0x00007F800)>>11); 
 
               pic->ram[P18_TBLPTRU]=(tblptr&0x3F0000)>>16; 
               pic->ram[P18_TBLPTRH]=(tblptr&0x00FF00)>>8;
@@ -348,19 +348,19 @@ pic_icsp18(_pic * pic, int  print)
              pic->pins[(pic->pgd-1)].dir=PD_OUT;
              break;
            case 0x0C: //Table Write                      1100
-	     if(print)printf("_Table Write\n");
+	     if(pic->print)printf("_Table Write\n");
              break;
            case 0x0D: //Table Write, post-increment by 2 1101
-	     if(print)printf("_Table Write, post-increment by 2\n");
+	     if(pic->print)printf("_Table Write, post-increment by 2\n");
              break;
            case 0x0E: //Table Write, post-decrement by 2 1110
-	     if(print)printf("_Table Write, post-decrement by 2\n");
+	     if(pic->print)printf("_Table Write, post-decrement by 2\n");
              break;
            case 0x0F: //Table Write, start programming   1111
-	     if(print)printf("_Table Write, start programming\n");
+	     if(pic->print)printf("_Table Write, start programming\n");
              break;
            default:
-	      if(print)printf  ("_Unknow Command %02X \n",(icsp_cmddata&0x00000F)); 
+	      if(pic->print)printf  ("_Unknow Command %02X \n",(icsp_cmddata&0x00000F)); 
               icsp_cmddata=0;
               icsp_bit=0;
               icsp_cmd=0;
@@ -372,9 +372,9 @@ pic_icsp18(_pic * pic, int  print)
          switch((icsp_cmddata&0x00000F))
          {
 	   case 0x00: //Core Instruction                 0000
-	     if(print)printf("Core Instruction  %#04X \n",(icsp_cmddata&0x000FFFF0)>>4);
+	     if(pic->print)printf("Core Instruction  %#04X \n",(icsp_cmddata&0x000FFFF0)>>4);
           
-             if(pic->s2 !=0)pic_decode_18(pic,print);
+             if(pic->s2 !=0)pic_decode_18(pic);
 
 	     pc_bkp=pic->pc;
              rom_bkp=pic->prog[pic->ROMSIZE]; 
@@ -384,29 +384,29 @@ pic_icsp18(_pic * pic, int  print)
 	     pic->pc=(pic->ROMSIZE<<1);
              pic->prog[pic->ROMSIZE]=((icsp_cmddata&0x000FFFF0)>>4);
  
-             pic_step(pic,print);
+             pic_step(pic);
               
              pic->pc=pc_bkp;
              pic->prog[pic->ROMSIZE]=rom_bkp;
              pic->config[3]=conf_bkp;
              break;
            case 0x02: //Shift out TABLAT register        0010
-	     if(print)printf("Shift out TABLAT register\n");
+	     if(pic->print)printf("Shift out TABLAT register\n");
              break;
            case 0x08: //Table Read                       1000
-	     if(print)printf("Table Read\n");
+	     if(pic->print)printf("Table Read\n");
              break;
            case 0x09: //Table Read, post-increment       1001
-	     if(print)printf("Table Read, post-increment\n");
+	     if(pic->print)printf("Table Read, post-increment\n");
              break;
            case 0x0A: //Table Read, post-decrement       1010
-	     if(print)printf("Table Read, post-decrement\n");
+	     if(pic->print)printf("Table Read, post-decrement\n");
              break;
            case 0x0B: //Table Read, pre-increment        1011
-	     if(print)printf("Table Read, pre-increment\n");
+	     if(pic->print)printf("Table Read, pre-increment\n");
              break;
            case 0x0C: //Table Write                      1100
-	     if(print)printf("Table Write\n");
+	     if(pic->print)printf("Table Write\n");
               tblptr=(pic->ram[P18_TBLPTRU]<<16) | (pic->ram[P18_TBLPTRH]<<8) | pic->ram[P18_TBLPTRL];
               if((tblptr>>1) < pic->ROMSIZE)
               {   
@@ -421,7 +421,7 @@ pic_icsp18(_pic * pic, int  print)
 	      else if((tblptr >=0x300000)&&(tblptr <= 0x30000D))
               {
 	        pic->config[(tblptr-0x300000)>>1]=((icsp_cmddata&0x000FFFF0)>>4);
-                if(print)printf("=>TBLWT* 0x%06lX   0x%02X \n",tblptr,((icsp_cmddata&0x000FFFF0)>>4));
+                if(pic->print)printf("=>TBLWT* 0x%06lX   0x%02X \n",tblptr,((icsp_cmddata&0x000FFFF0)>>4));
               }
               //debug vector  
 	      else if((tblptr >=0x200028)&&(tblptr <= 0x200037))
@@ -453,11 +453,11 @@ pic_icsp18(_pic * pic, int  print)
 
               }
               
-              if(print)printf("WRITE====0x%04lX ==========0x%04X\n",tblptr,(icsp_cmddata&0x0000FFFF0)>>4); 
+              if(pic->print)printf("WRITE====0x%04lX ==========0x%04X\n",tblptr,(icsp_cmddata&0x0000FFFF0)>>4); 
 
              break;
            case 0x0D: //Table Write, post-increment by 2 1101
-	     if(print)printf("Table Write, post-increment by 2\n");
+	     if(pic->print)printf("Table Write, post-increment by 2\n");
               tblptr=(pic->ram[P18_TBLPTRU]<<16) | (pic->ram[P18_TBLPTRH]<<8) | pic->ram[P18_TBLPTRL];
               if((tblptr>>1) < pic->ROMSIZE)
               {   
@@ -472,7 +472,7 @@ pic_icsp18(_pic * pic, int  print)
 	      else if((tblptr >=0x300000)&&(tblptr <= 0x30000D))
               {
 	        pic->config[(tblptr-0x300000)>>1]=((icsp_cmddata&0x000FFFF0)>>4);
-                if(print)printf("=>TBLWT*+ 0x%06lX   0x%02X \n",tblptr,((icsp_cmddata&0x000FFFF0)>>4));
+                if(pic->print)printf("=>TBLWT*+ 0x%06lX   0x%02X \n",tblptr,((icsp_cmddata&0x000FFFF0)>>4));
               }
               //debug vector  
 	      else if((tblptr >=0x200028)&&(tblptr <= 0x200037))
@@ -480,7 +480,7 @@ pic_icsp18(_pic * pic, int  print)
 	        pic->debugv[(tblptr - 0x200028)>>1]=((icsp_cmddata&0x000FFFF0)>>4);
               }
 	
-              if(print)printf("WRITE====0x%04lX ==========0x%04X\n",tblptr,(icsp_cmddata&0x0000FFFF0)>>4); 
+              if(pic->print)printf("WRITE====0x%04lX ==========0x%04X\n",tblptr,(icsp_cmddata&0x0000FFFF0)>>4); 
 
               tblptr+=2;
               pic->ram[P18_TBLPTRU]=(tblptr&0x3F0000)>>16; 
@@ -489,7 +489,7 @@ pic_icsp18(_pic * pic, int  print)
 
              break;
            case 0x0E: //Table Write, post-decrement by 2 1110
-	     if(print)printf("Table Write, post-decrement by 2\n");
+	     if(pic->print)printf("Table Write, post-decrement by 2\n");
               tblptr=(pic->ram[P18_TBLPTRU]<<16) | (pic->ram[P18_TBLPTRH]<<8) | pic->ram[P18_TBLPTRL];
               if((tblptr>>1) < pic->ROMSIZE)
               {   
@@ -504,7 +504,7 @@ pic_icsp18(_pic * pic, int  print)
 	      else if((tblptr >=0x300000)&&(tblptr <= 0x30000D))
               {
 	        pic->config[(tblptr-0x300000)>>1]=((icsp_cmddata&0x000FFFF0)>>4);
-                if(print)printf("=>TBLWT*- 0x%06lX   0x%02X \n",tblptr,((icsp_cmddata&0x000FFFF0)>>4));
+                if(pic->print)printf("=>TBLWT*- 0x%06lX   0x%02X \n",tblptr,((icsp_cmddata&0x000FFFF0)>>4));
               }	
               //debug vector  
 	      else if((tblptr >=0x200028)&&(tblptr <= 0x200037))
@@ -512,7 +512,7 @@ pic_icsp18(_pic * pic, int  print)
 	        pic->debugv[(tblptr - 0x200028)>>1]=((icsp_cmddata&0x000FFFF0)>>4);
               }
               
-              if(print)printf("WRITE====0x%04lX ==========0x%04X\n",tblptr,(icsp_cmddata&0x0000FFFF0)>>4); 
+              if(pic->print)printf("WRITE====0x%04lX ==========0x%04X\n",tblptr,(icsp_cmddata&0x0000FFFF0)>>4); 
 
               tblptr-=2;
               pic->ram[P18_TBLPTRU]=(tblptr&0x3F0000)>>16; 
@@ -520,7 +520,7 @@ pic_icsp18(_pic * pic, int  print)
               pic->ram[P18_TBLPTRL]=(tblptr&0x0000FF);  
              break;
            case 0x0F: //Table Write, start programming   1111
-	     if(print)printf("Table Write, start programming\n");
+	     if(pic->print)printf("Table Write, start programming\n");
               tblptr=(pic->ram[P18_TBLPTRU]<<16) | (pic->ram[P18_TBLPTRH]<<8) | pic->ram[P18_TBLPTRL];
               if((tblptr>>1) < pic->ROMSIZE)
               {   
@@ -535,7 +535,7 @@ pic_icsp18(_pic * pic, int  print)
 	      else if((tblptr >=0x300000)&&(tblptr <= 0x30000D))
               {
 	        pic->config[(tblptr-0x300000)>>1]=((icsp_cmddata&0x000FFFF0)>>4);
-                if(print)printf("=>TBLWT* 0x%06lX   0x%02X \n",tblptr,((icsp_cmddata&0x000FFFF0)>>4));
+                if(pic->print)printf("=>TBLWT* 0x%06lX   0x%02X \n",tblptr,((icsp_cmddata&0x000FFFF0)>>4));
               }	
               //debug vector  
 	      else if((tblptr >=0x200028)&&(tblptr <= 0x200037))
@@ -543,11 +543,11 @@ pic_icsp18(_pic * pic, int  print)
 	        pic->debugv[(tblptr - 0x200028)>>1]=((icsp_cmddata&0x000FFFF0)>>4);
               }
               
-              if(print)printf("WRITE====0x%04lX ==========0x%04X\n",tblptr,(icsp_cmddata&0x0000FFFF0)>>4); 
+              if(pic->print)printf("WRITE====0x%04lX ==========0x%04X\n",tblptr,(icsp_cmddata&0x0000FFFF0)>>4); 
 
              break;
            default:
-	      if(print)printf  ("Unknow Command %02X \n",(icsp_cmddata&0x00000F)); 
+	      if(pic->print)printf  ("Unknow Command %02X \n",(icsp_cmddata&0x00000F)); 
              break;
          } 
 

@@ -32,7 +32,7 @@
 extern const int fpw2[];
 
 
-extern void pic_decode_16E(_pic * pic,int print);
+extern void pic_decode_16E(_pic * pic);
 
 int 
 pic_wr_pin16E2(_pic * pic,unsigned char pin,unsigned char value)
@@ -60,7 +60,7 @@ pic_wr_pin16E2(_pic * pic,unsigned char pin,unsigned char value)
 
 
 
-int interrupt16E2(_pic * pic,int print)
+int interrupt16E2(_pic * pic)
 {
 //interrupt
   //GIE
@@ -163,7 +163,7 @@ pic->frst=1;
 
 
 void 
-periferic16E2_step_in(_pic * pic,int print)
+periferic16E2_step_in(_pic * pic)
 {
 //int i;
 float val;
@@ -1146,7 +1146,7 @@ else if((pic->processor == P16F877)||(pic->processor == P16F877A))
 };
 
 void 
-periferic16E2_step_out(_pic * pic,int print)
+periferic16E2_step_out(_pic * pic)
 {
 int i,val;
 
@@ -1292,7 +1292,7 @@ unsigned char tris;
 //interrupt
 if(pic->s2 == 0)
 {
-  if (interrupt16E2(pic,print) )
+  if (interrupt16E2(pic) )
   {
        pic->sleep=0; 
 
@@ -1318,7 +1318,7 @@ if(pic->s2 == 0)
         pic->ram[P16E2_FSR1H_SHAD]=pic->ram[P16E2_FSR1H];               
         
 
-       if(print)printf("interrupt!");
+       if(pic->print)printf("interrupt!");
        for(i=15;i>0;i--)
          pic->stack[i]=pic->stack[i-1];
        pic->stack[0]=pic->pc;
