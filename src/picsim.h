@@ -192,7 +192,7 @@ unsigned char ssp_bit;
   unsigned char recb;
   int serialc;
   unsigned char txtemp[2];
-  unsigned char txtc;
+  char txtc;
   unsigned char RCREG2;
 //serial emulation
   char SERIALDEVICE[100];

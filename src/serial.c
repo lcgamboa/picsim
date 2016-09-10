@@ -422,7 +422,7 @@ void serial(_pic * pic)
       }
       *pic->serial_TXSTA |=0x02; //TRMT=1 empty 
       *pic->serial_PIR1 |=0x10; //TXIF=1  
-      pic->txtc=0;
+      pic->txtc=-1;
     }
    pic->pins[pic->usart[0]-1].ptype=PT_USART;
    pic->pins[pic->usart[1]-1].ptype=PT_USART;
@@ -442,12 +442,26 @@ void serial(_pic * pic)
   
 
    if(pic->lram == pic->serial_TXREG_ADDR)    
-    { 
-      pic->txtemp[0]= *pic->serial_TXREG;
+    {
+      pic->txtc++;
+      if(pic->txtc > 1)pic->txtc=1; 
+      pic->txtemp[(unsigned char)pic->txtc]= *pic->serial_TXREG;
       *pic->serial_TXSTA &=~0x02; //TRMT=0 full   
-      *pic->serial_PIR1 &=~0x10; //TXIF=0 trasmiting 
+      *pic->serial_PIR1 &=~0x10; //TXIF=0 trasmiting
     }
-   
+  
+    //envia byte para TSTR
+    if((*pic->serial_TXSTA & 0x02)&&(pic->txtc >= 0)) 
+    {
+         pic->txtc--;
+         
+         if(!pic->txtc)
+         {
+           pic->txtemp[(unsigned char)pic->txtc]= *pic->serial_TXREG;
+           *pic->serial_TXSTA &=~0x02; //TRMT=0 full   
+           *pic->serial_PIR1 &=~0x10; //TXIF=0 trasmiting
+         }
+    }
 
    if(pic->lram == pic->serial_RCSTA_ADDR)
    {               //CREN 
@@ -540,7 +554,7 @@ void serial(_pic * pic)
        {   
         if(pic->s_open == 1 ) serial_send(pic,pic->txtemp[0]);
         *pic->serial_TXSTA |=0x02; //TRMT=1 empty  
-    
+        
         if(((*pic->serial_PIE1 & 0x10) == 0x10)&&((*pic->serial_PIR1 & 0x10) != 0x10))
         {
           if(pic->print)printf("serial tx interrupt (%#04X)\n",pic->txtemp[0]);
