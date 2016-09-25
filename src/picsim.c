@@ -69,6 +69,7 @@ main(int argc,char** argv)
   int proc;
   int family;
   unsigned int fst=0;
+  int error;
 
   if(argc == 3)
   {
@@ -88,7 +89,11 @@ main(int argc,char** argv)
             
     pic_set_serial(&pic1,"/dev/tnt2",0,0,0);
     
-    pic_init(&pic1,proc,argv[2],1,20e6);
+    if((error=pic_init(&pic1,proc,argv[2],1,20e6)))
+    {
+       printf("Pic_init error n=%i\n",error);
+       return 0;
+    } 
 
    /* 
    if(family == P16)

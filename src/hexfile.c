@@ -151,7 +151,7 @@ read_ihx(_pic * pic,const char * fname, int leeprom)
 	  break;
 	  case 1:
             fclose(fin);  
-	    return 1;
+	    return 0;//no error
 	  break;
 	  case 4:
 	    addrh=((parse_hex(line+9,2)<<8)|parse_hex(line+11,2));
@@ -162,7 +162,7 @@ read_ihx(_pic * pic,const char * fname, int leeprom)
       {
         printf("ERRO: Picsim->File bad checksum line %i!(%s)\n",lc,fname);
         fclose(fin);  
-        return 0;
+        return HEX_CHKSUM;
       }
      }
      while(!feof(fin));
@@ -171,9 +171,9 @@ read_ihx(_pic * pic,const char * fname, int leeprom)
   else
   {
     printf("ERRO: Picsim->File not found!(%s)\n",fname);
-    return 0;
+    return HEX_NFOUND;
   }
-  return 1;
+  return 0;//no error
 };
 
 
@@ -270,7 +270,7 @@ read_ihx_18(_pic * pic,const char * fname, int leeprom)
 	  break;
 	  case 1:
             fclose(fin);  
-	    return 1;
+	    return 0;//no error
 	  break;
 	  case 4:
 	    addrh=((parse_hex(line+9,2)<<8)|parse_hex(line+11,2));
@@ -281,7 +281,7 @@ read_ihx_18(_pic * pic,const char * fname, int leeprom)
       {
         printf("ERRO: Picsim->File bad checksum line %i!(%s)\n",lc,fname);
         fclose(fin);  
-        return 0;
+        return HEX_CHKSUM;
       }
      }
      while(!feof(fin));
@@ -290,9 +290,9 @@ read_ihx_18(_pic * pic,const char * fname, int leeprom)
   else
   {
     printf("ERRO: Picsim->File not found!(%s)\n",fname);
-    return 0;
+    return HEX_NFOUND;
   }
-  return 1;
+  return 0;//no error
 };
 
 
@@ -478,14 +478,14 @@ write_ihx(_pic * pic,const char * fname)
 //end
     fprintf(fout,":00000001FF\n");
     fclose(fout);   
-    return 1;
+    return 0; //no error
   }
   else
   {
     printf("ERRO: Picsim->File not found!(%s)\n",fname);
-    return 0;
+    return HEX_NWRITE;
   }
-  return 1;
+  return 0;//no error
 }
 
 int
@@ -673,12 +673,12 @@ write_ihx18(_pic * pic,const char * fname)
 //end
     fprintf(fout,":00000001FF\n");
     fclose(fout);   
-    return 1;
+    return 0;//no error
   }
   else
   {
     printf("ERRO: Picsim->File not found!(%s)\n",fname);
-    return 0;
+    return HEX_NWRITE;
   }
-  return 1;
+  return 0;//no error
 }

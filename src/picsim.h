@@ -262,6 +262,12 @@ const char * getFSRname_16E2(unsigned int addr);
 const char * getFSRname_18(unsigned int addr);
 const char * getPinName(_pic * pic,int pin, char * pname);
 
+
+//Errors
+#define HEX_NFOUND 1
+#define HEX_CHKSUM 2
+#define HEX_NWRITE 3
+
 #include"p16fxxx_defs.h"
 
 #include"p16fxxxe_defs.h"
