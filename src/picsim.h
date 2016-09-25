@@ -229,6 +229,7 @@ unsigned char ssp_bit;
 void pic_set_serial(_pic * pic, const char * name, int flowcontrol,int ctspin,int  rtspin);
 int pic_init(_pic * pic, int processor, const char * fname, int lrom,float freq);
 int pic_reset(_pic * pic,int flags);
+void pic_erase_flash(_pic * pic);
 void pic_step(_pic * pic);
 void pic_end(_pic * pic);
 

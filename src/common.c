@@ -56,6 +56,30 @@ unsigned short * memsets(unsigned short * mem,unsigned short value, unsigned lon
    return mem;
 }
 
+void   
+pic_erase_flash(_pic * pic)
+{
+   /*zerar memória*/
+   switch(pic->family)
+   {
+     case P16:
+     case P16E: 
+     case P16E2:    
+       memsets(pic->prog,0x3FFF,pic->ROMSIZE); 
+       memsets(pic->config,0x3FFF,pic->CONFIGSIZE); 
+       memsets(pic->id,0x3FFF,pic->IDSIZE); 
+       break;
+     case P18:
+       memsets(pic->prog,0xFFFF,pic->ROMSIZE); 
+       memsets(pic->config,0xFFFF,pic->CONFIGSIZE); 
+       memsets(pic->id,0xFFFF,pic->IDSIZE); 
+       memset(pic->debugv,0,8);  
+       break;
+     default:
+       break;
+   }
+}
+
 int 
 pic_init(_pic * pic, int processor, const char * fname, int lrom, float freq)
 {
@@ -260,25 +284,8 @@ pic_init(_pic * pic, int processor, const char * fname, int lrom, float freq)
    pic->adc=calloc(pic->ADCCOUNT,sizeof(char));
    pic->usart=calloc(2,sizeof(char));
 
-   /*zerar memória*/
-   switch(pic->family)
-   {
-     case P16:
-     case P16E: 
-     case P16E2:    
-       memsets(pic->prog,0x3FFF,pic->ROMSIZE); 
-       memsets(pic->config,0x3FFF,pic->CONFIGSIZE); 
-       memsets(pic->id,0x3FFF,pic->IDSIZE); 
-       break;
-     case P18:
-       memsets(pic->prog,0xFFFF,pic->ROMSIZE); 
-       memsets(pic->config,0xFFFF,pic->CONFIGSIZE); 
-       memsets(pic->id,0xFFFF,pic->IDSIZE); 
-       memset(pic->debugv,0,8);  
-       break;
-     default:
-       break;
-   }
+   pic_erase_flash(pic);
+
  
    if(lrom == 1)
      memset(pic->eeprom,0xFF,pic->EEPROMSIZE); 
