@@ -21,9 +21,8 @@ OBJS= common.o p16fxxx.o p16fxxxe.o p18fxxx.o hexfile.o periferic16.o periferic1
 
 all: all-lib picsim
 
-picsim: libpicsim.a picsim.c gdb.c 
+picsim: libpicsim.a picsim.c 
 	$(CC) $(FLAGS) picsim.c -o picsim  libpicsim.a 
-	$(CC) -Wall -ggdb  gdb.c -o gdb  libpicsim.a 
 
 
 %.o: %.c  
