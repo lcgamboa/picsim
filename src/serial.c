@@ -423,24 +423,13 @@ void serial(_pic * pic)
       *pic->serial_TXSTA |=0x02; //TRMT=1 empty 
       *pic->serial_PIR1 |=0x10; //TXIF=1  
       pic->txtc=-1;
+      
+      pic->pins[pic->usart[0]-1].ptype=PT_USART;
+      pic->pins[pic->usart[1]-1].ptype=PT_USART;
+      if(pic->flowcontrol)pic_set_pin(pic, pic->rtspin,0); //enable send
     }
-   pic->pins[pic->usart[0]-1].ptype=PT_USART;
-   pic->pins[pic->usart[1]-1].ptype=PT_USART;
-   
-   if(pic->flowcontrol)pic_set_pin(pic, pic->rtspin,0); //enable send
-  }
-  else
-  {
-    if(pic->s_open == 1)
-    {
-      pic->s_open=0;
-    }
-   pic->pins[pic->usart[0]-1].ptype=PT_CMOS;
-   pic->pins[pic->usart[1]-1].ptype=PT_CMOS;
-   if(pic->flowcontrol)pic_set_pin(pic, pic->rtspin,1); //disable send
-  }
-  
 
+  
    if(pic->lram == pic->serial_TXREG_ADDR)    
     {
       pic->txtc++;
@@ -565,6 +554,18 @@ void serial(_pic * pic)
     }
 
 //Hardware flowcontrol
+    
+   }
+  else
+  {
+    if(pic->s_open == 1)
+    {
+      pic->s_open=0;
+      pic->pins[pic->usart[0]-1].ptype=PT_CMOS;
+      pic->pins[pic->usart[1]-1].ptype=PT_CMOS;
+      if(pic->flowcontrol)pic_set_pin(pic, pic->rtspin,1); //disable send
+    }
+  }
 
 }
 

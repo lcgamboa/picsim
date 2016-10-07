@@ -63,7 +63,7 @@ pic18_wr_pin(_pic * pic,unsigned char pin,unsigned char value)
      return 0;
 };
 
-int interrupt18(_pic * pic)
+inline static int interrupt18(_pic * pic)
 {
 //interrupt
 
@@ -240,6 +240,8 @@ pic->portbm=0;
 
 pic->frst=1;
 
+pic->s_open=1;
+
 }
 
 
@@ -250,7 +252,7 @@ periferic18_step_in(_pic * pic)
 float val;
 int chn;
 short dval;
-
+unsigned char temp;
 
 //DEBUG
  if((pic->config[3] & 0x0080) == 0) //DEBUG ON
@@ -830,10 +832,11 @@ else //PIC18F4620 PIC18F4520 and PIC18F4550
    pic->int2v=pic->pins[pic->int2-1].value; 
 
 //PORTB
-if((pic->ram[P18_PORTB]&pic->ram[P18_TRISB]&0xF0) != (pic->portb&pic->ram[P18_TRISB]&0xF0)) 
-{
-  pic->portbm=1;
-}
+   temp=pic->ram[P18_TRISB]&0xF0;
+   if((pic->ram[P18_PORTB]&temp) != (pic->portb&temp)) 
+   {
+      pic->portbm=1;
+   }
 
 if(pic->rram == P18_PORTB)
 {
@@ -1409,13 +1412,14 @@ unsigned short tris;
 	break;
      };
     } 
+    pic->porta=pic->ram[P18_PORTA];
+    pic->portb=pic->ram[P18_PORTB];
+    pic->portc=pic->ram[P18_PORTC];
+    pic->portd=pic->ram[P18_PORTD];
+    pic->porte=pic->ram[P18_PORTE];
   }
 
-  pic->porta=pic->ram[P18_PORTA];
-  pic->portb=pic->ram[P18_PORTB];
-  pic->portc=pic->ram[P18_PORTC];
-  pic->portd=pic->ram[P18_PORTD];
-  pic->porte=pic->ram[P18_PORTE];
+
 
  if((pic->ram[P18_TRISA] != pic->trisa)||
     (pic->ram[P18_TRISB] != pic->trisb)||
@@ -1443,14 +1447,14 @@ unsigned short tris;
      }
 
    }
+   pic->trisa=pic->ram[P18_TRISA];
+   pic->trisb=pic->ram[P18_TRISB];
+   pic->trisc=pic->ram[P18_TRISC];
+   pic->trisd=pic->ram[P18_TRISD];
+   pic->trise=pic->ram[P18_TRISE];
  }
 
 
-  pic->trisa=pic->ram[P18_TRISA];
-  pic->trisb=pic->ram[P18_TRISB];
-  pic->trisc=pic->ram[P18_TRISC];
-  pic->trisd=pic->ram[P18_TRISD];
-  pic->trise=pic->ram[P18_TRISE];
 
   
 //interrupt

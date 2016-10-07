@@ -60,7 +60,7 @@ pic_wr_pin16(_pic * pic,unsigned char pin,unsigned char value)
      return 0;
 };
 
-int interrupt16(_pic * pic)
+inline static int interrupt16(_pic * pic)
 {
 //interrupt
   //GIE
@@ -159,6 +159,8 @@ pic->portbm=0;
 
 pic->frst=1;
 
+pic->s_open=1;
+
 }
 
 
@@ -169,7 +171,7 @@ periferic16_step_in(_pic * pic)
 float val;
 int chn;
 short dval;
-
+unsigned char temp;
 
 //DEBUG
  if((pic->config[0] & 0x0800) == 0) //DEBUG ON
@@ -923,10 +925,11 @@ if((pic->processor == P16F877)||(pic->processor == P16F877A)||(pic->processor ==
 
 
 //PORTB
-if((pic->ram[P16_PORTB]&pic->ram[P16_TRISB]&0xF0) != (pic->portb&pic->ram[P16_TRISB]&0xF0)) 
-{
-  pic->portbm=1;
-}
+   temp=pic->ram[P16_TRISB]&0xF0;
+   if((pic->ram[P16_PORTB]&temp) != (pic->portb&temp)) 
+   {
+     pic->portbm=1; 
+   }
 
 
 if(pic->rram == P16_PORTB)
@@ -1517,13 +1520,14 @@ int temp;
 	break;
      };
     } 
+    pic->porta=pic->ram[P16_PORTA];
+    pic->portb=pic->ram[P16_PORTB];
+    pic->portc=pic->ram[P16_PORTC];
+    pic->portd=pic->ram[P16_PORTD];
+    pic->porte=pic->ram[P16_PORTE];
   }
 
-  pic->porta=pic->ram[P16_PORTA];
-  pic->portb=pic->ram[P16_PORTB];
-  pic->portc=pic->ram[P16_PORTC];
-  pic->portd=pic->ram[P16_PORTD];
-  pic->porte=pic->ram[P16_PORTE];
+
 
  if((pic->ram[P16_TRISA] != pic->trisa)||
     (pic->ram[P16_TRISB] != pic->trisb)||
@@ -1550,14 +1554,13 @@ int temp;
      }
      }
    };
+   pic->trisa=pic->ram[P16_TRISA];
+   pic->trisb=pic->ram[P16_TRISB];
+   pic->trisc=pic->ram[P16_TRISC];
+   pic->trisd=pic->ram[P16_TRISD];
+   pic->trise=pic->ram[P16_TRISE];
  };
 
-
-  pic->trisa=pic->ram[P16_TRISA];
-  pic->trisb=pic->ram[P16_TRISB];
-  pic->trisc=pic->ram[P16_TRISC];
-  pic->trisd=pic->ram[P16_TRISD];
-  pic->trise=pic->ram[P16_TRISE];
 
 //interrupt
 if(pic->s2 == 0)
