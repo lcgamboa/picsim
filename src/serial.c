@@ -403,33 +403,6 @@ void serial(_pic * pic)
 {
   unsigned char rctemp;
 
-
-  if((*pic->serial_RCSTA & 0x80)==0x80)
-  {
-    if(pic->s_open == 0) 
-    {
-
-      if(pic->serialfd > 0)
-      {
-        serial_cfg(pic);
-        pic->s_open=1;
-       if(pic->print)printf("#Open Port:%s!\n",pic->SERIALDEVICE);
-      }
-      else
-      {
-        if(pic->print)printf("#Erro Open Port:%s!\n",pic->SERIALDEVICE);
-        pic->s_open=-1;
-      }
-      *pic->serial_TXSTA |=0x02; //TRMT=1 empty 
-      *pic->serial_PIR1 |=0x10; //TXIF=1  
-      pic->txtc=-1;
-      
-      pic->pins[pic->usart[0]-1].ptype=PT_USART;
-      pic->pins[pic->usart[1]-1].ptype=PT_USART;
-      if(pic->flowcontrol)pic_set_pin(pic, pic->rtspin,0); //enable send
-    }
-
-  
    if(pic->lram == pic->serial_TXREG_ADDR)    
     {
       pic->txtc++;
@@ -437,19 +410,6 @@ void serial(_pic * pic)
       pic->txtemp[(unsigned char)pic->txtc]= *pic->serial_TXREG;
       *pic->serial_TXSTA &=~0x02; //TRMT=0 full   
       *pic->serial_PIR1 &=~0x10; //TXIF=0 trasmiting
-    }
-  
-    //envia byte para TSTR
-    if((*pic->serial_TXSTA & 0x02)&&(pic->txtc >= 0)) 
-    {
-         pic->txtc--;
-         
-         if(!pic->txtc)
-         {
-           pic->txtemp[(unsigned char)pic->txtc]= *pic->serial_TXREG;
-           *pic->serial_TXSTA &=~0x02; //TRMT=0 full   
-           *pic->serial_PIR1 &=~0x10; //TXIF=0 trasmiting
-         }
     }
 
    if(pic->lram == pic->serial_RCSTA_ADDR)
@@ -480,6 +440,48 @@ void serial(_pic * pic)
         break; 
       }
 
+    }
+
+
+
+  if((*pic->serial_RCSTA & 0x80)==0x80)
+  {
+    if(pic->s_open == 0) 
+    {
+
+      if(pic->serialfd > 0)
+      {
+        serial_cfg(pic);
+        pic->s_open=1;
+       if(pic->print)printf("#Open Port:%s!\n",pic->SERIALDEVICE);
+      }
+      else
+      {
+        if(pic->print)printf("#Erro Open Port:%s!\n",pic->SERIALDEVICE);
+        pic->s_open=-1;
+      }
+      *pic->serial_TXSTA |=0x02; //TRMT=1 empty 
+      *pic->serial_PIR1 |=0x10; //TXIF=1  
+      pic->txtc=-1;
+      
+      pic->pins[pic->usart[0]-1].ptype=PT_USART;
+      pic->pins[pic->usart[1]-1].ptype=PT_USART;
+      if(pic->flowcontrol)pic_set_pin(pic, pic->rtspin,0); //enable send
+    }
+
+  
+  
+    //envia byte para TSTR
+    if((*pic->serial_TXSTA & 0x02)&&(pic->txtc >= 0)) 
+    {
+         pic->txtc--;
+         
+         if(!pic->txtc)
+         {
+           pic->txtemp[(unsigned char)pic->txtc]= *pic->serial_TXREG;
+           *pic->serial_TXSTA &=~0x02; //TRMT=0 full   
+           *pic->serial_PIR1 &=~0x10; //TXIF=0 trasmiting
+         }
     }
 
 
