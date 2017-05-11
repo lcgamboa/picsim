@@ -148,7 +148,7 @@ inline static int interrupt18(_pic * pic)
       //T0IE  T0IF
       if((pic->ram[P18_INTCON]&0x20)&&(pic->ram[P18_INTCON]&0x04)) return 1;
       //INTE INTF
-      //if((pic->ram[P18_INTCON]&0x10)&&(pic->ram[P18_INTCON]&0x02)) return 1;
+      if((pic->ram[P18_INTCON]&0x10)&&(pic->ram[P18_INTCON]&0x02)) return 1;
       //RBIE
       if((pic->ram[P18_INTCON]&0x08)&&(pic->ram[P18_INTCON]&0x01)) return 1;
       //INT1E INT1F
