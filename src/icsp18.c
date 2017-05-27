@@ -60,7 +60,7 @@ unsigned char  icsp_cmd;
 
 
 void 
-pic_icsp_init18(_pic * pic)
+pic_icsp_init18(void)
 {
      //entrando em icsp_mode de  programacao  
         icsp_sda=0;
@@ -80,7 +80,7 @@ pic_icsp_init18(_pic * pic)
  
 
 int 
-pic_icsp18(_pic * pic)
+pic_icsp18(void)
 {
  
   int icsp_scka=1;
@@ -96,14 +96,14 @@ pic_icsp18(_pic * pic)
 //icsp
 
      icsp_scka=icsp_sck;
-     icsp_sck=pic_get_pin(pic,pic->pgc); 
+     icsp_sck=pic_get_pin(pic->pgc); 
 
 
      if((icsp_scka != icsp_sck)&&(icsp_sck == 0))  
      {
        if(icsp_mode == 0)     
        { 
-         icsp_sda=pic_get_pin(pic, pic->pgd); 
+         icsp_sda=pic_get_pin( pic->pgd); 
          icsp_cmddata|=(icsp_sda<<icsp_bit);
        }
        icsp_bit++;
@@ -384,7 +384,7 @@ pic_icsp18(_pic * pic)
 	     pic->pc=(pic->ROMSIZE<<1);
              pic->prog[pic->ROMSIZE]=((icsp_cmddata&0x000FFFF0)>>4);
  
-             pic_step(pic);
+             pic_step();
               
              pic->pc=pc_bkp;
              pic->prog[pic->ROMSIZE]=rom_bkp;

@@ -53,7 +53,7 @@
 
 
 int 
-serial_open(_pic * pic)
+serial_open(void)
 {
       if(pic->SERIALDEVICE[0] == 0)
       { 	
@@ -99,7 +99,7 @@ NULL); // null template
 }
 
 int 
-serial_close(_pic * pic)
+serial_close(void)
 {
   if (pic->serialfd != 0) 
   {
@@ -116,7 +116,7 @@ serial_close(_pic * pic)
 
 
 int
-serial_cfg(_pic * pic)
+serial_cfg(void)
 {
     unsigned int BAUDRATE;
    
@@ -288,7 +288,7 @@ EscapeCommFunction(pic->serialfd ,SETRTS );
 
 
       
-unsigned long serial_send(_pic * pic, unsigned char c)
+unsigned long serial_send(unsigned char c)
 {
   if(pic->serialfd)
   {
@@ -325,7 +325,7 @@ unsigned long serial_rec(_pic * pic, unsigned char * c)
      return 0;
 }
 
-unsigned long serial_rec_tout(_pic * pic, unsigned char * c)
+unsigned long serial_rec_tout( unsigned char * c)
 {
  unsigned int tout=0;
 
@@ -354,7 +354,7 @@ unsigned long serial_rec_tout(_pic * pic, unsigned char * c)
 }
 
 
-unsigned long serial_recbuff(_pic * pic, unsigned char * c)
+unsigned long serial_recbuff( unsigned char * c)
 {
 int i;
 
@@ -375,7 +375,7 @@ int i;
     }
 
 
-    if((pic_get_pin(pic,pic->ctspin) == 0)&&(pic->bc > 0))
+    if((pic_get_pin(pic->ctspin) == 0)&&(pic->bc > 0))
     {
       *c=pic->buff[0];
 
@@ -399,7 +399,7 @@ int i;
 
 
 
-void serial(_pic * pic)
+void serial(void)
 {
   unsigned char rctemp;
 
@@ -451,7 +451,7 @@ void serial(_pic * pic)
 
       if(pic->serialfd > 0)
       {
-        serial_cfg(pic);
+        serial_cfg();
         pic->s_open=1;
        if(pic->print)printf("#Open Port:%s!\n",pic->SERIALDEVICE);
       }
@@ -466,7 +466,7 @@ void serial(_pic * pic)
       
       pic->pins[pic->usart[0]-1].ptype=PT_USART;
       pic->pins[pic->usart[1]-1].ptype=PT_USART;
-      if(pic->flowcontrol)pic_set_pin(pic, pic->rtspin,0); //enable send
+      if(pic->flowcontrol)pic_set_pin( pic->rtspin,0); //enable send
     }
 
   
@@ -507,7 +507,7 @@ void serial(_pic * pic)
       
       if((pic->s_open != 0)&&(( *pic->serial_TRIS_RX &  pic->serial_TRIS_RX_MASK) != 0)) //work only if RX tris bit is set
      {
-      if(serial_recbuff(pic,&rctemp) == 1)
+      if(serial_recbuff(&rctemp) == 1)
       {
 
         if((*pic->serial_RCSTA & 0x12) == 0x10)//CREN=1  OERR=0 
@@ -543,7 +543,7 @@ void serial(_pic * pic)
       //if(((pic->ram[P18_TXSTA] & 0x02) == 0 ) &&((pic->ram[pic->pins[pic->usart[1]-1].port+0x12] &  (0x01 << pic->pins[pic->usart[1]-1].pord)) == 0))
       if((*pic->serial_TXSTA & 0x02) == 0 )
        {   
-        if(pic->s_open == 1 ) serial_send(pic,pic->txtemp[0]);
+        if(pic->s_open == 1 ) serial_send(pic->txtemp[0]);
         *pic->serial_TXSTA |=0x02; //TRMT=1 empty  
         
         if(((*pic->serial_PIE1 & 0x10) == 0x10)&&((*pic->serial_PIR1 & 0x10) != 0x10))
@@ -565,15 +565,16 @@ void serial(_pic * pic)
       pic->s_open=0;
       pic->pins[pic->usart[0]-1].ptype=PT_CMOS;
       pic->pins[pic->usart[1]-1].ptype=PT_CMOS;
-      if(pic->flowcontrol)pic_set_pin(pic, pic->rtspin,1); //disable send
+      if(pic->flowcontrol)pic_set_pin( pic->rtspin,1); //disable send
     }
   }
 
 }
 
 void 
-pic_set_serial(_pic * pic, const char * name, int flowcontrol,int ctspin,int  rtspin)
+pic_set_serial(_pic * pic_,const char * name, int flowcontrol,int ctspin,int  rtspin)
 {
+  pic=pic_;   
   strcpy(pic->SERIALDEVICE,name);
   
   pic->flowcontrol=flowcontrol;

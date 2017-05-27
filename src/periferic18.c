@@ -32,10 +32,10 @@
 const int fpw2_[8]={1,2,4,8,16,32,64,128};
 
 
-extern void pic_decode_18(_pic * pic);
+extern void pic_decode_18(void);
 
 int 
-pic18_wr_pin(_pic * pic,unsigned char pin,unsigned char value)
+pic18_wr_pin(unsigned char pin,unsigned char value)
 {
    unsigned char val;
 
@@ -63,7 +63,7 @@ pic18_wr_pin(_pic * pic,unsigned char pin,unsigned char value)
      return 0;
 };
 
-inline static int interrupt18(_pic * pic)
+inline static int interrupt18(void)
 {
 //interrupt
 
@@ -188,7 +188,7 @@ inline static int interrupt18(_pic * pic)
 }
 
 void
-periferic18_rst(_pic * pic)
+periferic18_rst(void)
 {
 
 pic->debug=0;
@@ -246,7 +246,7 @@ pic->s_open=1;
 
 
 void 
-periferic18_step_in(_pic * pic)
+periferic18_step_in(void)
 {
 //int i;
 float val;
@@ -283,7 +283,7 @@ unsigned char temp;
 
 	if((pic->ssp_scka == 0)&&(pic->ssp_sck == 1)) //CKP =0 CKE =0     //coloca saida na borda de subida
         {
-           pic18_wr_pin(pic,pic->sdo, ((pic->ram[P18_SSPBUF] & (1 <<(7-pic->ssp_bit))) > 0));
+           pic18_wr_pin(pic->sdo, ((pic->ram[P18_SSPBUF] & (1 <<(7-pic->ssp_bit))) > 0));
         }
 
 
@@ -1239,7 +1239,7 @@ if(pic->portbm)
          } 
          else
          {
-           pic_reset(pic,0);
+           pic_reset(0);
          }
 
         } 
@@ -1248,12 +1248,12 @@ if(pic->portbm)
 
 
 
-   serial( pic);
+   serial();
 
 };
 
 void 
-periferic18_step_out(_pic * pic)
+periferic18_step_out(void)
 {
 int i,val;
 
@@ -1319,7 +1319,7 @@ unsigned short tris;
  //         if((pic->pc>>1) ==   ((((pic->ram[P18_BDMSR2]&0x0F)<<16)|(pic->ram[P18_BDMSR1]<<8)|pic->ram[P18_BDMSR0])/*+1*/ )) printf("Break Point\n");      //Break Point  
 //          if((pic->ram[P18_DEBUG]&0x20) == 0x20) printf("sstep!\n");  
           
-          if(pic->s2 !=0)pic_decode_18(pic);
+          if(pic->s2 !=0)pic_decode_18();
 
           if(pic->pc != 0x00000)
           {
@@ -1404,9 +1404,9 @@ unsigned short tris;
               port=pic->pins[i].port;
               pic->pins[i].lvalue= ((pic->ram[port] & val) != 0); //latch
   	      if(pic->pins[i].ptype > 2)	 
-                pic18_wr_pin(pic,i+1, 0);
+                pic18_wr_pin(i+1, 0);
               else  
-                pic18_wr_pin(pic,i+1,pic->pins[i].value);
+                pic18_wr_pin(i+1,pic->pins[i].value);
 	break;
 	default:
 	break;
@@ -1436,13 +1436,13 @@ unsigned short tris;
      if((pic->ram[tris] & val)==0)
      {
        pic->pins[i].dir=PD_OUT;
-       pic18_wr_pin(pic,i+1,pic->pins[i].lvalue);
+       pic18_wr_pin(i+1,pic->pins[i].lvalue);
      }
      else
      {
        val=pic->pins[i].dir;
        pic->pins[i].dir=PD_IN;
-       if(val != PD_IN)pic18_wr_pin(pic,i+1,pic->pins[i].ovalue);
+       if(val != PD_IN)pic18_wr_pin(i+1,pic->pins[i].ovalue);
      }
      }
 
@@ -1460,7 +1460,7 @@ unsigned short tris;
 //interrupt
 if(pic->s2 == 0)
 {
-  int iret=interrupt18(pic); 
+  int iret=interrupt18(); 
   if (iret)
   {
      pic->sleep=0; 

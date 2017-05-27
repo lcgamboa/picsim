@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2008-2015  Luis Claudio Gambôa Lopes
+   Copyright (c) : 2008-2015  Luis Claudio Gamboa Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -32,10 +32,10 @@
 const int fpw2[]={1,2,4,8,16,32,64,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288};
 
 
-extern void pic_decode_16(_pic * pic);
+extern void pic_decode_16(void);
 
 int 
-pic_wr_pin16(_pic * pic,unsigned char pin,unsigned char value)
+pic_wr_pin16(unsigned char pin,unsigned char value)
 {
    unsigned char val;
 
@@ -60,7 +60,7 @@ pic_wr_pin16(_pic * pic,unsigned char pin,unsigned char value)
      return 0;
 };
 
-inline static int interrupt16(_pic * pic)
+inline static int interrupt16(void)
 {
 //interrupt
   //GIE
@@ -106,7 +106,7 @@ inline static int interrupt16(_pic * pic)
 }
 
 void
-periferic16_rst(_pic * pic)
+periferic16_rst(void)
 {
 
 pic->debug=0;
@@ -165,7 +165,7 @@ pic->s_open=1;
 
 
 void 
-periferic16_step_in(_pic * pic)
+periferic16_step_in(void)
 {
 //int i;
 float val;
@@ -205,7 +205,7 @@ if((pic->processor == P16F877)||(pic->processor == P16F877A)||(pic->processor ==
 
 	if((pic->ssp_scka == 0)&&(pic->ssp_sck == 1)) //CKP =0 CKE =0     //coloca saida na borda de subida
         {
-           pic_wr_pin16(pic,pic->sdo, ((pic->ram[P16_SSPBUF] & (1 <<(7-pic->ssp_bit))) > 0));
+           pic_wr_pin16(pic->sdo, ((pic->ram[P16_SSPBUF] & (1 <<(7-pic->ssp_bit))) > 0));
         }
 
 
@@ -1346,7 +1346,7 @@ else if((pic->processor == P16F877)||(pic->processor == P16F877A))
          } 
          else
          {
-           pic_reset(pic,0);
+           pic_reset(0);
          }
         } 
       }
@@ -1373,7 +1373,7 @@ else if((pic->processor == P16F877)||(pic->processor == P16F877A))
          } 
          else
          {
-           pic_reset(pic,0);
+           pic_reset(0);
          }
         } 
 //        printf("WDT=%02X\n",pic->wdt);
@@ -1412,11 +1412,11 @@ else if((pic->processor == P16F877)||(pic->processor == P16F877A))
 */
 
 if(pic->processor != P16F84A)
-   serial(pic);
+   serial();
 };
 
 void 
-periferic16_step_out(_pic * pic)
+periferic16_step_out(void)
 {
 int i,val;
 
@@ -1458,7 +1458,7 @@ int temp;
          // if(pic->pc ==   ((((pic->ram[ICKBUG]&0x1F)<<8) |  pic->ram[BIGBUG])+1)) printf("Break Point\n");      //Break Point  
          // if((pic->ram[ICKBUG]&0x20) == 0x20) printf("sstep!\n");  
           
-          if(pic->s2 !=0)pic_decode_16(pic);
+          if(pic->s2 !=0)pic_decode_16();
 
 
           for(temp=7;temp>0;temp--)
@@ -1512,9 +1512,9 @@ int temp;
               port=pic->pins[i].port;
               pic->pins[i].lvalue= ((pic->ram[port] & val) != 0); //latch
   	      if(pic->pins[i].ptype > 2)
-                pic_wr_pin16(pic,i+1, 0);
+                pic_wr_pin16(i+1, 0);
               else
-                pic_wr_pin16(pic,i+1,pic->pins[i].value);
+                pic_wr_pin16(i+1,pic->pins[i].value);
 	break;
 	default:
 	break;
@@ -1544,13 +1544,13 @@ int temp;
      if((pic->ram[tris] & val)==0)
      {
        pic->pins[i].dir=PD_OUT;
-       pic_wr_pin16(pic,i+1,pic->pins[i].lvalue);
+       pic_wr_pin16(i+1,pic->pins[i].lvalue);
      }
      else
      {
        val=pic->pins[i].dir;
        pic->pins[i].dir=PD_IN;
-       if(val != PD_IN)pic_wr_pin16(pic,i+1,pic->pins[i].ovalue);
+       if(val != PD_IN)pic_wr_pin16(i+1,pic->pins[i].ovalue);
      }
      }
    };
@@ -1565,7 +1565,7 @@ int temp;
 //interrupt
 if(pic->s2 == 0)
 {
-  if (interrupt16(pic) )
+  if (interrupt16() )
   {
        pic->sleep=0; 
 

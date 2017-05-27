@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2008-2015  Luis Claudio GambÃ´a Lopes
+   Copyright (c) : 2008-2015  Luis Claudio Gamboa Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -33,18 +33,19 @@
 #include"periferic16e2.h"
 #include"periferic18.h"
 
+_pic * pic;//global object
 
-extern int serial_open(_pic * pic);
-extern int serial_close(_pic * pic);
+extern int serial_open(void);
+extern int serial_close(void);
  
 
-extern int read_ihx(_pic * pic,const char * fname,int lrom);
-extern int read_ihx_18(_pic * pic,const char * fname,int lrom);
+//extern int read_ihx(_pic * pic,const char * fname,int lrom);
+//extern int read_ihx_18(_pic * pic,const char * fname,int lrom);
 
 
-extern void pic_decode_16(_pic * pic);
-extern void pic_decode_16E(_pic * pic);
-extern void pic_decode_18(_pic * pic);
+extern void pic_decode_16(void);
+extern void pic_decode_16E(void);
+extern void pic_decode_18(void);
 
 
 unsigned short * memsets(unsigned short * mem,unsigned short value, unsigned long size)
@@ -57,9 +58,9 @@ unsigned short * memsets(unsigned short * mem,unsigned short value, unsigned lon
 }
 
 void   
-pic_erase_flash(_pic * pic)
+pic_erase_flash(void)
 {
-   /*zerar memória*/
+   /*zerar memoria*/
    switch(pic->family)
    {
      case P16:
@@ -81,10 +82,12 @@ pic_erase_flash(_pic * pic)
 }
 
 int 
-pic_init(_pic * pic, int processor, const char * fname, int lrom, float freq)
+pic_init(_pic * pic_, int processor, const char * fname, int lrom, float freq)
 {
    int i;
-
+   
+   pic=pic_;
+    
    pic->print=0;
    
    pic->freq=freq;
@@ -284,7 +287,7 @@ pic_init(_pic * pic, int processor, const char * fname, int lrom, float freq)
    pic->adc=calloc(pic->ADCCOUNT,sizeof(char));
    pic->usart=calloc(2,sizeof(char));
 
-   pic_erase_flash(pic);
+   pic_erase_flash();
 
  
    if(lrom == 1)
@@ -292,7 +295,7 @@ pic_init(_pic * pic, int processor, const char * fname, int lrom, float freq)
    
    pic->sleep=0; 
    
-   pic_reset(pic,1);
+   pic_reset(1);
    
    for(i=0; i < pic->PINCOUNT; i++)
    {
@@ -364,7 +367,7 @@ pic_init(_pic * pic, int processor, const char * fname, int lrom, float freq)
        break;
    }
    
-   serial_open(pic);
+   serial_open();
   
    if(fname == NULL)
    {
@@ -376,10 +379,10 @@ pic_init(_pic * pic, int processor, const char * fname, int lrom, float freq)
        case P16: 
        case P16E: 
        case P16E2:     
-         return read_ihx(pic,fname,lrom);
+         return read_ihx(fname,lrom);
          break; 
        case P18: 
-         return read_ihx_18(pic,fname,lrom);
+         return read_ihx_18(fname,lrom);
          break; 
        default:
          break;
@@ -389,7 +392,7 @@ pic_init(_pic * pic, int processor, const char * fname, int lrom, float freq)
 }
 
 int 
-pic_reset(_pic * pic, int flags)
+pic_reset(int flags)
 {
   int i;
 
@@ -648,7 +651,7 @@ pic_reset(_pic * pic, int flags)
      pic->ram[P16_TRISD]=0xFF; 
      pic->ram[P16_TRISE]=0x07; 
      pic->ram[P16_PR2]=0xFF; 
-     periferic16_rst(pic);
+     periferic16_rst();
 
      break;
     case P16E:  
@@ -733,7 +736,7 @@ pic_reset(_pic * pic, int flags)
      pic->ram[P16_TRISD]=0xFF; 
      pic->ram[P16_TRISE]=0x07; 
      pic->ram[P16_PR2]=0xFF; 
-     periferic16E_rst(pic);
+     periferic16E_rst();
      break;
     case P16E2:  
     switch(pic->processor)
@@ -843,7 +846,7 @@ pic_reset(_pic * pic, int flags)
      pic->ram[P16_TRISD]=0xFF; 
      pic->ram[P16_TRISE]=0x07; 
      pic->ram[P16_PR2]=0xFF; 
-     periferic16E2_rst(pic);
+     periferic16E2_rst();
 
      break; 
     case P18:
@@ -1097,7 +1100,7 @@ pic_reset(_pic * pic, int flags)
      pic->ram[P18_PR2]=0xFF; 
      pic->ram[P18_STKPTR]=0x00;
    
-     periferic18_rst(pic);
+     periferic18_rst();
      break;
     default:
     break;
@@ -1110,29 +1113,29 @@ pic_reset(_pic * pic, int flags)
 };
 
 void
-pic_step(_pic * pic)
+pic_step(void)
 {
   switch(pic->family)
   { 
     case P16:
-      pic_decode_16(pic);
-      periferic16_step_in(pic);
-      periferic16_step_out(pic);
+      pic_decode_16();
+      periferic16_step_in();
+      periferic16_step_out();
       break;
     case P16E:  
-      pic_decode_16E(pic);
-      periferic16E_step_in(pic);
-      periferic16E_step_out(pic);
+      pic_decode_16E();
+      periferic16E_step_in();
+      periferic16E_step_out();
       break;  
     case P16E2:  
-      pic_decode_16E(pic);
-      periferic16E2_step_in(pic);
-      periferic16E2_step_out(pic);
+      pic_decode_16E();
+      periferic16E2_step_in();
+      periferic16E2_step_out();
       break;    
     case P18:
-      pic_decode_18(pic);
-      periferic18_step_in(pic);
-      periferic18_step_out(pic);
+      pic_decode_18();
+      periferic18_step_in();
+      periferic18_step_out();
       break;
   }
 }
@@ -1140,7 +1143,7 @@ pic_step(_pic * pic)
 
 
 void
-pic_end(_pic * pic)
+pic_end(void)
 {
   if(pic->ram)free(pic->ram);
   if(pic->prog)free(pic->prog);
@@ -1153,11 +1156,11 @@ pic_end(_pic * pic)
   if(pic->adc)free(pic->adc);
   if(pic->usart)free(pic->usart);
 
-  serial_close(pic);
+  serial_close();
 }
 
 unsigned char 
-pic_get_pin(_pic * pic, unsigned char pin)
+pic_get_pin(unsigned char pin)
 {
    if((pin-1) < pic->PINCOUNT)
    {
@@ -1176,7 +1179,7 @@ pic_get_pin(_pic * pic, unsigned char pin)
 
 
 int 
-pic_set_pin(_pic * pic,unsigned char pin,unsigned char value)
+pic_set_pin(unsigned char pin,unsigned char value)
 {
    unsigned char val;
 
@@ -1224,7 +1227,7 @@ pic_set_pin(_pic * pic,unsigned char pin,unsigned char value)
 
 
 int 
-pic_set_apin(_pic * pic,unsigned char pin,float value)
+pic_set_apin(unsigned char pin,float value)
 {
 
    if((pin-1) < pic->PINCOUNT)
@@ -1248,7 +1251,7 @@ pic_set_apin(_pic * pic,unsigned char pin,float value)
 
 
 unsigned char 
-pic_get_pin_type(_pic * pic, unsigned char pin)
+pic_get_pin_type(unsigned char pin)
 {
    if((pin-1) < pic->PINCOUNT)
    {
@@ -1259,7 +1262,7 @@ pic_get_pin_type(_pic * pic, unsigned char pin)
 };
 
 unsigned char 
-pic_get_pin_dir(_pic * pic, unsigned char pin)
+pic_get_pin_dir(unsigned char pin)
 {
    if((pin-1) < pic->PINCOUNT)
    {
@@ -1272,7 +1275,7 @@ pic_get_pin_dir(_pic * pic, unsigned char pin)
 
 
 int 
-pic_set_pin_DOV(_pic * pic,unsigned char pin,unsigned char value)
+pic_set_pin_DOV(unsigned char pin,unsigned char value)
 {
    if((pin-1) < pic->PINCOUNT)
    {
@@ -1286,7 +1289,7 @@ pic_set_pin_DOV(_pic * pic,unsigned char pin,unsigned char value)
 }
 
 unsigned char 
-pic_get_pin_DOV(_pic * pic, unsigned char pin)
+pic_get_pin_DOV(unsigned char pin)
 {
    if((pin-1) < pic->PINCOUNT)
    {

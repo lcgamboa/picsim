@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2008-2015  Luis Claudio Gambôa Lopes
+   Copyright (c) : 2008-2017  Luis Claudio Gamboa Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -45,13 +45,11 @@ _pic pic1;
 
 void exitcc(int sig) 
 {
- pic_end(&pic1);
+ pic_end();
  exit(-1);
 //void) signal(SIGINT, SIG_DFL);
 }
 
-int write_ihx(_pic * pic,const char * fname);
-int write_ihx18(_pic * pic,const char * fname);
 
 int 
 main(int argc,char** argv)
@@ -113,7 +111,7 @@ main(int argc,char** argv)
       if(fst)
       {
         pic1.print=0;  
-        pic_step(&pic1);
+        pic_step();
       }
       else
       { 
@@ -121,7 +119,7 @@ main(int argc,char** argv)
         ANSI_FG_HCOLOR(RED);
 #endif 
         pic1.print=1;
-        pic_step(&pic1);
+        pic_step();
 
 #ifndef _WIN_      
         ANSI_DEFAULT(); 
@@ -254,7 +252,7 @@ main(int argc,char** argv)
          break;
        case 'r':
          printf("Reset:\n"); 
-         pic_reset(&pic1,0);
+         pic_reset(0);
          rep=0;  
          break;
        case 'm' :
@@ -289,7 +287,7 @@ main(int argc,char** argv)
 
     };
 
-     pic_end(&pic1);
+     pic_end();
    }
    else
    {

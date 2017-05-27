@@ -27,11 +27,11 @@
 extern "C" {
 #endif
     
-void periferic16E_rst(_pic * pic);
-void periferic16E_step_in(_pic * pic);
-void periferic16E_step_out(_pic * pic);
+void periferic16E_rst(void);
+void periferic16E_step_in(void);
+void periferic16E_step_out(void);
 
-void serial(_pic * pic);
+void serial(void);
 
 #ifdef __cplusplus
 }

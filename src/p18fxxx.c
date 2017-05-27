@@ -31,7 +31,7 @@
 
 
 void
-pic_decode_18(_pic * pic)
+pic_decode_18(void)
 {
   unsigned short temp;
   unsigned char  ctemp;
@@ -784,7 +784,7 @@ pic_decode_18(_pic * pic)
 //RESET       		Software device RESET        1     	0000 0000 1111 1111 All
             case 0x00FF:
                 if(pic->print)printf("RESET\n");                
-		pic_reset(pic,0);
+		pic_reset(0);
 		return;
 	      break;
             default:

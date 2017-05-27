@@ -32,10 +32,10 @@
 extern const int fpw2[];
 
 
-extern void pic_decode_16E(_pic * pic);
+extern void pic_decode_16E(void);
 
 int 
-pic_wr_pin16E(_pic * pic,unsigned char pin,unsigned char value)
+pic_wr_pin16E(unsigned char pin,unsigned char value)
 {
    unsigned char val;
 
@@ -60,7 +60,7 @@ pic_wr_pin16E(_pic * pic,unsigned char pin,unsigned char value)
 
 
 
-inline static int interrupt16E(_pic * pic)
+inline static int interrupt16E(void)
 {
 //interrupt
   //GIE
@@ -106,7 +106,7 @@ inline static int interrupt16E(_pic * pic)
 }
 
 void
-periferic16E_rst(_pic * pic)
+periferic16E_rst(void)
 {
 
 pic->debug=0;
@@ -165,7 +165,7 @@ pic->s_open=1;
 
 
 void 
-periferic16E_step_in(_pic * pic)
+periferic16E_step_in(void)
 {
 //int i;
 float val;
@@ -1127,7 +1127,7 @@ else if((pic->processor == P16F877)||(pic->processor == P16F877A))
          } 
          else
          {
-           pic_reset(pic,0);
+           pic_reset(0);
          }
         } 
       }
@@ -1164,11 +1164,11 @@ else if((pic->processor == P16F877)||(pic->processor == P16F877A))
    };
 */
 
- serial(pic);
+ serial();
 };
 
 void 
-periferic16E_step_out(_pic * pic)
+periferic16E_step_out(void)
 {
 int i,val;
 
@@ -1264,9 +1264,9 @@ unsigned char tris;
               port=pic->pins[i].port;
               pic->pins[i].lvalue= ((pic->ram[port] & val) != 0); //latch
   	      if(pic->pins[i].ptype > 2)
-                pic_wr_pin16E(pic,i+1, 0);
+                pic_wr_pin16E(i+1, 0);
               else
-                pic_wr_pin16E(pic,i+1,pic->pins[i].value);
+                pic_wr_pin16E(i+1,pic->pins[i].value);
 	break;
 	default:
 	break;
@@ -1294,13 +1294,13 @@ unsigned char tris;
      if((pic->ram[tris] & val)==0)
      {
        pic->pins[i].dir=PD_OUT;
-       pic_wr_pin16E(pic,i+1,pic->pins[i].lvalue);
+       pic_wr_pin16E(i+1,pic->pins[i].lvalue);
      }
      else
      {
        val=pic->pins[i].dir;
        pic->pins[i].dir=PD_IN;
-       if(val != PD_IN)pic_wr_pin16E(pic,i+1,pic->pins[i].ovalue);
+       if(val != PD_IN)pic_wr_pin16E(i+1,pic->pins[i].ovalue);
      }
      }
    };
@@ -1314,7 +1314,7 @@ unsigned char tris;
 //interrupt
 if(pic->s2 == 0)
 {
-  if (interrupt16E(pic) )
+  if (interrupt16E() )
   {
        pic->sleep=0; 
 

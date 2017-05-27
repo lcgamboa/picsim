@@ -224,34 +224,35 @@ unsigned char ssp_bit;
   unsigned char   serial_TRIS_RX_MASK;
 } _pic;
 
+extern _pic * pic;//global pointer 
 
 
-void pic_set_serial(_pic * pic, const char * name, int flowcontrol,int ctspin,int  rtspin);
-int pic_init(_pic * pic, int processor, const char * fname, int lrom,float freq);
-int pic_reset(_pic * pic,int flags);
-void pic_erase_flash(_pic * pic);
-void pic_step(_pic * pic);
-void pic_end(_pic * pic);
+void pic_set_serial(_pic * pic_, const char * name, int flowcontrol,int ctspin,int  rtspin);
+int pic_init(_pic * pic_, int processor, const char * fname, int lrom,float freq);
+int pic_reset(int flags);
+void pic_erase_flash(void);
+void pic_step(void);
+void pic_end(void);
 
-unsigned char pic_get_pin(_pic * pic, unsigned char pin);
-int pic_set_pin(_pic * pic,unsigned char pin,unsigned char value);
-int pic_set_apin(_pic * pic,unsigned char pin,float value);
-unsigned char pic_get_pin_type(_pic * pic, unsigned char pin);
-unsigned char pic_get_pin_dir(_pic * pic, unsigned char pin);
-unsigned char pic_get_pin_DOV(_pic * pic, unsigned char pin);//get default open value
-int pic_set_pin_DOV(_pic * pic,unsigned char pin,unsigned char value);//set default open value
+unsigned char pic_get_pin(unsigned char pin);
+int pic_set_pin(unsigned char pin,unsigned char value);
+int pic_set_apin(unsigned char pin,float value);
+unsigned char pic_get_pin_type(unsigned char pin);
+unsigned char pic_get_pin_dir(unsigned char pin);
+unsigned char pic_get_pin_DOV(unsigned char pin);//get default open value
+int pic_set_pin_DOV(unsigned char pin,unsigned char value);//set default open value
 
-void pic_icsp_init(_pic * pic);
-int pic_icsp(_pic * pic);
+void pic_icsp_init(void);
+int pic_icsp(void);
 
-void pic_icsp_init18(_pic * pic);
-int pic_icsp18(_pic * pic);
+void pic_icsp_init18(void);
+int pic_icsp18(void);
 
-int read_ihx(_pic * pic,const char * fname, int leeprom);
-int read_ihx_18(_pic * pic,const char * fname, int leeprom);
+int read_ihx(const char * fname, int leeprom);
+int read_ihx_18(const char * fname, int leeprom);
 
-int write_ihx(_pic * pic,const char * fname);
-int write_ihx18(_pic * pic,const char * fname);
+int write_ihx(const char * fname);
+int write_ihx18(const char * fname);
 
 int getprocbyname(char *str);
 int getfprocbyname(char *str);

@@ -30,7 +30,7 @@
 #include"picsim.h"
 
 
-void ReadIndf(_pic * pic, unsigned short *afsr)
+void ReadIndf( unsigned short *afsr)
 {
    int i;
    
@@ -91,7 +91,7 @@ void ReadIndf(_pic * pic, unsigned short *afsr)
 }
 
 void
-pic_decode_16E(_pic * pic)
+pic_decode_16E(void)
 {
   unsigned short temp;
   unsigned short opc;
@@ -152,7 +152,7 @@ pic_decode_16E(_pic * pic)
   }  
   //pc_ant = temp;
 
-  ReadIndf(pic, afsr);
+  ReadIndf(afsr);
   
   
   switch(opc & 0x3000)
@@ -173,7 +173,7 @@ pic_decode_16E(_pic * pic)
                 case 0x0001:
 //RESET    -     Software device Reset              1    00 0000 0000 0001  
                   if(pic->print)printf("RESET\n");                
-		  pic_reset(pic,0);  
+		  pic_reset(0);  
                 break;
 		case 0x0008:
 ///RETURN  --  	Return from Subroutine       2     0000000 0001000
@@ -287,7 +287,7 @@ pic_decode_16E(_pic * pic)
                      afsr[1]++; 
                      pic->ram[P16E_FSR1H]=(afsr[1] & 0xFF00)>>8;
                      pic->ram[P16E_FSR1L]=afsr[1] & 0x00FF; 
-                     ReadIndf(pic, afsr);
+                     ReadIndf(afsr);
                      pic->rram=afsr[1];
                      pic->ram[P16E_WREG]=pic->ram[P16E_INDF1];
                      break;    
@@ -295,7 +295,7 @@ pic_decode_16E(_pic * pic)
                      afsr[1]--;    
                      pic->ram[P16E_FSR1H]=(afsr[1] & 0xFF00)>>8;
                      pic->ram[P16E_FSR1L]=afsr[1] & 0x00FF; 
-                     ReadIndf(pic, afsr);
+                     ReadIndf(afsr);
                      pic->rram=afsr[1];
                      pic->ram[P16E_WREG]=pic->ram[P16E_INDF1];
                      break;
@@ -323,7 +323,7 @@ pic_decode_16E(_pic * pic)
                      afsr[0]++; 
                      pic->ram[P16E_FSR0H]=(afsr[0] & 0xFF00)>>8;
                      pic->ram[P16E_FSR0L]=afsr[0] & 0x00FF; 
-                     ReadIndf(pic, afsr);
+                     ReadIndf(afsr);
                      pic->rram=afsr[0];
                      pic->ram[P16E_WREG]=pic->ram[P16E_INDF0];
                      break;    
@@ -331,7 +331,7 @@ pic_decode_16E(_pic * pic)
                      afsr[0]--;    
                      pic->ram[P16E_FSR0H]=(afsr[0] & 0xFF00)>>8;
                      pic->ram[P16E_FSR0L]=afsr[0] & 0x00FF; 
-                     ReadIndf(pic, afsr);
+                     ReadIndf(afsr);
                      pic->rram=afsr[0];
                      pic->ram[P16E_WREG]=pic->ram[P16E_INDF0];
                      break;
@@ -365,7 +365,7 @@ pic_decode_16E(_pic * pic)
                      afsr[1]++; 
                      pic->ram[P16E_FSR1H]=(afsr[1] & 0xFF00)>>8;
                      pic->ram[P16E_FSR1L]=afsr[1] & 0x00FF; 
-                     ReadIndf(pic, afsr);
+                     ReadIndf(afsr);
                      pic->lram=P16E_INDF1;
                      pic->ram[P16E_INDF1]=pic->ram[P16E_WREG];
                      break;    
@@ -373,7 +373,7 @@ pic_decode_16E(_pic * pic)
                      afsr[1]--;    
                      pic->ram[P16E_FSR1H]=(afsr[1] & 0xFF00)>>8;
                      pic->ram[P16E_FSR1L]=afsr[1] & 0x00FF; 
-                     ReadIndf(pic, afsr);
+                     ReadIndf(afsr);
                      pic->lram=P16E_INDF1;
                      pic->ram[P16E_INDF1]=pic->ram[P16E_WREG];
                      break;
@@ -397,7 +397,7 @@ pic_decode_16E(_pic * pic)
                      afsr[0]++; 
                      pic->ram[P16E_FSR0H]=(afsr[0] & 0xFF00)>>8;
                      pic->ram[P16E_FSR0L]=afsr[0] & 0x00FF; 
-                     ReadIndf(pic, afsr);
+                     ReadIndf(afsr);
                      pic->lram=P16E_INDF0;
                      pic->ram[P16E_INDF0]=pic->ram[P16E_WREG];
                      break;    
@@ -405,7 +405,7 @@ pic_decode_16E(_pic * pic)
                      afsr[0]--;    
                      pic->ram[P16E_FSR0H]=(afsr[0] & 0xFF00)>>8;
                      pic->ram[P16E_FSR0L]=afsr[0] & 0x00FF; 
-                     ReadIndf(pic, afsr);
+                     ReadIndf(afsr);
                      pic->lram=P16E_INDF0;
                      pic->ram[P16E_INDF0]=pic->ram[P16E_WREG];
                      break;
@@ -1185,7 +1185,7 @@ pic_decode_16E(_pic * pic)
                 afsr[1]+=jrange;
                 pic->ram[P16E_FSR1H]=(afsr[1] & 0xFF00)>>8;
                 pic->ram[P16E_FSR1L]=afsr[1] & 0x00FF; 
-                ReadIndf(pic, afsr);
+                ReadIndf(afsr);
                 pic->rram=afsr[1];
                 pic->ram[P16E_WREG]=pic->ram[P16E_INDF1];  
                 afsr[1]-=jrange;
@@ -1197,7 +1197,7 @@ pic_decode_16E(_pic * pic)
                 afsr[0]+=jrange;
                 pic->ram[P16E_FSR0H]=(afsr[0] & 0xFF00)>>8;
                 pic->ram[P16E_FSR0L]=afsr[0] & 0x00FF; 
-                ReadIndf(pic, afsr);
+                ReadIndf(afsr);
                 pic->rram=afsr[0];
                 pic->ram[P16E_WREG]=pic->ram[P16E_INDF0];  
                 afsr[0]-=jrange;
@@ -1215,7 +1215,7 @@ pic_decode_16E(_pic * pic)
                 afsr[1]+=jrange;
                 pic->ram[P16E_FSR1H]=(afsr[1] & 0xFF00)>>8;
                 pic->ram[P16E_FSR1L]=afsr[1] & 0x00FF; 
-                ReadIndf(pic, afsr);
+                ReadIndf(afsr);
                 pic->lram=P16E_INDF1;
                 pic->ram[P16E_INDF1]=pic->ram[P16E_WREG];  
                 afsrpos=-jrange;
@@ -1225,7 +1225,7 @@ pic_decode_16E(_pic * pic)
                 afsr[0]+=jrange;
                 pic->ram[P16E_FSR0H]=(afsr[0] & 0xFF00)>>8;
                 pic->ram[P16E_FSR0L]=afsr[0] & 0x00FF; 
-                ReadIndf(pic, afsr);
+                ReadIndf(afsr);
                 pic->lram=P16E_INDF0;
                 pic->ram[P16E_INDF0]=pic->ram[P16E_WREG];  
                 afsrpos=-jrange;     
