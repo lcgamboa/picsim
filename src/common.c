@@ -262,7 +262,7 @@ pic_init(_pic * pic_, int processor, const char * fname, int lrom, float freq)
            pic->PINCOUNT=40;
            pic->IDSIZE=4;
            pic->CONFIGSIZE=7;
-           pic->CCPCOUNT=1;
+           pic->CCPCOUNT=2;
            pic->ADCCOUNT=13;
            pic->WDT_MS=4;
            break;
