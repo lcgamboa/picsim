@@ -1157,6 +1157,8 @@ pic_end(void)
   if(pic->usart)free(pic->usart);
 
   serial_close();
+
+  pic=NULL;
 }
 
 unsigned char 
