@@ -74,7 +74,7 @@ pic_erase_flash(void)
        memsets(pic->prog,0xFFFF,pic->ROMSIZE); 
        memsets(pic->config,0xFFFF,pic->CONFIGSIZE); 
        memsets(pic->id,0xFFFF,pic->IDSIZE); 
-       memset(pic->debugv,0,8);  
+       memset(pic->debugv,0,8*sizeof(short));  
        break;
      default:
        break;
@@ -702,10 +702,10 @@ pic_reset(int flags)
        pic->ccp[1]= 7; 
       
        pic->usart[0]=12;  
-       pic->usart[1]=0;  
+       pic->usart[1]=10;  
 
        pic->sck=11;
-       pic->sdo=0;
+       pic->sdo=9;
        pic->sdi=13;
 
        pic->t0cki=17;
@@ -811,11 +811,11 @@ pic_reset(int flags)
        pic->ccp[3]= 18; 
        pic->ccp[4]= 3; 
       
-       pic->usart[0]=15;  
-       pic->usart[1]=0;  
+       pic->usart[0]=9;  
+       pic->usart[1]=8;  
 
        pic->sck=11;
-       pic->sdo=0;
+       pic->sdo=7;
        pic->sdi=12;
 
        pic->t0cki=3;
