@@ -43,8 +43,9 @@ unsigned char value;     //value
 unsigned char lvalue;    //latch value
 char pord;               //pin port number
 unsigned short port;     //port address
-float avalue;            //analog value
+float avalue;            //analog input value
 unsigned char ovalue;    //defaut open pin value
+float oavalue;           //analog output value
 }picpin;
 
 #define PD_OUT	  0x00
@@ -254,8 +255,8 @@ int read_ihx_18(const char * fname, int leeprom);
 int write_ihx(const char * fname);
 int write_ihx18(const char * fname);
 
-int getprocbyname(char *str);
-int getfprocbyname(char *str);
+int getprocbyname(const char *str);
+int getfprocbyname(const char *str);
 int getfprocbynumber(int proc);
 char * getnamebyproc(int proc,char *str);
 const char * getFSRname_16(unsigned int addr);

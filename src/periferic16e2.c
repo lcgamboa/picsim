@@ -123,6 +123,7 @@ pic->adcstep=0;
 pic->adcon1=0xFF;
 
 pic->twdt=0;
+pic->wdt=0;
 
 pic->ee_wr=0;
 

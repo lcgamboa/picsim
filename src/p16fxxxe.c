@@ -70,8 +70,8 @@ void ReadIndf( unsigned short *afsr)
     }
   }
       
-  
-  pic->ram[P16E_INDF1]=pic->ram[afsr[1]];
+  //FIXME memory invalid read 
+  //pic->ram[P16E_INDF1]=pic->ram[afsr[1]];
   
  
   
