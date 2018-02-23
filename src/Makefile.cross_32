@@ -8,7 +8,7 @@ MKDIR = mkdir -p
 LIBVER=0.6
 LIBMAINVER=0
 #FLAGS= -ggdb -Wall
-FLAGS= -Wall -O3 -fomit-frame-pointer  -D_WIN_
+FLAGS= -Wall -O3 -fomit-frame-pointer -fsigned-char -D_WIN_
 
 prefix = /usr/i686-w64-mingw32
 exec_prefix = ${prefix}
@@ -39,8 +39,7 @@ LIBSTLIBNAME = $(LIBNAME).a
 LIBTARGETS := $(LIBSHBASENAME)
 
 
-
-LIBHEADERFILES := p16fxxx_defs.h p16fxxxe_defs.h p16fxxxe2_defs.h p18fxxx_defs.h periferic18.h periferic.h periferic16e.h periferic16e2.h picsim.h 
+LIBHEADERFILES := p16fxxx_defs.h p16fxxxe_defs.h p16fxxxe2_defs.h  p18fxxx_defs.h periferic18.h periferic16.h periferic16e.h periferic16e2.h picsim.h 
 
 # How to create the shared library
 $(LIBSHBASENAME): $(OBJS)
