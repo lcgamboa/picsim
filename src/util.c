@@ -768,6 +768,12 @@ getPinName(_pic * pic,int pin, char * pname)
                 case P16_PORTE:
                   sprintf(pname,"RE%i",pic->pins[pin].pord);
                   break;
+		case P_VDD:
+                  sprintf(pname,"+5V");
+                  break;
+		case P_VSS:
+                  sprintf(pname,"GND");
+                  break;
                 default:
                   strcpy(pname,"error");
                   break;  
@@ -793,6 +799,12 @@ getPinName(_pic * pic,int pin, char * pname)
                   sprintf(pname,"RE%i",pic->pins[pin].pord);
                   break;
                  */ 
+		case P_VDD:
+                  sprintf(pname,"+5V");
+                  break;
+		case P_VSS:
+                  sprintf(pname,"GND");
+                  break;
                 default:
                   strcpy(pname,"error");
                   break;  
@@ -816,6 +828,12 @@ getPinName(_pic * pic,int pin, char * pname)
                 case P16E2_PORTE:
                   sprintf(pname,"RE%i",pic->pins[pin].pord);
                   break;
+		case P_VDD:
+                  sprintf(pname,"+5V");
+                  break;
+		case P_VSS:
+                  sprintf(pname,"GND");
+                  break;
                 default:
                   strcpy(pname,"error");
                   break;  
@@ -838,6 +856,12 @@ getPinName(_pic * pic,int pin, char * pname)
                   break;
                 case P18_PORTE:
                   sprintf(pname,"RE%i",pic->pins[pin].pord);
+                  break;
+		case P_VDD:
+                  sprintf(pname,"+5V");
+                  break;
+		case P_VSS:
+                  sprintf(pname,"GND");
                   break;
                 default:
                   strcpy(pname,"error");

@@ -43,7 +43,7 @@ pic_wr_pin16(unsigned char pin,unsigned char value)
    {
           pic->pins[(pin-1)].value=value;
           
-          if(pic->pins[(pin-1)].port > 0)
+          if(pic->pins[(pin-1)].port & 0x0FFF)
           {
      	      val=0x01<<(pic->pins[(pin-1)].pord);
               if((pic->pins[(pin-1)].value) == 1)
@@ -1492,9 +1492,10 @@ int temp;
     (pic->ram[P16_PORTD] != pic->portd)||
     (pic->ram[P16_PORTE] != pic->porte))
  {
+	 
    for(i=0;i<pic->PINCOUNT;i++)
    {
-    if(pic->pins[i].port)
+    if(pic->pins[i].port & 0x0FFF)
      switch(pic->pins[i].dir)
      {
 	case PD_OUT:
@@ -1538,7 +1539,7 @@ int temp;
  {
    for(i=0;i<pic->PINCOUNT;i++)
    {
-    if(pic->pins[i].port)
+    if(pic->pins[i].port & 0x0FFF)
      { 
      val=0x01<<(pic->pins[i].pord);
      tris=pic->pins[i].port+0x80;

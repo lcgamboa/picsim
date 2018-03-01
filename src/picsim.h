@@ -90,6 +90,14 @@ float oavalue;           //analog output value
 //4K word
 #define BUFFMAX 8192 
 
+//pin without IO
+#define P_VDD 0x2000
+#define P_VSS 0x3000
+#define P_RST 0x4000
+#define P_OSC 0x5000
+#define P_USB 0x6000
+
+
 typedef struct 
 {
   unsigned char print;//print information ON/OFF  

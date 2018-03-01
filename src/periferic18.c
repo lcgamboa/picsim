@@ -43,7 +43,7 @@ pic18_wr_pin(unsigned char pin,unsigned char value)
    {
           pic->pins[(pin-1)].value=value;
           
-          if(pic->pins[(pin-1)].port > 0)
+          if(pic->pins[(pin-1)].port & 0x0FFF)
           {
      	      val=0x01<<(pic->pins[(pin-1)].pord);
               if((pic->pins[(pin-1)].value) == 1)
@@ -1386,7 +1386,7 @@ unsigned short tris;
  {
    for(i=0;i<pic->PINCOUNT;i++)
    {
-    if(pic->pins[i].port)
+    if(pic->pins[i].port & 0x0FFF)
      switch(pic->pins[i].dir)
      {
 	case PD_OUT:
@@ -1430,7 +1430,7 @@ unsigned short tris;
  {
    for(i=0;i<pic->PINCOUNT;i++)
    {
-     if(pic->pins[i].port)
+     if(pic->pins[i].port & 0x0FFF)
      {
      val=0x01<<(pic->pins[i].pord);
      tris=pic->pins[i].port+0x12;
