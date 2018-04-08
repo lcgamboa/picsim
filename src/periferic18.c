@@ -267,10 +267,39 @@ unsigned char temp;
 
  if((pic->ram[P18_SSPCON1] & 0x20) ==0x20) //SSPEN
  {
-    
-    if((pic->ram[P18_SSPCON1] & 0x0F) ==0x05)//SLAVE Without SS
-    {
    
+    switch(pic->ram[P18_SSPCON1])
+    {
+            case 0x00://SPI Master mode, clock = FOSC/4
+            case 0x01://SPI Master mode, clock = FOSC/16
+            case 0x02://SPI Master mode, clock = FOSC/64
+            case 0x03://SPI Master mode, clock = TMR2 output/2
+            //TODO: CLK POL and FREQ READ OP
+                if (pic->lram == P18_SSPBUF)
+                {
+                  pic->ssp_bit=8;
+                  pic->ssp_sck=0;
+                  pic18_wr_pin (pic->sck, 0);
+                }
+                
+                if(pic->ssp_bit)
+                {
+                    if(pic->ssp_sck == 1)
+                    {
+                      pic18_wr_pin (pic->sdo, ((pic->ram[P18_SSPBUF] & (1 << ((pic->ssp_bit-1)))) > 0));
+                      pic18_wr_pin (pic->sck, 1); 
+                    }
+                    else if(pic->ssp_sck == 2)
+                    {
+                      pic18_wr_pin (pic->sck, 0); 
+                      pic->ssp_sck=0;
+                      pic->ssp_bit--;
+                    }
+                    pic->ssp_sck++;
+                }
+                break;
+            //case 0x04://SPI Slave mode, clock = SCK pin. SS pin control enabled.
+            case 0x05://SPI Slave mode, clock = SCK pin. SS pin control disabled.
       pic->pins[pic->sdi-1].dir=PD_IN; 	
  
       if(pic->rram == P18_SSPBUF)
@@ -308,12 +337,10 @@ unsigned char temp;
            pic->ram[P18_PIR1]|=0x08; //PSPIF
 	   pic->ssp_bit=0;
         }
-	
-
-    }
-    else if((pic->ram[P18_SSPCON1] & 0x0F) ==0x08)//MASTER i2c
-    {
-      
+        break;	
+            //case 0x06://I2C Slave mode, 7-bit address
+            //case 0x07://I2C Slave mode, 10-bit address
+            case 0x08://I2C Master mode, clock = FOSC /(4 * (SSPADD + 1))
        pic->ssp_sck++;
 
        if(pic->ssp_sck == ((pic->ram[P18_SSPADD]+1/2)-1))
@@ -495,11 +522,17 @@ unsigned char temp;
 
 
       }
-    }
-    else //Unknown
-    {
+    break;   
+            //case 0x09://Reserved
+            //case 0x0A://Reserved
+            //case 0x0B://I2C Firmware Controlled Master mode (Slave Idle)
+            //case 0x0C://Reserved
+            //case 0x0D://Reserved
+            //case 0x0E://I2C Slave mode, 7-bit address with Start and Stop bit interrupts enabled
+            //case 0x0F://I2C Slave mode, 10-bit address with Start and Stop bit interrupts enabled
+    default: //unknown
 	printf(" %#02X SPI mode not implemented!\n",(pic->ram[P18_SSPCON1] & 0x0F));
-	
+	break;
     } 
  }
  else
