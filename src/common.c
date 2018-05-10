@@ -427,7 +427,7 @@ pic_reset(int flags)
      pic->pins[i].value=0;        
      pic->pins[i].ptype=PT_CMOS;
      pic->pins[i].dir=PD_IN;
-     pic->pins[i].ovalue=0;
+     //pic->pins[i].ovalue=0;
      pic->pins[i].oavalue=0;
    }
    
