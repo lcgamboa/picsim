@@ -48,7 +48,7 @@ checksum(char* str)
 {
   unsigned int i;
   unsigned char acum=0;
-
+  
   for(i=0; i < ((strlen(str)-1)/2);i++)
   {
     acum+=parse_hex(str+1+(i*2),2);
@@ -80,6 +80,8 @@ read_ihx(const char * fname, int leeprom)
       fgets(line,256,fin);
       lc++;
   
+      if(strlen(line) == 0) continue;
+      
       /*for dos file*/ 
       if(line[strlen(line)-2]=='\r')
       {
@@ -198,6 +200,8 @@ read_ihx_18(const char * fname, int leeprom)
     {
       fgets(line,256,fin);
       lc++;
+      
+      if(strlen(line) == 0) continue;
   
       /*for dos file*/ 
       if(line[strlen(line)-2]=='\r')
