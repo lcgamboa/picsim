@@ -15,5 +15,7 @@ install:
 uninstall:
 	$(RM) -r ${includedir} 
 
+clean:
 
+all:
 
