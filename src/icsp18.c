@@ -28,7 +28,7 @@
 #include<stdlib.h>
 #include<string.h>
 #include<unistd.h>
-#include"picsim.h"
+#include"../include/picsim.h"
 
 #ifdef _WIN_
 #include <time.h>

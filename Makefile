@@ -2,7 +2,7 @@
 FILE=Makefile
 
 
-SUBDIRS= src
+SUBDIRS= src include
 
 .PHONY: $(SUBDIRS)  
 

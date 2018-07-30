@@ -24,8 +24,8 @@
    ######################################################################## */
 
 #include<stdio.h>
-#include"picsim.h"
-#include"periferic18.h"
+#include"../include/picsim.h"
+#include"../include/periferic18.h"
 
 
 

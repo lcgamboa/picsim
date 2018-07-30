@@ -27,7 +27,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include"picsim.h"
+#include"../include/picsim.h"
 
 int
 parse_hex(char *line,int bytes)

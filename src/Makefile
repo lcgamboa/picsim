@@ -12,7 +12,6 @@ FLAGS= -Wall -O3 -fomit-frame-pointer -fpic -fsigned-char -Winline
 prefix = /usr
 exec_prefix = ${prefix}
 datadir = ${datarootdir}
-includedir = ${prefix}/include/picsim
 bindir = ${exec_prefix}/bin
 libdir = ${exec_prefix}/lib
 
@@ -40,8 +39,6 @@ LIBSHSONAME := $(LIBNAME).so.$(LIBMAINVER)
 LIBTARGETS := $(LIBSHLIBNAME) $(LIBSHSONAME) $(LIBSHBASENAME)
 
 
-
-LIBHEADERFILES := p16fxxx_defs.h  p16fxxxe_defs.h p16fxxxe2_defs.h p18fxxx_defs.h periferic18.h periferic16.h periferic16e.h periferic16e2.h picsim.h 
 
 # How to create the shared library
 $(LIBSHLIBNAME): $(OBJS)
@@ -75,13 +72,9 @@ clean-lib:
 install: all
 	strip -s $(LIBNAME).so
 	$(CP) -dvf $(LIBNAME)* ${libdir}
-	${MKDIR} ${includedir}
-	$(CP) -dvf $(LIBHEADERFILES) ${includedir}
-	chmod 644 ${includedir}/*
 
 uninstall:
 	$(RM) ${libdir}/$(LIBNAME)* 
-	$(RM) -r ${includedir} 
 
 
 clean:  clean-lib

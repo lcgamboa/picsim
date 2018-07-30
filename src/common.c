@@ -27,11 +27,11 @@
 #include<stdlib.h>
 #include<string.h>
 
-#include"picsim.h"
-#include"periferic16.h"
-#include"periferic16e.h"
-#include"periferic16e2.h"
-#include"periferic18.h"
+#include"../include/picsim.h"
+#include"../include/periferic16.h"
+#include"../include/periferic16e.h"
+#include"../include/periferic16e2.h"
+#include"../include/periferic18.h"
 
 _pic * pic;//global object
 

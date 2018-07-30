@@ -26,7 +26,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "picsim.h"
+#include "../include/picsim.h"
 
 int getprocbyname(const char *str)
 {  

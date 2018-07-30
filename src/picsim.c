@@ -28,7 +28,7 @@
 #include<stdlib.h>
 #include<string.h>
 #include<unistd.h>
-#include"picsim.h"
+#include"../include/picsim.h"
 
 #ifdef _WIN_
 #include<windows.h>
@@ -37,7 +37,7 @@
 #include <termios.h>
 #include <sys/ioctl.h>
 #include <signal.h>
-#include "ansi.h"
+#include "../include/ansi.h"
 #endif
   
 

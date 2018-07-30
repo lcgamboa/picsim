@@ -41,7 +41,7 @@
 #include <sys/ioctl.h>
 #endif
 
-#include "picsim.h"
+#include "../include/picsim.h"
 //#include "periferic16.h"
 //#include "periferic16e.h"
 //#include "periferic18.h"

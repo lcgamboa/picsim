@@ -27,7 +27,7 @@
 #include<stdlib.h>
 #include<string.h>
 
-#include"picsim.h"
+#include"../include/picsim.h"
 
 
 void ReadIndf( unsigned short *afsr)
