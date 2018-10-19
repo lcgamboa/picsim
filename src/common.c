@@ -85,7 +85,8 @@ int
 pic_init(_pic * pic_, int processor, const char * fname, int lrom, float freq)
 {
    int i;
-   
+   int retcode=0;
+
    pic=pic_;
     
    pic->print=0;
@@ -295,12 +296,6 @@ pic_init(_pic * pic_, int processor, const char * fname, int lrom, float freq)
    
    pic->sleep=0; 
    
-   pic_reset(1);
-   
-   for(i=0; i < pic->PINCOUNT; i++)
-   {
-     pic->pins[i].ovalue=1;  //put default pin values to 1  
-   }  
 
    
 
@@ -371,24 +366,34 @@ pic_init(_pic * pic_, int processor, const char * fname, int lrom, float freq)
   
    if(fname == NULL)
    {
-     return 0;
+     retcode=0;
    }
    else
+   {
      switch(pic->family)
      {
        case P16: 
        case P16E: 
        case P16E2:     
-         return read_ihx(fname,lrom);
+         retcode= read_ihx(fname,lrom);
          break; 
        case P18: 
-         return read_ihx_18(fname,lrom);
+         retcode= read_ihx_18(fname,lrom);
          break; 
        default:
          break;
      }
+   }
+
+//configuration   
+   pic_reset(1);
    
-   return 0;
+   for(i=0; i < pic->PINCOUNT; i++)
+   {
+     pic->pins[i].ovalue=1;  //put default pin values to 1  
+   }
+
+   return retcode;
 }
 
 int 
@@ -1084,7 +1089,16 @@ pic_reset(int flags)
 
        pic->serialbaud=9600; 
        pic->serialexbaud=9600.0; 
-
+         
+       //TODO implement for others processors  
+       if(pic->config[2]&0x0200) //PBADEN
+       {
+	 pic->ram[P18_ADCON1] &=0xF0;
+       }
+       else
+       {
+	 pic->ram[P18_ADCON1] |=0x07;
+       }
        break;
      default:
        break;
