@@ -1007,6 +1007,15 @@ pic_reset(int flags)
        pic->int0=33;
        pic->int1=34;
        pic->int2=35;
+       
+       if(pic->config[2]&0x0200) //PBADEN
+       {
+	 pic->ram[P18_ADCON1] &=0xF0;
+       }
+       else
+       {
+	 pic->ram[P18_ADCON1] |=0x07;
+       }
 
        break;
      case P18F4550:
@@ -1090,7 +1099,6 @@ pic_reset(int flags)
        pic->serialbaud=9600; 
        pic->serialexbaud=9600.0; 
          
-       //TODO implement for others processors  
        if(pic->config[2]&0x0200) //PBADEN
        {
 	 pic->ram[P18_ADCON1] &=0xF0;
