@@ -296,8 +296,35 @@ pic_init(_pic * pic_, int processor, const char * fname, int lrom, float freq)
    
    pic->sleep=0; 
    
+   if(fname == NULL)
+   {
+     retcode=0;
+   }
+   else
+   {
+     switch(pic->family)
+     {
+       case P16: 
+       case P16E: 
+       case P16E2:     
+         retcode= read_ihx(fname,lrom);
+         break; 
+       case P18: 
+         retcode= read_ihx_18(fname,lrom);
+         break; 
+       default:
+         break;
+     }
+   }
 
+//configuration   
+   pic_reset(1);
    
+   for(i=0; i < pic->PINCOUNT; i++)
+   {
+     pic->pins[i].ovalue=1;  //put default pin values to 1  
+   }
+
 
   /*serial config*/
    switch(pic->family)
@@ -364,35 +391,6 @@ pic_init(_pic * pic_, int processor, const char * fname, int lrom, float freq)
    
    serial_open();
   
-   if(fname == NULL)
-   {
-     retcode=0;
-   }
-   else
-   {
-     switch(pic->family)
-     {
-       case P16: 
-       case P16E: 
-       case P16E2:     
-         retcode= read_ihx(fname,lrom);
-         break; 
-       case P18: 
-         retcode= read_ihx_18(fname,lrom);
-         break; 
-       default:
-         break;
-     }
-   }
-
-//configuration   
-   pic_reset(1);
-   
-   for(i=0; i < pic->PINCOUNT; i++)
-   {
-     pic->pins[i].ovalue=1;  //put default pin values to 1  
-   }
-
    return retcode;
 }
 
