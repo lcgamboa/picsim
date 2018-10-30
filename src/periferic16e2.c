@@ -1245,7 +1245,7 @@ unsigned char tris;
 	case PD_IN:
               val=0x01<<(pic->pins[i].pord);
               port=pic->pins[i].port;
-              pic->pins[i].lvalue= ((pic->ram[port] & val) != 0); //latch
+              pic->pins[i].lvalue= ((pic->ram[port+12] & val) != 0); //latch 
   	      if(pic->pins[i].ptype > 2)
                 pic_wr_pin16E2(i+1, 0);
               else

@@ -127,6 +127,12 @@ periferic16_rst (void)
   pic->wdt = 0;
 
   pic->ee_wr = 0;
+  
+  pic->p16latch[0]=0;
+  pic->p16latch[1]=0;
+  pic->p16latch[2]=0;
+  pic->p16latch[3]=0;
+  pic->p16latch[4]=0;
 
   pic->porta = 129; //dummy value to be changed
   pic->portb = 129;
@@ -1545,7 +1551,7 @@ periferic16_step_out (void)
               case PD_IN:
                 val = 0x01 << (pic->pins[i].pord);
                 port = pic->pins[i].port;
-                pic->pins[i].lvalue = ((pic->ram[port] & val) != 0); //latch
+                pic->pins[i].lvalue = ((pic->p16latch[port- P16_PORTA] & val) != 0); //latch
                 if (pic->pins[i].ptype > 2)
                   pic_wr_pin16 (i + 1, 0);
                 else

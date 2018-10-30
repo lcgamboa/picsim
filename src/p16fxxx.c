@@ -839,6 +839,30 @@ pic_decode_16(void)
   if((pic->rram != 0x8000)&&(pic->print))printf("mem read  %#06X: %10s= %#06X\n",pic->rram,getFSRname_16(pic->rram),pic->ram[pic->rram]);
   if((pic->lram != 0x8000)&&(pic->print))printf("mem write %#06X: %10s= %#06X\n",pic->lram,getFSRname_16(pic->lram),pic->ram[pic->lram]);
   
+  //latchs    
+  switch(pic->lram)
+  { 
+    case P16_PORTA:
+    case P16_PORTA+0x100:
+      pic->p16latch[0]=pic->ram[P16_PORTA];
+      break;	
+    case P16_PORTB:
+    case P16_PORTB+0x100: 
+      pic->p16latch[1]=pic->ram[P16_PORTB];
+      break;	
+    case P16_PORTC:
+    case P16_PORTC+0x100: 
+      pic->p16latch[2]=pic->ram[P16_PORTC];
+      break;	
+    case P16_PORTD:
+    case P16_PORTD+0x100: 
+      pic->p16latch[3]=pic->ram[P16_PORTD];
+      break;	
+    case P16_PORTE:
+    case P16_PORTE+0x100: 
+      pic->p16latch[4]=pic->ram[P16_PORTE];
+      break; 
+  }
 
 }
 

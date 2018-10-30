@@ -175,6 +175,8 @@ float twdt;
 
 int ee_wr;
 
+unsigned char p16latch[5];
+
 unsigned char porta;
 unsigned char portb;
 unsigned char portc;

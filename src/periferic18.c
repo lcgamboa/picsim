@@ -1436,7 +1436,7 @@ unsigned short tris;
 	case PD_IN:
               val=0x01<<(pic->pins[i].pord);
               port=pic->pins[i].port;
-              pic->pins[i].lvalue= ((pic->ram[port] & val) != 0); //latch
+              pic->pins[i].lvalue= ((pic->ram[port+9] & val) != 0); //latch
   	      if(pic->pins[i].ptype > 2)	 
                 pic18_wr_pin(i+1, 0);
               else  
