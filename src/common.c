@@ -493,6 +493,8 @@ pic_reset(int flags)
        pic->pins[16].port=P16_PORTA;pic->pins[16].pord=0;
        pic->pins[17].port=P16_PORTA;pic->pins[17].pord=1; 
 
+       pic->mclr= 4;
+
        pic->ccp[0]= 9;
       
        pic->usart[0]=7;
@@ -555,6 +557,8 @@ pic_reset(int flags)
        pic->pins[37].port=P16_PORTB;pic->pins[37].pord=5;
        pic->pins[38].port=P16_PORTB;pic->pins[38].pord=6;
        pic->pins[39].port=P16_PORTB;pic->pins[39].pord=7;
+       
+       pic->mclr= 1;
        
        pic->ccp[0]=  17;
        pic->ccp[1]=  16;
@@ -628,6 +632,8 @@ pic_reset(int flags)
        pic->pins[38].port=P16_PORTB;pic->pins[38].pord=6;
        pic->pins[39].port=P16_PORTB;pic->pins[39].pord=7;
        
+       pic->mclr= 1;
+  
        pic->ccp[0]=  17;
        pic->ccp[1]=  16;
        pic->ccp[2]=  38;
@@ -714,6 +720,8 @@ pic_reset(int flags)
        pic->pins[19].port=P_VSS     ;pic->pins[19].pord=-1;
 
 	
+       pic->mclr= 4;
+     
        pic->pgc=17;
        pic->pgd=18;
        
@@ -805,6 +813,7 @@ pic_reset(int flags)
        pic->pins[26].port=P16E2_PORTA;pic->pins[26].pord=0;
        pic->pins[27].port=P16E2_PORTA;pic->pins[27].pord=1;
 
+       pic->mclr= 26;
 	
        pic->pgc=17;
        pic->pgd=18;
@@ -928,6 +937,8 @@ pic_reset(int flags)
        pic->pins[38].port=P18_PORTB;pic->pins[38].pord=6;
        pic->pins[39].port=P18_PORTB;pic->pins[39].pord=7;
        
+       pic->mclr= 1;
+       
        pic->ccp[0]=  17;
        pic->ccp[1]=  16;//36
 
@@ -1000,6 +1011,8 @@ pic_reset(int flags)
        pic->pins[37].port=P18_PORTB;pic->pins[37].pord=5;
        pic->pins[38].port=P18_PORTB;pic->pins[38].pord=6;
        pic->pins[39].port=P18_PORTB;pic->pins[39].pord=7;
+       
+       pic->mclr= 1;
        
        pic->ccp[0]=  17;
        pic->ccp[1]=  16;//36
@@ -1087,6 +1100,8 @@ pic_reset(int flags)
        pic->pins[37].port=P18_PORTB;pic->pins[37].pord=5;
        pic->pins[38].port=P18_PORTB;pic->pins[38].pord=6;
        pic->pins[39].port=P18_PORTB;pic->pins[39].pord=7;
+       
+       pic->mclr= 1;
        
        pic->ccp[0]=  17;
        pic->ccp[1]=  16;//36

@@ -130,6 +130,7 @@ typedef struct
   float   	 freq;
   unsigned char  sleep; //sleep mode on
   picpin *pins;
+  unsigned char mclr;
   unsigned char *ccp;
   unsigned char *adc;
   unsigned char *usart;
