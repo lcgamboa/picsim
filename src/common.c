@@ -394,13 +394,42 @@ pic_init(_pic * pic_, int processor, const char * fname, int lrom, float freq)
    return retcode;
 }
 
+int pic_getMCLRE(void)
+{
+  
+  switch(pic->processor)
+  {
+    case P16F628:
+    case P16F628A:
+    case P16F648A:
+    case P16F648AICD:
+    case P16F777:
+      return ((pic->config[0] & 0x0020) > 0); 
+      break;
+    case P18F4520: 
+    case P18F4550:
+    case P18F45K50: 
+    case P18F4620:
+      return ((pic->config[2] & 0x8000) > 0 ); 
+      break;	      
+    case P16F1619:
+      return ((pic->config[0] & 0x0040) > 0); 
+      break;
+    case P16F18855: 
+      return (pic->config[1] & 0x0001); 
+      break;
+  }
+ 
+  return 1;
+}
+
 int 
 pic_reset(int flags)
 {
   int i;
 
    //verify MCLRE
-   if(((pic->processor==P16F628)||(pic->processor == P16F628A)||(pic->processor == P16F648A)||(pic->processor == P16F648AICD))&&(flags < 0)&&((pic->config[0] & 0x0020) == 0x0000) )  
+   if((flags < 0)&& !pic_getMCLRE() )  
    {
      return 0;
    }
