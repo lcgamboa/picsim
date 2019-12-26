@@ -1251,8 +1251,8 @@ int
 pic_set_pin(unsigned char pin,unsigned char value)
 {
    unsigned char val;
-
-   if((pin-1) < pic->PINCOUNT)
+   
+   if(pin &&((pin-1) < pic->PINCOUNT))
    {
     if (pic->pins[(pin-1)].value == value) return 1;
         
