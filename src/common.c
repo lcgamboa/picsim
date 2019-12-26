@@ -1138,8 +1138,6 @@ pic_reset(int flags)
        pic->int1=34;
        pic->int2=35;
 
-       pic->serialbaud=9600; 
-       pic->serialexbaud=9600.0; 
          
        if(pic->config[2]&0x0200) //PBADEN
        {
@@ -1171,12 +1169,15 @@ pic_reset(int flags)
     default:
     break;
     }
+    
+   pic->serialbaud=9600; 
+   pic->serialexbaud=9600.0; 
    
 
  //  pic->debug=0;
 
    return 1;
-};
+}
 
 void
 pic_step(void)
