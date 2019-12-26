@@ -1299,7 +1299,7 @@ int
 pic_set_apin(unsigned char pin,float value)
 {
 
-   if((pin-1) < pic->PINCOUNT)
+   if(pic && ((pin-1) < pic->PINCOUNT))
    {
      if (pic->pins[(pin-1)].avalue == value) return 1;
 
