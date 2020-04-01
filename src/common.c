@@ -50,6 +50,7 @@ void PIC18F452_start(void);
 void PIC18F4550_start(void);
 void PIC18F45K50_start(void);
 void PIC18F4620_start(void);
+void PIC18F27K40_start(void);
 
 _pic * pic; //global object
 
@@ -186,6 +187,9 @@ pic_init(_pic * pic_, int processor, const char * fname, int lrom, float freq)
     case P18F45K50:
      PIC18F45K50_start ();
      break;
+    case P18F27K40:
+     PIC18F27K40_start ();
+     break; 
     default:
      printf ("unknown processor 0x%04X!\n", processor);
      return 0;
@@ -417,7 +421,7 @@ pic_reset(int flags)
     }
    break;
   case P18:
-   if (abs (flags) == 1)
+   if ((abs (flags) == 1)&&(pic->P18map.RCON))
     {
      (*pic->P18map.RCON) = 0x0C;
     }
@@ -425,9 +429,9 @@ pic_reset(int flags)
    *pic->P18map.TRISA = 0xFF;
    *pic->P18map.TRISB = 0xFF;
    *pic->P18map.TRISC = 0xFF;
-   *pic->P18map.TRISD = 0xFF;
-   *pic->P18map.TRISE = 0x07;
-   *pic->P18map.PR2 = 0xFF;
+   if(pic->P18map.TRISD)*pic->P18map.TRISD = 0xFF;
+   if(pic->P18map.TRISE)*pic->P18map.TRISE = 0x07;
+   if(pic->P18map.PR2)*pic->P18map.PR2 = 0xFF;
    *pic->P18map.STKPTR = 0x00;
 
    periferic18_rst ();

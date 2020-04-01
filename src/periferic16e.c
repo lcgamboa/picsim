@@ -1254,7 +1254,7 @@ periferic16E_step_out(void)
      if ((pic->pins[i].pord >= 0)&&(pic->pins[i].port))
       {
        val = 0x01 << (pic->pins[i].pord);
-       tris = sfr_addr (pic->pins[i].port) + 0x80;
+       tris = sfr_addr (pic->pins[i].port) + (sfr_addr (pic->P16Emap.TRISA) - sfr_addr (pic->P16Emap.PORTA));
        if ((pic->ram[tris] & val) == 0)
         {
          pic->pins[i].dir = PD_OUT;

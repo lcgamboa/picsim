@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2008-2020  Luis Claudio Gambôa Lopes
+   Copyright (c) : 2008-2020  Luis Claudio Gamboa Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -92,6 +92,7 @@ float oavalue;           //analog output value
 #define P18F4620    0x0C00
 #define P18F4550    0x1200
 #define P18F45K50   0x5C00
+#define P18F27K40   0x6960
 
 //4K word
 #define BUFFMAX 8192 

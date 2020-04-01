@@ -68,7 +68,7 @@ inline static int interrupt18(void)
 {
 //interrupt
 
-  if((*pic->P18map.RCON) & 0x80) //priority 
+  if((pic->P18map.RCON)&&((*pic->P18map.RCON) & 0x80)) //priority 
   {
     //GIEH
     if((*pic->P18map.INTCON) & 0x80)
@@ -267,6 +267,8 @@ unsigned char temp;
 
 //MSSP
 
+ if(pic->P18map.SSPCON1)
+ {
  if(((*pic->P18map.SSPCON1) & 0x20) ==0x20) //SSPEN
  {
    
@@ -543,7 +545,7 @@ unsigned char temp;
      pic->ssp_scka=0;
      pic->ssp_bit=0;
  }
-
+}
 
 
 //ADC
@@ -889,6 +891,8 @@ if(pic->portbm)
 
 
 //TMR0
+ if(pic->P18map.T0CON)
+ { 
   if((*pic->P18map.T0CON) & 0x80) //TMR0ON
   {
   if((((*pic->P18map.T0CON) & 0x20) == 0x00 )||  //TOCS=FOSC/4
@@ -931,7 +935,7 @@ if(pic->portbm)
   }
   } 
   pic->t0cki_=pic->pins[pic->t0cki-1].value; 
-
+}
 
 //TMR1
 
@@ -1267,7 +1271,7 @@ if(pic->portbm)
          //reset
          pic->wdt=0;
    
-         (*pic->P18map.RCON)&=~0x08; //clear TO
+         if(pic->P18map.RCON)(*pic->P18map.RCON)&=~0x08; //clear TO
            
           
          if( pic->sleep == 1)
@@ -1416,8 +1420,8 @@ unsigned short tris;
  if(((*pic->P18map.PORTA) != pic->porta)||
     ((*pic->P18map.PORTB) != pic->portb)||
     ((*pic->P18map.PORTC) != pic->portc)||
-    ((*pic->P18map.PORTD) != pic->portd)||
-    ((*pic->P18map.PORTE) != pic->porte))
+    ((pic->P18map.PORTD)&&((*pic->P18map.PORTD)) != pic->portd)||
+    ((pic->P18map.PORTE)&&((*pic->P18map.PORTE)) != pic->porte))
  {
    for(i=0;i<pic->PINCOUNT;i++)
    {
@@ -1438,7 +1442,7 @@ unsigned short tris;
 	case PD_IN:
               val=0x01<<(pic->pins[i].pord);
               port=sfr_addr(pic->pins[i].port);
-              pic->pins[i].lvalue= ((pic->ram[port+9] & val) != 0); //latch
+              pic->pins[i].lvalue= ((pic->ram[port+(sfr_addr (pic->P18map.LATA) - sfr_addr (pic->P18map.PORTA))] & val) != 0); //latch
   	      if(pic->pins[i].ptype > 2)	 
                 pic18_wr_pin(i+1, 0);
               else  
@@ -1452,8 +1456,8 @@ unsigned short tris;
     pic->porta=(*pic->P18map.PORTA);
     pic->portb=(*pic->P18map.PORTB);
     pic->portc=(*pic->P18map.PORTC);
-    pic->portd=(*pic->P18map.PORTD);
-    pic->porte=(*pic->P18map.PORTE);
+    if(pic->P18map.PORTD)pic->portd=(*pic->P18map.PORTD);
+    if(pic->P18map.PORTE)pic->porte=(*pic->P18map.PORTE);
   }
 
 
@@ -1461,15 +1465,15 @@ unsigned short tris;
  if(((*pic->P18map.TRISA) != pic->trisa)||
     ((*pic->P18map.TRISB) != pic->trisb)||
     ((*pic->P18map.TRISC) != pic->trisc)||
-    ((*pic->P18map.TRISD) != pic->trisd)||
-    ((*pic->P18map.TRISE) != pic->trise))
+    ((pic->P18map.TRISD)&&((*pic->P18map.TRISD) != pic->trisd))||
+    ((pic->P18map.TRISE)&&((*pic->P18map.TRISE) != pic->trise)))
  {
    for(i=0;i<pic->PINCOUNT;i++)
    {
-     if(pic->pins[i].pord >= 0)
+     if((pic->pins[i].pord >= 0)&&(pic->pins[i].port))
      {
      val=0x01<<(pic->pins[i].pord);
-     tris=sfr_addr(pic->pins[i].port)+0x12;
+     tris=sfr_addr(pic->pins[i].port)+(sfr_addr (pic->P18map.TRISA) - sfr_addr (pic->P18map.PORTA));
      if((pic->ram[tris] & val)==0)
      {
        pic->pins[i].dir=PD_OUT;
@@ -1487,8 +1491,8 @@ unsigned short tris;
    pic->trisa=(*pic->P18map.TRISA);
    pic->trisb=(*pic->P18map.TRISB);
    pic->trisc=(*pic->P18map.TRISC);
-   pic->trisd=(*pic->P18map.TRISD);
-   pic->trise=(*pic->P18map.TRISE);
+   if(pic->P18map.TRISD)pic->trisd=(*pic->P18map.TRISD);
+   if(pic->P18map.TRISE)pic->trise=(*pic->P18map.TRISE);
  }
 
 

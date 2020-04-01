@@ -5,7 +5,7 @@
 void
 PIC18F45K50_map(void)
 {
- memset(&pic->P18map,0,sizeof(P18map_t));
+ memset (&pic->P18map, 0, sizeof (P18map_t));
 
 #ifdef ICSPDBG   
  pic->P18map.DEBUG = &pic->ram[0xFD4];
@@ -19,7 +19,7 @@ PIC18F45K50_map(void)
  /*
  pic->P18map.UFRML = &pic->ram[0xF68];
  pic->P18map.UFRMH = &pic->ram[0xF69];
- */
+  */
  pic->P18map.CCPR2L = &pic->ram[0xF90];
  pic->P18map.CCPR2H = &pic->ram[0xF91];
  pic->P18map.TMR3L = &pic->ram[0xFB2];
@@ -87,7 +87,7 @@ PIC18F45K50_map(void)
  pic->P18map.VREFCON0 = &pic->ram[0xF7D];
  pic->P18map.PMD0 = &pic->ram[0xF7E];
  pic->P18map.PMD1 = &pic->ram[0xF7F];
- */
+  */
  pic->P18map.PORTA = &pic->ram[0xF80];
  pic->P18map.PORTB = &pic->ram[0xF81];
  pic->P18map.PORTC = &pic->ram[0xF82];
@@ -98,7 +98,7 @@ PIC18F45K50_map(void)
  pic->P18map.IOCB = &pic->ram[0xF86];
  pic->P18map.IOCC = &pic->ram[0xF87];
  pic->P18map.CTMUICON = &pic->ram[0xF88];
- */
+  */
  pic->P18map.LATA = &pic->ram[0xF89];
  pic->P18map.LATB = &pic->ram[0xF8A];
  pic->P18map.LATC = &pic->ram[0xF8B];
@@ -107,7 +107,7 @@ PIC18F45K50_map(void)
  /*
  pic->P18map.CTMUCONL = &pic->ram[0xF8E];
  pic->P18map.CTMUCONH = &pic->ram[0xF8F];
- */
+  */
  pic->P18map.TRISA = &pic->ram[0xF92];
  pic->P18map.TRISB = &pic->ram[0xF93];
  pic->P18map.TRISC = &pic->ram[0xF94];
@@ -120,7 +120,7 @@ PIC18F45K50_map(void)
  pic->P18map.CM2CON1 = &pic->ram[0xF9A];
  pic->P18map.OSCTUNE = &pic->ram[0xF9B];
  pic->P18map.HLVDCON = &pic->ram[0xF9C];
- */
+  */
  pic->P18map.PIE1 = &pic->ram[0xF9D];
  pic->P18map.PIR1 = &pic->ram[0xF9E];
  pic->P18map.IPR1 = &pic->ram[0xF9F];
@@ -141,7 +141,7 @@ PIC18F45K50_map(void)
  pic->P18map.RCREG1 = &pic->ram[0xFAE];
  pic->P18map.SPBRG1 = &pic->ram[0xFAF];
  pic->P18map.SPBRGH1 = &pic->ram[0xFB0];
- */
+  */
  pic->P18map.T3CON = &pic->ram[0xFB1];
  /*
  pic->P18map.T3GCON = &pic->ram[0xFB4];
@@ -150,7 +150,7 @@ PIC18F45K50_map(void)
  pic->P18map.PWM1CON = &pic->ram[0xFB7];
  pic->P18map.BAUDCON1 = &pic->ram[0xFB8];
  pic->P18map.PSTR1CON = &pic->ram[0xFB9];
- */
+  */
  pic->P18map.T2CON = &pic->ram[0xFBA];
  pic->P18map.PR2 = &pic->ram[0xFBB];
  pic->P18map.TMR2 = &pic->ram[0xFBC];
@@ -169,7 +169,7 @@ PIC18F45K50_map(void)
  pic->P18map.SSP1MSK = &pic->ram[0xFCA];
  pic->P18map.SSP1CON3 = &pic->ram[0xFCB];
  pic->P18map.T1GCON = &pic->ram[0xFCC];
- */
+  */
  pic->P18map.T1CON = &pic->ram[0xFCD];
  pic->P18map.RCON = &pic->ram[0xFD0];
  pic->P18map.WDTCON = &pic->ram[0xFD1];
@@ -199,6 +199,14 @@ PIC18F45K50_map(void)
  pic->P18map.INTCON = &pic->ram[0xFF2];
  pic->P18map.TABLAT = &pic->ram[0xFF5];
  pic->P18map.STKPTR = &pic->ram[0xFFC];
+
+ //serial compat
+ pic->P18map.TXSTA = &pic->ram[0xFAC];
+ pic->P18map.RCSTA = &pic->ram[0xFAB];
+ pic->P18map.SPBRG = &pic->ram[0xFAF];
+ pic->P18map.RCREG = &pic->ram[0xFAE];
+ pic->P18map.TXREG = &pic->ram[0xFAD];
+ 
 }
 
 /*PINS 
@@ -255,52 +263,94 @@ deviceid=0x5c00
 void
 PIC18F45K50_reset(void)
 {
- 
- pic->pins[ 0].port = pic->P18map.PORTE;pic->pins[ 0].pord = 3;
- pic->pins[ 1].port = pic->P18map.PORTA;pic->pins[ 1].pord = 0;
- pic->pins[ 2].port = pic->P18map.PORTA;pic->pins[ 2].pord = 1;
- pic->pins[ 3].port = pic->P18map.PORTA;pic->pins[ 3].pord = 2;
- pic->pins[ 4].port = pic->P18map.PORTA;pic->pins[ 4].pord = 3;
- pic->pins[ 5].port = pic->P18map.PORTA;pic->pins[ 5].pord = 4;
- pic->pins[ 6].port = pic->P18map.PORTA;pic->pins[ 6].pord = 5;
- pic->pins[ 7].port = pic->P18map.PORTE;pic->pins[ 7].pord = 0;
- pic->pins[ 8].port = pic->P18map.PORTE;pic->pins[ 8].pord = 1;
- pic->pins[ 9].port = pic->P18map.PORTE;pic->pins[ 9].pord = 2;
- pic->pins[10].port = P_VDD    ;pic->pins[10].pord = -1;pic->pins[10].value = 1;
- pic->pins[11].port = P_VSS    ;pic->pins[11].pord = -1;
- pic->pins[12].port = pic->P18map.PORTA;pic->pins[12].pord = 7;
- pic->pins[13].port = pic->P18map.PORTA;pic->pins[13].pord = 6;
- pic->pins[14].port = pic->P18map.PORTC;pic->pins[14].pord = 0;
- pic->pins[15].port = pic->P18map.PORTC;pic->pins[15].pord = 1;
- pic->pins[16].port = pic->P18map.PORTC;pic->pins[16].pord = 2;
- pic->pins[17].port = P_USB    ;pic->pins[17].pord = -1;
- pic->pins[18].port = pic->P18map.PORTD;pic->pins[18].pord = 0;
- pic->pins[19].port = pic->P18map.PORTD;pic->pins[19].pord = 1;
- pic->pins[20].port = pic->P18map.PORTD;pic->pins[20].pord = 2;
- pic->pins[21].port = pic->P18map.PORTD;pic->pins[21].pord = 3;
- pic->pins[22].port = pic->P18map.PORTC;pic->pins[22].pord = 4;
- pic->pins[23].port = pic->P18map.PORTC;pic->pins[23].pord = 5;
- pic->pins[24].port = pic->P18map.PORTC;pic->pins[24].pord = 6;
- pic->pins[25].port = pic->P18map.PORTC;pic->pins[25].pord = 7;
- pic->pins[26].port = pic->P18map.PORTD;pic->pins[26].pord = 4;
- pic->pins[27].port = pic->P18map.PORTD;pic->pins[27].pord = 5;
- pic->pins[28].port = pic->P18map.PORTD;pic->pins[28].pord = 6;
- pic->pins[29].port = pic->P18map.PORTD;pic->pins[29].pord = 7;
- pic->pins[30].port = P_VSS    ;pic->pins[30].pord = -1;
- pic->pins[31].port = P_VDD    ;pic->pins[31].pord = -1;pic->pins[31].value = 1;
- pic->pins[32].port = pic->P18map.PORTB;pic->pins[32].pord = 0;
- pic->pins[33].port = pic->P18map.PORTB;pic->pins[33].pord = 1;
- pic->pins[34].port = pic->P18map.PORTB;pic->pins[34].pord = 2;
- pic->pins[35].port = pic->P18map.PORTB;pic->pins[35].pord = 3;
- pic->pins[36].port = pic->P18map.PORTB;pic->pins[36].pord = 4;
- pic->pins[37].port = pic->P18map.PORTB;pic->pins[37].pord = 5;
- pic->pins[38].port = pic->P18map.PORTB;pic->pins[38].pord = 6;
- pic->pins[39].port = pic->P18map.PORTB;pic->pins[39].pord = 7;
- 
+
+ pic->pins[ 0].port = pic->P18map.PORTE;
+ pic->pins[ 0].pord = 3;
+ pic->pins[ 1].port = pic->P18map.PORTA;
+ pic->pins[ 1].pord = 0;
+ pic->pins[ 2].port = pic->P18map.PORTA;
+ pic->pins[ 2].pord = 1;
+ pic->pins[ 3].port = pic->P18map.PORTA;
+ pic->pins[ 3].pord = 2;
+ pic->pins[ 4].port = pic->P18map.PORTA;
+ pic->pins[ 4].pord = 3;
+ pic->pins[ 5].port = pic->P18map.PORTA;
+ pic->pins[ 5].pord = 4;
+ pic->pins[ 6].port = pic->P18map.PORTA;
+ pic->pins[ 6].pord = 5;
+ pic->pins[ 7].port = pic->P18map.PORTE;
+ pic->pins[ 7].pord = 0;
+ pic->pins[ 8].port = pic->P18map.PORTE;
+ pic->pins[ 8].pord = 1;
+ pic->pins[ 9].port = pic->P18map.PORTE;
+ pic->pins[ 9].pord = 2;
+ pic->pins[10].port = P_VDD;
+ pic->pins[10].pord = -1;
+ pic->pins[10].value = 1;
+ pic->pins[11].port = P_VSS;
+ pic->pins[11].pord = -1;
+ pic->pins[12].port = pic->P18map.PORTA;
+ pic->pins[12].pord = 7;
+ pic->pins[13].port = pic->P18map.PORTA;
+ pic->pins[13].pord = 6;
+ pic->pins[14].port = pic->P18map.PORTC;
+ pic->pins[14].pord = 0;
+ pic->pins[15].port = pic->P18map.PORTC;
+ pic->pins[15].pord = 1;
+ pic->pins[16].port = pic->P18map.PORTC;
+ pic->pins[16].pord = 2;
+ pic->pins[17].port = P_USB;
+ pic->pins[17].pord = -1;
+ pic->pins[18].port = pic->P18map.PORTD;
+ pic->pins[18].pord = 0;
+ pic->pins[19].port = pic->P18map.PORTD;
+ pic->pins[19].pord = 1;
+ pic->pins[20].port = pic->P18map.PORTD;
+ pic->pins[20].pord = 2;
+ pic->pins[21].port = pic->P18map.PORTD;
+ pic->pins[21].pord = 3;
+ pic->pins[22].port = pic->P18map.PORTC;
+ pic->pins[22].pord = 4;
+ pic->pins[23].port = pic->P18map.PORTC;
+ pic->pins[23].pord = 5;
+ pic->pins[24].port = pic->P18map.PORTC;
+ pic->pins[24].pord = 6;
+ pic->pins[25].port = pic->P18map.PORTC;
+ pic->pins[25].pord = 7;
+ pic->pins[26].port = pic->P18map.PORTD;
+ pic->pins[26].pord = 4;
+ pic->pins[27].port = pic->P18map.PORTD;
+ pic->pins[27].pord = 5;
+ pic->pins[28].port = pic->P18map.PORTD;
+ pic->pins[28].pord = 6;
+ pic->pins[29].port = pic->P18map.PORTD;
+ pic->pins[29].pord = 7;
+ pic->pins[30].port = P_VSS;
+ pic->pins[30].pord = -1;
+ pic->pins[31].port = P_VDD;
+ pic->pins[31].pord = -1;
+ pic->pins[31].value = 1;
+ pic->pins[32].port = pic->P18map.PORTB;
+ pic->pins[32].pord = 0;
+ pic->pins[33].port = pic->P18map.PORTB;
+ pic->pins[33].pord = 1;
+ pic->pins[34].port = pic->P18map.PORTB;
+ pic->pins[34].pord = 2;
+ pic->pins[35].port = pic->P18map.PORTB;
+ pic->pins[35].pord = 3;
+ pic->pins[36].port = pic->P18map.PORTB;
+ pic->pins[36].pord = 4;
+ pic->pins[37].port = pic->P18map.PORTB;
+ pic->pins[37].pord = 5;
+ pic->pins[38].port = pic->P18map.PORTB;
+ pic->pins[38].pord = 6;
+ pic->pins[39].port = pic->P18map.PORTB;
+ pic->pins[39].pord = 7;
+
  pic->mclr = 1;
 
  pic->ccp[0] = 17;
- pic->ccp[1] = 16;//36
+ pic->ccp[1] = 16; //36
 
  pic->adc[0] = 2;
  pic->adc[1] = 3;
@@ -331,8 +381,8 @@ PIC18F45K50_reset(void)
  pic->adc[22] = 21;
  pic->adc[23] = 22;
  pic->adc[24] = 27;
-*/
- 
+  */
+
  pic->usart[0] = 26;
  pic->usart[1] = 25;
 
@@ -349,15 +399,15 @@ PIC18F45K50_reset(void)
  pic->int0 = 33;
  pic->int1 = 34;
  pic->int2 = 35;
- 
- if(pic->config[2]&0x0200) //PBADEN
- {
-   (*pic->P18map.ADCON1) &=0xF0;
- }
+
+ if (pic->config[2]&0x0200) //PBADEN
+  {
+   (*pic->P18map.ADCON1) &= 0xF0;
+  }
  else
- {
-   (*pic->P18map.ADCON1) |=0x07;
- }
+  {
+   (*pic->P18map.ADCON1) |= 0x07;
+  }
 }
 
 int
@@ -366,7 +416,7 @@ PIC18F45K50_getconf(unsigned int cfg)
  switch (cfg)
   {
   case CFG_MCLR:
-   return ((pic->config[2] & 0x8000) > 0 ); 
+   return ((pic->config[2] & 0x8000) > 0);
    break;
   case CFG_WDT:
    return ((pic->config[1] & 0x0100) > 0);
@@ -389,10 +439,10 @@ PIC18F45K50_start(void)
  pic->CONFIGSIZE = 7;
  pic->STACKSIZE = 31;
  pic->CCPCOUNT = 2;
- pic->ADCCOUNT = 13;//25;
+ pic->ADCCOUNT = 13; //25;
  pic->WDT_MS = 4;
  pic->reset = PIC18F45K50_reset;
  pic->mmap = PIC18F45K50_map;
- pic->getconf = PIC18F45K50_getconf; 
+ pic->getconf = PIC18F45K50_getconf;
 }
 

@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2008-2015  Luis Claudio Gambôa Lopes
+   Copyright (c) : 2008-2020  Luis Claudio Gambôa Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -52,7 +52,8 @@ getprocbyname(const char *str)
  if (!strcmp ("PIC18F4620", str))return P18F4620;
  if (!strcmp ("PIC18F4550", str))return P18F4550;
  if (!strcmp ("PIC18F45K50", str))return P18F45K50;
-
+ if (!strcmp ("PIC18F27K40", str))return P18F27K40;
+ 
  return 0;
 }
 
@@ -126,6 +127,9 @@ getnamebyproc(int proc, char *str)
    strcpy (str, "PIC18F45K50");
    break;
 
+  case P18F27K40:
+   strcpy (str, "PIC18F27K40");
+   break;
 
   default:
    str = NULL;
@@ -158,6 +162,8 @@ getfprocbyname(const char *str)
  if (!strcmp ("PIC18F4620", str))return P18;
  if (!strcmp ("PIC18F4550", str))return P18;
  if (!strcmp ("PIC18F45K50", str))return P18;
+ if (!strcmp ("PIC18F27K40", str))return P18;
+ 
  return 0;
 }
 
@@ -185,6 +191,7 @@ getfprocbynumber(int proc)
  if (P18F4620 == proc)return P18;
  if (P18F4550 == proc)return P18;
  if (P18F45K50 == proc)return P18;
+ if (P18F27K40 == proc)return P18;
 
  return 0;
 }
