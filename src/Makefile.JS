@@ -16,7 +16,11 @@ bindir = ${exec_prefix}/bin
 libdir = ${exec_prefix}/lib
 
 
-OBJS= common.o p16fxxx.o p16fxxxe.o p18fxxx.o hexfile.o periferic16.o periferic16e.o periferic16e2.o periferic18.o serial.o icsp.o icsp18.o util.o 
+OBJS= common.o p16fxxx.o p16fxxxe.o p18fxxx.o hexfile.o periferic16.o periferic16e.o periferic18.o \
+      serial.o icsp.o icsp18.o util.o \
+      pics/PIC18F4520.o pics/PIC18F452.o pics/PIC18F4550.o pics/PIC18F45K50.o pics/PIC18F4620.o \
+      pics/PIC16F628A.o pics/PIC16F648A.o pics/PIC16F777.o pics/PIC16F877A.o pics/PIC16F84A.o \
+      pics/PIC16F1619.o pics/PIC16F18855.o pics/PIC16F1939.o pics/PIC16F1788.o pics/PIC16F1789.o
 
 all: all-lib picsim
 
@@ -25,7 +29,7 @@ picsim: libpicsim_js.a picsim.c
 
 
 %.o: %.c  
-	$(CC) $< -c  $(FLAGS) 
+	$(CC) -c $(FLAGS) $< -o $@ 
 
 
 # The static lib name, the shared lib name, and the internal ('so') name of

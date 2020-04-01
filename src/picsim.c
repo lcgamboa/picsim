@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2008-2017  Luis Claudio Gamboa Lopes
+   Copyright (c) : 2008-2020  Luis Claudio Gamboa Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -129,8 +129,8 @@ main(int argc,char** argv)
         {
           case P16:   
             printf("PC=0x%04X W=\033[1;32m 0x%#02X \033[0m STATUS=0x%02X PORTA=0x%02X PORTB=0x%02X INTCON=\033[1;32m 0x%02X \033[0m TMR0=0x%02X TMR1H=0x%04X TMR1L=0x%04X TMR2=0x%04X\n",pic1.pc,pic1.w,
-            pic1.ram[P16_STATUS],pic1.ram[P16_PORTA],pic1.ram[P16_PORTB],pic1.ram[P16_INTCON],pic1.ram[P16_TMR0],pic1.ram[P16_TMR1H],  
-            pic1.ram[P16_TMR1L],pic1.ram[P16_TMR2]); 
+            (*pic1.P16map.STATUS),(*pic1.P16map.PORTA),(*pic1.P16map.PORTB),(*pic1.P16map.INTCON),(*pic1.P16map.TMR0),(*pic1.P16map.TMR1H),  
+            (*pic1.P16map.TMR1L),(*pic1.P16map.TMR2)); 
 
             for(i=0;i<16;i++)
 	      printf("%#04X   ",pic1.ram[i]);
@@ -138,45 +138,31 @@ main(int argc,char** argv)
             break; 
           case P16E:   
             printf("PC=0x%04X W=\033[1;32m 0x%#02X \033[0m STATUS=0x%02X PORTA=0x%02X PORTB=0x%02X INTCON=\033[1;32m 0x%02X \033[0m TMR0=0x%02X TMR1H=0x%04X TMR1L=0x%04X OPTION=0x%04X\n",pic1.pc,pic1.w,
-            pic1.ram[P16E_STATUS],pic1.ram[P16E_PORTA],pic1.ram[P16E_PORTB],pic1.ram[P16E_INTCON],pic1.ram[P16E_TMR0],pic1.ram[P16E_TMR1H],  
-            pic1.ram[P16E_TMR1L],pic1.ram[P16E_OPTION_REG]);
+            (*pic1.P16Emap.STATUS),(*pic1.P16Emap.PORTA),(*pic1.P16Emap.PORTB),(*pic1.P16Emap.INTCON),(*pic1.P16Emap.TMR0),(*pic1.P16Emap.TMR1H),  
+            (*pic1.P16Emap.TMR1L),(*pic1.P16Emap.OPTION_REG));
  
 	    printf("BSR=0x%02X INDF0=0x%02X INDF1=0x%02X afsr0=0x%04X afsr1=0x%04X\n",
-            pic1.ram[P16E_BSR],pic1.ram[P16E_INDF0],pic1.ram[P16E_INDF1],
-            ((pic1.ram[P16E_FSR0H]&0xFF)<<8) |pic1.ram[P16E_FSR0L],
-            ((pic1.ram[P16E_FSR1H]&0xFF)<<8) |pic1.ram[P16E_FSR1L]);
+            (*pic1.P16Emap.BSR),(*pic1.P16Emap.INDF0),(*pic1.P16Emap.INDF1),
+            (((*pic1.P16Emap.FSR0H)&0xFF)<<8) |(*pic1.P16Emap.FSR0L),
+            (((*pic1.P16Emap.FSR1H)&0xFF)<<8) |(*pic1.P16Emap.FSR1L));
 
             for(i=0;i<16;i++)
 	      printf("%#04X   ",pic1.ram[i]);
             printf("\n");
             break;    
-          case P16E2:     
-            printf("PC=0x%04X W=\033[1;32m 0x%#02X \033[0m STATUS=0x%02X PORTA=0x%02X PORTB=0x%02X INTCON=\033[1;32m 0x%02X \033[0m TMR0L=0x%02X TMR1H=0x%04X TMR1L=0x%04X T1CON=0x%04X\n",pic1.pc,pic1.w,
-            pic1.ram[P16E2_STATUS],pic1.ram[P16E2_PORTA],pic1.ram[P16E2_PORTB],pic1.ram[P16E2_INTCON],pic1.ram[P16E2_TMR0L],pic1.ram[P16E2_TMR1H],  
-            pic1.ram[P16E2_TMR1L],pic1.ram[P16E2_T1CON]);
- 
-	    printf("BSR=0x%02X INDF0=0x%02X INDF1=0x%02X afsr0=0x%04X afsr1=0x%04X\n",
-            pic1.ram[P16E2_BSR],pic1.ram[P16E2_INDF0],pic1.ram[P16E2_INDF1],
-            ((pic1.ram[P16E2_FSR0H]&0xFF)<<8) |pic1.ram[P16E2_FSR0L],
-            ((pic1.ram[P16E2_FSR1H]&0xFF)<<8) |pic1.ram[P16E2_FSR1L]);
-
-            for(i=0;i<16;i++)
-	      printf("%#04X   ",pic1.ram[i]);
-            printf("\n");
-            break;             
           case P18:
               printf("PC    =0x%04X W=\033[1;32m 0x%02X \033[0m  STKPTR=0x%02X TOS=0x%06X PORTB=0x%02X PORTE=0x%02X status=\033[1;32m 0x%02X \033[0m INTCON=0x%02X afsr0=0x%04X afsr1=0x%04X afsr2=0x%04X\n",pic1.pc,pic1.w,
-                pic1.ram[P18_STKPTR],pic1.ram[P18_TOSU]<<16|pic1.ram[P18_TOSH]<<8|pic1.ram[P18_TOSL],pic1.ram[P18_PORTB],pic1.ram[P18_PORTE],pic1.ram[P18_STATUS],pic1.ram[P18_INTCON],  
-                ((pic1.ram[P18_FSR0H]&0x0F)<<8) |pic1.ram[P18_FSR0L],
-                ((pic1.ram[P18_FSR1H]&0x0F)<<8) |pic1.ram[P18_FSR1L],
-                ((pic1.ram[P18_FSR2H]&0x0F)<<8) |pic1.ram[P18_FSR2L]);
+                (*pic1.P18map.STKPTR),(*pic1.P18map.STKPTR)<<16|(*pic1.P18map.TOSH)<<8|(*pic1.P18map.TOSL),(*pic1.P18map.PORTB),(*pic1.P18map.PORTE),(*pic1.P18map.STATUS),(*pic1.P18map.INTCON),  
+                (((*pic1.P18map.FSR0H)&0x0F)<<8) |(*pic1.P18map.FSR0L),
+                (((*pic1.P18map.FSR1H)&0x0F)<<8) |(*pic1.P18map.FSR1L),
+                (((*pic1.P18map.FSR2H)&0x0F)<<8) |(*pic1.P18map.FSR2L));
        
               printf("INTCON=0x%02X   PIE1=0x%02X PIR1=0x%02X   TMR1=0x%04X  CCP1=0x%04X\n",
-                pic1.ram[P18_INTCON],
-                pic1.ram[P18_PIE1],
-                pic1.ram[P18_PIR1],
-                (pic1.ram[P18_TMR1H]<<8)|pic1.ram[P18_TMR1L],
-                (pic1.ram[P18_CCPR1H]<<8)|pic1.ram[P18_CCPR1L]);
+                (*pic1.P18map.INTCON),
+                (*pic1.P18map.PIE1),
+                (*pic1.P18map.PIR1),
+                ((*pic1.P18map.TMR1H)<<8)|(*pic1.P18map.TMR1L),
+                ((*pic1.P18map.CCPR1H)<<8)|(*pic1.P18map.CCPR1L));
             
               printf("0x110: ");
               for(i=0;i<16;i++)
@@ -187,7 +173,7 @@ main(int argc,char** argv)
 	        printf("%#04X   ",pic1.ram[i+0x120]);
               printf("\n");
 
-              printf("FSR0=%#04X  POSTINC0=%#04X\n",(pic1.ram[P18_FSR0H]<<8)+pic1.ram[P18_FSR0L],pic1.ram[P18_POSTINC0]);
+              printf("FSR0=%#04X  POSTINC0=%#04X\n",((*pic1.P18map.FSR0H)<<8)+(*pic1.P18map.FSR0L),(*pic1.P18map.POSTINC0));
 /*
               printf("0x550: ");
               for(i=0;i<16;i++)

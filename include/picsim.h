@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2008-2015  Luis Claudio Gambôa Lopes
+   Copyright (c) : 2008-2020  Luis Claudio Gambôa Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -35,6 +35,10 @@ extern "C" {
 #include <windows.h>
 #endif
 
+#include"p16fxxx_defs.h"
+#include"p16fxxxe_defs.h"
+#include"p18fxxx_defs.h"
+
 typedef struct
 {
 unsigned char ptype;     //type
@@ -42,7 +46,7 @@ unsigned char dir;       //dir
 unsigned char value;     //value
 unsigned char lvalue;    //latch value
 char pord;               //pin port number
-unsigned short port;     //port address
+unsigned char * port;     //port address
 float avalue;            //analog input value
 unsigned char ovalue;    //defaut open pin value
 float oavalue;           //analog output value
@@ -64,7 +68,6 @@ float oavalue;           //analog output value
 #define P16   1
 #define P18   2
 #define P16E  3
-#define P16E2 4
 
 //P16 processors
 #define P16F84A      0x0560
@@ -78,7 +81,10 @@ float oavalue;           //analog output value
 
 //P16E processors
 #define P16F1619     0x307D
+#define P16F1788     0x302B
+#define P16F1789     0x302A  
 #define P16F18855    0X306C
+#define P16F1939     0x23C0
 
 //P18 processors
 #define P18F452     0x0420
@@ -90,12 +96,20 @@ float oavalue;           //analog output value
 //4K word
 #define BUFFMAX 8192 
 
+
+extern unsigned char NO_IO[5];
+
 //pin without IO
-#define P_VDD 0x2000
-#define P_VSS 0x3000
-#define P_RST 0x4000
-#define P_OSC 0x5000
-#define P_USB 0x6000
+#define P_VDD &NO_IO[0]
+#define P_VSS &NO_IO[1]
+#define P_RST &NO_IO[2]
+#define P_OSC &NO_IO[3]
+#define P_USB &NO_IO[4]
+
+//CFG bits
+#define CFG_MCLR   0x01
+#define CFG_WDT    0x02
+#define CFG_DEBUG  0x04
 
 
 typedef struct 
@@ -234,6 +248,16 @@ unsigned char ssp_bit;
   unsigned short  serial_RCREG_ADDR;
   unsigned char * serial_TRIS_RX;
   unsigned char   serial_TRIS_RX_MASK;
+
+  void (*reset)(void);
+  void (*mmap)(void);
+  int (*getconf)(unsigned int);
+  
+  union{
+  P16map_t  P16map;
+  P16Emap_t P16Emap;
+  P18map_t  P18map;
+  };
 } _pic;
 
 extern _pic * pic;//global pointer 
@@ -276,19 +300,14 @@ const char * getFSRname_16E2(unsigned int addr);
 const char * getFSRname_18(unsigned int addr);
 const char * getPinName(_pic * pic,int pin, char * pname);
 
+#define sfr_addr(fsr) (fsr - pic->ram)
+
 
 //Errors
 #define HEX_NFOUND 1
 #define HEX_CHKSUM 2
 #define HEX_NWRITE 3
 
-#include"p16fxxx_defs.h"
-
-#include"p16fxxxe_defs.h"
-
-#include"p16fxxxe2_defs.h"
-
-#include"p18fxxx_defs.h"
 
 #endif
 
