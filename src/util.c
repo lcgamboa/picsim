@@ -790,7 +790,7 @@ getPinName(_pic * pic, int pin, char * pname)
     }
    else if (pic->pins[pin].port == P_VSS)
     {
-     sprintf (pname, "+5V");
+     sprintf (pname, "GND");
     }
    else if (pic->pins[pin].port == pic->P16map.PORTA)
     {
@@ -824,7 +824,7 @@ getPinName(_pic * pic, int pin, char * pname)
     }
    else if (pic->pins[pin].port == P_VSS)
     {
-     sprintf (pname, "+5V");
+     sprintf (pname, "GND");
     }
    else if (pic->pins[pin].port == pic->P16Emap.PORTA)
     {
@@ -858,7 +858,7 @@ getPinName(_pic * pic, int pin, char * pname)
     }
    else if (pic->pins[pin].port == P_VSS)
     {
-     sprintf (pname, "+5V");
+     sprintf (pname, "GND");
     }
    else if (pic->pins[pin].port == pic->P18map.PORTA)
     {
