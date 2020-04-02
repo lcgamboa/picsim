@@ -1,0 +1,689 @@
+p16_adc.c: pic->adcstep = 0;
+p16_adc.c: pic->adcon1 = 0xFF;
+p16_adc.c: if (((*pic->P16map.ADCON0) & 0x05) == 0x05) // ADON and GO/DONE
+p16_adc.c:   pic->adcstep++;
+p16_adc.c:   if (pic->adcstep > 10)
+p16_adc.c:     if (pic->processor == P16F777)
+p16_adc.c:       chn = (((*pic->P16map.ADCON0)&0x02) << 2) | (((*pic->P16map.ADCON0)&0x38) >> 3);
+p16_adc.c:       chn = ((*pic->P16map.ADCON0)&0x38) >> 3;
+p16_adc.c:     if (pic->pins[pic->adc[chn] - 1].ptype == PT_ANALOG)
+p16_adc.c:       val = pic->pins[pic->adc[chn] - 1].avalue;
+p16_adc.c:     if (((*pic->P16map.ADCON1)&0x80) == 0x80)
+p16_adc.c:       (*pic->P16map.ADRESH) = (dval & 0xFF00) >> 8;
+p16_adc.c:       (*pic->P16map.ADRESL) = (dval & 0x00FF);
+p16_adc.c:       (*pic->P16map.ADRESH) = (dval & 0xFF00) >> 8;
+p16_adc.c:       (*pic->P16map.ADRESL) = (dval & 0x00FF);
+p16_adc.c:     (*pic->P16map.ADCON0) &= ~0x04;
+p16_adc.c:     (*pic->P16map.PIR1) |= 0x40;
+p16_adc.c:     pic->adcstep = 0;
+p16_adc.c:     // printf("AD0=%02X AD1=%02X\n",pic->ram[ADCON0],pic->ram[ADCON1]);
+p16_adc.c:   pic->adcstep = 0;
+p16_adc.c: if (((*pic->P16map.ADCON1)&0x0F) != pic->adcon1)
+p16_adc.c:   if (pic->processor == P16F777)
+p16_adc.c:     switch ((*pic->P16map.ADCON1)&0x0F)
+p16_adc.c:       pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[1] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[2] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[3] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[4] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[5] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[6] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[7] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[8] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[9] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[10] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[11] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[12] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[13] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[1] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[2] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[3] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[4] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[5] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[6] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[7] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[8] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[9] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[10] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[11] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[12] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[13] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[1] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[2] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[3] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[4] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[5] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[6] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[7] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[8] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[9] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[10] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[11] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[12] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[13] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[1] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[2] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[3] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[4] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[5] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[6] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[7] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[8] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[9] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[10] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[11] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[12] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[13] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[1] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[2] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[3] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[4] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[5] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[6] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[7] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[8] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[9] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[10] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[11] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[12] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[13] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[1] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[2] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[3] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[4] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[5] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[6] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[7] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[8] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[9] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[10] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[11] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[12] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[13] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[1] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[2] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[3] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[4] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[5] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[6] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[7] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[8] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[9] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[10] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[11] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[12] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[13] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[1] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[2] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[3] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[4] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[5] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[6] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[7] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[8] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[9] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[10] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[11] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[12] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[13] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[1] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[2] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[3] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[4] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[5] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[6] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[7] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[8] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[9] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[10] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[11] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[12] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[13] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[1] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[2] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[3] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[4] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[5] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[6] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[7] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[8] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[9] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[10] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[11] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[12] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[13] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[1] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[2] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[3] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[4] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[5] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[6] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[7] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[8] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[9] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[10] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[11] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[12] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[13] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[1] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[2] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[3] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[4] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[5] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[6] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[7] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[8] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[9] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[10] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[11] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[12] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[13] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[1] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[2] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[3] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[4] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[5] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[6] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[7] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[8] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[9] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[10] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[11] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[12] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[13] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[1] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[2] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[3] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[4] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[5] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[6] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[7] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[8] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[9] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[10] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[11] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[12] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[13] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[0] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[1] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[2] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[3] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[4] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[5] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[6] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[7] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[8] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[9] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[10] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[11] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[12] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[13] - 1].ptype = PT_CMOS;
+p16_adc.c:     switch ((*pic->P16map.ADCON1)&0x0F)
+p16_adc.c:       pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[1] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[2] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[3] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[4] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[5] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[6] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[7] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[1] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[2] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[3] - 1].ptype = PT_ANAREF;
+p16_adc.c:       pic->pins[pic->adc[4] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[5] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[6] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[7] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[1] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[2] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[3] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[4] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[5] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[6] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[7] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[1] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[2] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[3] - 1].ptype = PT_ANAREF;
+p16_adc.c:       pic->pins[pic->adc[4] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[5] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[6] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[7] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[1] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[2] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[3] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[4] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[5] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[6] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[7] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[1] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[2] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[3] - 1].ptype = PT_ANAREF;
+p16_adc.c:       pic->pins[pic->adc[4] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[5] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[6] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[7] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[0] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[1] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[2] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[3] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[4] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[5] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[6] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[7] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[1] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[2] - 1].ptype = PT_ANAREF;
+p16_adc.c:       pic->pins[pic->adc[3] - 1].ptype = PT_ANAREF;
+p16_adc.c:       pic->pins[pic->adc[4] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[5] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[6] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[7] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[1] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[2] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[3] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[4] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[5] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[6] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[7] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[1] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[2] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[3] - 1].ptype = PT_ANAREF;
+p16_adc.c:       pic->pins[pic->adc[4] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[5] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[6] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[7] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[1] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[2] - 1].ptype = PT_ANAREF;
+p16_adc.c:       pic->pins[pic->adc[3] - 1].ptype = PT_ANAREF;
+p16_adc.c:       pic->pins[pic->adc[4] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[5] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[6] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[7] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[1] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[2] - 1].ptype = PT_ANAREF;
+p16_adc.c:       pic->pins[pic->adc[3] - 1].ptype = PT_ANAREF;
+p16_adc.c:       pic->pins[pic->adc[4] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[5] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[6] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[7] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[1] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[2] - 1].ptype = PT_ANAREF;
+p16_adc.c:       pic->pins[pic->adc[3] - 1].ptype = PT_ANAREF;
+p16_adc.c:       pic->pins[pic->adc[4] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[5] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[6] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[7] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[1] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[2] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[3] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[4] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[5] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[6] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[7] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
+p16_adc.c:       pic->pins[pic->adc[1] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[2] - 1].ptype = PT_ANAREF;
+p16_adc.c:       pic->pins[pic->adc[3] - 1].ptype = PT_ANAREF;
+p16_adc.c:       pic->pins[pic->adc[4] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[5] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[6] - 1].ptype = PT_CMOS;
+p16_adc.c:       pic->pins[pic->adc[7] - 1].ptype = PT_CMOS;
+p16_adc.c:   pic->adcon1 = (*pic->P16map.ADCON1)&0x0F;
+p16_eeprom.c: pic->ee_wr = 0;
+p16_eeprom.c: if (((*pic->P16map.EECON1) & 0x04) == 0x04)
+p16_eeprom.c:   if ((*pic->P16map.EECON2) != 0)
+p16_eeprom.c:     if ((*pic->P16map.EECON2) == 0x55)
+p16_eeprom.c:       (*pic->P16map.EECON2) = 0;
+p16_eeprom.c:       pic->ee_wr = -1;
+p16_eeprom.c:       if (((*pic->P16map.EECON2) == 0xAA)&&(pic->ee_wr == -1))
+p16_eeprom.c:         (*pic->P16map.EECON2) = 0;
+p16_eeprom.c:         pic->ee_wr = 1;
+p16_eeprom.c:         (*pic->P16map.EECON2) = 0;
+p16_eeprom.c:         pic->ee_wr = 0;
+p16_eeprom.c: if (((*pic->P16map.EECON1) & 0x03) != 0x00)
+p16_eeprom.c:   if (((*pic->P16map.EECON1) & 0x01) == 0x01) //RD
+p16_eeprom.c:     (*pic->P16map.EEDATA) = pic->eeprom[(*pic->P16map.EEADR)];
+p16_eeprom.c:     (*pic->P16map.EECON1) &= ~0x01;
+p16_eeprom.c:     if (pic->ee_wr == 1)
+p16_eeprom.c:       pic->eeprom[(*pic->P16map.EEADR)] = (*pic->P16map.EEDATA);
+p16_eeprom.c:       (*pic->P16map.EECON1) &= ~0x02;
+p16_eeprom.c:       pic->ee_wr = 0;
+p16_eeprom.c: if (((*pic->P16map.EECON1) & 0x04) == 0x04)
+p16_eeprom.c:   if ((*pic->P16map.EECON2) != 0)
+p16_eeprom.c:     if ((*pic->P16map.EECON2) == 0x55)
+p16_eeprom.c:       (*pic->P16map.EECON2) = 0;
+p16_eeprom.c:       pic->ee_wr = -1;
+p16_eeprom.c:       if (((*pic->P16map.EECON2) == 0xAA)&&(pic->ee_wr == -1))
+p16_eeprom.c:         (*pic->P16map.EECON2) = 0;
+p16_eeprom.c:         pic->ee_wr = 1;
+p16_eeprom.c:         (*pic->P16map.EECON2) = 0;
+p16_eeprom.c:         pic->ee_wr = 0;
+p16_eeprom.c: if (((*pic->P16map.EECON1) & 0x03) != 0x00)
+p16_eeprom.c:   if (((*pic->P16map.EECON1) & 0x01) == 0x01) //RD
+p16_eeprom.c:     if (((*pic->P16map.EECON1) & 0x80) == 0)
+p16_eeprom.c:       (*pic->P16map.EEDATA) = pic->eeprom[(*pic->P16map.EEADR)];
+p16_eeprom.c:       (*pic->P16map.EEDATA) = (pic->prog[((*pic->P16map.EEADRH) << 8) | (*pic->P16map.EEADR)])&0x00FF;
+p16_eeprom.c:       (*pic->P16map.EEDATH) = ((pic->prog[((*pic->P16map.EEADRH) << 8) | (*pic->P16map.EEADR)])&0xFF00) >> 8;
+p16_eeprom.c:       //       printf("Reading %04X=%04X\n",(pic->ram[P877_EEADRH]<<8)|pic->ram[P877_EEADR],(pic->ram[P877_EEDATAH]<<8) | pic->ram[P877_EEDATA]);
+p16_eeprom.c:     (*pic->P16map.EECON1) &= ~0x01;
+p16_eeprom.c:     if (pic->ee_wr == 1)
+p16_eeprom.c:       if (((*pic->P16map.EECON1) & 0x80) == 0)
+p16_eeprom.c:         pic->eeprom[(*pic->P16map.EEADR)] = (*pic->P16map.EEDATA);
+p16_eeprom.c:         pic->prog[((*pic->P16map.EEADRH) << 8) | (*pic->P16map.EEADR)] = ((*pic->P16map.EEDATH) << 8) | (*pic->P16map.EEDATA);
+p16_eeprom.c:         //      printf("Writing %04X=%04X\n",(pic->ram[P877_EEADRH]<<8)|pic->ram[P877_EEADR],(pic->ram[P877_EEDATAH]<<8) | pic->ram[P877_EEDATA]);
+p16_eeprom.c:       (*pic->P16map.EECON1) &= ~0x02;
+p16_eeprom.c:       pic->ee_wr = 0;
+p16_int_pin.c:  pic->int0v = 0;
+p16_int_pin.c: if ((pic->pins[pic->int0 - 1].dir == PD_IN)&&(pic->pins[pic->int0 - 1].value != pic->int0v))
+p16_int_pin.c:   if (((!pic->int0v) &&((*pic->P16map.OPTION_REG) & 0x40)) || ((pic->int0v) && (!((*pic->P16map.OPTION_REG) & 0x40))))
+p16_int_pin.c:     pic->ram[(0x0000) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x02; //INTF
+p16_int_pin.c:     pic->ram[(0x0080) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x02;
+p16_int_pin.c:     pic->ram[(0x0100) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x02;
+p16_int_pin.c:     pic->ram[(0x0180) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x02;
+p16_int_pin.c: pic->int0v = pic->pins[pic->int0 - 1].value;
+p16_int_portb.c: pic->portbm = 0;
+p16_int_portb.c: temp = (*pic->P16map.TRISB)&0xF0;
+p16_int_portb.c: if (((*pic->P16map.PORTB) & temp) != (pic->portb & temp))
+p16_int_portb.c:   pic->portbm = 1;
+p16_int_portb.c: if (pic->rram == sfr_addr (pic->P16map.PORTB))
+p16_int_portb.c:   pic->portbm = 0;
+p16_int_portb.c: if (pic->portbm)
+p16_int_portb.c:   pic->ram[(0x0000) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x01; //RBIF
+p16_int_portb.c:   pic->ram[(0x0080) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x01;
+p16_int_portb.c:   if (pic->processor != P16F84A)
+p16_int_portb.c:     pic->ram[(0x0100) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x01;
+p16_int_portb.c:     pic->ram[(0x0180) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x01;
+p16_mssp.c: pic->ssp_sck = 0;
+p16_mssp.c: pic->ssp_scka = 0;
+p16_mssp.c: pic->sspsr = 0;
+p16_mssp.c: pic->ssp_bit = 0;
+p16_mssp.c: pic->sspsr = 0;
+p16_mssp.c: if (((*pic->P16map.SSPCON) & 0x20) == 0x20) //SSPEN
+p16_mssp.c:   switch (((*pic->P16map.SSPCON) & 0x0F))
+p16_mssp.c:     if (pic->lram == sfr_addr (pic->P16map.SSPBUF))
+p16_mssp.c:       pic->ssp_bit = 8;
+p16_mssp.c:       pic->ssp_sck = 0;
+p16_mssp.c:       pic_wr_pin16 (pic->sck, 0);
+p16_mssp.c:     if (pic->ssp_bit)
+p16_mssp.c:       if (pic->ssp_sck == 1)
+p16_mssp.c:         pic_wr_pin16 (pic->sdo, (((*pic->P16map.SSPBUF) & (1 << ((pic->ssp_bit - 1)))) > 0));
+p16_mssp.c:         pic_wr_pin16 (pic->sck, 1);
+p16_mssp.c:       else if (pic->ssp_sck == 2)
+p16_mssp.c:         pic_wr_pin16 (pic->sck, 0);
+p16_mssp.c:         pic->ssp_sck = 0;
+p16_mssp.c:         pic->ssp_bit--;
+p16_mssp.c:       pic->ssp_sck++;
+p16_mssp.c:     pic->pins[pic->sdi - 1].dir = PD_IN;
+p16_mssp.c:     if (pic->rram == sfr_addr (pic->P16map.SSPBUF))
+p16_mssp.c:       (*pic->P16map.SSPSTAT) &= ~0x01; //BF
+p16_mssp.c:     pic->ssp_scka = pic->ssp_sck;
+p16_mssp.c:     pic->ssp_sck = pic->pins[pic->sck - 1].value;
+p16_mssp.c:     if ((pic->ssp_scka == 0)&&(pic->ssp_sck == 1)) //CKP =0 CKE =0     //coloca saida na borda de subida
+p16_mssp.c:       pic_wr_pin16 (pic->sdo, (((*pic->P16map.SSPBUF) & (1 << (7 - pic->ssp_bit))) > 0));
+p16_mssp.c:     if ((pic->ssp_scka == 1)&&(pic->ssp_sck == 0)) //CKP =0 CKE =0    //le na borda de decida
+p16_mssp.c:       pic->sspsr |= (pic->pins[pic->sdi - 1].value) << (7 - pic->ssp_bit);
+p16_mssp.c:       //printf("SSP bit =%i    REC=%#02X   SEND=%#02X \n",pic->ssp_bit,pic->sspsr, pic->ram[SSPBUF]);
+p16_mssp.c:       pic->ssp_bit++;
+p16_mssp.c:     if (pic->ssp_bit >= 8)
+p16_mssp.c:       //	   printf("MSSP TX=%#02X  RX=%#02X\n",pic->ram[SSPBUF],pic->sspsr);
+p16_mssp.c:       (*pic->P16map.SSPBUF) = pic->sspsr;
+p16_mssp.c:       pic->sspsr = 0;
+p16_mssp.c:       (*pic->P16map.SSPSTAT) |= 0x01; //BF
+p16_mssp.c:       (*pic->P16map.PIR1) |= 0x08;
+p16_mssp.c:       pic->ssp_bit = 0;
+p16_mssp.c:     pic->ssp_sck++;
+p16_mssp.c:     if (pic->ssp_sck == (((*pic->P16map.SSPADD) + 1 / 2) - 1))
+p16_mssp.c:       if (((*pic->P16map.SSPCON2) & 0x01)) //start
+p16_mssp.c:         pic->pins[pic->sck - 1].dir = PD_OUT;
+p16_mssp.c:         pic->pins[pic->sdi - 1].dir = PD_OUT;
+p16_mssp.c:         pic->pins[pic->sdi - 1].value = 1;
+p16_mssp.c:         pic->pins[pic->sck - 1].value = 1;
+p16_mssp.c:       else if (((*pic->P16map.SSPCON2) & 0x02)) //restart
+p16_mssp.c:         pic->pins[pic->sdi - 1].dir = PD_OUT;
+p16_mssp.c:         pic->pins[pic->sdi - 1].value = 1;
+p16_mssp.c:         pic->pins[pic->sck - 1].value = 1;
+p16_mssp.c:       else if (((*pic->P16map.SSPCON2) & 0x04)) //stop
+p16_mssp.c:         pic->pins[pic->sdi - 1].dir = PD_OUT;
+p16_mssp.c:         pic->pins[pic->sdi - 1].value = 0;
+p16_mssp.c:         pic->pins[pic->sck - 1].value = 1;
+p16_mssp.c:     if (pic->ssp_sck == (((*pic->P16map.SSPADD) + 1 / 2) + 1))
+p16_mssp.c:       if (((*pic->P16map.SSPCON2) & 0x01)) //start
+p16_mssp.c:         (*pic->P16map.SSPCON2) &= ~0x01;
+p16_mssp.c:         pic->pins[pic->sdi - 1].value = 0;
+p16_mssp.c:         pic->pins[pic->sck - 1].value = 1;
+p16_mssp.c:       else if (((*pic->P16map.SSPCON2) & 0x02)) //restart
+p16_mssp.c:         (*pic->P16map.SSPCON2) &= ~0x02;
+p16_mssp.c:         pic->pins[pic->sdi - 1].value = 0;
+p16_mssp.c:         pic->pins[pic->sck - 1].value = 1;
+p16_mssp.c:       else if (((*pic->P16map.SSPCON2) & 0x04)) //stop
+p16_mssp.c:         (*pic->P16map.SSPCON2) &= ~0x04;
+p16_mssp.c:         pic->ssp_bit = 10;
+p16_mssp.c:         pic->pins[pic->sdi - 1].value = 1;
+p16_mssp.c:         pic->pins[pic->sck - 1].value = 1;
+p16_mssp.c:     if (pic->lram == sfr_addr (pic->P16map.SSPBUF))
+p16_mssp.c:       (*pic->P16map.SSPSTAT) |= 0x04; //R/W
+p16_mssp.c:       //printf("SPPBUF write (%#02X)!!!!\n",pic->ram[SSPBUF]);	
+p16_mssp.c:       pic->ssp_bit = 0;
+p16_mssp.c:       pic->pins[pic->sdi - 1].dir = PD_OUT;
+p16_mssp.c:       (*pic->P16map.SSPSTAT) |= 0x01; //BF
+p16_mssp.c:     if (!((*pic->P16map.SSPCON2) & 0x08)) pic->ssp_scka = 0;
+p16_mssp.c:     if (((*pic->P16map.SSPCON2) & 0x08) && (pic->ssp_scka == 0))
+p16_mssp.c:       pic->ssp_bit = 0;
+p16_mssp.c:       (*pic->P16map.SSPBUF) = 0;
+p16_mssp.c:       pic->pins[pic->sdi - 1].dir = PD_IN;
+p16_mssp.c:       pic->ssp_ck = pic->pins[pic->sck - 1].value;
+p16_mssp.c:       (*pic->P16map.SSPSTAT) &= ~0x01; //BF
+p16_mssp.c:       pic->ssp_scka = 1;
+p16_mssp.c:     if (pic->ssp_sck > (*pic->P16map.SSPADD))
+p16_mssp.c:       pic->ssp_sck = 0;
+p16_mssp.c:       if ((((*pic->P16map.SSPSTAT) & 0x04))&&(pic->ssp_bit <= 9))
+p16_mssp.c:         pic->pins[pic->sck - 1].value ^= 0x01;
+p16_mssp.c:         if ((pic->pins[pic->sck - 1].value == 0)&&(pic->ssp_bit <= 8))
+p16_mssp.c:           pic->pins[pic->sdi - 1].value = ((*pic->P16map.SSPBUF) & (0x01 << (7 - pic->ssp_bit))) > 0;
+p16_mssp.c:           pic->ssp_bit++;
+p16_mssp.c:           if (pic->ssp_bit == 9)
+p16_mssp.c:             pic->pins[pic->sdi - 1].dir = PD_IN;
+p16_mssp.c:         if ((pic->pins[pic->sck - 1].value == 1)&&(pic->ssp_bit > 8))
+p16_mssp.c:           if (pic->pins[pic->sdi - 1].value)
+p16_mssp.c:            (*pic->P16map.SSPCON2) |= 0x40; //ACKSTAT
+p16_mssp.c:            (*pic->P16map.SSPCON2) &= ~0x40; //ACKSTAT
+p16_mssp.c:           (*pic->P16map.SSPSTAT) &= ~0x04; //R/W
+p16_mssp.c:           (*pic->P16map.PIR1) |= 0x08; //SSPIF
+p16_mssp.c:           (*pic->P16map.SSPSTAT) &= ~0x01; //BF
+p16_mssp.c:           pic->ssp_bit++;
+p16_mssp.c:         //    printf("wbit(%i)  sck=%i  sda=%i \n",pic->ssp_bit,pic->pins[pic->sck-1].value,pic->pins[pic->sdi-1].value); 
+p16_mssp.c:       if ((((*pic->P16map.SSPCON2) & 0x08) || ((*pic->P16map.SSPCON2)& 0x10))&&(pic->ssp_bit <= 9))
+p16_mssp.c:         //printf("sck 1 =%i\n", pic->pins[pic->sck-1].value);
+p16_mssp.c:         pic->ssp_ck ^= 0x01;
+p16_mssp.c:         pic->pins[pic->sck - 1].value = pic->ssp_ck;
+p16_mssp.c:         //printf("sck 2 =%i\n", pic->pins[pic->sck-1].value);
+p16_mssp.c:         if ((pic->pins[pic->sck - 1].value == 0)&&(pic->ssp_bit <= 8))
+p16_mssp.c:           pic->ssp_bit++;
+p16_mssp.c:         if ((pic->pins[pic->sck - 1].value == 1)&&(pic->ssp_bit <= 8))
+p16_mssp.c:           (*pic->P16map.SSPBUF) |= (pic->pins[pic->sdi - 1].value << (8 - pic->ssp_bit));
+p16_mssp.c:           if (pic->ssp_bit == 8)
+p16_mssp.c:             (*pic->P16map.SSPCON2) &= ~0x10; //ACKDT
+p16_mssp.c:             (*pic->P16map.PIR1) |= 0x08; //SSPIF
+p16_mssp.c:             pic->ssp_bit++;
+p16_mssp.c:             (*pic->P16map.SSPCON2) &= ~0x08;
+p16_mssp.c:             (*pic->P16map.SSPSTAT) |= 0x01; //BF
+p16_mssp.c:             //printf("recebido1 %02X\n",pic->ram[SSPBUF]);
+p16_mssp.c:         if (((*pic->P16map.SSPCON2)& 0x10)&&(pic->pins[pic->sck - 1].value == 1)&&(pic->ssp_bit > 8))
+p16_mssp.c:           pic->pins[pic->sdi - 1].dir = PD_OUT;
+p16_mssp.c:           pic->pins[pic->sdi - 1].value = ((*pic->P16map.SSPCON2)&0x20) > 0;
+p16_mssp.c:           (*pic->P16map.PIR1) |= 0x08; //SSPIF
+p16_mssp.c:           pic->ssp_bit++;
+p16_mssp.c:           (*pic->P16map.SSPCON2) &= ~0x10; //ACKDT
+p16_mssp.c:         //  printf("rbit(%i)  sck=%i  sda=%i sdadir=%i\n",pic->ssp_bit,pic->pins[pic->sck-1].value,pic->pins[pic->sdi-1].value,pic->pins[pic->sdi-1].dir); 
+p16_mssp.c:       if (pic->ssp_bit == 10)
+p16_mssp.c:         pic->pins[pic->sdi - 1].dir = PD_OUT;
+p16_mssp.c:         pic->pins[pic->sdi - 1].value = 1;
+p16_mssp.c:         pic->ssp_bit++;
+p16_mssp.c:     if (pic->ssp_sck == 0)
+p16_mssp.c:       printf (" %#02X SPI mode not implemented!\n", ((*pic->P16map.SSPCON) & 0x0F));
+p16_mssp.c:     pic->ssp_sck++;
+p16_mssp.c:   pic->ssp_sck = 0;
+p16_mssp.c:   pic->ssp_scka = 0;
+p16_mssp.c:   pic->ssp_bit = 0;
+p16_tmr0.c:  pic->cp0 = 0;
+p16_tmr0.c: if ((((*pic->P16map.OPTION_REG) & 0x20) == 0x00) || //TOCS=FOSC/4
+p16_tmr0.c:     ((((*pic->P16map.OPTION_REG) & 0x30) == 0x20)&&((pic->t0cki_ == 0)&&(pic->pins[pic->t0cki - 1].value == 1))) || //T0CS=t0cki  T0SE =0
+p16_tmr0.c:     ((((*pic->P16map.OPTION_REG) & 0x30) == 0x30)&&((pic->t0cki_ == 1)&&(pic->pins[pic->t0cki - 1].value == 0)))) //T0CS=t0cki  T0SE =1
+p16_tmr0.c:   pic->cp0++;
+p16_tmr0.c:   if (pic->lram == sfr_addr (pic->P16map.TMR0))pic->cp0 = 0; //RESET prescaler	 
+p16_tmr0.c:   if (((*pic->P16map.OPTION_REG) & 0x08) == 0x08) //PSA
+p16_tmr0.c:     if ((((*pic->P16map.TMR0) + 1) == 0x100))
+p16_tmr0.c:       pic->ram[(0x0000) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x04; //T0IF
+p16_tmr0.c:       pic->ram[(0x0080) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x04;
+p16_tmr0.c:       if (pic->processor != P16F84A)
+p16_tmr0.c:         pic->ram[(0x0100) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x04;
+p16_tmr0.c:         pic->ram[(0x0180) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x04;
+p16_tmr0.c:     (*pic->P16map.TMR0)++;
+p16_tmr0.c:     pic->cp0 = 0;
+p16_tmr0.c:     if (pic->cp0 >= 2 * (fpw2[(*pic->P16map.OPTION_REG)&0x07]))
+p16_tmr0.c:       if ((((*pic->P16map.TMR0) + 1) == 0x100))
+p16_tmr0.c:         pic->ram[(0x0000) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x04; //T0IF
+p16_tmr0.c:         pic->ram[(0x0080) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x04;
+p16_tmr0.c:         if (pic->processor != P16F84A)
+p16_tmr0.c:           pic->ram[(0x0100) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x04;
+p16_tmr0.c:           pic->ram[(0x0180) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x04;
+p16_tmr0.c:       (*pic->P16map.TMR0)++;
+p16_tmr0.c:       pic->cp0 = 0;
+p16_tmr0.c: pic->t0cki_ = pic->pins[pic->t0cki - 1].value;
+p16_tmr1.c:  pic->cp1 = 0;
+p16_tmr1.c:    if ((((*pic->P16map.T1CON) & 0x03) == 0x01) || //TMRICS=FOSC/4 TMREN=1
+p16_tmr1.c:       ((((*pic->P16map.T1CON) & 0x03) == 0x03)&&((pic->t1cki_ == 0)&&(pic->pins[pic->t1cki - 1].value == 1)))) //TMRICS=t1cki  TMREN=1
+p16_tmr1.c:     pic->cp1++;
+p16_tmr1.c:     if (pic->cp1 >= fpw2[((*pic->P16map.T1CON)&0x30) >> 4])
+p16_tmr1.c:       (*pic->P16map.TMR1L)++;
+p16_tmr1.c:       if ((*pic->P16map.TMR1L) == 0)
+p16_tmr1.c:         if (((*pic->P16map.TMR1H) + 1) == 0x100)(*pic->P16map.PIR1) |= 0x01; //TMR1IF
+p16_tmr1.c:         (*pic->P16map.TMR1H)++;
+p16_tmr1.c:       pic->cp1 = 0;
+p16_tmr1.c:     if ((pic->CCPCOUNT >= 1)&&(pic->ccp[0] > 0)&&(((*pic->P16map.CCP1CON) & 0x0C) == 0x08))
+p16_tmr1.c:       if (((*pic->P16map.TMR1H) == (*pic->P16map.CCPR1H))&&((*pic->P16map.TMR1L) == (*pic->P16map.CCPR1L)))//match !!
+p16_tmr1.c:         (*pic->P16map.PIR1) |= 0x04; //CCP1IF
+p16_tmr1.c:         switch ((*pic->P16map.CCP1CON) & 0x03)
+p16_tmr1.c:           if (pic->pins[pic->ccp[0] - 1].dir == PD_OUT)
+p16_tmr1.c:            (*pic->pins[(pic->ccp[0] - 1)].port) |= 0x01 << (pic->pins[(pic->ccp[0] - 1)].pord);
+p16_tmr1.c:           if (pic->pins[pic->ccp[0] - 1].dir == PD_OUT)
+p16_tmr1.c:            (*pic->pins[(pic->ccp[0] - 1)].port) &= ~(0x01 << (pic->pins[(pic->ccp[0] - 1)].pord));
+p16_tmr1.c:           (*pic->P16map.TMR1H) = 0;
+p16_tmr1.c:           (*pic->P16map.TMR1L) = 0;
+p16_tmr1.c:     if ((pic->CCPCOUNT >= 2)&&(pic->ccp[1] > 0)&&(((*pic->P16map.CCP2CON) & 0x0C) == 0x08))
+p16_tmr1.c:       if (((*pic->P16map.TMR1H) == (*pic->P16map.CCPR2H))&&((*pic->P16map.TMR1L) == (*pic->P16map.CCPR2L)))//match !!
+p16_tmr1.c:         (*pic->P16map.PIR2) |= 0x01; //CCP2IF
+p16_tmr1.c:         switch ((*pic->P16map.CCP2CON) & 0x03)
+p16_tmr1.c:           if (pic->pins[pic->ccp[1] - 1].dir == PD_OUT)
+p16_tmr1.c:            (*pic->pins[(pic->ccp[1] - 1)].port) |= 0x01 << (pic->pins[(pic->ccp[1] - 1)].pord);
+p16_tmr1.c:           if (pic->pins[pic->ccp[1] - 1].dir == PD_OUT)
+p16_tmr1.c:            (*pic->pins[(pic->ccp[1] - 1)].port) &= ~(0x01 << (pic->pins[(pic->ccp[1] - 1)].pord));
+p16_tmr1.c:           (*pic->P16map.TMR1H) = 0;
+p16_tmr1.c:           (*pic->P16map.TMR1L) = 0;
+p16_tmr1.c:           if ((*pic->P16map.ADCON0) & 0x01)(*pic->P16map.ADCON0) |= 0x04; //if ad on, enable one conversion
+p16_tmr1.c:     if ((pic->CCPCOUNT >= 3)&&(pic->ccp[2] > 0)&&(((*pic->P16map.CCP3CON) & 0x0C) == 0x08))
+p16_tmr1.c:       if (((*pic->P16map.TMR1H) == (*pic->P16map.CCPR3H))&&((*pic->P16map.TMR1L) == (*pic->P16map.CCPR3L)))//match !!
+p16_tmr1.c:         (*pic->P16map.PIR2) |= 0x02; //CCP3IF
+p16_tmr1.c:         switch ((*pic->P16map.CCP3CON) & 0x03)
+p16_tmr1.c:           if (pic->pins[pic->ccp[2] - 1].dir == PD_OUT)
+p16_tmr1.c:            (*pic->pins[(pic->ccp[2] - 1)].port) |= 0x01 << (pic->pins[(pic->ccp[2] - 1)].pord);
+p16_tmr1.c:           if (pic->pins[pic->ccp[2] - 1].dir == PD_OUT)
+p16_tmr1.c:            (*pic->pins[(pic->ccp[2] - 1)].port) &= ~(0x01 << (pic->pins[(pic->ccp[2] - 1)].pord));
+p16_tmr1.c:           (*pic->P16map.TMR1H) = 0;
+p16_tmr1.c:           (*pic->P16map.TMR1L) = 0;
+p16_tmr1.c:   pic->t1cki_ = pic->pins[pic->t1cki - 1].value;
+p16_tmr2.c: pic->cp2 = 0;
+p16_tmr2.c: pic->cp2_ = 0;
+p16_tmr2.c: pic->t2pr = 0;
+p16_tmr2.c: if (((*pic->P16map.T2CON) & 0x04) == 0x04) //TMR2EN
+p16_tmr2.c:   pic->cp2++;
+p16_tmr2.c:   if (((*pic->P16map.T2CON)&0x02) == 0x02)
+p16_tmr2.c:     pic->t2pr = 16;
+p16_tmr2.c:   else if (((*pic->P16map.T2CON)&0x01) == 0x01)
+p16_tmr2.c:     pic->t2pr = 4;
+p16_tmr2.c:     pic->t2pr = 1;
+p16_tmr2.c:   if (pic->cp2 >= pic->t2pr)
+p16_tmr2.c:     (*pic->P16map.TMR2)++;
+p16_tmr2.c:     if ((*pic->P16map.TMR2) == (*pic->P16map.PR2))
+p16_tmr2.c:       (*pic->P16map.TMR2) = 0;
+p16_tmr2.c:       pic->cp2_++;
+p16_tmr2.c:       if (pic->cp2_ >= ((((*pic->P16map.T2CON)&0x78) >> 3) + 1))
+p16_tmr2.c:         (*pic->P16map.PIR1) |= 0x02; //TMR2IF
+p16_tmr2.c:         pic->cp2_ = 0;
+p16_tmr2.c:       if ((pic->CCPCOUNT >= 1)&&(pic->ccp[0] > 0)&&((*pic->P16map.CCP1CON)& 0x0C) == 0x0C)
+p16_tmr2.c:         (*pic->P16map.CCPR1H) = (*pic->P16map.CCPR1L);
+p16_tmr2.c:         if (pic->pins[pic->ccp[0] - 1].dir == PD_OUT)
+p16_tmr2.c:          (*pic->pins[(pic->ccp[0] - 1)].port) |= 0x01 << (pic->pins[(pic->ccp[0] - 1)].pord);
+p16_tmr2.c:       if ((pic->CCPCOUNT >= 2)&&(pic->ccp[1] > 0)&&((*pic->P16map.CCP2CON)& 0x0C) == 0x0C)
+p16_tmr2.c:         (*pic->P16map.CCPR2H) = (*pic->P16map.CCPR2L);
+p16_tmr2.c:         if (pic->pins[pic->ccp[1] - 1].dir == PD_OUT)
+p16_tmr2.c:          (*pic->pins[(pic->ccp[1] - 1)].port) |= 0x01 << (pic->pins[(pic->ccp[1] - 1)].pord);
+p16_tmr2.c:       if ((pic->CCPCOUNT >= 3)&&(pic->ccp[2] > 0)&&((*pic->P16map.CCP3CON)& 0x0C) == 0x0C)
+p16_tmr2.c:         (*pic->P16map.CCPR3H) = (*pic->P16map.CCPR3L);
+p16_tmr2.c:         if (pic->pins[pic->ccp[2] - 1].dir == PD_OUT)
+p16_tmr2.c:          (*pic->pins[(pic->ccp[2] - 1)].port) |= 0x01 << (pic->pins[(pic->ccp[2] - 1)].pord);
+p16_tmr2.c:     pic->cp2 = 0;
+p16_tmr2.c:   if ((pic->CCPCOUNT >= 1)&&(pic->ccp[0] > 0)&&((*pic->P16map.CCP1CON)& 0x0C) == 0x0C)
+p16_tmr2.c:     if ((*pic->P16map.TMR2) >= (*pic->P16map.CCPR1H))
+p16_tmr2.c:       if (pic->pins[pic->ccp[0] - 1].dir == PD_OUT)
+p16_tmr2.c:        (*pic->pins[(pic->ccp[0] - 1)].port) &= ~(0x01 << (pic->pins[(pic->ccp[0] - 1)].pord));
+p16_tmr2.c:   if ((pic->CCPCOUNT >= 2)&&(pic->ccp[1] > 0)&&((*pic->P16map.CCP2CON)& 0x0C) == 0x0C)
+p16_tmr2.c:     if ((*pic->P16map.TMR2) >= (*pic->P16map.CCPR2H))
+p16_tmr2.c:       if (pic->pins[pic->ccp[1] - 1].dir == PD_OUT)
+p16_tmr2.c:        (*pic->pins[(pic->ccp[1] - 1)].port) &= ~(0x01 << (pic->pins[(pic->ccp[1] - 1)].pord));
+p16_tmr2.c:   if ((pic->CCPCOUNT >= 3)&&(pic->ccp[2] > 0)&&((*pic->P16map.CCP3CON)& 0x0C) == 0x0C)
+p16_tmr2.c:     if ((*pic->P16map.TMR2) >= (*pic->P16map.CCPR3H))
+p16_tmr2.c:       if (pic->pins[pic->ccp[2] - 1].dir == PD_OUT)
+p16_tmr2.c:        (*pic->pins[(pic->ccp[2] - 1)].port) &= ~(0x01 << (pic->pins[(pic->ccp[2] - 1)].pord));
+p16_wdt.c: pic->twdt = 0;
+p16_wdt.c: pic->wdt = 0;
+p16_wdt.c:   pic->twdt += 4.0 / pic->freq;
+p16_wdt.c:   if (((*pic->P16map.OPTION_REG) & 0x08)) //PSA
+p16_wdt.c:     if (pic->twdt > (1e-3 * fpw2[(*pic->P16map.OPTION_REG) & 0x07]))
+p16_wdt.c:       pic->twdt = 0;
+p16_wdt.c:       pic->wdt++;
+p16_wdt.c:       if (pic->wdt == pic->WDT_MS)
+p16_wdt.c:         pic->wdt = 0;
+p16_wdt.c:         pic->ram[((0x0000) << 2) | (sfr_addr (pic->P16map.STATUS) & 0x007F)] &= ~0x10;
+p16_wdt.c:         pic->ram[((0x0020) << 2) | (sfr_addr (pic->P16map.STATUS) & 0x007F)] &= ~0x10;
+p16_wdt.c:         pic->ram[((0x0040) << 2) | (sfr_addr (pic->P16map.STATUS) & 0x007F)] &= ~0x10;
+p16_wdt.c:         pic->ram[((0x0060) << 2) | (sfr_addr (pic->P16map.STATUS) & 0x007F)] &= ~0x10;
+p16_wdt.c:         if (pic->sleep == 1)
+p16_wdt.c:           pic->sleep = 0;
+p16_wdt.c:     if (pic->twdt > 1e-3)
+p16_wdt.c:       pic->twdt = 0;
+p16_wdt.c:       pic->wdt++;
+p16_wdt.c:       if (pic->wdt == pic->WDT_MS)
+p16_wdt.c:         pic->wdt = 0;
+p16_wdt.c:         pic->ram[((0x0000) << 2) | (sfr_addr (pic->P16map.STATUS) & 0x007F)] &= ~0x10;
+p16_wdt.c:         pic->ram[((0x0020) << 2) | (sfr_addr (pic->P16map.STATUS) & 0x007F)] &= ~0x10;
+p16_wdt.c:         if (pic->processor != P16F84A)
+p16_wdt.c:           pic->ram[((0x0040) << 2) | (sfr_addr (pic->P16map.STATUS) & 0x007F)] &= ~0x10;
+p16_wdt.c:           pic->ram[((0x0060) << 2) | (sfr_addr (pic->P16map.STATUS) & 0x007F)] &= ~0x10;
+p16_wdt.c:         if (pic->sleep == 1)
+p16_wdt.c:           pic->sleep = 0;
+p16_wdt.c:       //        printf("WDT=%02X\n",pic->wdt);
