@@ -97,7 +97,7 @@ extern "C" {
 #define BUFFMAX 8192 
 
 
-    extern unsigned char NO_IO[5];
+extern unsigned char NO_IO[5];
 
     //pin without IO
 #define P_VDD &NO_IO[0]
@@ -110,6 +110,10 @@ extern "C" {
 #define CFG_MCLR   0x01
 #define CFG_WDT    0x02
 #define CFG_DEBUG  0x04
+
+   //PACKAGING
+#define PDIP 0
+#define QFN  1
 
     typedef struct {
         unsigned char print; //print information ON/OFF  
@@ -141,6 +145,7 @@ extern "C" {
         unsigned char s2;
         float freq;
         unsigned char sleep; //sleep mode on
+        unsigned char pkg; //packaging
         picpin *pins;
         unsigned char mclr;
         unsigned char *ccp;

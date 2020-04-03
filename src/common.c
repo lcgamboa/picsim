@@ -116,6 +116,8 @@ pic_init(_pic * pic_, int processor, const char * fname, int lrom, float freq)
  pic->processor = processor;
  pic->family = getfprocbynumber (processor);
 
+ pic->pkg=PDIP;
+ 
  switch (pic->family)
   {
   case P16:
