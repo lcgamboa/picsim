@@ -23,49 +23,37 @@
    For e-mail suggestions :  lcgamboa@yahoo.com
    ######################################################################## */
 
-#ifndef P16_PERIFERIC_H
-#define P16_PERIFERIC_H
+#include<stdio.h>
+#include"../../include/picsim.h"
+#include"../../include/periferic18.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-#include"../../include/periferic16.h"
-    
-void p16_mssp_rst(void);
-void p16_mssp(void);
-
-void p16_adc_rst(void);
-void p16_adc(void);
-
-void p16_tmr0_rst(void);
-void p16_tmr0(void);
-
-void p16_tmr1_rst(void);
-void p16_tmr1(void);
-
-void p16_tmr2_rst(void);
-void p16_tmr2(void);
-
-void p16_eeprom_rst(void);
-void p16_eeprom(void);
-void p16_eeprom_2(void);
-
-void p16_wdt_rst(void);
-void p16_wdt(void);    
-
-void p16_int_pin_rst(void); 
-void p16_int_pin(void);
-
-void p16_int_portb_rst(void);
-void p16_int_portb(void);
-
-void p16_uart_rst(void);
-#define p16_uart serial
-
-
-#ifdef __cplusplus
+void
+p18_int_portb_rst(void)
+{
+ pic->portbm = 0;
 }
-#endif
 
-#endif /* P16_PERIFERIC_H */
+void
+p18_int_portb(void)
+{
+ unsigned char temp;
 
+ temp = (*pic->P18map.TRISB)&0xF0;
+ if (((*pic->P18map.PORTB) & temp) != (pic->portb & temp))
+  {
+   pic->portbm = 1;
+  }
+
+ if (pic->rram == sfr_addr (pic->P18map.PORTB))
+  {
+   pic->portbm = 0;
+   //Only disable mismatch
+   //(*pic->P18map.INTCON)&=~0x01;//RBIF
+  }
+
+ if (pic->portbm)
+  {
+   (*pic->P18map.INTCON) |= 0x01; //RBIF
+  }
+
+}

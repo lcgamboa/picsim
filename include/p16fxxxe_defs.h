@@ -205,8 +205,10 @@ unsigned char * TOSL;
 unsigned char * TOSH;
 unsigned char * OPTION_REG;
 
+unsigned char * PIR0;
 unsigned char * PIR1;
 unsigned char * PIR2;
+unsigned char * PIE0;
 unsigned char * PIE1;
 unsigned char * PIE2;
 
@@ -246,6 +248,12 @@ unsigned char * RCREG;
 
 unsigned char * TMR0; 
 
+unsigned char * T0CON0;
+unsigned char * T0CON1;
+unsigned char * TMR0L;
+unsigned char * TMR0H; 
+
+
 unsigned char * T1CON;
 unsigned char * TMR1L;
 unsigned char * TMR1H;
@@ -271,9 +279,6 @@ unsigned char * WDTCON0;
 
 
 /*    
-unsigned char * TMR0L;
-unsigned char * TMR0H; 
-unsigned char * PIR0;
 unsigned char * CCP1CAP;
 unsigned char * CCP2CAP; 
 unsigned char * WDTCON;
@@ -346,9 +351,6 @@ unsigned char * NCO1INCL;
 unsigned char * NCO1INCH;
 unsigned char * NCO1INCU;
 
-
-unsigned char * T0CON0;
-unsigned char * T0CON1;
 
 unsigned char * ADCON2;
 unsigned char * ADCON3;
@@ -492,9 +494,8 @@ unsigned char * PIR5;
 unsigned char * PIR6;
 unsigned char * PIR7;
 unsigned char * PIR8;
-unsigned char * PIE0;
 
-;
+
 unsigned char * PIE3;
 unsigned char * PIE4;
 unsigned char * PIE5;

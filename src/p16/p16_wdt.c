@@ -39,6 +39,8 @@ p16_wdt_rst(void)
 void
 p16_wdt(void) 
 { 
+  if (pic->getconf (CFG_WDT))
+  {
    pic->twdt += 4.0 / pic->freq;
 
    if (((*pic->P16map.OPTION_REG) & 0x08)) //PSA
@@ -98,4 +100,5 @@ p16_wdt(void)
        //        printf("WDT=%02X\n",pic->wdt);
       }
     }
+   }
 }

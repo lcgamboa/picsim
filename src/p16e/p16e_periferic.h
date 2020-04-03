@@ -23,49 +23,54 @@
    For e-mail suggestions :  lcgamboa@yahoo.com
    ######################################################################## */
 
-#ifndef P16_PERIFERIC_H
-#define P16_PERIFERIC_H
+#ifndef P16E_PERIFERIC_H
+#define P16E_PERIFERIC_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include"../../include/periferic16.h"
-    
-void p16_mssp_rst(void);
-void p16_mssp(void);
+#include"../../include/periferic16e.h"
+        
+int interrupt16E(void);    
+int interrupt16E_2(void);   
 
-void p16_adc_rst(void);
-void p16_adc(void);
+void p16e_mssp_rst(void);
+void p16e_mssp(void);
 
-void p16_tmr0_rst(void);
-void p16_tmr0(void);
+void p16e_adc_rst(void);
+void p16e_adc(void);
 
-void p16_tmr1_rst(void);
-void p16_tmr1(void);
+void p16e_tmr0_rst(void);
+void p16e_tmr0(void);
+void p16e_tmr0_2(void);
 
-void p16_tmr2_rst(void);
-void p16_tmr2(void);
+void p16e_tmr1_rst(void);
+void p16e_tmr1(void);
 
-void p16_eeprom_rst(void);
-void p16_eeprom(void);
-void p16_eeprom_2(void);
+void p16e_tmr2_rst(void);
+void p16e_tmr2(void);
 
-void p16_wdt_rst(void);
-void p16_wdt(void);    
+void p16e_eeprom_rst(void);
+void p16e_eeprom(void);
+void p16e_eeprom_2(void);
 
-void p16_int_pin_rst(void); 
-void p16_int_pin(void);
+void p16e_wdt_rst(void);
+void p16e_wdt(void);    
 
-void p16_int_portb_rst(void);
-void p16_int_portb(void);
+void p16e_int_pin_rst(void); 
+void p16e_int_pin(void);
 
-void p16_uart_rst(void);
-#define p16_uart serial
+void p16e_int_portb_rst(void);
+void p16e_int_portb(void);
+
+void p16e_uart_rst(void);
+void p16e_uart_rst_2(void);
+#define p16e_uart serial
 
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* P16_PERIFERIC_H */
+#endif /* P16E_PERIFERIC_H */
 

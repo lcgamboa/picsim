@@ -23,49 +23,51 @@
    For e-mail suggestions :  lcgamboa@yahoo.com
    ######################################################################## */
 
-#ifndef P16_PERIFERIC_H
-#define P16_PERIFERIC_H
+#include<stdio.h>
+#include"../../include/picsim.h"
+#include"../../include/periferic18.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-#include"../../include/periferic16.h"
-    
-void p16_mssp_rst(void);
-void p16_mssp(void);
+extern const int fpw2_[];
 
-void p16_adc_rst(void);
-void p16_adc(void);
-
-void p16_tmr0_rst(void);
-void p16_tmr0(void);
-
-void p16_tmr1_rst(void);
-void p16_tmr1(void);
-
-void p16_tmr2_rst(void);
-void p16_tmr2(void);
-
-void p16_eeprom_rst(void);
-void p16_eeprom(void);
-void p16_eeprom_2(void);
-
-void p16_wdt_rst(void);
-void p16_wdt(void);    
-
-void p16_int_pin_rst(void); 
-void p16_int_pin(void);
-
-void p16_int_portb_rst(void);
-void p16_int_portb(void);
-
-void p16_uart_rst(void);
-#define p16_uart serial
-
-
-#ifdef __cplusplus
+void
+p18_wdt_rst(void)
+{
+ pic->twdt = 0;
+ pic->wdt = 0;
 }
-#endif
 
-#endif /* P16_PERIFERIC_H */
+void
+p18_wdt(void)
+{
+ if (pic->getconf (CFG_WDT) || ((*pic->P18map.WDTCON) & 0x01))
+  {
+   //     printf("WDT ON %f   %i  0x%02X\n",pic->twdt ,pic->wdt,(*pic->P18map.RCON));
 
+   pic->twdt += 4.0 / pic->freq;
+
+   if (pic->twdt > (1e-3 * fpw2_[(pic->config[1] & 0x0E00) >> 9]))
+    {
+     pic->twdt = 0;
+     pic->wdt++;
+
+     if (pic->wdt == pic->WDT_MS)
+      {
+       //reset
+       pic->wdt = 0;
+
+       if (pic->P18map.RCON)(*pic->P18map.RCON) &= ~0x08; //clear TO
+
+
+       if (pic->sleep == 1)
+        {
+         pic->sleep = 0;
+        }
+       else
+        {
+         pic_reset (0);
+        }
+
+      }
+    }
+  }
+}

@@ -26,7 +26,6 @@
 #include<stdio.h>
 #include"../include/picsim.h"
 #include"../include/periferic16.h"
-#include"p16/p16_periferic.h"
 
 
 const int fpw2[] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072, 262144, 524288};
@@ -110,16 +109,6 @@ periferic16_rst(void)
 {
  pic->debug = 0;
 
- p16_tmr0_rst ();
- p16_tmr1_rst ();
- p16_tmr2_rst ();
- p16_adc_rst ();
- p16_wdt_rst ();
- p16_eeprom_rst ();
- p16_mssp_rst ();
- p16_int_pin_rst();
- p16_int_portb_rst();
-     
  pic->p16latch[0] = 0;
  pic->p16latch[1] = 0;
  pic->p16latch[2] = 0;
@@ -141,8 +130,6 @@ periferic16_rst(void)
  pic->sstep = 0;
  pic->dbg = 5;
 
- pic->s_open = 1;
-
 }
 
 void
@@ -158,54 +145,8 @@ periferic16_step_in(void)
   }
 #endif
 
- //MSSP
- if (pic->P16map.SSPCON)
-  {
-   p16_mssp ();
-  }
+ pic->periferic ();
 
- //ADC
- if (pic->ADCCOUNT > 0)
-  {
-   p16_adc ();
-  }
-
- //INT
- p16_int_pin();
-
- //PORTB
- p16_int_portb();
-
- //TMR0
- p16_tmr0 ();
-
- if (pic->processor != P16F84A)
-  {
-   //TMR1
-   p16_tmr1 ();
-
-   //TMR2
-   p16_tmr2 ();
-  }
-
- //EEPROM
- if ((pic->processor == P16F628) || (pic->processor == P16F628A))
-  {
-   p16_eeprom ();
-  }
- else if ((pic->processor == P16F877) || (pic->processor == P16F877A))
-  {
-   p16_eeprom_2 ();
-  }
-
- //WDT
- if (pic->getconf (CFG_WDT))
-  {
-   p16_wdt ();
-  }
-
- if (pic->processor != P16F84A)
-  serial ();
 }
 
 void

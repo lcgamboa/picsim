@@ -1,5 +1,30 @@
+/* ########################################################################
+
+   PICsim - PIC simulator
+
+   ########################################################################
+
+   Copyright (c) : 2008-2020  Luis Claudio Gamboa Lopes
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2, or (at your option)
+   any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+   For e-mail suggestions :  lcgamboa@yahoo.com
+   ######################################################################## */
 
 #include "../../include/picsim.h"
+#include"../p16/p16_periferic.h"
 #include <string.h>
 
 void
@@ -101,6 +126,22 @@ PIC16F84A_reset(void)
  pic->int0 = 6;
  pic->int1 = 0;
  pic->int2 = 0;
+ 
+ p16_tmr0_rst ();
+ p16_wdt_rst ();
+ p16_eeprom_rst ();
+ p16_int_pin_rst();
+ p16_int_portb_rst();
+}
+
+void
+PIC16F84A_periferic(void)
+{
+  p16_int_pin();
+  p16_int_portb();
+  p16_tmr0 ();
+  p16_wdt ();
+  p16_eeprom ();
 }
 
 int
@@ -137,5 +178,6 @@ PIC16F84A_start(void)
  pic->reset = PIC16F84A_reset;
  pic->mmap = PIC16F84A_map;
  pic->getconf = PIC16F84A_getconf;
+ pic->periferic = PIC16F84A_periferic;
 }
 

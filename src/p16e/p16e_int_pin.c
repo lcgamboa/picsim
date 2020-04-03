@@ -23,49 +23,38 @@
    For e-mail suggestions :  lcgamboa@yahoo.com
    ######################################################################## */
 
-#ifndef P16_PERIFERIC_H
-#define P16_PERIFERIC_H
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-#include"../../include/periferic16.h"
-    
-void p16_mssp_rst(void);
-void p16_mssp(void);
-
-void p16_adc_rst(void);
-void p16_adc(void);
-
-void p16_tmr0_rst(void);
-void p16_tmr0(void);
-
-void p16_tmr1_rst(void);
-void p16_tmr1(void);
-
-void p16_tmr2_rst(void);
-void p16_tmr2(void);
-
-void p16_eeprom_rst(void);
-void p16_eeprom(void);
-void p16_eeprom_2(void);
-
-void p16_wdt_rst(void);
-void p16_wdt(void);    
-
-void p16_int_pin_rst(void); 
-void p16_int_pin(void);
-
-void p16_int_portb_rst(void);
-void p16_int_portb(void);
-
-void p16_uart_rst(void);
-#define p16_uart serial
+#include<stdio.h>
+#include"../../include/picsim.h"
+#include"../../include/periferic16e.h"
 
 
-#ifdef __cplusplus
+void
+p16e_int_pin_rst(void) 
+{ 
+  pic->int0v = 0;
+    //FIXME	
+  printf ("Incomplete: %s -> %s :%i\n", __func__,__FILE__, __LINE__);
 }
-#endif
 
-#endif /* P16_PERIFERIC_H */
+void
+p16e_int_pin(void) 
+{ 
+  //FIXME	
+  printf ("Incomplete: %s -> %s :%i\n", __func__,__FILE__, __LINE__);
+ /*
+ //INT
+ 
+    if((pic->pins[pic->int0-1].dir == PD_IN)&&(pic->pins[pic->int0-1].value  != pic->int0v))
+    {
+      if(((!pic->int0v) &&(pic->ram[P16E_OPTION] & 0x40))||((pic->int0v) && (!(pic->ram[P16E_OPTION] & 0x40))))
+      {
+         pic->ram[(0x0000)|(P16E_INTCON & 0x007F)]|=0x02;//INTF
+         pic->ram[(0x0080)|(P16E_INTCON & 0x007F)]|=0x02;
+         pic->ram[(0x0100)|(P16E_INTCON & 0x007F)]|=0x02;
+         pic->ram[(0x0180)|(P16E_INTCON & 0x007F)]|=0x02;
+      } 
+    } 
+    pic->int0v=pic->pins[pic->int0-1].value;
+  */
 
+}

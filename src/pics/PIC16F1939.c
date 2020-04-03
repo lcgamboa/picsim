@@ -1,5 +1,30 @@
+/* ########################################################################
+
+   PICsim - PIC simulator
+
+   ########################################################################
+
+   Copyright (c) : 2008-2020  Luis Claudio Gamboa Lopes
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2, or (at your option)
+   any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+   For e-mail suggestions :  lcgamboa@yahoo.com
+   ######################################################################## */
 
 #include "../../include/picsim.h"
+#include"../p16e/p16e_periferic.h"
 #include <string.h>
 
 void
@@ -315,6 +340,32 @@ PIC16F1939_reset(void)
  pic->int0 = 33;
  pic->int1 = 0;
  pic->int2 = 0;
+ 
+ p16e_tmr0_rst ();
+ p16e_tmr1_rst ();
+ p16e_tmr2_rst ();
+ p16e_adc_rst ();
+ p16e_wdt_rst ();
+ p16e_eeprom_rst ();
+ p16e_mssp_rst ();
+ p16e_int_pin_rst();
+ p16e_int_portb_rst();
+ p16e_uart_rst();
+}
+
+void
+PIC16F1939_periferic(void)
+{
+  //p16e_mssp ();
+  p16e_adc ();
+  //p16e_int_pin();
+  //p16e_int_portb();
+  p16e_tmr0 ();
+  p16e_wdt ();
+  //p16e_eeprom ();
+  p16e_tmr1 ();
+  p16e_tmr2 ();
+  p16e_uart ();
 }
 
 int
@@ -352,5 +403,7 @@ PIC16F1939_start(void)
  pic->reset = PIC16F1939_reset;
  pic->mmap = PIC16F1939_map;
  pic->getconf = PIC16F1939_getconf;
+ pic->periferic = PIC16F1939_periferic;
+ pic->interrupt = interrupt16E;
 }
 

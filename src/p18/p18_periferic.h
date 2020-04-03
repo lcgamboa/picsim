@@ -23,49 +23,54 @@
    For e-mail suggestions :  lcgamboa@yahoo.com
    ######################################################################## */
 
-#ifndef P16_PERIFERIC_H
-#define P16_PERIFERIC_H
+#ifndef P18_PERIFERIC_H
+#define P18_PERIFERIC_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include"../../include/periferic16.h"
+#include"../../include/periferic18.h"
     
-void p16_mssp_rst(void);
-void p16_mssp(void);
+void p18_mssp_rst(void);
+void p18_mssp(void);
 
-void p16_adc_rst(void);
-void p16_adc(void);
+void p18_adc_rst(void);
+void p18_adc(void);
+void p18_adc_2(void);
 
-void p16_tmr0_rst(void);
-void p16_tmr0(void);
+void p18_tmr0_rst(void);
+void p18_tmr0(void);
 
-void p16_tmr1_rst(void);
-void p16_tmr1(void);
+void p18_tmr1_rst(void);
+void p18_tmr1(void);
 
-void p16_tmr2_rst(void);
-void p16_tmr2(void);
+void p18_tmr2_rst(void);
+void p18_tmr2(void);
 
-void p16_eeprom_rst(void);
-void p16_eeprom(void);
-void p16_eeprom_2(void);
+void p18_tmr3_rst(void);
+void p18_tmr3(void);
 
-void p16_wdt_rst(void);
-void p16_wdt(void);    
+void p18_eeprom_rst(void);
+void p18_eeprom(void);
 
-void p16_int_pin_rst(void); 
-void p16_int_pin(void);
+void p18_wdt_rst(void);
+void p18_wdt(void);    
 
-void p16_int_portb_rst(void);
-void p16_int_portb(void);
+void p18_int_pin_rst(void); 
+void p18_int_pin(void);
 
-void p16_uart_rst(void);
-#define p16_uart serial
+void p18_int_portb_rst(void);
+void p18_int_portb(void);
+
+void p18_uart_rst(void);
+void p18_uart_rst_2(void);
+void p18_uart_rst_3(void);
+#define p18_uart serial
 
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* P16_PERIFERIC_H */
+#endif /* P18_PERIFERIC_H */
 

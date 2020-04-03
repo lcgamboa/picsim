@@ -1,5 +1,30 @@
+/* ########################################################################
+
+   PICsim - PIC simulator
+
+   ########################################################################
+
+   Copyright (c) : 2008-2020  Luis Claudio Gamboa Lopes
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2, or (at your option)
+   any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+   For e-mail suggestions :  lcgamboa@yahoo.com
+   ######################################################################## */
 
 #include "../../include/picsim.h"
+#include"../p18/p18_periferic.h"
 #include <string.h>
 
 void
@@ -272,6 +297,33 @@ PIC18F4620_reset(void)
   (*pic->P18map.ADCON1) |=0x07;
  }
  
+ 
+ p18_tmr0_rst ();
+ p18_tmr1_rst ();
+ p18_tmr2_rst ();
+ p18_tmr3_rst ();
+ p18_adc_rst ();
+ p18_wdt_rst ();
+ p18_eeprom_rst ();
+ p18_mssp_rst ();
+ p18_int_pin_rst();
+ p18_int_portb_rst();
+ p18_uart_rst();
+}
+void
+PIC18F4620_periferic(void)
+{
+  p18_mssp ();
+  p18_adc ();
+  p18_int_pin();
+  p18_int_portb();
+  p18_tmr0 ();
+  p18_wdt ();
+  p18_eeprom ();
+  p18_tmr1 ();
+  p18_tmr2 ();
+  p18_tmr3 ();
+  p18_uart ();
 }
 
 int
@@ -307,6 +359,7 @@ PIC18F4620_start(void)
  pic->WDT_MS = 4;
  pic->reset = PIC18F4620_reset;
  pic->mmap =  PIC18F4620_map;
-  pic->getconf = PIC18F4620_getconf;
+ pic->getconf = PIC18F4620_getconf;
+ pic->periferic = PIC18F4620_periferic;
 }
 

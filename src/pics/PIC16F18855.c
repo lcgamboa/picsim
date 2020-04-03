@@ -1,5 +1,30 @@
+/* ########################################################################
+
+   PICsim - PIC simulator
+
+   ########################################################################
+
+   Copyright (c) : 2008-2020  Luis Claudio Gamboa Lopes
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2, or (at your option)
+   any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+   For e-mail suggestions :  lcgamboa@yahoo.com
+   ######################################################################## */
 
 #include "../../include/picsim.h"
+#include"../p16e/p16e_periferic.h"
 #include <string.h>
 
 void
@@ -111,12 +136,10 @@ PIC16F18855_map(void)
  pic->P16Emap.LATA = &pic->ram[0x16];
  pic->P16Emap.LATB = &pic->ram[0x17];
  pic->P16Emap.LATC = &pic->ram[0x18];
- /*
  pic->P16Emap.TMR0L = &pic->ram[0x1C];
  pic->P16Emap.TMR0H = &pic->ram[0x1D];
  pic->P16Emap.T0CON0 = &pic->ram[0x1E];
  pic->P16Emap.T0CON1 = &pic->ram[0x1F];
- */
  pic->P16Emap.ADCON0 = &pic->ram[0x93];
  pic->P16Emap.ADCON1 = &pic->ram[0x94];
  /*
@@ -252,8 +275,8 @@ PIC16F18855_map(void)
  pic->P16Emap.CWG3AS0 = &pic->ram[0x692];
  pic->P16Emap.CWG3AS1 = &pic->ram[0x693];
  pic->P16Emap.CWG3STR = &pic->ram[0x694];
+  */ 
  pic->P16Emap.PIR0 = &pic->ram[0x70C];
- */
  pic->P16Emap.PIR1 = &pic->ram[0x70D];
  pic->P16Emap.PIR2 = &pic->ram[0x70E];
  /*
@@ -263,8 +286,8 @@ PIC16F18855_map(void)
  pic->P16Emap.PIR6 = &pic->ram[0x712];
  pic->P16Emap.PIR7 = &pic->ram[0x713];
  pic->P16Emap.PIR8 = &pic->ram[0x714];
+  */ 
  pic->P16Emap.PIE0 = &pic->ram[0x716];
- */
  pic->P16Emap.PIE1 = &pic->ram[0x717];
  pic->P16Emap.PIE2 = &pic->ram[0x718];
  /*
@@ -613,6 +636,32 @@ PIC16F18855_reset(void)
  pic->int1 = 0;
  pic->int2 = 0;
   */ 
+ 
+ p16e_tmr0_rst ();
+ p16e_tmr1_rst ();
+ p16e_tmr2_rst ();
+ p16e_adc_rst ();
+ p16e_wdt_rst ();
+ p16e_eeprom_rst ();
+ p16e_mssp_rst ();
+ p16e_int_pin_rst();
+ p16e_int_portb_rst();
+ p16e_uart_rst_2();
+}
+
+void
+PIC16F18855_periferic(void)
+{
+  //p16e_mssp ();
+  p16e_adc ();
+  //p16e_int_pin();
+  //p16e_int_portb();
+  //p16e_tmr0_2 ();
+  p16e_wdt ();
+  //p16e_eeprom ();
+  p16e_tmr1 ();
+  p16e_tmr2 ();
+  p16e_uart ();
 }
 
 int
@@ -649,5 +698,7 @@ PIC16F18855_start(void)
  pic->reset = PIC16F18855_reset;
  pic->mmap = PIC16F18855_map;
  pic->getconf = PIC16F18855_getconf;
+ pic->periferic = PIC16F18855_periferic;
+ pic->interrupt = interrupt16E_2;
 }
 
