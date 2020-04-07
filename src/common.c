@@ -116,8 +116,8 @@ pic_init(_pic * pic_, int processor, const char * fname, int lrom, float freq)
  pic->processor = processor;
  pic->family = getfprocbynumber (processor);
 
- pic->pkg=PDIP;
- 
+ pic->pkg = PDIP;
+
  switch (pic->family)
   {
   case P16:
@@ -191,7 +191,7 @@ pic_init(_pic * pic_, int processor, const char * fname, int lrom, float freq)
      break;
     case P18F27K40:
      PIC18F27K40_start ();
-     break; 
+     break;
     default:
      printf ("unknown processor 0x%04X!\n", processor);
      return 0;
@@ -345,14 +345,22 @@ pic_reset(int flags)
    if (pic->P16Emap.TRISD)(*pic->P16Emap.TRISD) = 0xFF;
    if (pic->P16Emap.TRISE)(*pic->P16Emap.TRISE) = 0x07;
    if (pic->P16Emap.PR2)(*pic->P16Emap.PR2) = 0xFF;
+
+   (*pic->P16Emap.ANSELA) = 0xFF;
+   (*pic->P16Emap.ANSELB) = 0xFF;
+   if (pic->P16Emap.ANSELC)(*pic->P16Emap.ANSELC) = 0xFF;
+   if (pic->P16Emap.ANSELD)(*pic->P16Emap.ANSELD) = 0xFF;
+   if (pic->P16Emap.ANSELE)(*pic->P16Emap.ANSELE) = 0xFF;
+
+
    periferic16E_rst ();
 
    for (i = 0; i < pic->ADCCOUNT; i++)
     {
-     if(pic->adc[i])
-     {	     
+     if (pic->adc[i])
+      {
        pic->pins[pic->adc[i] - 1].ptype = PT_ANALOG;
-     }
+      }
     }
    break;
   case P18:
@@ -364,12 +372,29 @@ pic_reset(int flags)
    *pic->P18map.TRISA = 0xFF;
    *pic->P18map.TRISB = 0xFF;
    *pic->P18map.TRISC = 0xFF;
-   if(pic->P18map.TRISD)*pic->P18map.TRISD = 0xFF;
-   if(pic->P18map.TRISE)*pic->P18map.TRISE = 0x07;
-   if(pic->P18map.PR2)*pic->P18map.PR2 = 0xFF;
+   if (pic->P18map.TRISD)*pic->P18map.TRISD = 0xFF;
+   if (pic->P18map.TRISE)*pic->P18map.TRISE = 0x07;
+   if (pic->P18map.PR2)*pic->P18map.PR2 = 0xFF;
    *pic->P18map.STKPTR = 0x00;
 
+   if (pic->P18map.ANSELA)*pic->P18map.ANSELA = 0xFF;
+   if (pic->P18map.ANSELB)*pic->P18map.ANSELB = 0xFF;
+   if (pic->P18map.ANSELC)*pic->P18map.ANSELC = 0xFF;
+   if (pic->P18map.ANSELD)*pic->P18map.ANSELD = 0xFF;
+   if (pic->P18map.ANSELE)*pic->P18map.ANSELE = 0xFF;
+
    periferic18_rst ();
+
+   if (pic->P18map.ANSELA)
+    {
+     for (i = 0; i < pic->ADCCOUNT; i++)
+      {
+       if (pic->adc[i])
+        {
+         pic->pins[pic->adc[i] - 1].ptype = PT_ANALOG;
+        }
+      }
+    }
    break;
   default:
    break;

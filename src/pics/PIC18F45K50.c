@@ -77,11 +77,13 @@ PIC18F45K50_map(void)
  pic->P18map.SRCON0 = &pic->ram[0xF58];
  pic->P18map.CCPTMRS = &pic->ram[0xF59];
  pic->P18map.VREGCON = &pic->ram[0xF5A];
+  */ 
  pic->P18map.ANSELA = &pic->ram[0xF5B];
  pic->P18map.ANSELB = &pic->ram[0xF5C];
  pic->P18map.ANSELC = &pic->ram[0xF5D];
  pic->P18map.ANSELD = &pic->ram[0xF5E];
  pic->P18map.ANSELE = &pic->ram[0xF5F];
+ /*
  pic->P18map.UCON = &pic->ram[0xF60];
  pic->P18map.USTAT = &pic->ram[0xF61];
  pic->P18map.UCFG = &pic->ram[0xF62];
@@ -417,15 +419,6 @@ PIC18F45K50_reset(void)
  pic->int0 = 33;
  pic->int1 = 34;
  pic->int2 = 35;
-
- if (pic->config[2]&0x0200) //PBADEN
-  {
-   (*pic->P18map.ADCON1) &= 0xF0;
-  }
- else
-  {
-   (*pic->P18map.ADCON1) |= 0x07;
-  }
  
  p18_tmr0_rst ();
  p18_tmr1_rst ();

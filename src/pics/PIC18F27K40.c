@@ -160,7 +160,9 @@ PIC18F27K40_map(void)
  pic->P18map.SLRCONA = &pic->ram[0xF0E];
  pic->P18map.ODCONA = &pic->ram[0xF0F];
  pic->P18map.WPUA = &pic->ram[0xF10];
+  */ 
  pic->P18map.ANSELA = &pic->ram[0xF11];
+ /*
  pic->P18map.IOCBF = &pic->ram[0xF12];
  pic->P18map.IOCBN = &pic->ram[0xF13];
  pic->P18map.IOCBP = &pic->ram[0xF14];
@@ -168,7 +170,9 @@ PIC18F27K40_map(void)
  pic->P18map.SLRCONB = &pic->ram[0xF16];
  pic->P18map.ODCONB = &pic->ram[0xF17];
  pic->P18map.WPUB = &pic->ram[0xF18];
+  */ 
  pic->P18map.ANSELB = &pic->ram[0xF19];
+ /*
  pic->P18map.IOCCF = &pic->ram[0xF1A];
  pic->P18map.IOCCN = &pic->ram[0xF1B];
  pic->P18map.IOCCP = &pic->ram[0xF1C];
@@ -176,7 +180,9 @@ PIC18F27K40_map(void)
  pic->P18map.SLRCONC = &pic->ram[0xF1E];
  pic->P18map.ODCONC = &pic->ram[0xF1F];
  pic->P18map.WPUC = &pic->ram[0xF20];
+  */ 
  pic->P18map.ANSELC = &pic->ram[0xF21];
+ /*
  pic->P18map.IOCEF = &pic->ram[0xF27];
  pic->P18map.IOCEN = &pic->ram[0xF28];
  pic->P18map.IOCEP = &pic->ram[0xF29];
@@ -548,14 +554,6 @@ PIC18F27K40_reset(void)
  pic->int1 = 14;
  pic->int2 = 15;
 
- if (pic->config[2]&0x0200) //PBADEN
-  {
-   (*pic->P18map.ADCON1) &= 0xF0;
-  }
- else
-  {
-   (*pic->P18map.ADCON1) |= 0x07;
-  }
  p18_tmr0_rst ();
  p18_tmr1_rst ();
  p18_tmr2_rst ();
