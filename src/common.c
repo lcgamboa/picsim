@@ -332,9 +332,9 @@ pic_reset(int flags)
 
    if (abs (flags) == 1)
     {
+     unsigned short offset = (sfr_addr (pic->P16Emap.STATUS) & 0x007F);
      for (int bk = 0; bk < 32; bk++)
       {
-       unsigned short offset = (sfr_addr (pic->P16Emap.STATUS) & 0x007F);
        pic->ram[(0x0080 * bk) | (offset)] = 0x18;
       }
     }

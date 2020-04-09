@@ -80,8 +80,8 @@ p16e_adc(void)
 
      pic->adcstep = 0;
 
-     // printf("AD0=%02X AD1=%02X\n",pic->ram[ADCON0],pic->ram[ADCON1]);
-     // printf("ADC conversion channel (%i)=%#04X (%08.3f)\n",chn,dval,val); 
+      //printf("AD0=%02X AD1=%02X\n",(*pic->P16Emap.ADCON0),(*pic->P16Emap.ADCON1));
+      //printf("ADC conversion channel (%i)=%#04X (%08.3f)\n",chn,dval,val); 
     }
   }
  else
@@ -96,7 +96,7 @@ p16e_adc(void)
     {
      if (pic->pins[pic->adc[i] - 1].port == pic->P16Emap.PORTA)
       {
-       if ((*pic->P16Emap.ANSELA) & pic->pins[pic->adc[i] - 1].pord)
+       if ((*pic->P16Emap.ANSELA) & (1<<pic->pins[pic->adc[i] - 1].pord))
         {
          pic->pins[pic->adc[i] - 1].ptype = PT_ANALOG;
         }
@@ -114,7 +114,7 @@ p16e_adc(void)
     {
      if (pic->pins[pic->adc[i] - 1].port == pic->P16Emap.PORTB)
       {
-       if ((*pic->P16Emap.ANSELB) & pic->pins[pic->adc[i] - 1].pord)
+       if ((*pic->P16Emap.ANSELB) & (1<<pic->pins[pic->adc[i] - 1].pord))
         {
          pic->pins[pic->adc[i] - 1].ptype = PT_ANALOG;
         }
@@ -132,7 +132,7 @@ p16e_adc(void)
     {
      if (pic->pins[pic->adc[i] - 1].port == pic->P16Emap.PORTC)
       {
-       if ((*pic->P16Emap.ANSELC) & pic->pins[pic->adc[i] - 1].pord)
+       if ((*pic->P16Emap.ANSELC) & (1<<pic->pins[pic->adc[i] - 1].pord))
         {
          pic->pins[pic->adc[i] - 1].ptype = PT_ANALOG;
         }
@@ -150,7 +150,7 @@ p16e_adc(void)
     {
      if (pic->pins[pic->adc[i] - 1].port == pic->P16Emap.PORTD)
       {
-       if ((*pic->P16Emap.ANSELD) & pic->pins[pic->adc[i] - 1].pord)
+       if ((*pic->P16Emap.ANSELD) & (1<<pic->pins[pic->adc[i] - 1].pord))
         {
          pic->pins[pic->adc[i] - 1].ptype = PT_ANALOG;
         }
@@ -168,7 +168,7 @@ p16e_adc(void)
     {
      if (pic->pins[pic->adc[i] - 1].port == pic->P16Emap.PORTE)
       {
-       if ((*pic->P16Emap.ANSELE) & pic->pins[pic->adc[i] - 1].pord)
+       if ((*pic->P16Emap.ANSELE) & (1<<pic->pins[pic->adc[i] - 1].pord))
         {
          pic->pins[pic->adc[i] - 1].ptype = PT_ANALOG;
         }

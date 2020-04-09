@@ -277,7 +277,13 @@ unsigned char * ADRESH;
 
 unsigned char * WDTCON0;
 
-
+unsigned char * EECON2;
+unsigned char * EECON1;
+unsigned char * EEADRL; 
+unsigned char * EEADRH; 
+unsigned char * EEDATL; 
+unsigned char * EEDATH;
+ 
 /*    
 unsigned char * CCP1CAP;
 unsigned char * CCP2CAP; 
@@ -753,9 +759,6 @@ unsigned char * SSPMSK;
 unsigned char * SSPADD;
 unsigned char * SSPBUF;
 unsigned char * BAUDCON; //duplicated ?
-
-unsigned char * EECON2;
-unsigned char * EECON1;
 
 unsigned char * APFCON;
 unsigned char * SRCON1;

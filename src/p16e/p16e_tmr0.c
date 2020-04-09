@@ -51,13 +51,12 @@ p16e_tmr0(void)
      //Without prescaler  
      if ((((*pic->P16Emap.TMR0) + 1) == 0x100))
       {
-       pic->ram[(0x0000) | (sfr_addr (pic->P16Emap.INTCON) & 0x007F)] |= 0x04; //T0IF
-       pic->ram[(0x0080) | (sfr_addr (pic->P16Emap.INTCON) & 0x007F)] |= 0x04;
-       if (pic->processor != P16F84A)
+       unsigned short offset = (sfr_addr (pic->P16Emap.INTCON) & 0x007F);
+       for (int bk = 0; bk < 32; bk++)
         {
-         pic->ram[(0x0100) | (sfr_addr (pic->P16Emap.INTCON) & 0x007F)] |= 0x04;
-         pic->ram[(0x0180) | (sfr_addr (pic->P16Emap.INTCON) & 0x007F)] |= 0x04;
+         pic->ram[(0x0080 * bk) | (offset)] |= 0x04; //TMR0IF
         }
+
       }
      (*pic->P16Emap.TMR0)++;
      pic->cp0 = 0;
@@ -69,12 +68,10 @@ p16e_tmr0(void)
       {
        if ((((*pic->P16Emap.TMR0) + 1) == 0x100))
         {
-         pic->ram[(0x0000) | (sfr_addr (pic->P16Emap.INTCON) & 0x007F)] |= 0x04; //T0IF
-         pic->ram[(0x0080) | (sfr_addr (pic->P16Emap.INTCON) & 0x007F)] |= 0x04;
-         if (pic->processor != P16F84A)
+         unsigned short offset = (sfr_addr (pic->P16Emap.INTCON) & 0x007F);
+         for (int bk = 0; bk < 32; bk++)
           {
-           pic->ram[(0x0100) | (sfr_addr (pic->P16Emap.INTCON) & 0x007F)] |= 0x04;
-           pic->ram[(0x0180) | (sfr_addr (pic->P16Emap.INTCON) & 0x007F)] |= 0x04;
+           pic->ram[(0x0080 * bk) | (offset)] |= 0x04; //TMR0IF
           }
         }
        (*pic->P16Emap.TMR0)++;

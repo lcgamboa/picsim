@@ -40,12 +40,10 @@ PIC16F1939_map(void)
  pic->P16Emap.TMR1H = &pic->ram[0x17];
  pic->P16Emap.ADRESL = &pic->ram[0x9B];
  pic->P16Emap.ADRESH = &pic->ram[0x9C];
- /*
  pic->P16Emap.EEADRL = &pic->ram[0x191];
  pic->P16Emap.EEADRH = &pic->ram[0x192];
  pic->P16Emap.EEDATL = &pic->ram[0x193];
  pic->P16Emap.EEDATH = &pic->ram[0x194];
-  */ 
  pic->P16Emap.SP1BRGL = &pic->ram[0x19B];
  pic->P16Emap.SP1BRGH = &pic->ram[0x19C];
  pic->P16Emap.CCPR1L = &pic->ram[0x291];
@@ -125,8 +123,8 @@ PIC16F1939_map(void)
  pic->P16Emap.ANSELB = &pic->ram[0x18D];
  pic->P16Emap.ANSELD = &pic->ram[0x18F];
  pic->P16Emap.ANSELE = &pic->ram[0x190];
- //pic->P16Emap.EECON1 = &pic->ram[0x195];
- //pic->P16Emap.EECON2 = &pic->ram[0x196];
+ pic->P16Emap.EECON1 = &pic->ram[0x195];
+ pic->P16Emap.EECON2 = &pic->ram[0x196];
  pic->P16Emap.RCREG = &pic->ram[0x199];
  pic->P16Emap.TXREG = &pic->ram[0x19A];
  pic->P16Emap.RCSTA = &pic->ram[0x19D];
@@ -362,7 +360,7 @@ PIC16F1939_periferic(void)
   //p16e_int_portb();
   p16e_tmr0 ();
   p16e_wdt ();
-  //p16e_eeprom ();
+  p16e_eeprom ();
   p16e_tmr1 ();
   p16e_tmr2 ();
   p16e_uart ();
