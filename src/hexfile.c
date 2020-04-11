@@ -119,7 +119,7 @@ read_ihx(const char * fname, int leeprom)
                {
                 addrx = (((addrh << 16) | addr) + bc - 0x4200) / 2;
                if (addrx < pic->EEPROMSIZE * 2)
-                 pic->eeprom[addrx/2] = parse_hex (line + 9 + (bc * 2), 2);
+                 pic->eeprom[addrx] = parse_hex (line + 9 + (bc * 2), 2);
                }
             }
            else
