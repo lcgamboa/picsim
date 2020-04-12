@@ -133,14 +133,14 @@ PIC16F1939_map(void)
  pic->P16Emap.BAUDCON = &pic->ram[0x19F];
  pic->P16Emap.WPUB = &pic->ram[0x20D];
  pic->P16Emap.WPUE = &pic->ram[0x210];
- pic->P16Emap.SSPBUF = &pic->ram[0x211];
- pic->P16Emap.SSPADD = &pic->ram[0x212];
- pic->P16Emap.SSPMSK = &pic->ram[0x213];
- pic->P16Emap.SSPSTAT = &pic->ram[0x214];
- pic->P16Emap.SSPCON1 = &pic->ram[0x215];
- pic->P16Emap.SSPCON2 = &pic->ram[0x216];
- pic->P16Emap.SSPCON3 = &pic->ram[0x217];
- */
+  */ 
+ pic->P16Emap.SSP1BUF = &pic->ram[0x211];
+ pic->P16Emap.SSP1ADD = &pic->ram[0x212];
+ //pic->P16Emap.SSPMSK = &pic->ram[0x213];
+ pic->P16Emap.SSP1STAT = &pic->ram[0x214];
+ pic->P16Emap.SSP1CON1 = &pic->ram[0x215];
+ pic->P16Emap.SSP1CON2 = &pic->ram[0x216];
+ //pic->P16Emap.SSPCON3 = &pic->ram[0x217];
  pic->P16Emap.CCP1CON = &pic->ram[0x293];
  /*
  pic->P16Emap.PWM1CON = &pic->ram[0x294];
@@ -354,7 +354,7 @@ PIC16F1939_reset(void)
 void
 PIC16F1939_periferic(void)
 {
-  //p16e_mssp ();
+  p16e_mssp ();
   p16e_adc ();
   //p16e_int_pin();
   //p16e_int_portb();

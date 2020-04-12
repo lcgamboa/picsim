@@ -284,7 +284,16 @@ unsigned char * EEADRH;
 unsigned char * EEDATL; 
 unsigned char * EEDATH;
  
+
+unsigned char * SSP1STAT;
+unsigned char * SSP1CON2;
+unsigned char * SSP1CON1;
+unsigned char * SSP1BUF;
+unsigned char * SSP1ADD;
+
+
 /*    
+unsigned char * SSPCON3;
 unsigned char * CCP1CAP;
 unsigned char * CCP2CAP; 
 unsigned char * WDTCON;
@@ -375,6 +384,12 @@ unsigned char * BAUD1CON;
 unsigned char * WPUA;
 unsigned char * WPUB;
 unsigned char * WPUC;
+
+
+unsigned char * SSPMSK;
+
+
+unsigned char * BAUDCON; //duplicated ?
 unsigned char * SSP1BUF;
 unsigned char * SSP1ADD;
 unsigned char * SSP1MSK;
@@ -751,15 +766,6 @@ unsigned char * PWM2CON;
 unsigned char * PSTR1CON;
 unsigned char * CCP1AS;
 unsigned char * PWM1CON;
-unsigned char * SSPCON3;
-unsigned char * SSPCON2;
-unsigned char * SSPCON1;
-unsigned char * SSPSTAT;
-unsigned char * SSPMSK;
-unsigned char * SSPADD;
-unsigned char * SSPBUF;
-unsigned char * BAUDCON; //duplicated ?
-
 unsigned char * APFCON;
 unsigned char * SRCON1;
 unsigned char * SRCON0;

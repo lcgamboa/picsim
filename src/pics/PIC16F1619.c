@@ -221,12 +221,14 @@ PIC16F1619_map(void)
  pic->P16Emap.WPUA = &pic->ram[0x20C];
  pic->P16Emap.WPUB = &pic->ram[0x20D];
  pic->P16Emap.WPUC = &pic->ram[0x20E];
+  */ 
  pic->P16Emap.SSP1BUF = &pic->ram[0x211];
  pic->P16Emap.SSP1ADD = &pic->ram[0x212];
- pic->P16Emap.SSP1MSK = &pic->ram[0x213];
+ //pic->P16Emap.SSP1MSK = &pic->ram[0x213];
  pic->P16Emap.SSP1STAT = &pic->ram[0x214];
  pic->P16Emap.SSP1CON1 = &pic->ram[0x215];
  pic->P16Emap.SSP1CON2 = &pic->ram[0x216];
+ /*
  pic->P16Emap.SSP1CON3 = &pic->ram[0x217];
  pic->P16Emap.ODCONA = &pic->ram[0x28C];
  pic->P16Emap.ODCONB = &pic->ram[0x28D];
@@ -538,7 +540,7 @@ PIC16F1619_reset(void)
 void
 PIC16F1619_periferic(void)
 {
-  //p16e_mssp ();
+  p16e_mssp ();
   p16e_adc ();
   //p16e_int_pin();
   //p16e_int_portb();

@@ -160,14 +160,14 @@ PIC16F18855_map(void)
  pic->P16Emap.TX1REG = &pic->ram[0x11A];
  pic->P16Emap.RC1STA = &pic->ram[0x11D];
  pic->P16Emap.TX1STA = &pic->ram[0x11E];
- /*
- pic->P16Emap.BAUD1CON = &pic->ram[0x11F];
+// pic->P16Emap.BAUD1CON = &pic->ram[0x11F];
  pic->P16Emap.SSP1BUF = &pic->ram[0x18C];
  pic->P16Emap.SSP1ADD = &pic->ram[0x18D];
- pic->P16Emap.SSP1MSK = &pic->ram[0x18E];
+ //pic->P16Emap.SSP1MSK = &pic->ram[0x18E];
  pic->P16Emap.SSP1STAT = &pic->ram[0x18F];
  pic->P16Emap.SSP1CON1 = &pic->ram[0x190];
  pic->P16Emap.SSP1CON2 = &pic->ram[0x191];
+ /*
  pic->P16Emap.SSP1CON3 = &pic->ram[0x192];
  pic->P16Emap.SSP2BUF = &pic->ram[0x196];
  pic->P16Emap.SSP2ADD = &pic->ram[0x197];
@@ -685,7 +685,7 @@ PIC16F18855_reset(void)
 void
 PIC16F18855_periferic(void)
 {
-  //p16e_mssp ();
+  p16e_mssp ();
   p16e_adc ();
   //p16e_int_pin();
   //p16e_int_portb();
