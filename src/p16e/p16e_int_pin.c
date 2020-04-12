@@ -27,34 +27,28 @@
 #include"../../include/picsim.h"
 #include"../../include/periferic16e.h"
 
-
 void
-p16e_int_pin_rst(void) 
-{ 
-  pic->int0v = 0;
-    //FIXME	
-  printf ("Incomplete: %s -> %s :%i\n", __func__,__FILE__, __LINE__);
+p16e_int_pin_rst(void)
+{
+ pic->int0v = 0;
 }
 
 void
-p16e_int_pin(void) 
-{ 
-  //FIXME	
-  printf ("Incomplete: %s -> %s :%i\n", __func__,__FILE__, __LINE__);
- /*
+p16e_int_pin(void)
+{
  //INT
- 
-    if((pic->pins[pic->int0-1].dir == PD_IN)&&(pic->pins[pic->int0-1].value  != pic->int0v))
+
+ if ((pic->pins[pic->int0 - 1].dir == PD_IN)&&(pic->pins[pic->int0 - 1].value != pic->int0v))
+  {
+   if (((!pic->int0v) &&((*pic->P16Emap.OPTION_REG) & 0x40)) || ((pic->int0v) && (!((*pic->P16Emap.OPTION_REG) & 0x40))))
     {
-      if(((!pic->int0v) &&(pic->ram[P16E_OPTION] & 0x40))||((pic->int0v) && (!(pic->ram[P16E_OPTION] & 0x40))))
+     unsigned short offset = (sfr_addr (pic->P16Emap.INTCON) & 0x007F);
+     for (int bk = 0; bk < 32; bk++)
       {
-         pic->ram[(0x0000)|(P16E_INTCON & 0x007F)]|=0x02;//INTF
-         pic->ram[(0x0080)|(P16E_INTCON & 0x007F)]|=0x02;
-         pic->ram[(0x0100)|(P16E_INTCON & 0x007F)]|=0x02;
-         pic->ram[(0x0180)|(P16E_INTCON & 0x007F)]|=0x02;
-      } 
-    } 
-    pic->int0v=pic->pins[pic->int0-1].value;
-  */
+       pic->ram[(0x0080 * bk) | (offset)] |= 0x02; //INTF
+      }
+    }
+  }
+ pic->int0v = pic->pins[pic->int0 - 1].value;
 
 }

@@ -160,9 +160,11 @@ PIC16F1939_map(void)
  pic->P16Emap.PSTR3CON = &pic->ram[0x316];
  pic->P16Emap.CCP4CON = &pic->ram[0x31A];
  pic->P16Emap.CCP5CON = &pic->ram[0x31E];
+  */ 
  pic->P16Emap.IOCBP = &pic->ram[0x394];
  pic->P16Emap.IOCBN = &pic->ram[0x395];
  pic->P16Emap.IOCBF = &pic->ram[0x396];
+ /*
  pic->P16Emap.TMR4 = &pic->ram[0x415];
  pic->P16Emap.PR4 = &pic->ram[0x416];
  pic->P16Emap.T4CON = &pic->ram[0x417];
@@ -356,8 +358,8 @@ PIC16F1939_periferic(void)
 {
   p16e_mssp ();
   p16e_adc ();
-  //p16e_int_pin();
-  //p16e_int_portb();
+  p16e_int_pin();
+  p16e_int_portb();
   p16e_tmr0 ();
   p16e_wdt ();
   p16e_eeprom ();

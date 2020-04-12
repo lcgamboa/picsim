@@ -31,48 +31,45 @@ void
 p16e_int_portb_rst(void)
 {
  pic->portbm = 0;
-   //FIXME	
-  printf ("Incomplete: %s -> %s :%i\n", __func__,__FILE__, __LINE__);
 }
 
 void
 p16e_int_portb(void)
 {
-  //FIXME	
-  printf ("Incomplete: %s -> %s :%i\n", __func__,__FILE__, __LINE__);
-  
-  /*
- unsigned char temp;
+
+unsigned char temp;
  
- temp=(*pic->P16Emap.TRISB)&0xF0;
- if(((*pic->P16Emap.PORTB)&temp) != (pic->portb&temp)) 
- {
-   pic->portbm=1;
- }
+temp=(*pic->P16Emap.TRISB)&&(*pic->P16Emap.IOCBP)&&(*pic->P16Emap.IOCBN);
 
+if(((*pic->P16Emap.PORTB)&temp) != (pic->portb&temp)) 
+{
+  pic->portbm=1;
+}
+  
 
- if(pic->rram == P16E_PORTB)
- {
-   pic->portbm=0;
+ if (pic->rram == sfr_addr(pic->P16Emap.PORTB))
+  {
+   pic->portbm = 0;
    //Only disable mismatch
    //pic->ram[(0x0000)|(INTCON & 0x007F)]&=~0x01;//RBIF
    //pic->ram[(0x0080)|(INTCON & 0x007F)]&=~0x01;
    //pic->ram[(0x0100)|(INTCON & 0x007F)]&=~0x01;
    //pic->ram[(0x0180)|(INTCON & 0x007F)]&=~0x01;
+  }
 
- }
+ if (pic->portbm)
+  {
+   //FIXME
+   
+   //(*pic->P16Emap.IOCBF)=
+   
+   unsigned short offset = (sfr_addr (pic->P16Emap.INTCON) & 0x007F);
+   for (int bk = 0; bk < 32; bk++)
+    {
+     pic->ram[(0x0080 * bk) | (offset)] |= 0x01; //IOCIF
+    }
+  }
 
- if(pic->portbm)
- {
-   pic->ram[(0x0000)|(P16E_INTCON & 0x007F)]|=0x01;//RBIF
-   pic->ram[(0x0080)|(P16E_INTCON & 0x007F)]|=0x01;
-   if(pic->processor != P16F84A)
-   {
-     pic->ram[(0x0100)|(P16E_INTCON & 0x007F)]|=0x01;
-     pic->ram[(0x0180)|(P16E_INTCON & 0x007F)]|=0x01;
-   }
- }  
 
-  */
 
 }

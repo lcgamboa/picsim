@@ -192,6 +192,7 @@ unsigned char * WREG;
 unsigned char * PCLATH;
 unsigned char * INTCON;
 
+//SHADOW
 unsigned char * STATUS_SHAD;
 unsigned char * WREG_SHAD;
 unsigned char * BSR_SHAD;
@@ -200,11 +201,13 @@ unsigned char * FSR0L_SHAD;
 unsigned char * FSR0H_SHAD;
 unsigned char * FSR1L_SHAD;
 unsigned char * FSR1H_SHAD;
+
 unsigned char * STKPTR;
 unsigned char * TOSL;
 unsigned char * TOSH;
 unsigned char * OPTION_REG;
 
+//INTERRUPTS
 unsigned char * PIR0;
 unsigned char * PIR1;
 unsigned char * PIR2;
@@ -212,6 +215,7 @@ unsigned char * PIE0;
 unsigned char * PIE1;
 unsigned char * PIE2;
 
+//IO
 unsigned char * PORTA;
 unsigned char * PORTB;
 unsigned char * PORTC;
@@ -233,6 +237,7 @@ unsigned char * ANSELC;
 unsigned char * ANSELD;
 unsigned char * ANSELE;
 
+//USART
 unsigned char * RC1REG;
 unsigned char * TX1REG;
 unsigned char * RC1STA;
@@ -245,19 +250,19 @@ unsigned char * RCSTA;
 unsigned char * TXREG;
 unsigned char * RCREG;
 
-
+//TMR0
 unsigned char * TMR0; 
-
 unsigned char * T0CON0;
 unsigned char * T0CON1;
 unsigned char * TMR0L;
 unsigned char * TMR0H; 
 
-
+//TMR1
 unsigned char * T1CON;
 unsigned char * TMR1L;
 unsigned char * TMR1H;
 
+//CCP
 unsigned char * CCP1CON;
 unsigned char * CCP2CON;
 unsigned char * CCPR1L;
@@ -265,18 +270,21 @@ unsigned char * CCPR1H;
 unsigned char * CCPR2L;
 unsigned char * CCPR2H;
 
+//TMR2
 unsigned char * T2CON;
 unsigned char * TMR2;
 unsigned char * PR2;
 
-
+//ADC
 unsigned char * ADCON0;
 unsigned char * ADCON1;
 unsigned char * ADRESL;
 unsigned char * ADRESH;
 
+//WDT
 unsigned char * WDTCON0;
 
+//EEPROM
 unsigned char * EECON2;
 unsigned char * EECON1;
 unsigned char * EEADRL; 
@@ -284,13 +292,17 @@ unsigned char * EEADRH;
 unsigned char * EEDATL; 
 unsigned char * EEDATH;
  
-
+//MSSP
 unsigned char * SSP1STAT;
 unsigned char * SSP1CON2;
 unsigned char * SSP1CON1;
 unsigned char * SSP1BUF;
 unsigned char * SSP1ADD;
 
+//INTERRUPT-ON-CHANGE PORTB
+unsigned char * IOCBP;
+unsigned char * IOCBN;
+unsigned char * IOCBF;
 
 /*    
 unsigned char * SSPCON3;
@@ -690,9 +702,6 @@ unsigned char * CCDPA;
 unsigned char * ODCONB;
 unsigned char * SLRCONB;
 unsigned char * INLVLB;
-unsigned char * IOCBP;
-unsigned char * IOCBN;
-unsigned char * IOCBF;
 unsigned char * CCDNB;
 unsigned char * CCDPB;
 

@@ -249,9 +249,11 @@ PIC16F1619_map(void)
  pic->P16Emap.IOCAP = &pic->ram[0x391];
  pic->P16Emap.IOCAN = &pic->ram[0x392];
  pic->P16Emap.IOCAF = &pic->ram[0x393];
+  */
  pic->P16Emap.IOCBP = &pic->ram[0x394];
  pic->P16Emap.IOCBN = &pic->ram[0x395];
  pic->P16Emap.IOCBF = &pic->ram[0x396];
+ /*
  pic->P16Emap.IOCCP = &pic->ram[0x397];
  pic->P16Emap.IOCCN = &pic->ram[0x398];
  pic->P16Emap.IOCCF = &pic->ram[0x399];
@@ -542,8 +544,8 @@ PIC16F1619_periferic(void)
 {
   p16e_mssp ();
   p16e_adc ();
-  //p16e_int_pin();
-  //p16e_int_portb();
+  p16e_int_pin();
+  p16e_int_portb();
   p16e_tmr0 ();
   p16e_wdt ();
   //p16e_eeprom ();

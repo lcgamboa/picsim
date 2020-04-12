@@ -472,9 +472,11 @@ PIC16F18855_map(void)
  pic->P16Emap.ODCONB = &pic->ram[0xF45];
  pic->P16Emap.SLRCONB = &pic->ram[0xF46];
  pic->P16Emap.INLVLB = &pic->ram[0xF47];
+  */ 
  pic->P16Emap.IOCBP = &pic->ram[0xF48];
  pic->P16Emap.IOCBN = &pic->ram[0xF49];
  pic->P16Emap.IOCBF = &pic->ram[0xF4A];
+ /*
  pic->P16Emap.CCDNB = &pic->ram[0xF4B];
  pic->P16Emap.CCDPB = &pic->ram[0xF4C];
  */
@@ -688,7 +690,7 @@ PIC16F18855_periferic(void)
   p16e_mssp ();
   p16e_adc ();
   //p16e_int_pin();
-  //p16e_int_portb();
+  p16e_int_portb();
   p16e_tmr0_2 ();
   p16e_wdt ();
   //p16e_eeprom ();
