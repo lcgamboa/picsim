@@ -118,7 +118,7 @@ read_ihx(const char * fname, int leeprom)
               for (bc = 0; bc < nbytes; bc += 2)
                {
                 addrx = (((addrh << 16) | addr) + bc - 0x4200) / 2;
-               if (addrx < pic->EEPROMSIZE * 2)
+               if (addrx < pic->EEPROMSIZE)
                  pic->eeprom[addrx] = parse_hex (line + 9 + (bc * 2), 2);
                }
             }
