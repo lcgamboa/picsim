@@ -28,46 +28,55 @@
 #include"../../include/periferic16e.h"
 
 void
-p16e_int_portb_rst(void)
-{
- pic->portbm = 0;
-}
+p16e_int_portb_rst(void) { }
 
 void
 p16e_int_portb(void)
 {
 
-unsigned char temp;
- 
-temp=(*pic->P16Emap.TRISB)&&(*pic->P16Emap.IOCBP)&&(*pic->P16Emap.IOCBN);
+ unsigned char temp;
 
-if(((*pic->P16Emap.PORTB)&temp) != (pic->portb&temp)) 
-{
-  pic->portbm=1;
-}
-  
+ temp = (*pic->P16Emap.TRISB)&(*pic->P16Emap.IOCBP)&(*pic->P16Emap.IOCBN);
 
- if (pic->rram == sfr_addr(pic->P16Emap.PORTB))
+ if (((*pic->P16Emap.PORTB) & temp) != (pic->portb & temp))
   {
-   pic->portbm = 0;
-   //Only disable mismatch
-   //pic->ram[(0x0000)|(INTCON & 0x007F)]&=~0x01;//RBIF
-   //pic->ram[(0x0080)|(INTCON & 0x007F)]&=~0x01;
-   //pic->ram[(0x0100)|(INTCON & 0x007F)]&=~0x01;
-   //pic->ram[(0x0180)|(INTCON & 0x007F)]&=~0x01;
+
+   temp = (*pic->P16Emap.TRISB)&(*pic->P16Emap.IOCBP);
+   if (((*pic->P16Emap.PORTB) & temp)&(pic->portb & temp))
+    {
+     (*pic->P16Emap.IOCBF) |= ((*pic->P16Emap.PORTB) & temp)& ~(pic->portb & temp);
+     unsigned short offset = (sfr_addr (pic->P16Emap.INTCON) & 0x007F);
+     for (int bk = 0; bk < 32; bk++)
+      {
+       pic->ram[(0x0080 * bk) | (offset)] |= 0x01; //IOCIF
+      }
+    }
+
+   temp = (*pic->P16Emap.TRISB)&(*pic->P16Emap.IOCBN);
+   if (((*pic->P16Emap.PORTB) & temp)&(pic->portb & temp))
+    {
+     (*pic->P16Emap.IOCBF) |= ~((*pic->P16Emap.PORTB) & temp)& (pic->portb & temp);
+     unsigned short offset = (sfr_addr (pic->P16Emap.INTCON) & 0x007F);
+     for (int bk = 0; bk < 32; bk++)
+      {
+       pic->ram[(0x0080 * bk) | (offset)] |= 0x01; //IOCIF
+      }
+    }
+
+
   }
 
- if (pic->portbm)
+ if (pic->lram == sfr_addr (pic->P16Emap.IOCBF))
   {
-   //FIXME
-   
-   //(*pic->P16Emap.IOCBF)=
-   
-   unsigned short offset = (sfr_addr (pic->P16Emap.INTCON) & 0x007F);
-   for (int bk = 0; bk < 32; bk++)
+   if ((*pic->P16Emap.IOCBF) == 0)
     {
-     pic->ram[(0x0080 * bk) | (offset)] |= 0x01; //IOCIF
+     unsigned short offset = (sfr_addr (pic->P16Emap.INTCON) & 0x007F);
+     for (int bk = 0; bk < 32; bk++)
+      {
+       pic->ram[(0x0080 * bk) | (offset)] &= 0xFE; //IOCIF
+      }
     }
+
   }
 
 
