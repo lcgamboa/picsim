@@ -33,6 +33,8 @@ void
 ReadIndf(unsigned short *afsr)
 {
  int i;
+ int bk;
+ int offset;
 
  afsr[0] = ((*pic->P16Emap.FSR0H) << 8) | (*pic->P16Emap.FSR0L);
  afsr[1] = ((*pic->P16Emap.FSR1H) << 8) | (*pic->P16Emap.FSR1L);
@@ -60,7 +62,7 @@ ReadIndf(unsigned short *afsr)
       {
        unsigned short addr = afsr[i] - 0x2000;
 
-       int bk = addr / 80;
+       bk = addr / 80;
        int bkoff = addr % 80;
        unsigned short laddr = (bk * 0x80) + 0x20 + bkoff;
 
@@ -76,8 +78,7 @@ ReadIndf(unsigned short *afsr)
 
 
  //mirror on all banks
- int bk;
- int offset = 0x007F & sfr_addr (pic->P16Emap.INDF0);
+ offset = 0x007F & sfr_addr (pic->P16Emap.INDF0);
  unsigned char temp0 = (*pic->P16Emap.INDF0);
  unsigned char temp1 = (*pic->P16Emap.INDF1);
 
@@ -101,6 +102,8 @@ pic_decode_16E(void)
  unsigned short afsr[2];
  short jrange;
  int afsrpos = 0;
+ int bk;
+ int offset;
 
  if (pic->pc != 0x2004)
   opc = pic->prog[pic->pc];
@@ -144,9 +147,9 @@ pic_decode_16E(void)
  //pc
  temp = pic->pc & 0x00FF;
 
- for (int bk = 0; bk < 32; bk++)
+ for (bk = 0; bk < 32; bk++)
   {
-   unsigned short offset = (sfr_addr (pic->P16Emap.PCL) & 0x007F);
+   offset = (sfr_addr (pic->P16Emap.PCL) & 0x007F);
    pic->ram[(0x0080 * bk) | (offset)] = temp;
   }
 
@@ -201,8 +204,6 @@ pic_decode_16E(void)
          *intcon |= 0x80;
          pic->lram = sfr_addr (pic->P16Emap.INTCON);
          //restore shadow
-         int bk;
-         int offset;
          (*pic->P16Emap.STATUS) = (*pic->P16Emap.STATUS_SHAD);
          offset = 0x007F & sfr_addr (pic->P16Emap.STATUS);
          temp = (*pic->P16Emap.STATUS);
@@ -784,7 +785,7 @@ pic_decode_16E(void)
       {
        pic->ram[bank | (opc & 0x007F) ] = 0x00FF & temp;
        pic->lram = bank | (opc & 0x007F);
-      };
+      }
      break;
     case 0x0D00:
      //RLF     f, d 	Rotate Left f through Carry  1     001101 dfffffff	C       1, 2                   
@@ -796,6 +797,7 @@ pic_decode_16E(void)
       *status |= 0x0001;
      else
       *status &= ~0x0001;
+     pic->rram = bank | (opc & 0x007F);
      if ((opc & 0x0080) == 0)
       {
        (*pic->P16Emap.WREG) = 0x00FF & temp;
@@ -1265,6 +1267,13 @@ pic_decode_16E(void)
 
 
 
+ //bank status
+ offset = 0x007F & sfr_addr (pic->P16Emap.STATUS);
+ temp = *status;
+ for (bk = 0; bk < 32; bk++)
+  pic->ram[(0x0080 * bk) | offset] = temp;
+
+
  if (pic->lram != 0x8000)
   {
    unsigned char * plram = &pic->ram[pic->lram];
@@ -1286,7 +1295,7 @@ pic_decode_16E(void)
         {
          unsigned short addr = afsr[0] - 0x2000;
 
-         int bk = addr / 80;
+         bk = addr / 80;
          int bkoff = addr % 80;
          unsigned short laddr = (bk * 0x80) + 0x20 + bkoff;
 
@@ -1319,7 +1328,7 @@ pic_decode_16E(void)
         {
          unsigned short addr = afsr[1] - 0x2000;
 
-         int bk = addr / 80;
+         bk = addr / 80;
          int bkoff = addr % 80;
          unsigned short laddr = (bk * 0x80) + 0x20 + bkoff;
 
@@ -1340,8 +1349,7 @@ pic_decode_16E(void)
    //bank init mirror
    if ((pic->lram & 0x007F) <= 0x000B)
     {
-     int bk;
-     int offset = 0x007F & pic->lram;
+     offset = 0x007F & pic->lram;
      temp = pic->ram[pic->lram];
 
      for (bk = 0; bk < 32; bk++)
@@ -1352,8 +1360,7 @@ pic_decode_16E(void)
    //bank end mirror
    if ((pic->lram & 0x007F) >= 0x0070)
     {
-     int bk;
-     int offset = 0x007F & pic->lram;
+     offset = 0x007F & pic->lram;
      temp = pic->ram[pic->lram];
 
      for (bk = 0; bk < 32; bk++)
@@ -1480,10 +1487,7 @@ pic_decode_16E(void)
   {
    if (pic->rram <= 0x0FFF)
     {
-     if (pic->family == P16E)
-      printf ("mem read  %#06X: %10s= %#06X\n", pic->rram, getFSRname_16E (pic->rram), pic->ram[pic->rram]);
-     else
-      printf ("mem read  %#06X: %10s= %#06X\n", pic->rram, getFSRname_16E2 (pic->rram), pic->ram[pic->rram]);
+     printf ("mem read  %#06X: %10s= %#06X\n", pic->rram, getFSRname_16E2 (pic->rram), pic->ram[pic->rram]);
     }
    else
     {
@@ -1509,10 +1513,7 @@ pic_decode_16E(void)
   {
    if (pic->lram <= 0x0FFF)
     {
-     if (pic->family == P16E)
-      printf ("mem write %#06X: %10s= %#06X\n", pic->lram, getFSRname_16E (pic->lram), pic->ram[pic->lram]);
-     else
-      printf ("mem write %#06X: %10s= %#06X\n", pic->lram, getFSRname_16E2 (pic->lram), pic->ram[pic->lram]);
+     printf ("mem write %#06X: %10s= %#06X\n", pic->lram, getFSRname_16E2 (pic->lram), pic->ram[pic->lram]);
     }
    else
     {
@@ -1524,7 +1525,7 @@ pic_decode_16E(void)
      else
       {
        unsigned short addr = pic->lram - 0x2000;
-       int bk = addr / 80;
+       bk = addr / 80;
        int bkoff = addr % 80;
        unsigned short laddr = (bk * 0x80) + 0x20 + bkoff;
 

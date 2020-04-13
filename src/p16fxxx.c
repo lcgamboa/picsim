@@ -448,6 +448,7 @@ pic_decode_16(void)
      else
       *status &= ~0x01;
      temp = temp >> 1;
+     pic->rram = bank | (opc & 0x007F);
      if ((opc & 0x0080) == 0)
       {
        pic->w = 0x00FF & temp;
@@ -456,7 +457,7 @@ pic_decode_16(void)
       {
        pic->ram[bank | (opc & 0x007F) ] = 0x00FF & temp;
        pic->lram = bank | (opc & 0x007F);
-      };
+      }
      break;
     case 0x0D00:
      //RLF     f, d 	Rotate Left f through Carry  1     001101 dfffffff	C       1, 2                   
@@ -468,6 +469,7 @@ pic_decode_16(void)
       *status |= 0x0001;
      else
       *status &= ~0x0001;
+     pic->rram = bank | (opc & 0x007F);
      if ((opc & 0x0080) == 0)
       {
        pic->w = 0x00FF & temp;
@@ -476,7 +478,7 @@ pic_decode_16(void)
       {
        pic->ram[bank | (opc & 0x007F) ] = 0x00FF & temp;
        pic->lram = bank | (opc & 0x007F);
-      };
+      }
      break;
     case 0x0E00:
      //SWAPF   f, d 	Swap nibbles in f            1     001110 dfffffff 		1, 2

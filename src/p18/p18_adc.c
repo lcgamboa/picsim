@@ -116,7 +116,7 @@ p18_adc(void)
       {
        for (int i = 0; i < pic->ADCCOUNT; i++)
         {
-         if (pic->pins[pic->adc[i] - 1].port == pic->P18map.PORTA)
+         if ((pic->adc[i])&&(pic->pins[pic->adc[i] - 1].port == pic->P18map.PORTA))
           {
            if ((*pic->P18map.ANSELA) & (1 << pic->pins[pic->adc[i] - 1].pord))
             {
@@ -134,7 +134,7 @@ p18_adc(void)
       {
        for (int i = 0; i < pic->ADCCOUNT; i++)
         {
-         if (pic->pins[pic->adc[i] - 1].port == pic->P18map.PORTB)
+         if ((pic->adc[i])&&(pic->pins[pic->adc[i] - 1].port == pic->P18map.PORTB))
           {
            if ((*pic->P18map.ANSELB) & (1 << pic->pins[pic->adc[i] - 1].pord))
             {
@@ -152,7 +152,7 @@ p18_adc(void)
       {
        for (int i = 0; i < pic->ADCCOUNT; i++)
         {
-         if (pic->pins[pic->adc[i] - 1].port == pic->P18map.PORTC)
+         if ((pic->adc[i])&&(pic->pins[pic->adc[i] - 1].port == pic->P18map.PORTC))
           {
            if ((*pic->P18map.ANSELC) & (1 << pic->pins[pic->adc[i] - 1].pord))
             {
@@ -170,7 +170,7 @@ p18_adc(void)
       {
        for (int i = 0; i < pic->ADCCOUNT; i++)
         {
-         if (pic->pins[pic->adc[i] - 1].port == pic->P18map.PORTD)
+         if ((pic->adc[i])&&(pic->pins[pic->adc[i] - 1].port == pic->P18map.PORTD))
           {
            if ((*pic->P18map.ANSELD) & (1 << pic->pins[pic->adc[i] - 1].pord))
             {
@@ -188,7 +188,7 @@ p18_adc(void)
       {
        for (int i = 0; i < pic->ADCCOUNT; i++)
         {
-         if (pic->pins[pic->adc[i] - 1].port == pic->P18map.PORTE)
+         if ((pic->adc[i])&&(pic->pins[pic->adc[i] - 1].port == pic->P18map.PORTE))
           {
            if ((*pic->P18map.ANSELE) & (1 << pic->pins[pic->adc[i] - 1].pord))
             {

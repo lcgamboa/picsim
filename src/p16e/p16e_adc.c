@@ -94,7 +94,7 @@ p16e_adc(void)
   {
    for (int i = 0; i < pic->ADCCOUNT; i++)
     {
-     if (pic->pins[pic->adc[i] - 1].port == pic->P16Emap.PORTA)
+     if ((pic->adc[i])&&(pic->pins[pic->adc[i] - 1].port == pic->P16Emap.PORTA))
       {
        if ((*pic->P16Emap.ANSELA) & (1<<pic->pins[pic->adc[i] - 1].pord))
         {
@@ -112,7 +112,7 @@ p16e_adc(void)
   {
    for (int i = 0; i < pic->ADCCOUNT; i++)
     {
-     if (pic->pins[pic->adc[i] - 1].port == pic->P16Emap.PORTB)
+     if ((pic->adc[i])&&(pic->pins[pic->adc[i] - 1].port == pic->P16Emap.PORTB))
       {
        if ((*pic->P16Emap.ANSELB) & (1<<pic->pins[pic->adc[i] - 1].pord))
         {
@@ -130,7 +130,7 @@ p16e_adc(void)
   {
    for (int i = 0; i < pic->ADCCOUNT; i++)
     {
-     if (pic->pins[pic->adc[i] - 1].port == pic->P16Emap.PORTC)
+     if ((pic->adc[i])&&(pic->pins[pic->adc[i] - 1].port == pic->P16Emap.PORTC))
       {
        if ((*pic->P16Emap.ANSELC) & (1<<pic->pins[pic->adc[i] - 1].pord))
         {
@@ -148,7 +148,7 @@ p16e_adc(void)
   {
    for (int i = 0; i < pic->ADCCOUNT; i++)
     {
-     if (pic->pins[pic->adc[i] - 1].port == pic->P16Emap.PORTD)
+     if ((pic->adc[i])&&(pic->pins[pic->adc[i] - 1].port == pic->P16Emap.PORTD))
       {
        if ((*pic->P16Emap.ANSELD) & (1<<pic->pins[pic->adc[i] - 1].pord))
         {
@@ -166,7 +166,7 @@ p16e_adc(void)
   {
    for (int i = 0; i < pic->ADCCOUNT; i++)
     {
-     if (pic->pins[pic->adc[i] - 1].port == pic->P16Emap.PORTE)
+     if ((pic->adc[i])&&(pic->pins[pic->adc[i] - 1].port == pic->P16Emap.PORTE))
       {
        if ((*pic->P16Emap.ANSELE) & (1<<pic->pins[pic->adc[i] - 1].pord))
         {
