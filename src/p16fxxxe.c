@@ -100,6 +100,7 @@ pic_decode_16E(void)
  unsigned char * status = &pic->ram[bank | (sfr_addr (pic->P16Emap.STATUS) & 0x007F)];
  unsigned char * intcon = &pic->ram[bank | (sfr_addr (pic->P16Emap.INTCON) & 0x007F)];
  unsigned short afsr[2];
+ unsigned char status_old = *status;
  short jrange;
  int afsrpos = 0;
  int bk;
@@ -1268,11 +1269,13 @@ pic_decode_16E(void)
 
 
  //bank status
- offset = 0x007F & sfr_addr (pic->P16Emap.STATUS);
- temp = *status;
- for (bk = 0; bk < 32; bk++)
-  pic->ram[(0x0080 * bk) | offset] = temp;
-
+ if (*status != status_old)
+  {
+   offset = 0x007F & sfr_addr (pic->P16Emap.STATUS);
+   temp = *status;
+   for (bk = 0; bk < 32; bk++)
+    pic->ram[(0x0080 * bk) | offset] = temp;
+  }
 
  if (pic->lram != 0x8000)
   {
@@ -1483,57 +1486,59 @@ pic_decode_16E(void)
 
  pic->w = (*pic->P16Emap.WREG);
 
- if ((pic->rram != 0x8000)&&(pic->print))
+ if (pic->print)
   {
-   if (pic->rram <= 0x0FFF)
+   if ((pic->rram != 0x8000))
     {
-     printf ("mem read  %#06X: %10s= %#06X\n", pic->rram, getFSRname_16E2 (pic->rram), pic->ram[pic->rram]);
-    }
-   else
-    {
-     if (pic->rram >= 0x8000)
+     if (pic->rram <= 0x0FFF)
       {
-       unsigned short addr = pic->rram - 0x8000;
-       printf ("mem read  %#06X: %10s= %#06X\n", pic->rram, "PROG MEM", pic->prog[addr]);
-      }
-     else //linear bank
-      {
-       unsigned short addr = pic->rram - 0x2000;
-
-       int bk = addr / 80;
-       int bkoff = addr % 80;
-       unsigned short laddr = (bk * 0x80) + 0x20 + bkoff;
-
-       printf ("mem read  %#06X: %10s= %#06X\n", pic->rram, "LINEAR MEM", pic->ram[laddr]);
-      }
-    }
-  }
-
- if ((pic->lram != 0x8000)&&(pic->print))
-  {
-   if (pic->lram <= 0x0FFF)
-    {
-     printf ("mem write %#06X: %10s= %#06X\n", pic->lram, getFSRname_16E2 (pic->lram), pic->ram[pic->lram]);
-    }
-   else
-    {
-     if (pic->lram >= 0x8000)
-      {
-       unsigned short addr = pic->lram - 0x8000;
-       printf ("mem write  %#06X: %10s= %#06X\n", pic->lram, "PROG MEM", pic->prog[addr]);
+       printf ("mem read  %#06X: %10s= %#06X\n", pic->rram, getFSRname_16E2 (pic->rram), pic->ram[pic->rram]);
       }
      else
       {
-       unsigned short addr = pic->lram - 0x2000;
-       bk = addr / 80;
-       int bkoff = addr % 80;
-       unsigned short laddr = (bk * 0x80) + 0x20 + bkoff;
+       if (pic->rram >= 0x8000)
+        {
+         unsigned short addr = pic->rram - 0x8000;
+         printf ("mem read  %#06X: %10s= %#06X\n", pic->rram, "PROG MEM", pic->prog[addr]);
+        }
+       else //linear bank
+        {
+         unsigned short addr = pic->rram - 0x2000;
 
-       printf ("mem write  %#06X: %10s= %#06X\n", pic->rram, "LINEAR MEM", pic->ram[laddr]);
+         int bk = addr / 80;
+         int bkoff = addr % 80;
+         unsigned short laddr = (bk * 0x80) + 0x20 + bkoff;
+
+         printf ("mem read  %#06X: %10s= %#06X\n", pic->rram, "LINEAR MEM", pic->ram[laddr]);
+        }
+      }
+    }
+
+   if (pic->lram != 0x8000)
+    {
+     if (pic->lram <= 0x0FFF)
+      {
+       printf ("mem write %#06X: %10s= %#06X\n", pic->lram, getFSRname_16E2 (pic->lram), pic->ram[pic->lram]);
+      }
+     else
+      {
+       if (pic->lram >= 0x8000)
+        {
+         unsigned short addr = pic->lram - 0x8000;
+         printf ("mem write  %#06X: %10s= %#06X\n", pic->lram, "PROG MEM", pic->prog[addr]);
+        }
+       else
+        {
+         unsigned short addr = pic->lram - 0x2000;
+         bk = addr / 80;
+         int bkoff = addr % 80;
+         unsigned short laddr = (bk * 0x80) + 0x20 + bkoff;
+
+         printf ("mem write  %#06X: %10s= %#06X\n", pic->rram, "LINEAR MEM", pic->ram[laddr]);
+        }
       }
     }
   }
-
 }
 
 
