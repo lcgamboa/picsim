@@ -254,16 +254,10 @@ periferic16E_step_out(void)
     {
      pic->sleep = 0;
 
-     (*pic->P16Emap.INTCON) &= ~0x80;
-
-     unsigned char temp;
      int bk;
      int offset = 0x007F & sfr_addr (pic->P16Emap.INTCON);
-     temp = (*pic->P16Emap.INTCON);
-     temp &= ~0x80;
-
      for (bk = 0; bk < 32; bk++)
-      pic->ram[(0x0080 * bk) | offset] = temp;
+      pic->ram[(0x0080 * bk) | offset] &= 0x7F; //disable GIE
 
      //save shadow
      (*pic->P16Emap.STATUS_SHAD) = (*pic->P16Emap.STATUS);

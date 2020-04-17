@@ -98,7 +98,6 @@ pic_decode_16E(void)
  unsigned short opc;
  unsigned short bank = ((*pic->P16Emap.BSR) & 0x003F) << 7;
  unsigned char * status = &pic->ram[bank | (sfr_addr (pic->P16Emap.STATUS) & 0x007F)];
- unsigned char * intcon = &pic->ram[bank | (sfr_addr (pic->P16Emap.INTCON) & 0x007F)];
  unsigned short afsr[2];
  unsigned char status_old = *status;
  short jrange;
@@ -202,8 +201,8 @@ pic_decode_16E(void)
           pic->stack[temp] = pic->stack[temp + 1];
          pic->stack[15] = 0;
          pic->s2 = 1;
-         *intcon |= 0x80;
-         pic->lram = sfr_addr (pic->P16Emap.INTCON);
+         pic->lram = bank | (sfr_addr (pic->P16Emap.INTCON) & 0x007F);
+         pic->ram[pic->lram]|=0x80;
          //restore shadow
          (*pic->P16Emap.STATUS) = (*pic->P16Emap.STATUS_SHAD);
          offset = 0x007F & sfr_addr (pic->P16Emap.STATUS);
