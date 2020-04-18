@@ -43,17 +43,20 @@ p16e_tmr2(void)
   {
    pic->cp2++;
 
-   if (((*pic->P16Emap.T2CON)&0x02) == 0x02)
+   switch ((*pic->P16Emap.T2CON)&0x03)
     {
+    case 0x03:
+     pic->t2pr = 64;
+     break;
+    case 0x02:
      pic->t2pr = 16;
-    }
-   else if (((*pic->P16Emap.T2CON)&0x01) == 0x01)
-    {
+     break;
+    case 0x01:
      pic->t2pr = 4;
-    }
-   else
-    {
+     break;
+    case 0x00:
      pic->t2pr = 1;
+     break;
     }
 
    if (pic->cp2 >= pic->t2pr)
