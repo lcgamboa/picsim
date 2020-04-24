@@ -8,7 +8,7 @@ MKDIR = mkdir -p
 LIBVER=0.6
 LIBMAINVER=0
 #FLAGS= -ggdb -Wall
-FLAGS= -Wall -O3 -fomit-frame-pointer -fsigned-char -D_WIN_
+FLAGS= -Wall -O3 -fsigned-char -D_WIN_
 
 prefix = /usr/x86_64-w64-mingw32
 exec_prefix = ${prefix}

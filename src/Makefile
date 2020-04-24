@@ -7,7 +7,7 @@ MKDIR = mkdir -p
 
 LIBVER=0.6
 LIBMAINVER=0
-FLAGS= -Wall -O3 -fomit-frame-pointer -fpic -fsigned-char -Winline 
+FLAGS= -Wall -O3 -fpic -fsigned-char -Winline 
 
 prefix = /usr
 exec_prefix = ${prefix}
