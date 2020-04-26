@@ -2315,23 +2315,23 @@ pic_decode_18(void)
 
    if (plram == pic->P18map.LATA)
     {
-     (*pic->P18map.PORTA) = (*pic->P18map.LATA);
+     (*pic->P18map.PORTA) = ((*pic->P18map.PORTA)&(*pic->P18map.TRISA))|((*pic->P18map.LATA)&(~(*pic->P18map.TRISA)));
     }
    if (plram == pic->P18map.LATB)
     {
-     (*pic->P18map.PORTB) = (*pic->P18map.LATB);
+     (*pic->P18map.PORTB) = ((*pic->P18map.PORTB)&(*pic->P18map.TRISB))|((*pic->P18map.LATB)&(~(*pic->P18map.TRISB)));
     }
    if (plram == pic->P18map.LATC)
     {
-     (*pic->P18map.PORTC) = (*pic->P18map.LATC);
+     (*pic->P18map.PORTC) = ((*pic->P18map.PORTC)&(*pic->P18map.TRISC))|((*pic->P18map.LATC)&(~(*pic->P18map.TRISC)));
     }
    if (plram == pic->P18map.LATD)
     {
-     (*pic->P18map.PORTD) = (*pic->P18map.LATD);
+     (*pic->P18map.PORTD) = ((*pic->P18map.PORTD)&(*pic->P18map.TRISD))|((*pic->P18map.LATD)&(~(*pic->P18map.TRISD)));
     }
    if (plram == pic->P18map.LATE)
     {
-     (*pic->P18map.PORTE) = (*pic->P18map.LATE);
+     (*pic->P18map.PORTE) = ((*pic->P18map.PORTE)&(*pic->P18map.TRISE))|((*pic->P18map.LATE)&(~(*pic->P18map.TRISE)));
     }
 
    if (plram == pic->P18map.PORTA)

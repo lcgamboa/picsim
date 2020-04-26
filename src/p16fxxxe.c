@@ -1411,23 +1411,23 @@ pic_decode_16E(void)
 
    if (plram == pic->P16Emap.LATA)
     {
-     (*pic->P16Emap.PORTA) = (*pic->P16Emap.LATA);
+     (*pic->P16Emap.PORTA) = ((*pic->P16Emap.PORTA)&(*pic->P16Emap.TRISA))|((*pic->P16Emap.LATA)&(~(*pic->P16Emap.TRISA)));
     }
    if (plram == pic->P16Emap.LATB)
     {
-     (*pic->P16Emap.PORTB) = (*pic->P16Emap.LATB);
+     (*pic->P16Emap.PORTB) = ((*pic->P16Emap.PORTB)&(*pic->P16Emap.TRISB))|((*pic->P16Emap.LATB)&(~(*pic->P16Emap.TRISB)));
     }
    if (plram == pic->P16Emap.LATC)
     {
-     (*pic->P16Emap.PORTC) = (*pic->P16Emap.LATC);
+     (*pic->P16Emap.PORTC) = ((*pic->P16Emap.PORTC)&(*pic->P16Emap.TRISC))|((*pic->P16Emap.LATC)&(~(*pic->P16Emap.TRISC)));
     }
    if (plram == pic->P16Emap.LATD)
     {
-     (*pic->P16Emap.PORTD) = (*pic->P16Emap.LATD);
+     (*pic->P16Emap.PORTD) = ((*pic->P16Emap.PORTD)&(*pic->P16Emap.TRISD))|((*pic->P16Emap.LATD)&(~(*pic->P16Emap.TRISD)));
     }
    if (plram == pic->P16Emap.LATE)
     {
-     (*pic->P16Emap.PORTE) = (*pic->P16Emap.LATE);
+     (*pic->P16Emap.PORTE) = ((*pic->P16Emap.PORTE)&(*pic->P16Emap.TRISE))|((*pic->P16Emap.LATE)&(~(*pic->P16Emap.TRISE)));
     }
 
    if (plram == pic->P16Emap.PORTA)

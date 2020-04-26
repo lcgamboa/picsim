@@ -194,8 +194,9 @@ periferic16E_step_out(void)
         break;
        case PD_IN:
         val = 0x01 << (pic->pins[i].pord);
-        port = sfr_addr (pic->pins[i].port);
-        pic->pins[i].lvalue = ((pic->ram[port + 256] & val) != 0); //latch
+        //port = sfr_addr (pic->pins[i].port)+256;
+        port = sfr_addr (pic->pins[i].port)+(sfr_addr (pic->P16Emap.LATA) - sfr_addr (pic->P16Emap.PORTA));
+        pic->pins[i].lvalue = ((pic->ram[port] & val) != 0); //latch
         if (pic->pins[i].ptype > 2)
          pic_wr_pin16E (i + 1, 0);
         else

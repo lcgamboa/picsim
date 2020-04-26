@@ -35,35 +35,31 @@ p16e_int_portb(void)
 {
 
  unsigned char temp;
-
- temp = (*pic->P16Emap.TRISB)&(*pic->P16Emap.IOCBP)&(*pic->P16Emap.IOCBN);
-
- if (((*pic->P16Emap.PORTB) & temp) != (pic->portb & temp))
+ unsigned char val;
+ //POSITIVE
+ temp = (*pic->P16Emap.TRISB)&(*pic->P16Emap.IOCBP);
+ val = ((*pic->P16Emap.PORTB) & temp) & ~(pic->portb & temp);
+ if (val)
   {
-
-   temp = (*pic->P16Emap.TRISB)&(*pic->P16Emap.IOCBP);
-   if (((*pic->P16Emap.PORTB) & temp)&(pic->portb & temp))
+   (*pic->P16Emap.IOCBF) |= val;
+   unsigned short offset = (sfr_addr (pic->P16Emap.INTCON) & 0x007F);
+   for (int bk = 0; bk < 32; bk++)
     {
-     (*pic->P16Emap.IOCBF) |= ((*pic->P16Emap.PORTB) & temp)& ~(pic->portb & temp);
-     unsigned short offset = (sfr_addr (pic->P16Emap.INTCON) & 0x007F);
-     for (int bk = 0; bk < 32; bk++)
-      {
-       pic->ram[(0x0080 * bk) | (offset)] |= 0x01; //IOCIF
-      }
+     pic->ram[(0x0080 * bk) | (offset)] |= 0x01; //IOCIF
     }
+  }
 
-   temp = (*pic->P16Emap.TRISB)&(*pic->P16Emap.IOCBN);
-   if (((*pic->P16Emap.PORTB) & temp)&(pic->portb & temp))
+ //NEGATIVE
+ temp = (*pic->P16Emap.TRISB)&(*pic->P16Emap.IOCBN);
+ val=~((*pic->P16Emap.PORTB) & temp) & (pic->portb & temp);
+ if (val)
+  {
+   (*pic->P16Emap.IOCBF) |= val;
+   unsigned short offset = (sfr_addr (pic->P16Emap.INTCON) & 0x007F);
+   for (int bk = 0; bk < 32; bk++)
     {
-     (*pic->P16Emap.IOCBF) |= ~((*pic->P16Emap.PORTB) & temp)& (pic->portb & temp);
-     unsigned short offset = (sfr_addr (pic->P16Emap.INTCON) & 0x007F);
-     for (int bk = 0; bk < 32; bk++)
-      {
-       pic->ram[(0x0080 * bk) | (offset)] |= 0x01; //IOCIF
-      }
+     pic->ram[(0x0080 * bk) | (offset)] |= 0x01; //IOCIF
     }
-
-
   }
 
  if (pic->lram == sfr_addr (pic->P16Emap.IOCBF))
@@ -78,7 +74,5 @@ p16e_int_portb(void)
     }
 
   }
-
-
 
 }
