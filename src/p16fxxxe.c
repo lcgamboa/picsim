@@ -1278,13 +1278,13 @@ pic_decode_16E(void)
 
  if (pic->lram != 0x8000)
   {
-   unsigned char * plram = &pic->ram[pic->lram];
+   unsigned char * plram = &pic->ram[pic->lram & 0x007F];
 
    if (plram == pic->P16Emap.INDF0)
     {
      if (afsr[0] <= 0x0FFF)//traditional data memory
       {
-       pic->ram[afsr[0]] = (*pic->P16Emap.INDF0);
+       pic->ram[afsr[0]] = pic->ram[pic->lram]; 
        pic->lram = afsr[0];
       }
      else
@@ -1301,7 +1301,7 @@ pic_decode_16E(void)
          int bkoff = addr % 80;
          unsigned short laddr = (bk * 0x80) + 0x20 + bkoff;
 
-         pic->ram[laddr] = (*pic->P16Emap.INDF0);
+         pic->ram[laddr] = pic->ram[pic->lram];
          pic->lram = afsr[0];
         }
       }
@@ -1313,11 +1313,11 @@ pic_decode_16E(void)
       }
     }
 
-   if (plram == pic->P16Emap.INDF1)
+   if ( plram  == pic->P16Emap.INDF1)
     {
      if (afsr[1] <= 0x0FFF)//taditional data memory
       {
-       pic->ram[afsr[1]] = (*pic->P16Emap.INDF1);
+       pic->ram[afsr[1]] = pic->ram[pic->lram];
        pic->lram = afsr[1];
       }
      else
@@ -1334,7 +1334,7 @@ pic_decode_16E(void)
          int bkoff = addr % 80;
          unsigned short laddr = (bk * 0x80) + 0x20 + bkoff;
 
-         pic->ram[laddr] = (*pic->P16Emap.INDF1);
+         pic->ram[laddr] = pic->ram[pic->lram];
          pic->lram = afsr[1];
         }
       }
