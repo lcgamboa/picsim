@@ -8,7 +8,7 @@ MKDIR = mkdir -p
 LIBVER=0.6
 LIBMAINVER=0
 FLAGS= -Os 
-#FLAGS+=-s USE_PTHREADS=1 -s PTHREAD_POOL_SIZE=2
+FLAGS+=-s WASM=1 -s USE_PTHREADS=1 -s PTHREAD_POOL_SIZE=2
 
 prefix = /usr
 exec_prefix = ${prefix}
@@ -32,8 +32,8 @@ OBJS= common.o p16fxxx.o p16fxxxe.o p18fxxx.o hexfile.o periferic16.o periferic1
 
 all: all-lib picsim
 
-picsim: libpicsim_js.a picsim.c 
-	$(CC) $(FLAGS) picsim.c -o picsim  libpicsim_js.a 
+picsim: libpicsim_js_mt.a picsim.c 
+	$(CC) $(FLAGS) picsim.c -o picsim  libpicsim_js_mt.a 
 
 
 %.o: %.c  
@@ -42,7 +42,7 @@ picsim: libpicsim_js.a picsim.c
 
 # The static lib name, the shared lib name, and the internal ('so') name of
 # the shared lib.
-LIBNAME = libpicsim_js
+LIBNAME = libpicsim_js_mt
 LIBSHBASENAME = $(LIBNAME).so
 LIBSHLIBNAME = $(LIBNAME).so.$(LIBVER)
 LIBSTLIBNAME = $(LIBNAME).a
@@ -85,7 +85,7 @@ uninstall:
 
 
 clean:  
-	rm -f picsim libpicsim_js.a $(OBJS)
+	rm -f picsim libpicsim_js_mt.a $(OBJS)
 	rm -f examples/*_sdcc*/*.asm
 	rm -f share/examples/*_mikroc_pro*/*.asm
 	rm -f examples/*/*.adb

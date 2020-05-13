@@ -58,10 +58,6 @@ extern int serial_open(void);
 extern int serial_close(void);
 
 
-//extern int read_ihx(_pic * pic,const char * fname,int lrom);
-//extern int read_ihx_18(_pic * pic,const char * fname,int lrom);
-
-
 extern void pic_decode_16(void);
 extern void pic_decode_16E(void);
 extern void
@@ -232,8 +228,10 @@ pic_init(_pic * pic_, int processor, const char * fname, int lrom, float freq)
    switch (pic->family)
     {
     case P16:
-    case P16E:
      retcode = read_ihx (fname, lrom);
+     break;
+    case P16E:
+     retcode = read_ihx_16e (fname, lrom);
      break;
     case P18:
      retcode = read_ihx_18 (fname, lrom);

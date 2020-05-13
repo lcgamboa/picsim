@@ -286,9 +286,11 @@ extern unsigned char NO_IO[5];
     int pic_icsp18(void);
 
     int read_ihx(const char * fname, int leeprom);
+    int read_ihx_16e(const char * fname, int leeprom);
     int read_ihx_18(const char * fname, int leeprom);
 
     int write_ihx(const char * fname);
+    int write_ihx16e(const char * fname);
     int write_ihx18(const char * fname);
 
     int getprocbyname(const char *str);
