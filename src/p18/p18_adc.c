@@ -27,6 +27,8 @@
 #include"../../include/picsim.h"
 #include"../../include/periferic18.h"
 
+int pic18_wr_pin(unsigned char pin, unsigned char value);
+
 void
 p18_adc_rst(void)
 {
@@ -88,7 +90,7 @@ p18_adc(void)
     }
 
 
-   if (! pic->P18map.ANSELA)
+   if (!pic->P18map.ANSELA)
     {
      if (((*pic->P18map.ADCON1)&0x0F) != pic->adcon1)
       {
@@ -125,6 +127,7 @@ p18_adc(void)
            else
             {
              pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+             if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic18_wr_pin (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
             }
           }
         }
@@ -143,6 +146,7 @@ p18_adc(void)
            else
             {
              pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+             if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic18_wr_pin (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
             }
           }
         }
@@ -161,6 +165,7 @@ p18_adc(void)
            else
             {
              pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+             if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic18_wr_pin (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
             }
           }
         }
@@ -179,6 +184,7 @@ p18_adc(void)
            else
             {
              pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+             if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic18_wr_pin (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
             }
           }
         }
@@ -197,6 +203,7 @@ p18_adc(void)
            else
             {
              pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+             if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic18_wr_pin (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
             }
           }
         }

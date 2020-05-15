@@ -27,6 +27,8 @@
 #include"../../include/picsim.h"
 #include"../../include/periferic16e.h"
 
+int pic_wr_pin16E(unsigned char pin, unsigned char value);
+
 void
 p16e_adc_rst(void)
 {
@@ -40,7 +42,7 @@ p16e_adc(void)
  float val;
  int chn;
  short dval;
- 
+
  if (((*pic->P16Emap.ADCON0) & 0x03) == 0x03) // ADON and GO/DONE
   {
    pic->adcstep++;
@@ -80,8 +82,8 @@ p16e_adc(void)
 
      pic->adcstep = 0;
 
-      //printf("AD0=%02X AD1=%02X\n",(*pic->P16Emap.ADCON0),(*pic->P16Emap.ADCON1));
-      //printf("ADC conversion channel (%i)=%#04X (%08.3f)\n",chn,dval,val); 
+     //printf("AD0=%02X AD1=%02X\n",(*pic->P16Emap.ADCON0),(*pic->P16Emap.ADCON1));
+     //printf("ADC conversion channel (%i)=%#04X (%08.3f)\n",chn,dval,val); 
     }
   }
  else
@@ -96,13 +98,14 @@ p16e_adc(void)
     {
      if ((pic->adc[i])&&(pic->pins[pic->adc[i] - 1].port == pic->P16Emap.PORTA))
       {
-       if ((*pic->P16Emap.ANSELA) & (1<<pic->pins[pic->adc[i] - 1].pord))
+       if ((*pic->P16Emap.ANSELA) & (1 << pic->pins[pic->adc[i] - 1].pord))
         {
          pic->pins[pic->adc[i] - 1].ptype = PT_ANALOG;
         }
        else
         {
          pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+         if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin16E (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
         }
       }
     }
@@ -114,13 +117,14 @@ p16e_adc(void)
     {
      if ((pic->adc[i])&&(pic->pins[pic->adc[i] - 1].port == pic->P16Emap.PORTB))
       {
-       if ((*pic->P16Emap.ANSELB) & (1<<pic->pins[pic->adc[i] - 1].pord))
+       if ((*pic->P16Emap.ANSELB) & (1 << pic->pins[pic->adc[i] - 1].pord))
         {
          pic->pins[pic->adc[i] - 1].ptype = PT_ANALOG;
         }
        else
         {
          pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+         if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin16E (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
         }
       }
     }
@@ -132,13 +136,14 @@ p16e_adc(void)
     {
      if ((pic->adc[i])&&(pic->pins[pic->adc[i] - 1].port == pic->P16Emap.PORTC))
       {
-       if ((*pic->P16Emap.ANSELC) & (1<<pic->pins[pic->adc[i] - 1].pord))
+       if ((*pic->P16Emap.ANSELC) & (1 << pic->pins[pic->adc[i] - 1].pord))
         {
          pic->pins[pic->adc[i] - 1].ptype = PT_ANALOG;
         }
        else
         {
          pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+         if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin16E (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
         }
       }
     }
@@ -150,13 +155,14 @@ p16e_adc(void)
     {
      if ((pic->adc[i])&&(pic->pins[pic->adc[i] - 1].port == pic->P16Emap.PORTD))
       {
-       if ((*pic->P16Emap.ANSELD) & (1<<pic->pins[pic->adc[i] - 1].pord))
+       if ((*pic->P16Emap.ANSELD) & (1 << pic->pins[pic->adc[i] - 1].pord))
         {
          pic->pins[pic->adc[i] - 1].ptype = PT_ANALOG;
         }
        else
         {
          pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+         if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin16E (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
         }
       }
     }
@@ -168,13 +174,14 @@ p16e_adc(void)
     {
      if ((pic->adc[i])&&(pic->pins[pic->adc[i] - 1].port == pic->P16Emap.PORTE))
       {
-       if ((*pic->P16Emap.ANSELE) & (1<<pic->pins[pic->adc[i] - 1].pord))
+       if ((*pic->P16Emap.ANSELE) & (1 << pic->pins[pic->adc[i] - 1].pord))
         {
          pic->pins[pic->adc[i] - 1].ptype = PT_ANALOG;
         }
        else
         {
          pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+         if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin16E (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
         }
       }
     }
