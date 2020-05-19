@@ -163,6 +163,7 @@ p16_mssp(void)
         {
          (*pic->P16map.SSPCON2) &= ~0x01;
 
+         pic->pins[pic->sck - 1].dir = PD_OUT;
          pic->pins[pic->sdi - 1].value = 0;
          pic->pins[pic->sck - 1].value = 1;
 
