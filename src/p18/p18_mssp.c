@@ -28,7 +28,9 @@
 #include"../../include/periferic18.h"
 
 
-int pic18_wr_pin(unsigned char pin, unsigned char value);
+int pic_wr_pin18(unsigned char pin, unsigned char value);
+
+int pic_dir_pin18(unsigned char pin, unsigned char dir);
 
 void
 p18_mssp_rst(void)
@@ -57,19 +59,19 @@ p18_mssp(void)
       {
        pic->ssp_bit = 8;
        pic->ssp_sck = 0;
-       pic18_wr_pin (pic->sck, 0);
+       pic_wr_pin18 (pic->sck, 0);
       }
 
      if (pic->ssp_bit)
       {
        if (pic->ssp_sck == 1)
         {
-         pic18_wr_pin (pic->sdo, (((*pic->P18map.SSPBUF) & (1 << ((pic->ssp_bit - 1)))) > 0));
-         pic18_wr_pin (pic->sck, 1);
+         pic_wr_pin18 (pic->sdo, (((*pic->P18map.SSPBUF) & (1 << ((pic->ssp_bit - 1)))) > 0));
+         pic_wr_pin18 (pic->sck, 1);
         }
        else if (pic->ssp_sck == 2)
         {
-         pic18_wr_pin (pic->sck, 0);
+         pic_wr_pin18 (pic->sck, 0);
          pic->ssp_sck = 0;
          pic->ssp_bit--;
         }
@@ -78,7 +80,7 @@ p18_mssp(void)
      break;
      //case 0x04://SPI Slave mode, clock = SCK pin. SS pin control enabled.
     case 0x05://SPI Slave mode, clock = SCK pin. SS pin control disabled.
-     pic->pins[pic->sdi - 1].dir = PD_IN;
+     pic_dir_pin18(pic->sdi, PD_IN);
 
      if (pic->rram == sfr_addr (pic->P18map.SSPBUF))
       {
@@ -91,7 +93,7 @@ p18_mssp(void)
 
      if ((pic->ssp_scka == 0)&&(pic->ssp_sck == 1)) //CKP =0 CKE =0     //coloca saida na borda de subida
       {
-       pic18_wr_pin (pic->sdo, (((*pic->P18map.SSPBUF) & (1 << (7 - pic->ssp_bit))) > 0));
+       pic_wr_pin18 (pic->sdo, (((*pic->P18map.SSPBUF) & (1 << (7 - pic->ssp_bit))) > 0));
       }
 
 
@@ -126,25 +128,25 @@ p18_mssp(void)
 
        if (((*pic->P18map.SSPCON2) & 0x01)) //start
         {
-         pic->pins[pic->sck - 1].dir = PD_OUT;
-         pic->pins[pic->sdi - 1].dir = PD_OUT;
-         pic->pins[pic->sdi - 1].value = 1;
-         pic->pins[pic->sck - 1].value = 1;
-
+         pic_dir_pin18(pic->sck, PD_OUT);
+         pic_dir_pin18(pic->sdi, PD_OUT);
+         pic_wr_pin18 (pic->sdi, 1);
+         pic_wr_pin18 (pic->sck, 1);
+         
          //printf("I2C_start 1\n");
         }
        else if (((*pic->P18map.SSPCON2) & 0x02)) //restart
         {
-         pic->pins[pic->sdi - 1].dir = PD_OUT;
-         pic->pins[pic->sdi - 1].value = 1;
-         pic->pins[pic->sck - 1].value = 1;
+         pic_dir_pin18(pic->sdi, PD_OUT);
+         pic_wr_pin18 (pic->sdi, 1);
+         pic_wr_pin18 (pic->sck, 1);
          //printf("restar1\n");
         }
        else if (((*pic->P18map.SSPCON2) & 0x04)) //stop
         {
-         pic->pins[pic->sdi - 1].dir = PD_OUT;
-         pic->pins[pic->sdi - 1].value = 0;
-         pic->pins[pic->sck - 1].value = 1;
+         pic_dir_pin18(pic->sdi, PD_OUT);
+         pic_wr_pin18 (pic->sdi, 0);
+         pic_wr_pin18 (pic->sck, 1);
          //printf("stop1\n");
         }
       }
@@ -156,9 +158,8 @@ p18_mssp(void)
         {
          (*pic->P18map.SSPCON2) &= ~0x01;
 
-         pic->pins[pic->sck - 1].dir = PD_OUT;
-         pic->pins[pic->sdi - 1].value = 0;
-         pic->pins[pic->sck - 1].value = 1;
+         pic_wr_pin18 (pic->sdi, 0);
+         pic_wr_pin18 (pic->sck, 1);
 
          //printf("start 2\n");
         }
@@ -166,8 +167,8 @@ p18_mssp(void)
         {
          (*pic->P18map.SSPCON2) &= ~0x02;
 
-         pic->pins[pic->sdi - 1].value = 0;
-         pic->pins[pic->sck - 1].value = 1;
+         pic_wr_pin18 (pic->sdi, 0);
+         pic_wr_pin18 (pic->sdi, 1);
          //printf("restart 2\n");
         }
        else if (((*pic->P18map.SSPCON2) & 0x04)) //stop
@@ -176,8 +177,8 @@ p18_mssp(void)
 
          pic->ssp_bit = 10;
 
-         pic->pins[pic->sdi - 1].value = 1;
-         pic->pins[pic->sck - 1].value = 1;
+         pic_wr_pin18 (pic->sdi, 1);
+         pic_wr_pin18 (pic->sck, 1);
          //printf("stop 2\n");
         }
       }
@@ -190,7 +191,7 @@ p18_mssp(void)
        (*pic->P18map.SSPSTAT) |= 0x04; //R/W
        //printf("SPPBUF write (%#02X)!!!!\n",(*pic->P18map.SSPBUF));	
        pic->ssp_bit = 0;
-       pic->pins[pic->sdi - 1].dir = PD_OUT;
+       pic_dir_pin18(pic->sdi, PD_OUT);
        (*pic->P18map.SSPSTAT) |= 0x01; //BF
       }
 
@@ -202,7 +203,7 @@ p18_mssp(void)
 
        //printf("I2C read\n");
        (*pic->P18map.SSPBUF) = 0;
-       pic->pins[pic->sdi - 1].dir = PD_IN;
+       pic_dir_pin18(pic->sdi, PD_IN);
        pic->ssp_ck = pic->pins[pic->sck - 1].value;
        (*pic->P18map.SSPSTAT) &= ~0x01; //BF
 
@@ -217,16 +218,16 @@ p18_mssp(void)
        //write
        if ((((*pic->P18map.SSPSTAT) & 0x04))&&(pic->ssp_bit <= 9))
         {
-         pic->pins[pic->sck - 1].value ^= 0x01;
-
-
+         pic_wr_pin18 (pic->sck, !pic->pins[pic->sck - 1].value);
+         
+         
          if ((pic->pins[pic->sck - 1].value == 0)&&(pic->ssp_bit <= 8))
           {
-           pic->pins[pic->sdi - 1].value = ((*pic->P18map.SSPBUF) & (0x01 << (7 - pic->ssp_bit))) > 0;
+           pic_wr_pin18 (pic->sdi,((*pic->P18map.SSPBUF) & (0x01 << (7 - pic->ssp_bit))) > 0);
            pic->ssp_bit++;
            if (pic->ssp_bit == 9)
             {
-             pic->pins[pic->sdi - 1].dir = PD_IN;
+             pic_dir_pin18(pic->sdi, PD_IN);
             }
           }
 
@@ -252,7 +253,7 @@ p18_mssp(void)
         {
          //printf("sck 1 =%i\n", pic->pins[pic->sck-1].value);
          pic->ssp_ck ^= 0x01;
-         pic->pins[pic->sck - 1].value = pic->ssp_ck;
+         pic_wr_pin18 (pic->sck, pic->ssp_ck);
          //printf("sck 2 =%i\n", pic->pins[pic->sck-1].value);
 
          if ((pic->pins[pic->sck - 1].value == 0)&&(pic->ssp_bit <= 8))
@@ -277,9 +278,9 @@ p18_mssp(void)
 
          if (((*pic->P18map.SSPCON2)& 0x10)&&(pic->pins[pic->sck - 1].value == 1)&&(pic->ssp_bit > 8))
           {
-           pic->pins[pic->sdi - 1].dir = PD_OUT;
-           pic->pins[pic->sdi - 1].value = ((*pic->P18map.SSPCON2)&0x20) > 0;
-           (*pic->P18map.PIR1) |= 0x08; //SSPIF;
+           pic_dir_pin18(pic->sdi, PD_OUT);
+           pic_wr_pin18 (pic->sdi, ((*pic->P18map.SSPCON2)&0x20) > 0);
+           (*pic->P18map.PIR1) |= 0x08; //SSPIF
            pic->ssp_bit++;
 
            (*pic->P18map.SSPCON2) &= ~0x10; //ACKDT
@@ -291,15 +292,10 @@ p18_mssp(void)
 
        if (pic->ssp_bit == 10)
         {
-         pic->pins[pic->sdi - 1].dir = PD_OUT;
-         pic->pins[pic->sdi - 1].value = 1;
+         pic_dir_pin18(pic->sdi, PD_OUT);
+         pic_wr_pin18 (pic->sdi, 1);
          pic->ssp_bit++;
         }
-
-
-
-
-
       }
      break;
      //case 0x09://Reserved
@@ -309,8 +305,12 @@ p18_mssp(void)
      //case 0x0D://Reserved
      //case 0x0E://I2C Slave mode, 7-bit address with Start and Stop bit interrupts enabled
      //case 0x0F://I2C Slave mode, 10-bit address with Start and Stop bit interrupts enabled
-    default: //unknown
-     printf (" %#02X SPI mode not implemented!\n", ((*pic->P18map.SSPCON1) & 0x0F));
+    default://Unknown
+     if (pic->ssp_sck == 0)
+      {
+       printf (" %#02X SPI mode not implemented!\n", ((*pic->P18map.SSPCON1) & 0x0F));
+      }
+     pic->ssp_sck++;
      break;
     }
   }
@@ -320,4 +320,5 @@ p18_mssp(void)
    pic->ssp_scka = 0;
    pic->ssp_bit = 0;
   }
+
 }

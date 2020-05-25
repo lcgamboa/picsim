@@ -35,7 +35,7 @@ const int fpw2_[8] = {1, 2, 4, 8, 16, 32, 64, 128};
 extern void pic_decode_18(void);
 
 int
-pic18_wr_pin(unsigned char pin, unsigned char value)
+pic_wr_pin18(unsigned char pin, unsigned char value)
 {
  unsigned char val;
 
@@ -62,7 +62,56 @@ pic18_wr_pin(unsigned char pin, unsigned char value)
   }
  else
   return 0;
-};
+}
+
+int
+pic_dir_pin18(unsigned char pin, unsigned char dir)
+{
+ unsigned char val = 0;
+ unsigned char tris;
+
+ if ((pic->pins[pin - 1].pord >= 0)&&(pic->pins[pin - 1].port))
+  {
+   val = 0x01 << (pic->pins[pin - 1].pord);
+   tris = sfr_addr (pic->pins[pin-1].port)+(sfr_addr (pic->P18map.TRISA) - sfr_addr (pic->P18map.PORTA));
+
+   if (dir == PD_OUT)
+    {
+     if (pic->ram[tris] & val)
+      {
+       pic->pins[pin - 1].dir = PD_OUT;
+       pic->ram[tris] &= ~val;
+      }
+     else
+      {
+       val = 0; //value not changed
+      }
+    }
+   else
+    {
+     if (!(pic->ram[tris] & val))
+      {
+       pic->pins[pin - 1].dir = PD_IN;
+       pic->ram[tris] |= val;
+      }
+     else
+      {
+       val = 0; //value not changed
+      }
+    }
+  }
+
+ if (val)
+  {
+   pic->trisa = (*pic->P16map.TRISA);
+   pic->trisb = (*pic->P16map.TRISB);
+   pic->trisc = (*pic->P16map.TRISC);
+   if (pic->P16map.TRISD)pic->trisd = (*pic->P16map.TRISD);
+   if (pic->P16map.TRISE)pic->trise = (*pic->P16map.TRISE);
+   return 1;
+  }
+ return 0;
+}
 
 inline static int
 interrupt18(void)
@@ -384,9 +433,9 @@ periferic18_step_out(void)
         port = sfr_addr (pic->pins[i].port)+(sfr_addr (pic->P18map.LATA) - sfr_addr (pic->P18map.PORTA));
         pic->pins[i].lvalue = ((pic->ram[port] & val) != 0); //latch
         if (pic->pins[i].ptype > 2)
-         pic18_wr_pin (i + 1, 0);
+         pic_wr_pin18 (i + 1, 0);
         else
-         pic18_wr_pin (i + 1, pic->pins[i].value);
+         pic_wr_pin18 (i + 1, pic->pins[i].value);
         break;
        default:
         break;
@@ -417,13 +466,13 @@ periferic18_step_out(void)
        if ((pic->ram[tris] & val) == 0)
         {
          pic->pins[i].dir = PD_OUT;
-         pic18_wr_pin (i + 1, pic->pins[i].lvalue);
+         pic_wr_pin18 (i + 1, pic->pins[i].lvalue);
         }
        else
         {
          val = pic->pins[i].dir;
          pic->pins[i].dir = PD_IN;
-         if (val != PD_IN)pic18_wr_pin (i + 1, pic->pins[i].ovalue);
+         if (val != PD_IN)pic_wr_pin18 (i + 1, pic->pins[i].ovalue);
         }
       }
 

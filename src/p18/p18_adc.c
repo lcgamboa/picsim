@@ -27,7 +27,7 @@
 #include"../../include/picsim.h"
 #include"../../include/periferic18.h"
 
-int pic18_wr_pin(unsigned char pin, unsigned char value);
+int pic_wr_pin18(unsigned char pin, unsigned char value);
 
 void
 p18_adc_rst(void)
@@ -127,7 +127,7 @@ p18_adc(void)
            else
             {
              pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
-             if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic18_wr_pin (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
+             if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin18 (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
             }
           }
         }
@@ -146,7 +146,7 @@ p18_adc(void)
            else
             {
              pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
-             if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic18_wr_pin (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
+             if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin18 (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
             }
           }
         }
@@ -165,7 +165,7 @@ p18_adc(void)
            else
             {
              pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
-             if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic18_wr_pin (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
+             if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin18 (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
             }
           }
         }
@@ -184,7 +184,7 @@ p18_adc(void)
            else
             {
              pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
-             if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic18_wr_pin (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
+             if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin18 (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
             }
           }
         }
@@ -203,7 +203,7 @@ p18_adc(void)
            else
             {
              pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
-             if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic18_wr_pin (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
+             if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin18 (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
             }
           }
         }

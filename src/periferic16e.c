@@ -30,7 +30,7 @@
 extern const int fpw2[];
 
 extern void pic_decode_16E(void);
- 
+
 int
 pic_wr_pin16E(unsigned char pin, unsigned char value)
 {
@@ -53,6 +53,54 @@ pic_wr_pin16E(unsigned char pin, unsigned char value)
   }
  else
   return 0;
+}
+
+int
+pic_dir_pin16E(unsigned char pin, unsigned char dir)
+{
+ unsigned char val = 0;
+ unsigned char tris;
+ if ((pic->pins[pin - 1].pord >= 0)&&(pic->pins[pin - 1].port))
+  {
+   val = 0x01 << (pic->pins[pin - 1].pord);
+   tris = sfr_addr (pic->pins[pin - 1].port) + (sfr_addr (pic->P16Emap.TRISA) - sfr_addr (pic->P16Emap.PORTA));
+
+   if (dir == PD_OUT)
+    {
+     if (pic->ram[tris] & val)
+      {
+       pic->pins[pin - 1].dir = PD_OUT;
+       pic->ram[tris] &= ~val;
+      }
+     else
+      {
+       val = 0; //value not changed
+      }
+    }
+   else
+    {
+     if (!(pic->ram[tris] & val))
+      {
+       pic->pins[pin - 1].dir = PD_IN;
+       pic->ram[tris] |= val;
+      }
+     else
+      {
+       val = 0; //value not changed
+      }
+    }
+  }
+
+ if (val)
+  {
+   pic->trisa = (*pic->P16map.TRISA);
+   pic->trisb = (*pic->P16map.TRISB);
+   pic->trisc = (*pic->P16map.TRISC);
+   if (pic->P16map.TRISD)pic->trisd = (*pic->P16map.TRISD);
+   if (pic->P16map.TRISE)pic->trise = (*pic->P16map.TRISE);
+   return 1;
+  }
+ return 0;
 }
 
 void
@@ -239,7 +287,7 @@ periferic16E_step_out(void)
          if (val != PD_IN)pic_wr_pin16E (i + 1, pic->pins[i].ovalue);
         }
       }
-    };
+    }
    pic->trisa = (*pic->P16Emap.TRISA);
    pic->trisb = (*pic->P16Emap.TRISB);
    pic->trisc = (*pic->P16Emap.TRISC);
@@ -251,7 +299,7 @@ periferic16E_step_out(void)
  //interrupt
  if (pic->s2 == 0)
   {
-   if (pic->interrupt())
+   if (pic->interrupt ())
     {
      pic->sleep = 0;
 

@@ -58,6 +58,55 @@ pic_wr_pin16(unsigned char pin, unsigned char value)
   return 0;
 }
 
+int
+pic_dir_pin16(unsigned char pin, unsigned char dir)
+{
+ unsigned char val = 0;
+ unsigned char tris;
+
+ if ((pic->pins[pin - 1].pord >= 0)&&(pic->pins[pin - 1].port))
+  {
+   val = 0x01 << (pic->pins[pin - 1].pord);
+   tris = sfr_addr (pic->pins[pin - 1].port) + 0x80;
+
+   if (dir == PD_OUT)
+    {
+     if (pic->ram[tris] & val)
+      {
+       pic->pins[pin - 1].dir = PD_OUT;
+       pic->ram[tris] &= ~val;
+      }
+     else
+      {
+       val = 0; //value not changed
+      }
+    }
+   else
+    {
+     if (!(pic->ram[tris] & val))
+      {
+       pic->pins[pin - 1].dir = PD_IN;
+       pic->ram[tris] |= val;
+      }
+     else
+      {
+       val = 0; //value not changed
+      }
+    }
+  }
+
+ if (val)
+  {
+   pic->trisa = (*pic->P16map.TRISA);
+   pic->trisb = (*pic->P16map.TRISB);
+   if (pic->P16map.TRISC)pic->trisc = (*pic->P16map.TRISC);
+   if (pic->P16map.TRISD)pic->trisd = (*pic->P16map.TRISD);
+   if (pic->P16map.TRISE)pic->trise = (*pic->P16map.TRISE);
+   return 1;
+  }
+ return 0;
+}
+
 inline static int
 interrupt16(void)
 {
@@ -285,7 +334,7 @@ periferic16_step_out(void)
          if (val != PD_IN)pic_wr_pin16 (i + 1, pic->pins[i].ovalue);
         }
       }
-    };
+    }
    pic->trisa = (*pic->P16map.TRISA);
    pic->trisb = (*pic->P16map.TRISB);
    if (pic->P16map.TRISC)pic->trisc = (*pic->P16map.TRISC);
