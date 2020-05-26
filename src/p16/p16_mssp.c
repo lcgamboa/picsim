@@ -62,6 +62,7 @@ p16_mssp(void)
        pic->ssp_bit = 8;
        pic->ssp_sck = 0;
        pic_wr_pin16 (pic->sck, 0);
+       (*pic->P16map.SSPSTAT) |= 0x01; //BF
       }
 
      if (pic->ssp_bit)
@@ -79,10 +80,14 @@ p16_mssp(void)
         }
        pic->ssp_sck++;
       }
+     else
+      {
+       (*pic->P16map.SSPSTAT) &= ~0x01; //BF
+      }
      break;
      //case 0x04://SPI Slave mode, clock = SCK pin. SS pin control enabled.
     case 0x05://SPI Slave mode, clock = SCK pin. SS pin control disabled.
-     pic_dir_pin16(pic->sdi, PD_IN);
+     pic_dir_pin16 (pic->sdi, PD_IN);
 
      if (pic->rram == sfr_addr (pic->P16map.SSPBUF))
       {
@@ -130,23 +135,23 @@ p16_mssp(void)
 
        if (((*pic->P16map.SSPCON2) & 0x01)) //start
         {
-         pic_dir_pin16(pic->sck, PD_OUT);
-         pic_dir_pin16(pic->sdi, PD_OUT);
+         pic_dir_pin16 (pic->sck, PD_OUT);
+         pic_dir_pin16 (pic->sdi, PD_OUT);
          pic_wr_pin16 (pic->sdi, 1);
          pic_wr_pin16 (pic->sck, 1);
-         
+
          //printf("I2C_start 1\n");
         }
        else if (((*pic->P16map.SSPCON2) & 0x02)) //restart
         {
-         pic_dir_pin16(pic->sdi, PD_OUT);
+         pic_dir_pin16 (pic->sdi, PD_OUT);
          pic_wr_pin16 (pic->sdi, 1);
          pic_wr_pin16 (pic->sck, 1);
          //printf("restar1\n");
         }
        else if (((*pic->P16map.SSPCON2) & 0x04)) //stop
         {
-         pic_dir_pin16(pic->sdi, PD_OUT);
+         pic_dir_pin16 (pic->sdi, PD_OUT);
          pic_wr_pin16 (pic->sdi, 0);
          pic_wr_pin16 (pic->sck, 1);
          //printf("stop1\n");
@@ -191,7 +196,7 @@ p16_mssp(void)
        (*pic->P16map.SSPSTAT) |= 0x04; //R/W
        //printf("SPPBUF write (%#02X)!!!!\n",pic->ram[SSPBUF]);	
        pic->ssp_bit = 0;
-       pic_dir_pin16(pic->sdi, PD_OUT);
+       pic_dir_pin16 (pic->sdi, PD_OUT);
        (*pic->P16map.SSPSTAT) |= 0x01; //BF
       }
 
@@ -203,7 +208,7 @@ p16_mssp(void)
 
        //printf("read\n");
        (*pic->P16map.SSPBUF) = 0;
-       pic_dir_pin16(pic->sdi, PD_IN);
+       pic_dir_pin16 (pic->sdi, PD_IN);
        pic->ssp_ck = pic->pins[pic->sck - 1].value;
        (*pic->P16map.SSPSTAT) &= ~0x01; //BF
 
@@ -219,15 +224,15 @@ p16_mssp(void)
        if ((((*pic->P16map.SSPSTAT) & 0x04))&&(pic->ssp_bit <= 9))
         {
          pic_wr_pin16 (pic->sck, !pic->pins[pic->sck - 1].value);
-         
-         
+
+
          if ((pic->pins[pic->sck - 1].value == 0)&&(pic->ssp_bit <= 8))
           {
-           pic_wr_pin16 (pic->sdi,((*pic->P16map.SSPBUF) & (0x01 << (7 - pic->ssp_bit))) > 0);
+           pic_wr_pin16 (pic->sdi, ((*pic->P16map.SSPBUF) & (0x01 << (7 - pic->ssp_bit))) > 0);
            pic->ssp_bit++;
            if (pic->ssp_bit == 9)
             {
-             pic_dir_pin16(pic->sdi, PD_IN);
+             pic_dir_pin16 (pic->sdi, PD_IN);
             }
           }
 
@@ -278,7 +283,7 @@ p16_mssp(void)
 
          if (((*pic->P16map.SSPCON2)& 0x10)&&(pic->pins[pic->sck - 1].value == 1)&&(pic->ssp_bit > 8))
           {
-           pic_dir_pin16(pic->sdi, PD_OUT);
+           pic_dir_pin16 (pic->sdi, PD_OUT);
            pic_wr_pin16 (pic->sdi, ((*pic->P16map.SSPCON2)&0x20) > 0);
            (*pic->P16map.PIR1) |= 0x08; //SSPIF
            pic->ssp_bit++;
@@ -292,7 +297,7 @@ p16_mssp(void)
 
        if (pic->ssp_bit == 10)
         {
-         pic_dir_pin16(pic->sdi, PD_OUT);
+         pic_dir_pin16 (pic->sdi, PD_OUT);
          pic_wr_pin16 (pic->sdi, 1);
          pic->ssp_bit++;
         }
