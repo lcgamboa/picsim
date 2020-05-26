@@ -45,10 +45,12 @@ p18_mssp_rst(void)
 void
 p18_mssp(void)
 {
+
+ //MSSP
  if (((*pic->P18map.SSPCON1) & 0x20) == 0x20) //SSPEN
   {
 
-   switch ((*pic->P18map.SSPCON1))
+   switch ((*pic->P18map.SSPCON1) & 0x0F)
     {
     case 0x00://SPI Master mode, clock = FOSC/4
     case 0x01://SPI Master mode, clock = FOSC/16

@@ -50,7 +50,7 @@ p16_mssp(void)
  if (((*pic->P16map.SSPCON) & 0x20) == 0x20) //SSPEN
   {
 
-   switch (((*pic->P16map.SSPCON) & 0x0F))
+   switch ((*pic->P16map.SSPCON) & 0x0F)
     {
     case 0x00://SPI Master mode, clock = FOSC/4
     case 0x01://SPI Master mode, clock = FOSC/16
@@ -82,7 +82,6 @@ p16_mssp(void)
      break;
      //case 0x04://SPI Slave mode, clock = SCK pin. SS pin control enabled.
     case 0x05://SPI Slave mode, clock = SCK pin. SS pin control disabled.
-
      pic_dir_pin16(pic->sdi, PD_IN);
 
      if (pic->rram == sfr_addr (pic->P16map.SSPBUF))
@@ -117,16 +116,13 @@ p16_mssp(void)
        (*pic->P16map.SSPSTAT) |= 0x01; //BF
 
        //PSPIF
-       (*pic->P16map.PIR1) |= 0x08;
+       (*pic->P16map.PIR1) |= 0x08; //PSPIF
        pic->ssp_bit = 0;
       }
-
-
      break;
      //case 0x06://I2C Slave mode, 7-bit address
      //case 0x07://I2C Slave mode, 10-bit address
     case 0x08://I2C Master mode, clock = FOSC /(4 * (SSPADD + 1))
-
      pic->ssp_sck++;
 
      if (pic->ssp_sck == (((*pic->P16map.SSPADD) + 1 / 2) - 1))

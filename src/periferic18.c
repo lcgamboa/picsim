@@ -73,7 +73,7 @@ pic_dir_pin18(unsigned char pin, unsigned char dir)
  if ((pic->pins[pin - 1].pord >= 0)&&(pic->pins[pin - 1].port))
   {
    val = 0x01 << (pic->pins[pin - 1].pord);
-   tris = sfr_addr (pic->pins[pin-1].port)+(sfr_addr (pic->P18map.TRISA) - sfr_addr (pic->P18map.PORTA));
+   tris = sfr_addr (pic->pins[pin - 1].port)+(sfr_addr (pic->P18map.TRISA) - sfr_addr (pic->P18map.PORTA));
 
    if (dir == PD_OUT)
     {
