@@ -164,7 +164,7 @@ p18_mssp(void)
        if (((*pic->P18map.SSPCON2) & 0x01)) //start
         {
          (*pic->P18map.SSPCON2) &= ~0x01;
-
+         pic_dir_pin18 (pic->sck, PD_OUT);
          pic_wr_pin18 (pic->sdi, 0);
          pic_wr_pin18 (pic->sck, 1);
 

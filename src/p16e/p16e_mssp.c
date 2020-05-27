@@ -164,7 +164,7 @@ p16e_mssp(void)
        if (((*pic->P16Emap.SSP1CON2) & 0x01)) //start
         {
          (*pic->P16Emap.SSP1CON2) &= ~0x01;
-
+         pic_dir_pin16E (pic->sck, PD_OUT);
          pic_wr_pin16E (pic->sdi, 0);
          pic_wr_pin16E (pic->sck, 1);
 
