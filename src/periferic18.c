@@ -68,7 +68,7 @@ int
 pic_dir_pin18(unsigned char pin, unsigned char dir)
 {
  unsigned char val = 0;
- unsigned char tris;
+ unsigned short tris;
 
  if ((pic->pins[pin - 1].pord >= 0)&&(pic->pins[pin - 1].port))
   {
@@ -103,11 +103,11 @@ pic_dir_pin18(unsigned char pin, unsigned char dir)
 
  if (val)
   {
-   pic->trisa = (*pic->P16map.TRISA);
-   pic->trisb = (*pic->P16map.TRISB);
-   pic->trisc = (*pic->P16map.TRISC);
-   if (pic->P16map.TRISD)pic->trisd = (*pic->P16map.TRISD);
-   if (pic->P16map.TRISE)pic->trise = (*pic->P16map.TRISE);
+   pic->trisa = (*pic->P18map.TRISA);
+   pic->trisb = (*pic->P18map.TRISB);
+   pic->trisc = (*pic->P18map.TRISC);
+   if (pic->P18map.TRISD)pic->trisd = (*pic->P18map.TRISD);
+   if (pic->P18map.TRISE)pic->trise = (*pic->P18map.TRISE);
    return 1;
   }
  return 0;

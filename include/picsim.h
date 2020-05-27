@@ -52,7 +52,7 @@ extern "C" {
     } picpin;
 
 #define PD_OUT   0x00
-#define PD_IN   0x01
+#define PD_IN    0x01
 
 
 #define PT_CMOS    0x01
