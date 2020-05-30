@@ -978,6 +978,7 @@ pic_decode_18(void)
      (*pic->P18map.PRODH) = (temp & 0xFF00) >> 8;
      (*pic->P18map.PRODL) = temp & 0x00FF;
      pic->lram = sfr_addr (pic->P18map.PRODL);
+     break;
     case 0x0E00:
      //MOVLW    k    	Move literal to WREG         1     	0000 1110 kkkk kkkk None
      if (pic->print)printf ("MOVLW %#06X\n", opc & 0x00FF);
