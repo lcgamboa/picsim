@@ -38,9 +38,6 @@ PIC18F452_map(void)
  pic->P18map.BDMSR1 = &pic->ram[0xFB8];
  pic->P18map.BDMSR0 = &pic->ram[0xFB7];
 #endif 
- pic->P18map.WS = &pic->ram[0xF00];
- pic->P18map.STATUSS = &pic->ram[0xF01];
- pic->P18map.BSRS = &pic->ram[0xF02];
  
  pic->P18map.TMR3L = &pic->ram[0xFB2];
  pic->P18map.TMR3H = &pic->ram[0xFB3];

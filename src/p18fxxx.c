@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2008-2015  Luis Claudio Gambôa Lopes
+   Copyright (c) : 2008-2020  Luis Claudio Gambôa Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -689,9 +689,9 @@ pic_decode_18(void)
 
        if (opc & 0x0001)
         {
-         (*pic->P18map.WREG) = (*pic->P18map.WS);
-         (*pic->P18map.STATUS) = (*pic->P18map.STATUSS);
-         (*pic->P18map.BSR) = (*pic->P18map.BSRS);
+         (*pic->P18map.WREG) = pic->P18map.WS;
+         (*pic->P18map.STATUS) = pic->P18map.STATUSS;
+         (*pic->P18map.BSR) = pic->P18map.BSRS;
         }
        break;
       case 0x0012:
@@ -714,9 +714,9 @@ pic_decode_18(void)
 
        if (opc & 0x0001)
         {
-         (*pic->P18map.WREG) = (*pic->P18map.WS);
-         (*pic->P18map.STATUS) = (*pic->P18map.STATUSS);
-         (*pic->P18map.BSR) = (*pic->P18map.BSRS);
+         (*pic->P18map.WREG) = pic->P18map.WS;
+         (*pic->P18map.STATUS) = pic->P18map.STATUSS;
+         (*pic->P18map.BSR) = pic->P18map.BSRS;
         }
        /* debug 
    if((pic->ram[ICKBUG] & 0x80)== 0x80)printf("Out DEBUG mode\n");
@@ -2102,9 +2102,9 @@ pic_decode_18(void)
 
      if (opc & 0x0100)
       {
-       (*pic->P18map.WS) = (*pic->P18map.WREG);
-       (*pic->P18map.STATUSS) = (*pic->P18map.STATUS);
-       (*pic->P18map.BSRS) = (*pic->P18map.BSR);
+       pic->P18map.WS = (*pic->P18map.WREG);
+       pic->P18map.STATUSS = (*pic->P18map.STATUS);
+       pic->P18map.BSRS = (*pic->P18map.BSR);
       }
      if (((*pic->P18map.STKPTR) & 0x1F) < 31)
       {

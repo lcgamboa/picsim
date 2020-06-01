@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2008-2015  Luis Claudio GambÃ´a Lopes
+   Copyright (c) : 2008-2020  Luis Claudio Gambôa Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -514,9 +514,9 @@ periferic18_step_out(void)
        (*pic->P18map.TOSU) = 0;
       }
      //fast stack       
-     (*pic->P18map.WS) = pic->w;
-     (*pic->P18map.STATUSS) = (*pic->P18map.STATUS);
-     (*pic->P18map.BSRS) = (*pic->P18map.BSR);
+     pic->P18map.WS = pic->w;
+     pic->P18map.STATUSS = (*pic->P18map.STATUS);
+     pic->P18map.BSRS = (*pic->P18map.BSR);
 
 
      if (iret == 2)

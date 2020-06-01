@@ -182,16 +182,16 @@ extern "C" {
 #define P18_SPPCFG	0xF63
 #define P18_SPPDATA	0xF62
 
-
-
-//shadow
-#define P18_WS		0xF00
-#define P18_STATUSS	0xF01
-#define P18_BSRS	0xF02
 */
     
 typedef struct
 {    
+
+//shadow stack	
+unsigned char WS;
+unsigned char STATUSS;
+unsigned char BSRS;
+
 //not mapped    
 #ifdef ICSPDBG  
 unsigned char * DEBUG;
@@ -200,9 +200,6 @@ unsigned char * BDMSR1;
 unsigned char * BDMSR0;
 #endif
 
-unsigned char * WS;
-unsigned char * STATUSS;
-unsigned char * BSRS;
     
 //maped 
 unsigned char * STATUS;

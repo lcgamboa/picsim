@@ -38,9 +38,6 @@ PIC18F27K40_map(void)
  pic->P18map.BDMSR1 = &pic->ram[0xFB8];
  pic->P18map.BDMSR0 = &pic->ram[0xFB7];
 #endif 
- pic->P18map.WS = &pic->ram[0xFF0];
- pic->P18map.STATUSS = &pic->ram[0xFF1];
- pic->P18map.BSRS = &pic->ram[0xFAE];
  
  /*
  pic->P18map.RX2PPS = &pic->ram[0xE8D];
