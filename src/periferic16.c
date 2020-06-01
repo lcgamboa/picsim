@@ -157,6 +157,7 @@ void
 periferic16_rst(void)
 {
  pic->debug = 0;
+ pic->sleep = 0;
 
  pic->p16latch[0] = 0;
  pic->p16latch[1] = 0;

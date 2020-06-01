@@ -243,6 +243,7 @@ periferic18_rst(void)
 {
 
  pic->debug = 0;
+ pic->sleep = 0;
 
  pic->porta = 129;
  pic->portb = 129;

@@ -108,6 +108,7 @@ periferic16E_rst(void)
 {
 
  pic->debug = 0;
+ pic->sleep = 0;
 
  pic->porta = 129; //dummy value to be changed
  pic->portb = 129;
