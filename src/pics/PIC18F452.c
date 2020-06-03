@@ -332,5 +332,6 @@ PIC18F452_start(void)
  pic->mmap = PIC18F452_map;
  pic->getconf = PIC18F452_getconf;
  pic->periferic = PIC18F452_periferic;
+ pic->interrupt = interrupt18;
 }
 

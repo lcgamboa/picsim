@@ -51,6 +51,7 @@ void PIC18F4550_start(void);
 void PIC18F45K50_start(void);
 void PIC18F4620_start(void);
 void PIC18F27K40_start(void);
+void PIC18F47K40_start(void);
 
 _pic * pic; //global object
 
@@ -188,6 +189,9 @@ pic_init(_pic * pic_, int processor, const char * fname, int lrom, float freq)
     case P18F27K40:
      PIC18F27K40_start ();
      break;
+    case P18F47K40:
+     PIC18F47K40_start ();
+     break;
     default:
      printf ("unknown processor 0x%04X!\n", processor);
      return 0;
@@ -202,7 +206,7 @@ pic_init(_pic * pic_, int processor, const char * fname, int lrom, float freq)
  pic->prog = calloc (pic->ROMSIZE, sizeof (short));
  pic->id = calloc (pic->IDSIZE, sizeof (short));
  pic->config = calloc (pic->CONFIGSIZE, sizeof (short));
- pic->stack = calloc (pic->STACKSIZE, sizeof (short));
+ pic->stack = calloc (pic->STACKSIZE, sizeof (int));
  pic->eeprom = calloc (pic->EEPROMSIZE, sizeof (char));
  pic->pins = calloc (pic->PINCOUNT, sizeof (picpin));
  pic->ccp = calloc (pic->CCPCOUNT, sizeof (char));
@@ -285,7 +289,7 @@ pic_reset(int flags)
 
  /*memory clear*/
  memset (pic->ram, 0, pic->RAMSIZE);
- memset (pic->stack, 0, pic->STACKSIZE * 2);
+ memset (pic->stack, 0, pic->STACKSIZE * sizeof(int));
 
  for (i = 0; i < pic->PINCOUNT; i++)
   {

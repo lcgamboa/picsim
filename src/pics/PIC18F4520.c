@@ -359,5 +359,6 @@ PIC18F4520_start(void)
  pic->mmap = PIC18F4520_map;
  pic->getconf = PIC18F4520_getconf; 
  pic->periferic = PIC18F4520_periferic;
+ pic->interrupt = interrupt18;
 }
 

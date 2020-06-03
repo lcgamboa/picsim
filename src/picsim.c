@@ -281,7 +281,7 @@ main(int argc,char** argv)
      printf("supported processors PIC16:\n");
      printf("         PIC16F84A PIC16F628 PIC16F628A PIC16F877 PIC16F877A PIC16F648A PIC16F777 PIC16F1619 PIC16F18855\n");     
      printf("supported processors PIC18:\n");
-     printf("         PIC18F452 PIC18F4520 PIC18F4620 PIC18F4550 PIC18F45K50\n");
+     printf("         PIC18F452 PIC18F4520 PIC18F4620 PIC18F4550 PIC18F45K50 PIC18F27K40 PIC18F47K40\n");
 
 #ifdef _WIN_
     system("PAUSE");

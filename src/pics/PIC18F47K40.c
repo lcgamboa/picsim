@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2008-2020  Luis Claudio Gamboa Lopes
+   Copyright (c) : 2019-2020  Luis Claudio Gamboa Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@
 #include <string.h>
 
 void
-PIC18F27K40_map(void)
+PIC18F47K40_map(void)
 {
  memset (&pic->P18map, 0, sizeof (P18map_t));
 
@@ -160,6 +160,17 @@ PIC18F27K40_map(void)
  pic->P18map.RC5PPS = &pic->ram[0xEFC];
  pic->P18map.RC6PPS = &pic->ram[0xEFD];
  pic->P18map.RC7PPS = &pic->ram[0xEFE];
+ pic->P18map.RD0PPS = &pic->ram[0xEFF];
+ pic->P18map.RD1PPS = &pic->ram[0xF00];
+ pic->P18map.RD2PPS = &pic->ram[0xF01];
+ pic->P18map.RD3PPS = &pic->ram[0xF02];
+ pic->P18map.RD4PPS = &pic->ram[0xF03];
+ pic->P18map.RD5PPS = &pic->ram[0xF04];
+ pic->P18map.RD6PPS = &pic->ram[0xF05];
+ pic->P18map.RD7PPS = &pic->ram[0xF06];
+ pic->P18map.RE0PPS = &pic->ram[0xF07];
+ pic->P18map.RE1PPS = &pic->ram[0xF08];
+ pic->P18map.RE2PPS = &pic->ram[0xF09];
  pic->P18map.IOCAF = &pic->ram[0xF0A];
  pic->P18map.IOCAN = &pic->ram[0xF0B];
  pic->P18map.IOCAP = &pic->ram[0xF0C];
@@ -189,12 +200,24 @@ PIC18F27K40_map(void)
  pic->P18map.WPUC = &pic->ram[0xF20];
   */ 
  pic->P18map.ANSELC = &pic->ram[0xF21];
- /*
+/*
+ pic->P18map.INLVLD = &pic->ram[0xF22];
+ pic->P18map.SLRCOND = &pic->ram[0xF23];
+ pic->P18map.ODCOND = &pic->ram[0xF24];
+ pic->P18map.WPUD = &pic->ram[0xF25];
+*/ 
+ pic->P18map.ANSELD = &pic->ram[0xF26];
+/* 
  pic->P18map.IOCEF = &pic->ram[0xF27];
  pic->P18map.IOCEN = &pic->ram[0xF28];
  pic->P18map.IOCEP = &pic->ram[0xF29];
  pic->P18map.INLVLE = &pic->ram[0xF2A];
+ pic->P18map.SLRCONE = &pic->ram[0xF2B];
+ pic->P18map.ODCONE = &pic->ram[0xF2C];
  pic->P18map.WPUE = &pic->ram[0xF2D];
+*/
+ pic->P18map.ANSELE = &pic->ram[0xF2E];
+/* 
  pic->P18map.HLVDCON0 = &pic->ram[0xF2F];
  pic->P18map.HLVDCON1 = &pic->ram[0xF30];
  pic->P18map.FVRCON = &pic->ram[0xF31];
@@ -287,12 +310,17 @@ PIC18F27K40_map(void)
  pic->P18map.LATA = &pic->ram[0xF83];
  pic->P18map.LATB = &pic->ram[0xF84];
  pic->P18map.LATC = &pic->ram[0xF85];
+ pic->P18map.LATD = &pic->ram[0xF86];
+ pic->P18map.LATE = &pic->ram[0xF87];
  pic->P18map.TRISA = &pic->ram[0xF88];
  pic->P18map.TRISB = &pic->ram[0xF89];
  pic->P18map.TRISC = &pic->ram[0xF8A];
+ pic->P18map.TRISD = &pic->ram[0xF8B];
+ pic->P18map.TRISE = &pic->ram[0xF8C];
  pic->P18map.PORTA = &pic->ram[0xF8D];
  pic->P18map.PORTB = &pic->ram[0xF8E];
  pic->P18map.PORTC = &pic->ram[0xF8F];
+ pic->P18map.PORTD = &pic->ram[0xF90];
  pic->P18map.PORTE = &pic->ram[0xF91];
  /*
  pic->P18map.SSP1BUF = &pic->ram[0xF92];
@@ -419,105 +447,101 @@ PIC18F27K40_map(void)
 
 /*PINS 
 
-01 - VPP MCLR_n ICD_n IOCE3 RE3 
+01 - VPP nMCLR IOCE3 RE3 
 02 - ANA0 C1IN0- C2IN0- IOCA0 RA0 
 03 - ANA1 C1IN1- C2IN1- IOCA1 RA1 
 04 - DAC1OUT1 VREF- ANA2 C1IN0+ C2IN0+ IOCA2 RA2 
 05 - VREF+ ANA3 C1IN1+ IOCA3 RA3 
 06 - ANA4 IOCA4 RA4 
 07 - ANA5 IOCA5 RA5 
-08 - AVSS VSS 
-09 - CLKIN OSC1 ANA7 IOCA7 RA7 
-10 - OSC2 CLKOUT ANA6 IOCA6 RA6 
-11 - SOSCO ANC0 IOCC0 RC0 
-12 - SOSCI ANC1 IOCC1 RC1 
-13 - ANC2 IOCC2 RC2 
-14 - SMB_I2C ANC3 IOCC3 RC3 
-15 - SMB_I2C ANC4 IOCC4 RC4 
-16 - ANC5 IOCC5 RC5 
-17 - ANC6 IOCC6 RC6 
-18 - ANC7 IOCC7 RC7 
-19 - VSS VSEL0 
-20 - AVDD VDD 
-21 - ZCD ANB0 C2IN1+ IOCB0 RB0 
-22 - ANB1 C1IN3- C2IN3- SMB_I2C IOCB1 RB1 
-23 - ANB2 SMB_I2C IOCB2 RB2 
-24 - ANB3 C1IN2- C2IN2- IOCB3 RB3 
-25 - ANB4 IOCB4 RB4 
-26 - ANB5 IOCB5 RB5 
-27 - ICSPCLK ICDCLK ANB6 IOCB6 RB6 
-28 - ICSPDAT ICDDAT DAC1OUT2 ANB7 IOCB7 RB7 
+08 - ANE0 RE0 
+09 - ANE1 RE1 
+10 - ANE2 RE2 
+11 - VDD 
+12 - AVSS VSS 
+13 - CLKIN OSC1 ANA7 IOCA7 RA7 
+14 - OSC2 CLKOUT ANA6 IOCA6 RA6 
+15 - SOSCO ANC0 IOCC0 RC0 
+16 - SOSCI ANC1 IOCC1 RC1 
+17 - ANC2 IOCC2 RC2 
+18 - ANC3 SMB_I2C IOCC3 RC3 
+19 - AND0 RD0 
+20 - AND1 RD1 
+21 - AND2 RD2 
+22 - AND3 RD3 
+23 - ANC4 SMB_I2C IOCC4 RC4 
+24 - ANC5 IOCC5 RC5 
+25 - ANC6 IOCC6 RC6 
+26 - ANC7 IOCC7 RC7 
+27 - AND4 RD4 
+28 - AND5 RD5 
+29 - AND6 RD6 
+30 - AND7 RD7 
+31 - VSS VSEL0 
+32 - AVDD VDD 
+33 - ZCD ANB0 C2IN1+ IOCB0 RB0 
+34 - ANB1 C1IN3- C2IN3- SMB_I2C IOCB1 RB1 
+35 - ANB2 SMB_I2C IOCB2 RB2 
+36 - ANB3 C1IN2- C2IN2- IOCB3 RB3 
+37 - ANB4 IOCB4 RB4 
+38 - ANB5 IOCB5 RB5 
+39 - ICSPCLK ANB6 IOCB6 RB6 
+40 - ICSPDAT DAC1OUT2 ANB7 IOCB7 RB7 
  */
 
 /*
 ======================
 Family=P18 
-processor=PIC18F27K40
-deviceid=0x6960
+processor=PIC18F47K40
+deviceid=0x6900
  */
 
 void
-PIC18F27K40_reset(void)
+PIC18F47K40_reset(void)
 {
- pic->pins[ 0].port = pic->P18map.PORTE;
- pic->pins[ 0].pord = 3;
- pic->pins[ 1].port = pic->P18map.PORTA;
- pic->pins[ 1].pord = 0;
- pic->pins[ 2].port = pic->P18map.PORTA;
- pic->pins[ 2].pord = 1;
- pic->pins[ 3].port = pic->P18map.PORTA;
- pic->pins[ 3].pord = 2;
- pic->pins[ 4].port = pic->P18map.PORTA;
- pic->pins[ 4].pord = 3;
- pic->pins[ 5].port = pic->P18map.PORTA;
- pic->pins[ 5].pord = 4;
- pic->pins[ 6].port = pic->P18map.PORTA;
- pic->pins[ 6].pord = 5;
- pic->pins[ 7].port = P_VSS;
- pic->pins[ 7].pord = -1;
- pic->pins[ 8].port = pic->P18map.PORTA;
- pic->pins[ 8].pord = 7;
- pic->pins[ 9].port = pic->P18map.PORTA;
- pic->pins[ 9].pord = 6;
- pic->pins[10].port = pic->P18map.PORTC;
- pic->pins[10].pord = 0;
- pic->pins[11].port = pic->P18map.PORTC;
- pic->pins[11].pord = 1;
- pic->pins[12].port = pic->P18map.PORTC;
- pic->pins[12].pord = 2;
- pic->pins[13].port = pic->P18map.PORTC;
- pic->pins[13].pord = 3;
- pic->pins[14].port = pic->P18map.PORTC;
- pic->pins[14].pord = 4;
- pic->pins[15].port = pic->P18map.PORTC;
- pic->pins[15].pord = 5;
- pic->pins[16].port = pic->P18map.PORTC;
- pic->pins[16].pord = 6;
- pic->pins[17].port = pic->P18map.PORTC;
- pic->pins[17].pord = 7;
- pic->pins[18].port = P_VSS;
- pic->pins[18].pord = -1;
- pic->pins[19].port = P_VDD;
- pic->pins[19].pord = -1;
- pic->pins[19].value = 1;
- pic->pins[20].port = pic->P18map.PORTB;
- pic->pins[20].pord = 0;
- pic->pins[21].port = pic->P18map.PORTB;
- pic->pins[21].pord = 1;
- pic->pins[22].port = pic->P18map.PORTB;
- pic->pins[22].pord = 2;
- pic->pins[23].port = pic->P18map.PORTB;
- pic->pins[23].pord = 3;
- pic->pins[24].port = pic->P18map.PORTB;
- pic->pins[24].pord = 4;
- pic->pins[25].port = pic->P18map.PORTB;
- pic->pins[25].pord = 5;
- pic->pins[26].port = pic->P18map.PORTB;
- pic->pins[26].pord = 6;
- pic->pins[27].port = pic->P18map.PORTB;
- pic->pins[27].pord = 7;
+ pic->pins[ 0].port = pic->P18map.PORTE;pic->pins[ 0].pord = 3;
+ pic->pins[ 1].port = pic->P18map.PORTA;pic->pins[ 1].pord = 0;
+ pic->pins[ 2].port = pic->P18map.PORTA;pic->pins[ 2].pord = 1;
+ pic->pins[ 3].port = pic->P18map.PORTA;pic->pins[ 3].pord = 2;
+ pic->pins[ 4].port = pic->P18map.PORTA;pic->pins[ 4].pord = 3;
+ pic->pins[ 5].port = pic->P18map.PORTA;pic->pins[ 5].pord = 4;
+ pic->pins[ 6].port = pic->P18map.PORTA;pic->pins[ 6].pord = 5;
+ pic->pins[ 7].port = pic->P18map.PORTE;pic->pins[ 7].pord = 0;
+ pic->pins[ 8].port = pic->P18map.PORTE;pic->pins[ 8].pord = 1;
+ pic->pins[ 9].port = pic->P18map.PORTE;pic->pins[ 9].pord = 2;
+ pic->pins[10].port = P_VDD    ;pic->pins[10].pord = -1;pic->pins[10].value = 1;
+ pic->pins[11].port = P_VSS    ;pic->pins[11].pord = -1;
+ pic->pins[12].port = pic->P18map.PORTA;pic->pins[12].pord = 7;
+ pic->pins[13].port = pic->P18map.PORTA;pic->pins[13].pord = 6;
+ pic->pins[14].port = pic->P18map.PORTC;pic->pins[14].pord = 0;
+ pic->pins[15].port = pic->P18map.PORTC;pic->pins[15].pord = 1;
+ pic->pins[16].port = pic->P18map.PORTC;pic->pins[16].pord = 2;
+ pic->pins[17].port = pic->P18map.PORTC;pic->pins[17].pord = 3;
+ pic->pins[18].port = pic->P18map.PORTD;pic->pins[18].pord = 0;
+ pic->pins[19].port = pic->P18map.PORTD;pic->pins[19].pord = 1;
+ pic->pins[20].port = pic->P18map.PORTD;pic->pins[20].pord = 2;
+ pic->pins[21].port = pic->P18map.PORTD;pic->pins[21].pord = 3;
+ pic->pins[22].port = pic->P18map.PORTC;pic->pins[22].pord = 4;
+ pic->pins[23].port = pic->P18map.PORTC;pic->pins[23].pord = 5;
+ pic->pins[24].port = pic->P18map.PORTC;pic->pins[24].pord = 6;
+ pic->pins[25].port = pic->P18map.PORTC;pic->pins[25].pord = 7;
+ pic->pins[26].port = pic->P18map.PORTD;pic->pins[26].pord = 4;
+ pic->pins[27].port = pic->P18map.PORTD;pic->pins[27].pord = 5;
+ pic->pins[28].port = pic->P18map.PORTD;pic->pins[28].pord = 6;
+ pic->pins[29].port = pic->P18map.PORTD;pic->pins[29].pord = 7;
+ pic->pins[30].port = P_VSS    ;pic->pins[30].pord = -1;
+ pic->pins[31].port = P_VDD    ;pic->pins[31].pord = -1;pic->pins[31].value = 1;
+ pic->pins[32].port = pic->P18map.PORTB;pic->pins[32].pord = 0;
+ pic->pins[33].port = pic->P18map.PORTB;pic->pins[33].pord = 1;
+ pic->pins[34].port = pic->P18map.PORTB;pic->pins[34].pord = 2;
+ pic->pins[35].port = pic->P18map.PORTB;pic->pins[35].pord = 3;
+ pic->pins[36].port = pic->P18map.PORTB;pic->pins[36].pord = 4;
+ pic->pins[37].port = pic->P18map.PORTB;pic->pins[37].pord = 5;
+ pic->pins[38].port = pic->P18map.PORTB;pic->pins[38].pord = 6;
+ pic->pins[39].port = pic->P18map.PORTB;pic->pins[39].pord = 7;
 
  pic->mclr = 1;
+
 
  pic->adc[0] = 2;
  pic->adc[1] = 3;
@@ -525,41 +549,52 @@ PIC18F27K40_reset(void)
  pic->adc[3] = 5;
  pic->adc[4] = 6;
  pic->adc[5] = 7;
- pic->adc[6] = 10;
- pic->adc[7] = 9;
- pic->adc[8] = 21;
- pic->adc[9] = 22;
- pic->adc[10] = 23;
- pic->adc[11] = 24;
- pic->adc[12] = 25;
- pic->adc[13] = 26;
- pic->adc[14] = 27;
- pic->adc[15] = 28;
- pic->adc[16] = 11;
- pic->adc[17] = 12;
- pic->adc[18] = 13;
- pic->adc[19] = 14;
- pic->adc[20] = 15;
- pic->adc[21] = 16;
- pic->adc[22] = 17;
- pic->adc[23] = 18;
+ pic->adc[6] = 14;
+ pic->adc[7] = 13;
+ pic->adc[8] = 33;
+ pic->adc[9] = 34;
+ pic->adc[10] = 35;
+ pic->adc[11] = 36;
+ pic->adc[12] = 37;
+ pic->adc[13] = 38;
+ pic->adc[14] = 39;
+ pic->adc[15] = 40;
+ pic->adc[16] = 15;
+ pic->adc[17] = 16;
+ pic->adc[18] = 17;
+ pic->adc[19] = 18;
+ pic->adc[20] = 23;
+ pic->adc[21] = 24;
+ pic->adc[22] = 25;
+ pic->adc[23] = 26;
+ pic->adc[24] = 19;
+ pic->adc[25] = 20;
+ pic->adc[26] = 21;
+ pic->adc[27] = 22;
+ pic->adc[28] = 27;
+ pic->adc[29] = 28;
+ pic->adc[30] = 29;
+ pic->adc[31] = 30;
+ pic->adc[32] = 8;
+ pic->adc[33] = 9;
+ pic->adc[34] = 10;
 
  pic->usart[0] = 26;
  pic->usart[1] = 25;
 
- pic->pgc = 27;
- pic->pgd = 28;
+ pic->pgc = 39;
+ pic->pgd = 40;
 
- pic->sck = 0;
- pic->sdo = 0;
- pic->sdi = 0;
+ pic->sck = 18;
+ pic->sdo = 24;
+ pic->sdi = 23;
 
  pic->t0cki = 6;
  pic->t1cki = 15;
 
- pic->int0 = 13;
- pic->int1 = 14;
- pic->int2 = 15;
+ pic->int0 = 33;
+ pic->int1 = 34;
+ pic->int2 = 35;
 
  p18_tmr0_rst ();
  p18_tmr1_rst ();
@@ -575,7 +610,7 @@ PIC18F27K40_reset(void)
 }
 
 void
-PIC18F27K40_periferic(void)
+PIC18F47K40_periferic (void)
 {
   //p18_mssp ();
   p18_adc ();
@@ -591,7 +626,7 @@ PIC18F27K40_periferic(void)
 }
 
 int
-PIC18F27K40_getconf(unsigned int cfg)
+PIC18F47K40_getconf(unsigned int cfg)
 {
  switch (cfg)
   {
@@ -609,22 +644,22 @@ PIC18F27K40_getconf(unsigned int cfg)
 }
 
 void
-PIC18F27K40_start(void)
+PIC18F47K40_start(void)
 {
  pic->ROMSIZE = 65536;
  pic->EEPROMSIZE = 1024;
  pic->RAMSIZE = 4096;
- pic->PINCOUNT = 28;
+ pic->PINCOUNT = 40;
  pic->IDSIZE = 8;
  pic->CONFIGSIZE = 6;
  pic->STACKSIZE = 31;
  pic->CCPCOUNT = 0;
- pic->ADCCOUNT = 24;
+ pic->ADCCOUNT = 35;
  pic->WDT_MS = 1;
- pic->reset = PIC18F27K40_reset;
- pic->mmap = PIC18F27K40_map;
- pic->getconf = PIC18F27K40_getconf;
- pic->periferic = PIC18F27K40_periferic;
+ pic->reset = PIC18F47K40_reset;
+ pic->mmap = PIC18F47K40_map;
+ pic->getconf = PIC18F47K40_getconf;
+ pic->periferic = PIC18F47K40_periferic;
  pic->interrupt = interrupt18_2;
 }
 

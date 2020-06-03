@@ -53,6 +53,7 @@ getprocbyname(const char *str)
  if (!strcmp ("PIC18F4550", str))return P18F4550;
  if (!strcmp ("PIC18F45K50", str))return P18F45K50;
  if (!strcmp ("PIC18F27K40", str))return P18F27K40;
+ if (!strcmp ("PIC18F47K40", str))return P18F47K40;
  
  return 0;
 }
@@ -130,6 +131,10 @@ getnamebyproc(int proc, char *str)
   case P18F27K40:
    strcpy (str, "PIC18F27K40");
    break;
+  
+  case P18F47K40:
+   strcpy (str, "PIC18F47K40");
+   break;
 
   default:
    str = NULL;
@@ -163,6 +168,7 @@ getfprocbyname(const char *str)
  if (!strcmp ("PIC18F4550", str))return P18;
  if (!strcmp ("PIC18F45K50", str))return P18;
  if (!strcmp ("PIC18F27K40", str))return P18;
+ if (!strcmp ("PIC18F47K40", str))return P18;
  
  return 0;
 }
@@ -192,6 +198,7 @@ getfprocbynumber(int proc)
  if (P18F4550 == proc)return P18;
  if (P18F45K50 == proc)return P18;
  if (P18F27K40 == proc)return P18;
+ if (P18F47K40 == proc)return P18;
 
  return 0;
 }

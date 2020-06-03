@@ -794,7 +794,7 @@ pic_decode_18(void)
        return;
        break;
       default:
-       printf ("unknown opcode 0x%04X!\n", opc);
+       printf ("unknown opcode 0x%04X at 0x%06X !\n", opc, pic->pc-2);
        break;
       }
      break;
@@ -1020,7 +1020,7 @@ pic_decode_18(void)
       *status &= ~0x10;
      break;
     default:
-     printf ("unknown opcode 0x%04X!\n", opc);
+     printf ("unknown opcode 0x%04X at 0x%06X !\n", opc, pic->pc-2);
      break;
     }
    break;
@@ -1156,7 +1156,7 @@ pic_decode_18(void)
       }
      break;
     default:
-     printf ("unknown opcode 0x%04X!\n", opc);
+     printf ("unknown opcode 0x%04X at 0x%06X !\n", opc, pic->pc-2);
      break;
     }
    break;
@@ -1353,7 +1353,7 @@ pic_decode_18(void)
       }
      break;
     default:
-     printf ("unknown opcode 0x%04X!\n", opc);
+     printf ("unknown opcode 0x%04X at 0x%06X !\n", opc, pic->pc-2);
      break;
     }
    break;
@@ -1469,7 +1469,7 @@ pic_decode_18(void)
       }
      break;
     default:
-     printf ("unknown opcode 0x%04X!\n", opc);
+     printf ("unknown opcode 0x%04X at 0x%06X !\n", opc, pic->pc-2);
      break;
     }
    break;
@@ -1586,7 +1586,7 @@ pic_decode_18(void)
       }
      break;
     default:
-     printf ("unknown opcode 0x%04X!\n", opc);
+     printf ("unknown opcode 0x%04X at 0x%06X !\n", opc, pic->pc-2);
      break;
     }
    break;
@@ -1812,7 +1812,7 @@ pic_decode_18(void)
       }
      break;
     default:
-     printf ("unknown opcode 0x%04X!\n", opc);
+     printf ("unknown opcode 0x%04X at 0x%06X !\n", opc, pic->pc-2);
      break;
     }
    break;
@@ -1923,7 +1923,7 @@ pic_decode_18(void)
      pic->rram = sfr_addr (pic->P18map.WREG);
      break;
     default:
-     printf ("unknown opcode 0x%04X!\n", opc);
+     printf ("unknown opcode 0x%04X at 0x%06X !\n", opc, pic->pc-2);
      break;
     }
    break;
@@ -2007,7 +2007,7 @@ pic_decode_18(void)
      break;
      break;
     default:
-     printf ("unknown opcode 0x%04X!\n", opc);
+     printf ("unknown opcode 0x%04X at 0x%06X !\n", opc, pic->pc-2);
      break;
     }
    break;
@@ -2161,7 +2161,7 @@ pic_decode_18(void)
      pic->s2 = 1;
      break;
     default:
-     printf ("unknown opcode 0x%04X!\n", opc);
+     printf ("unknown opcode 0x%04X at 0x%06X !\n", opc, pic->pc-2);     
      break;
     }
    break;
@@ -2170,7 +2170,7 @@ pic_decode_18(void)
    if (pic->print)printf ("NOP\n");
    break;
   default:
-   printf ("unknown opcode 0x%04X!\n", opc);
+   printf ("unknown opcode 0x%04X at 0x%06X !\n", opc, pic->pc-2);
    break;
   }
 

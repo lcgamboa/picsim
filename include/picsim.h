@@ -92,6 +92,7 @@ extern "C" {
 #define P18F4550    0x1200
 #define P18F45K50   0x5C00
 #define P18F27K40   0x6960
+#define P18F47K40   0x6900
 
     //4K word
 #define BUFFMAX 8192 
@@ -139,7 +140,7 @@ extern unsigned char NO_IO[5];
         unsigned int jpc;
         unsigned short lram; //loaded register 
         unsigned short rram; //readed register 
-        unsigned short *stack;
+        unsigned int *stack;
         unsigned char w;
         unsigned char wdt;
         unsigned char s2;

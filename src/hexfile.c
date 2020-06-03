@@ -118,7 +118,7 @@ read_ihx(const char * fname, int leeprom)
               for (bc = 0; bc < nbytes; bc += 2)
                {
                 addrx = (((addrh << 16) | addr) + bc - 0x4200) / 2;
-               if (addrx < pic->EEPROMSIZE)
+                if (addrx < pic->EEPROMSIZE)
                  pic->eeprom[addrx] = parse_hex (line + 9 + (bc * 2), 2);
                }
             }
@@ -175,7 +175,6 @@ read_ihx(const char * fname, int leeprom)
   }
  return 0; //no error
 }
-
 
 int
 read_ihx_16e(const char * fname, int leeprom)
@@ -239,7 +238,7 @@ read_ihx_16e(const char * fname, int leeprom)
               for (bc = 0; bc < nbytes; bc += 2)
                {
                 addrx = (((addrh << 16) | addr) + bc - 0x1E000) / 2;
-               if (addrx < pic->EEPROMSIZE)
+                if (addrx < pic->EEPROMSIZE)
                  pic->eeprom[addrx] = parse_hex (line + 9 + (bc * 2), 2);
                }
             }
@@ -297,7 +296,6 @@ read_ihx_16e(const char * fname, int leeprom)
  return 0; //no error
 }
 
-
 int
 read_ihx_18(const char * fname, int leeprom)
 {
@@ -353,7 +351,7 @@ read_ihx_18(const char * fname, int leeprom)
           }
          else
           {
-           if (addrh == 0x00F0)
+           if ((addrh == 0x00F0) || (addrh == 0x0031))
             {
              //EEPROM
              if (leeprom == 1)
@@ -383,7 +381,7 @@ read_ihx_18(const char * fname, int leeprom)
                mptr = (char*) pic->prog;
                for (bc = 0; bc < nbytes; bc++)
                 {
-                 addrx = addr + bc;
+                 addrx = (addrh << 16) + addr + bc;
                  if ((addrx / 2) < pic->ROMSIZE)
                   mptr[addrx] = parse_hex (line + 9 + (bc * 2), 2);
                 }
@@ -610,7 +608,6 @@ write_ihx(const char * fname)
  return 0; //no error
 }
 
-
 int
 write_ihx16e(const char * fname)
 {
@@ -820,16 +817,18 @@ write_ihx18(const char * fname)
 
  if (fout)
   {
-   //program memory  //TODO P18 only address < 64K bytes  
+   //program memory  
    nb = 0;
    sum = 0;
-   fprintf (fout, ":020000040000FA\n");
+
    for (i = 0; i < pic->ROMSIZE; i++)
     {
+     if (i == 0x0000)fprintf (fout, ":020000040000FA\n");
+     if (i == 0x8000)fprintf (fout, ":020000040001F9\n");
 
      if (nb == 0)
       {
-       iaddr = i * 2;
+       iaddr = (i & 0x7FFF) * 2;
        sprintf (values, "%02X%02X", pic->prog[i]&0x00FF, (pic->prog[i]&0xFF00) >> 8);
       }
      else
@@ -853,6 +852,7 @@ write_ihx18(const char * fname)
        sum = 0;
       }
     }
+
    if (nb)
     {
      sum += nb;
@@ -948,7 +948,15 @@ write_ihx18(const char * fname)
    //eeprom
    nb = 0;
    sum = 0;
-   fprintf (fout, ":0200000400F00A\n");
+   if ((pic->processor == P18F27K40)||(pic->processor == P18F47K40)) //FIXME escolher de outra forma
+    {
+     fprintf (fout, ":020000040031C9\n");
+    }
+   else
+    {
+     fprintf (fout, ":0200000400F00A\n");
+
+    }
    for (i = 0; i < pic->EEPROMSIZE; i++)
     {
 

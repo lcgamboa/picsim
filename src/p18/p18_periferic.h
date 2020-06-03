@@ -31,6 +31,9 @@ extern "C" {
 #endif
 #include"../../include/periferic18.h"
     
+int interrupt18(void);    
+int interrupt18_2(void);       
+    
 void p18_mssp_rst(void);
 void p18_mssp(void);
 

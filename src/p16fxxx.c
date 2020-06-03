@@ -165,7 +165,7 @@ pic_decode_16(void)
          pic->lram = sfr_addr (pic->P16map.INTCON);
          break;
         default:
-         printf ("unknown opcode 0x%04X!\n", opc);
+         printf ("unknown opcode 0x%04X at 0x%06X !\n", opc, pic->pc-2);
          break;
         };
        break;
@@ -176,7 +176,7 @@ pic_decode_16(void)
        pic->lram = bank | (opc & 0x007F);
        break;
       default:
-       printf ("unknown opcode 0x%04X!\n", opc);
+       printf ("unknown opcode 0x%04X at 0x%06X !\n", opc, pic->pc-2);
        break;
       }
      break;
@@ -195,7 +195,7 @@ pic_decode_16(void)
        pic->lram = bank | (opc & 0x007F);
        break;
       default:
-       printf ("unknown opcode 0x%04X!\n", opc);
+       printf ("unknown opcode 0x%04X at 0x%06X !\n", opc, pic->pc-2);
        break;
       };
      break;
@@ -521,7 +521,7 @@ pic_decode_16(void)
       };
      break;
     default:
-     printf ("unknown opcode 0x%04X!\n", opc);
+     printf ("unknown opcode 0x%04X at 0x%06X !\n", opc, pic->pc-2);
      break;
     }
    break;
@@ -559,7 +559,7 @@ pic_decode_16(void)
       }
      break;
     default:
-     printf ("unknown opcode 0x%04X!\n", opc);
+     printf ("unknown opcode 0x%04X at 0x%06X !\n", opc, pic->pc-2);
      break;
     };
    break;
@@ -590,7 +590,7 @@ pic_decode_16(void)
      pic->s2 = 1;
      break;
     default:
-     printf ("unknown opcode 0x%04X!\n", opc);
+     printf ("unknown opcode 0x%04X at 0x%06X !\n", opc, pic->pc-2);
      break;
     }
    break;
@@ -692,12 +692,12 @@ pic_decode_16(void)
       *status &= ~0x04;
      break;
     default:
-     printf ("unknown opcode 0x%04X!\n", opc);
+     printf ("unknown opcode 0x%04X at 0x%06X !\n", opc, pic->pc-2);
      break;
     }
    break;
   default:
-   printf ("unknown opcode 0x%04X!\n", opc);
+   printf ("unknown opcode 0x%04X at 0x%06X !\n", opc, pic->pc-2);
    break;
   }
 
