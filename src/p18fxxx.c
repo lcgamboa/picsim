@@ -29,13 +29,49 @@
 
 #include"../include/picsim.h"
 
+
+static unsigned short opc;
+static unsigned short raddr;
+static unsigned short bank;
+
+static inline void fraddr(void)
+ {
+     if(opc & 0x0100)//a =1
+      {
+       raddr=bank|(opc & 0x00FF);
+      }
+     else if(( pic->processor == P18F27K40)||( pic->processor == P18F47K40))//FIXME need better option
+      {
+       if((opc&0x00FF) > 0x5F)//SFR bank15
+        {
+         raddr=0xF00|(opc & 0x00FF);
+        }
+       else //bank0
+        {
+          raddr=(opc & 0x00FF);
+        }
+      }
+     else
+      {
+       if(opc & 0x0080)//SFR bank15
+        {
+         raddr=0xF00|(opc & 0x00FF);
+        }
+       else //bank0
+        {
+          raddr=(opc & 0x00FF);
+        }
+      }
+ }
+   
 void
 pic_decode_18(void)
 {
  unsigned short temp;
  unsigned char ctemp;
- unsigned short opc;
- unsigned short bank = (((*pic->P18map.BSR) & 0x0F) << 8);
+ //unsigned short opc;
+ //unsigned short bank = (((*pic->P18map.BSR) & 0x0F) << 8);
+ bank = (((*pic->P18map.BSR) & 0x0F) << 8);
  unsigned char * status = pic->P18map.STATUS;
  unsigned char * intcon = pic->P18map.INTCON;
  unsigned short afsr0 = (((*pic->P18map.FSR0H)&0x0F) << 8) | (*pic->P18map.FSR0L);
@@ -43,23 +79,12 @@ pic_decode_18(void)
  unsigned short afsr2 = (((*pic->P18map.FSR2H)&0x0F) << 8) | (*pic->P18map.FSR2L);
  //unsigned short  pc_ant;
 
- unsigned short raddr;
+ //unsigned short raddr;
  unsigned int tblptr;
 
  short jrange;
 
- /*
-   inline void fraddr(void)
-   {
-     if(opc & 0x0100)//a =1
-       raddr=bank|(opc & 0x00FF);
-     else
-       if(opc & 0x0080)//SFR bank15
-         raddr=0xF00|(opc & 0x00FF);
-       else //bank0
-          raddr=(opc & 0x00FF);
-   };
-  */
+/*
 #define  fraddr()\
     if(opc & 0x0100)\
       raddr=bank|(opc & 0x00FF);\
@@ -68,7 +93,7 @@ pic_decode_18(void)
         raddr=0xF00|(opc & 0x00FF);\
       else\
          raddr=(opc & 0x00FF);
-
+*/
 
  pic->lram = 0x8000;
  pic->rram = 0x8000;
