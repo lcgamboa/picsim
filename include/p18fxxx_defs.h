@@ -280,6 +280,8 @@ unsigned char * ADCON1;
 unsigned char * ADCON0;
 unsigned char * ADRESL;
 unsigned char * ADRESH;
+unsigned char * ADCON3;
+unsigned char * ADPCH;
 
 unsigned char * T0CON;
 unsigned char * TMR0L;

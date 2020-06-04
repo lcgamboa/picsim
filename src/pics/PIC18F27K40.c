@@ -240,13 +240,13 @@ PIC18F27K40_map(void)
   */
  pic->P18map.ADCON1 = &pic->ram[0xF59];
  pic->P18map.ADCON2 = &pic->ram[0xF5A];
- /*
  pic->P18map.ADCON3 = &pic->ram[0xF5B];
+ /*
  pic->P18map.ADACQ = &pic->ram[0xF5C];
  pic->P18map.ADCAP = &pic->ram[0xF5D];
  pic->P18map.ADPRE = &pic->ram[0xF5E];
+ */
  pic->P18map.ADPCH = &pic->ram[0xF5F];
-  */
  pic->P18map.ADCON0 = &pic->ram[0xF60];
  //pic->P18map.ADPREVL = &pic->ram[0xF61];
  //pic->P18map.ADPREVH = &pic->ram[0xF62];

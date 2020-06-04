@@ -436,16 +436,19 @@ p18_adc_2(void)
 void
 p18_adc_3(void)
 {
-
+//FIXME only basic mode implemented
+ float val;
+ int chn;
+ short dval;
+ 
  if (pic->ADCCOUNT > 0)
   {
-/*
-   if (((*pic->P18map.ADCON0) & 0x03) == 0x03) //ADON and GO/DONE
+   if (((*pic->P18map.ADCON0) & 0x81) == 0x81) //ADON and GO/DONE
     {
      pic->adcstep++;
      if (pic->adcstep > 10)
       {
-       chn = ((*pic->P18map.ADCON0)&0x3C) >> 2;
+       chn = (*pic->P18map.ADPCH)&0x3F;
 
        if ((pic->pins[pic->adc[chn] - 1].ptype == PT_ANALOG)&&(chn < pic->ADCCOUNT))
         {
@@ -458,7 +461,7 @@ p18_adc_3(void)
 
        dval = ((1023 * val) / 5.0);
 
-       if ((*pic->P18map.ADCON2)&0x80)//ADFM
+       if ((*pic->P18map.ADCON0)&0x04)//ADFM
         { //Rigth
          (*pic->P18map.ADRESH) = (dval & 0xFF00) >> 8;
          (*pic->P18map.ADRESL) = (dval & 0x00FF);
@@ -470,10 +473,10 @@ p18_adc_3(void)
          (*pic->P18map.ADRESL) = (dval & 0x00FF);
         }
 
-       (*pic->P18map.ADCON0) &= ~0x02;
+       (*pic->P18map.ADCON0) &= ~0x01;
 
        //ADIF
-       (*pic->P18map.PIR1) |= 0x40;
+       (*pic->P18map.PIR1) |= 0x01;
 
        pic->adcstep = 0;
       }
@@ -482,7 +485,7 @@ p18_adc_3(void)
     {
      pic->adcstep = 0;
     }
-*/
+
 
    if (!pic->P18map.ANSELA)
     {
