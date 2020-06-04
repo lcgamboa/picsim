@@ -83,5 +83,11 @@ p18_tmr0(void)
     }
    pic->t0cki_ = pic->pins[pic->t0cki - 1].value;
   }
+}
+
+
+void
+p18_tmr0_2(void)
+{
 
 }

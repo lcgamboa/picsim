@@ -40,9 +40,11 @@ void p18_mssp(void);
 void p18_adc_rst(void);
 void p18_adc(void);
 void p18_adc_2(void);
+void p18_adc_3(void);
 
 void p18_tmr0_rst(void);
 void p18_tmr0(void);
+void p18_tmr0_2(void);
 
 void p18_tmr1_rst(void);
 void p18_tmr1(void);

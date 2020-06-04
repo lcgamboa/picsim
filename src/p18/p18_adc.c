@@ -431,3 +431,179 @@ p18_adc_2(void)
 
   }
 }
+
+
+void
+p18_adc_3(void)
+{
+
+ if (pic->ADCCOUNT > 0)
+  {
+/*
+   if (((*pic->P18map.ADCON0) & 0x03) == 0x03) //ADON and GO/DONE
+    {
+     pic->adcstep++;
+     if (pic->adcstep > 10)
+      {
+       chn = ((*pic->P18map.ADCON0)&0x3C) >> 2;
+
+       if ((pic->pins[pic->adc[chn] - 1].ptype == PT_ANALOG)&&(chn < pic->ADCCOUNT))
+        {
+         val = pic->pins[pic->adc[chn] - 1].avalue;
+        }
+       else
+        {
+         val = 0;
+        }
+
+       dval = ((1023 * val) / 5.0);
+
+       if ((*pic->P18map.ADCON2)&0x80)//ADFM
+        { //Rigth
+         (*pic->P18map.ADRESH) = (dval & 0xFF00) >> 8;
+         (*pic->P18map.ADRESL) = (dval & 0x00FF);
+        }
+       else
+        { //left
+         dval = dval << 6;
+         (*pic->P18map.ADRESH) = (dval & 0xFF00) >> 8;
+         (*pic->P18map.ADRESL) = (dval & 0x00FF);
+        }
+
+       (*pic->P18map.ADCON0) &= ~0x02;
+
+       //ADIF
+       (*pic->P18map.PIR1) |= 0x40;
+
+       pic->adcstep = 0;
+      }
+    }
+   else
+    {
+     pic->adcstep = 0;
+    }
+*/
+
+   if (!pic->P18map.ANSELA)
+    {
+     if (((*pic->P18map.ADCON1)&0x0F) != pic->adcon1)
+      {
+       int i;
+       for (i = 0; i < pic->ADCCOUNT; i++)
+        {
+         if (((*pic->P18map.ADCON1)&0x0F) < (0x0F - i))
+          pic->pins[pic->adc[i] - 1].ptype = PT_ANALOG;
+         else
+          pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+        }
+
+       if ((*pic->P18map.ADCON1) & 0x20)//VCFG1  
+        pic->pins[pic->adc[2] - 1].ptype = PT_ANAREF;
+       if ((*pic->P18map.ADCON1) & 0x10)//VCFG0  
+        pic->pins[pic->adc[3] - 1].ptype = PT_ANAREF;
+
+       pic->adcon1 = (*pic->P18map.ADCON1)&0x0F;
+      }
+    }
+   else
+    {
+
+     if (pic->lram == sfr_addr (pic->P18map.ANSELA))
+      {
+       for (int i = 0; i < pic->ADCCOUNT; i++)
+        {
+         if ((pic->adc[i])&&(pic->pins[pic->adc[i] - 1].port == pic->P18map.PORTA))
+          {
+           if ((*pic->P18map.ANSELA) & (1 << pic->pins[pic->adc[i] - 1].pord))
+            {
+             pic->pins[pic->adc[i] - 1].ptype = PT_ANALOG;
+            }
+           else
+            {
+             pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+             if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin18 (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
+            }
+          }
+        }
+      }
+
+     if (pic->lram == sfr_addr (pic->P18map.ANSELB))
+      {
+       for (int i = 0; i < pic->ADCCOUNT; i++)
+        {
+         if ((pic->adc[i])&&(pic->pins[pic->adc[i] - 1].port == pic->P18map.PORTB))
+          {
+           if ((*pic->P18map.ANSELB) & (1 << pic->pins[pic->adc[i] - 1].pord))
+            {
+             pic->pins[pic->adc[i] - 1].ptype = PT_ANALOG;
+            }
+           else
+            {
+             pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+             if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin18 (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
+            }
+          }
+        }
+      }
+
+     if (pic->lram == sfr_addr (pic->P18map.ANSELC))
+      {
+       for (int i = 0; i < pic->ADCCOUNT; i++)
+        {
+         if ((pic->adc[i])&&(pic->pins[pic->adc[i] - 1].port == pic->P18map.PORTC))
+          {
+           if ((*pic->P18map.ANSELC) & (1 << pic->pins[pic->adc[i] - 1].pord))
+            {
+             pic->pins[pic->adc[i] - 1].ptype = PT_ANALOG;
+            }
+           else
+            {
+             pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+             if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin18 (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
+            }
+          }
+        }
+      }
+
+     if ((pic->P18map.ANSELD)&&(pic->lram == sfr_addr (pic->P18map.ANSELD)))
+      {
+       for (int i = 0; i < pic->ADCCOUNT; i++)
+        {
+         if ((pic->adc[i])&&(pic->pins[pic->adc[i] - 1].port == pic->P18map.PORTD))
+          {
+           if ((*pic->P18map.ANSELD) & (1 << pic->pins[pic->adc[i] - 1].pord))
+            {
+             pic->pins[pic->adc[i] - 1].ptype = PT_ANALOG;
+            }
+           else
+            {
+             pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+             if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin18 (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
+            }
+          }
+        }
+      }
+
+     if ((pic->P18map.ANSELE)&&(pic->lram == sfr_addr (pic->P18map.ANSELE)))
+      {
+       for (int i = 0; i < pic->ADCCOUNT; i++)
+        {
+         if ((pic->adc[i])&&(pic->pins[pic->adc[i] - 1].port == pic->P18map.PORTE))
+          {
+           if ((*pic->P18map.ANSELE) & (1 << pic->pins[pic->adc[i] - 1].pord))
+            {
+             pic->pins[pic->adc[i] - 1].ptype = PT_ANALOG;
+            }
+           else
+            {
+             pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+             if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin18 (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
+            }
+          }
+        }
+      }
+    }
+
+
+  }
+}

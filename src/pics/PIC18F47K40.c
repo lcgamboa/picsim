@@ -607,16 +607,18 @@ PIC18F47K40_reset(void)
  p18_int_pin_rst();
  p18_int_portb_rst();
  p18_uart_rst_3();
+ pic->serial_PIR1 = pic->P18map.PIR3;
+ pic->serial_PIE1 = pic->P18map.PIE3;
 }
 
 void
 PIC18F47K40_periferic (void)
 {
   //p18_mssp ();
-  p18_adc ();
+  p18_adc_3 ();
   //p18_int_pin();
-  p18_int_portb();
-  p18_tmr0 ();
+  //p18_int_portb();
+  p18_tmr0_2 ();
   //p18_wdt ();
   //p18_eeprom ();
   p18_tmr1 ();
