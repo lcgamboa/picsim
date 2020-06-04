@@ -572,8 +572,6 @@ PIC18F27K40_reset(void)
  p18_int_pin_rst();
  p18_int_portb_rst();
  p18_uart_rst_3();
- pic->serial_PIR1 = pic->P18map.PIR3;
- pic->serial_PIE1 = pic->P18map.PIE3;
 }
 
 void

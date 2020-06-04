@@ -68,6 +68,9 @@ p18_uart_rst_3(void)
  pic->P18map.RCREG = &pic->ram[0xF99];
  pic->P18map.TXREG = &pic->ram[0xF9A];
  p18_uart_rst();
+ pic->serial_PIR1 = pic->P18map.PIR3;
+ pic->serial_PIE1 = pic->P18map.PIE3;
+ pic->serial_TRIS_RX = &pic->ram[sfr_addr (pic->pins[pic->usart[0] - 1].port) - 0x05];
 }
 
 /*
