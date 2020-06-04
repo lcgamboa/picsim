@@ -27,7 +27,7 @@
 #include"../../include/picsim.h"
 #include"../../include/periferic18.h"
 
-extern const int fpw2_[];
+extern const int fpw2[];
 
 void
 p18_wdt_rst(void)
@@ -45,7 +45,7 @@ p18_wdt(void)
 
    pic->twdt += 4.0 / pic->freq;
 
-   if (pic->twdt > (1e-3 * fpw2_[(pic->config[1] & 0x0E00) >> 9]))
+   if (pic->twdt > (1e-3 * fpw2[(pic->config[1] & 0x0E00) >> 9]))
     {
      pic->twdt = 0;
      pic->wdt++;

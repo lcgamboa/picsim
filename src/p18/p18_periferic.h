@@ -48,9 +48,11 @@ void p18_tmr0_2(void);
 
 void p18_tmr1_rst(void);
 void p18_tmr1(void);
+void p18_tmr1_2(void);
 
 void p18_tmr2_rst(void);
 void p18_tmr2(void);
+void p18_tmr2_2(void);
 
 void p18_tmr3_rst(void);
 void p18_tmr3(void);

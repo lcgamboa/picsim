@@ -27,7 +27,7 @@
 #include"../../include/picsim.h"
 #include"../../include/periferic18.h"
 
-extern const int fpw2_[];
+extern const int fpw2[];
 
 void
 p18_tmr1_rst(void)
@@ -44,7 +44,7 @@ p18_tmr1(void)
   {
    pic->cp1++;
 
-   if (pic->cp1 >= fpw2_[((*pic->P18map.T1CON)&0x30) >> 4])
+   if (pic->cp1 >= fpw2[((*pic->P18map.T1CON)&0x30) >> 4])
     {
      (*pic->P18map.TMR1L)++;
      if ((*pic->P18map.TMR1L) == 0)
@@ -117,3 +117,91 @@ p18_tmr1(void)
   }
 
 }
+
+void
+p18_tmr1_2(void)
+{
+
+ if ((*pic->P18map.T1CON) & 0x01) //ON
+  {
+      //TODO support all modes
+      if ((((*pic->P18map.T1CLK) & 0x0F) == 0x01) || //TMRICS=FOSC/4 
+          ((((*pic->P18map.T1CLK) & 0x0F) == 0x00)&&((pic->t1cki_ == 0)&&(pic->pins[pic->t1cki - 1].value == 1)))) //TMRICS=t1cki  
+    {
+      pic->cp1++;
+
+      if (pic->cp1 >= fpw2[((*pic->P18map.T1CON)&0x30) >> 4])
+      {
+      (*pic->P18map.TMR1L)++;
+      if ((*pic->P18map.TMR1L) == 0)
+        {
+      if (((*pic->P18map.TMR1H) + 1) == 0x100)(*pic->P18map.PIR4) |= 0x01; //TMR1IF
+      (*pic->P18map.TMR1H)++;
+         }
+      pic->cp1 = 0;
+      }
+      
+      /*
+           //CCP - only when TMR1 is ON
+           //CCP1 compare modes 
+           if ((pic->CCPCOUNT >= 1)&&(pic->ccp[0] > 0)&&(((*pic->P18map.CCP1CON) & 0x0C) == 0x08)&&(!((*pic->P18map.T3CON) & 0x40)))
+           {
+           if (((*pic->P18map.TMR1H) == (*pic->P18map.CCPR1H))&&((*pic->P18map.TMR1L) == (*pic->P18map.CCPR1L)))//match !!
+             {
+           (*pic->P18map.PIR1) |= 0x04; //CCP1IF
+           switch ((*pic->P18map.CCP1CON) & 0x03)
+               {
+           case 0://set output
+           if (pic->pins[pic->ccp[0] - 1].dir == PD_OUT)
+           (*pic->pins[(pic->ccp[0] - 1)].port) |= 0x01 << (pic->pins[(pic->ccp[0] - 1)].pord);
+           break;
+           case 1://clear output
+           if (pic->pins[pic->ccp[0] - 1].dir == PD_OUT)
+           (*pic->pins[(pic->ccp[0] - 1)].port) &= ~(0x01 << (pic->pins[(pic->ccp[0] - 1)].pord));
+           break;
+           case 2://software interrupt
+           break;
+           case 3://trigger special event
+           (*pic->P18map.TMR1H) = 0;
+           (*pic->P18map.TMR1L) = 0;
+           break;
+                 }
+             }
+           }
+           //CCP2 compare modes 
+           if ((pic->CCPCOUNT >= 2)&&(pic->ccp[1] > 0)&&(((*pic->P18map.CCP2CON) & 0x0C) == 0x08)&&(!((*pic->P18map.T3CON) & 0x48)))
+           {
+           if (((*pic->P18map.TMR1H) == (*pic->P18map.CCPR2H))&&((*pic->P18map.TMR1L) == (*pic->P18map.CCPR2L)))//match !!
+             {
+           (*pic->P18map.PIR2) |= 0x01; //CCP2IF
+           switch ((*pic->P18map.CCP2CON) & 0x03)
+               {
+           case 0://set output
+           if (pic->pins[pic->ccp[1] - 1].dir == PD_OUT)
+           (*pic->pins[(pic->ccp[1] - 1)].port) |= 0x01 << (pic->pins[(pic->ccp[1] - 1)].pord);
+           break;
+           case 1://clear output
+           if (pic->pins[pic->ccp[1] - 1].dir == PD_OUT)
+           (*pic->pins[(pic->ccp[1] - 1)].port) &= ~(0x01 << (pic->pins[(pic->ccp[1] - 1)].pord));
+           break;
+           case 2://software interrupt
+           break;
+           case 3://trigger special event
+           (*pic->P18map.TMR1H) = 0;
+           (*pic->P18map.TMR1L) = 0;
+           if (pic->processor == P18F452)
+                   {
+           if ((*pic->P18map.ADCON0) & 0x01)(*pic->P18map.ADCON0) |= 0x04; //if ad on, enable one conversion
+                    }
+                  else
+                   {
+           if ((*pic->P18map.ADCON0) & 0x01)(*pic->P18map.ADCON0) |= 0x02; //if ad on, enable one conversion  
+                    }
+           break;
+               }
+             }
+           }
+      */
+    }
+  }
+ }

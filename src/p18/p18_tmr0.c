@@ -27,7 +27,7 @@
 #include"../../include/picsim.h"
 #include"../../include/periferic18.h"
 
-extern const int fpw2_[];
+extern const int fpw2[];
 
 void
 p18_tmr0_rst(void)
@@ -65,7 +65,7 @@ p18_tmr0(void)
         }
        else
         {
-         if (pic->cp0 >= 2 * (fpw2_[(*pic->P18map.T0CON)&0x07]))
+         if (pic->cp0 >= 2 * (fpw2[(*pic->P18map.T0CON)&0x07]))
           {
 
            if (((*pic->P18map.T0CON) & 0x40)&& (((*pic->P18map.TMR0L) + 1) == 0x100))(*pic->P18map.INTCON) |= 0x04; //T0IF
@@ -85,9 +85,46 @@ p18_tmr0(void)
   }
 }
 
-
 void
 p18_tmr0_2(void)
 {
+ if (pic->P18map.T0CON0)
+  {
+   if ((*pic->P18map.T0CON0) & 0x80) //T0EN
+    {
+     if ((((*pic->P18map.T0CON1) & 0xE0) == 0x40) || //TOCS=FOSC/4
+         ((((*pic->P18map.T0CON1) & 0xE0) == 0x00)&&((pic->t0cki_ == 0)&&(pic->pins[pic->t0cki - 1].value == 1))) || //T0CS=t0cki  
+         ((((*pic->P18map.T0CON1) & 0xE0) == 0x20)&&((pic->t0cki_ == 1)&&(pic->pins[pic->t0cki - 1].value == 0)))) //T0CS=t0cki  
+      {
+       pic->cp0++;
 
+       if (pic->lram == sfr_addr (pic->P18map.TMR0L))pic->cp0 = 0; //RESET prescaler	 
+
+
+       if (pic->cp0 >= 2 * (fpw2[(*pic->P18map.T0CON1)&0x0F]))
+        {
+
+         (*pic->P18map.TMR0L)++;
+                  
+         //8 bit mode
+         if (!((*pic->P18map.T0CON0) & 0x10) && ((*pic->P18map.TMR0H) == (*pic->P18map.TMR0L)))
+          {
+           (*pic->P18map.PIR0) |= 0x20; //TMR0IF
+           (*pic->P18map.TMR0L)=0;
+           //TODO buffer TMR0H writes
+          }
+
+         //16 bit mode;
+         if ((!(*pic->P18map.TMR0L))&&(((*pic->P18map.T0CON0) & 0x10)))
+          {
+           if (((*pic->P18map.TMR0H) + 1) == 0x100)(*pic->P18map.PIR0) |= 0x20; //TMR0IF
+           (*pic->P18map.TMR0H)++;
+          }
+         pic->cp0 = 0;
+        }
+       //TODO implement postscaler
+      }
+    }
+   pic->t0cki_ = pic->pins[pic->t0cki - 1].value;
+  }
 }

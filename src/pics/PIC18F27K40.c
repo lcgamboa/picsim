@@ -85,33 +85,33 @@ PIC18F27K40_map(void)
  pic->P18map.SSP1CLKPPS = &pic->ram[0xEB7];
  pic->P18map.SSP1DATPPS = &pic->ram[0xEB8];
  pic->P18map.SSP1SSPPS = &pic->ram[0xEB9];
+ */ 
  pic->P18map.IPR0 = &pic->ram[0xEBA];
-  */
  pic->P18map.IPR1 = &pic->ram[0xEBB];
  pic->P18map.IPR2 = &pic->ram[0xEBC];
  pic->P18map.IPR3 = &pic->ram[0xEBD];
- /*
  pic->P18map.IPR4 = &pic->ram[0xEBE];
+ /*
  pic->P18map.IPR5 = &pic->ram[0xEBF];
  pic->P18map.IPR6 = &pic->ram[0xEC0];
  pic->P18map.IPR7 = &pic->ram[0xEC1];
+  */ 
  pic->P18map.PIE0 = &pic->ram[0xEC2];
-  */
  pic->P18map.PIE1 = &pic->ram[0xEC3];
  pic->P18map.PIE2 = &pic->ram[0xEC4];
  pic->P18map.PIE3 = &pic->ram[0xEC5];
- /*
  pic->P18map.PIE4 = &pic->ram[0xEC6];
+ /*
  pic->P18map.PIE5 = &pic->ram[0xEC7];
  pic->P18map.PIE6 = &pic->ram[0xEC8];
  pic->P18map.PIE7 = &pic->ram[0xEC9];
+ */ 
  pic->P18map.PIR0 = &pic->ram[0xECA];
-  */
  pic->P18map.PIR1 = &pic->ram[0xECB];
  pic->P18map.PIR2 = &pic->ram[0xECC];
  pic->P18map.PIR3 = &pic->ram[0xECD];
- /*
  pic->P18map.PIR4 = &pic->ram[0xECE];
+ /*
  pic->P18map.PIR5 = &pic->ram[0xECF];
  pic->P18map.PIR6 = &pic->ram[0xED0];
  pic->P18map.PIR7 = &pic->ram[0xED1];
@@ -338,10 +338,10 @@ PIC18F27K40_map(void)
  pic->P18map.T4HLT = &pic->ram[0xFB8];
  pic->P18map.T4CLKCON = &pic->ram[0xFB9];
  pic->P18map.T4RST = &pic->ram[0xFBA];
+ */ 
  pic->P18map.T2TMR = &pic->ram[0xFBB];
  pic->P18map.T2PR = &pic->ram[0xFBC];
-  */
- pic->P18map.T2CON = &pic->ram[0xFBD];
+  pic->P18map.T2CON = &pic->ram[0xFBD];
  /*
  pic->P18map.T2HLT = &pic->ram[0xFBE];
  pic->P18map.T2CLKCON = &pic->ram[0xFBF];
@@ -367,13 +367,13 @@ PIC18F27K40_map(void)
  /*
  pic->P18map.T1GCON = &pic->ram[0xFD0];
  pic->P18map.T1GATE = &pic->ram[0xFD1];
+ */ 
  pic->P18map.T1CLK = &pic->ram[0xFD2];
-  */
  pic->P18map.TMR0L = &pic->ram[0xFD3];
  pic->P18map.TMR0H = &pic->ram[0xFD4];
- /*
  pic->P18map.T0CON0 = &pic->ram[0xFD5];
  pic->P18map.T0CON1 = &pic->ram[0xFD6];
+ /* 
  pic->P18map.PCON0 = &pic->ram[0xFD7];
   */
  pic->P18map.STATUS = &pic->ram[0xFD8];
@@ -584,9 +584,9 @@ PIC18F27K40_periferic(void)
   p18_tmr0_2 ();
   //p18_wdt ();
   //p18_eeprom ();
-  p18_tmr1 ();
-  p18_tmr2 ();
-  p18_tmr3 ();
+  p18_tmr1_2 ();
+  p18_tmr2_2 ();
+  //p18_tmr3 ();
   p18_uart ();
 }
 

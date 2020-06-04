@@ -28,9 +28,7 @@
 #include"../include/periferic18.h"
 
 
-
-const int fpw2_[8] = {1, 2, 4, 8, 16, 32, 64, 128};
-
+extern const int fpw2[];
 
 extern void pic_decode_18(void);
 

@@ -244,6 +244,9 @@ unsigned char * TOSH;
 unsigned char * TOSU;
 unsigned char * RCON;
 
+unsigned char * PIE0;
+unsigned char * PIR0;
+unsigned char * IPR0;
 unsigned char * PIE1;
 unsigned char * PIR1;
 unsigned char * IPR1;
@@ -253,6 +256,9 @@ unsigned char * IPR2;
 unsigned char * PIE3;
 unsigned char * PIR3;
 unsigned char * IPR3;
+unsigned char * PIE4;
+unsigned char * PIR4;
+unsigned char * IPR4;
 
 unsigned char * PORTA;
 unsigned char * PORTB;
@@ -286,10 +292,13 @@ unsigned char * ADPCH;
 unsigned char * T0CON;
 unsigned char * TMR0L;
 unsigned char * TMR0H;
+unsigned char * T0CON0;
+unsigned char * T0CON1;
 
 unsigned char * T1CON;
 unsigned char * TMR1L;
 unsigned char * TMR1H;
+unsigned char * T1CLK;
 
 unsigned char * T3CON;
 unsigned char * TMR3L;
@@ -324,6 +333,9 @@ unsigned char * SPBRGH;
 unsigned char * T2CON;
 unsigned char * PR2;
 unsigned char * TMR2;
+
+unsigned char * T2TMR; 
+unsigned char * T2PR;
 
 unsigned char * WDTCON;
 

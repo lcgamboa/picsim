@@ -27,6 +27,8 @@
 #include"../../include/picsim.h"
 #include"../../include/periferic18.h"
 
+extern const int fpw2[];
+
 void
 p18_tmr2_rst(void)
 {
@@ -109,4 +111,70 @@ p18_tmr2(void)
       }
     }
   }
+}
+
+void
+p18_tmr2_2(void)
+{
+ //TODO TMR2 incomplete
+ if ((*pic->P18map.T2CON) & 0x80) //TMR2EN
+  {
+   pic->cp2++;
+
+   if (pic->cp2 >= fpw2[((*pic->P18map.T2CON)&0x70) >> 4])
+    {
+     (*pic->P18map.T2TMR)++;
+     if ((*pic->P18map.T2TMR) == (*pic->P18map.T2PR))
+      {
+       (*pic->P18map.T2TMR) = 0;
+       pic->cp2_++;
+
+       if (pic->cp2_ >= ((((*pic->P18map.T2CON)&0x0F)) + 1))
+        {
+         (*pic->P18map.PIR4) |= 0x02; //TMR2IF
+         pic->cp2_ = 0;
+        }
+/*
+       //PWM
+
+       if ((pic->CCPCOUNT >= 1)&&(pic->ccp[0] > 0)&&((*pic->P18map.CCP1CON)& 0x0C) == 0x0C)
+        {
+         (*pic->P18map.CCPR1H) = (*pic->P18map.CCPR1L);
+         if (pic->pins[pic->ccp[0] - 1].dir == PD_OUT)
+          (*pic->pins[(pic->ccp[0] - 1)].port) = 0x01 << (pic->pins[(pic->ccp[0] - 1)].pord);
+        }
+
+       if ((pic->CCPCOUNT >= 2)&&(pic->ccp[1] > 0)&&((*pic->P18map.CCP2CON)& 0x0C) == 0x0C)
+        {
+         (*pic->P18map.CCPR2H) = (*pic->P18map.CCPR2L);
+         if (pic->pins[pic->ccp[1] - 1].dir == PD_OUT)
+          (*pic->pins[(pic->ccp[1] - 1)].port) |= 0x01 << (pic->pins[(pic->ccp[1] - 1)].pord);
+        }
+*/
+      }
+     pic->cp2 = 0;
+    }
+/*   
+   //PWM - only if TMR2 is on
+   //only use 8 bits ! not 10 bits  
+   if ((pic->CCPCOUNT >= 1)&&(pic->ccp[0] > 0)&&((*pic->P18map.CCP1CON)& 0x0C) == 0x0C)
+    {
+     if ((*pic->P18map.TMR2) >= (*pic->P18map.CCPR1H))
+      {
+       if (pic->pins[pic->ccp[0] - 1].dir == PD_OUT)
+        (*pic->pins[(pic->ccp[0] - 1)].port) &= ~(0x01 << (pic->pins[(pic->ccp[0] - 1)].pord));
+      }
+    }
+
+   if ((pic->CCPCOUNT >= 2)&&(pic->ccp[1] > 0)&&((*pic->P18map.CCP2CON)& 0x0C) == 0x0C)
+    {
+     if ((*pic->P18map.TMR2) >= (*pic->P18map.CCPR2H))
+      {
+       if (pic->pins[pic->ccp[1] - 1].dir == PD_OUT)
+        (*pic->pins[(pic->ccp[1] - 1)].port) &= ~(0x01 << (pic->pins[(pic->ccp[1] - 1)].pord));
+      }
+    }
+*/   
+  }
+ 
 }

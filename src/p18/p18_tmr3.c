@@ -27,7 +27,7 @@
 #include"../../include/picsim.h"
 #include"../../include/periferic18.h"
 
-extern const int fpw2_[];
+extern const int fpw2[];
 
 void
 p18_tmr3_rst(void)
@@ -43,7 +43,7 @@ p18_tmr3(void)
   {
    pic->cp3++;
 
-   if (pic->cp3 >= fpw2_[((*pic->P18map.T3CON)&0x30) >> 4])
+   if (pic->cp3 >= fpw2[((*pic->P18map.T3CON)&0x30) >> 4])
     {
      (*pic->P18map.TMR3L)++;
      if ((*pic->P18map.TMR3L) == 0)
