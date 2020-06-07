@@ -62,7 +62,10 @@ p16e_mssp(void)
        pic->ssp_bit = 8;
        pic->ssp_sck = 0;
        pic_wr_pin16E (pic->sck, 0);
-       (*pic->P16Emap.SSP1STAT) |= 0x01; //BF
+      }
+      if (pic->rram == sfr_addr (pic->P16Emap.SSP1BUF))
+      {
+       (*pic->P16Emap.SSP1STAT) &= ~0x01; //BF
       }
 
      if (pic->ssp_bit)
@@ -79,10 +82,8 @@ p16e_mssp(void)
          pic->ssp_bit--;
         }
        pic->ssp_sck++;
-      }
-     else
-      {
-       (*pic->P16Emap.SSP1STAT) &= ~0x01; //BF
+       
+       if(!pic->ssp_bit)(*pic->P16Emap.SSP1STAT) |= 0x01; //BF
       }
      break;
      //case 0x04://SPI Slave mode, clock = SCK pin. SS pin control enabled.
