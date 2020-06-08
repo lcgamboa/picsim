@@ -566,7 +566,7 @@ PIC16F1619_getconf(unsigned int cfg)
    return (pic->config[2] &  0x0060);
    break;
   case CFG_DEBUG:
-   return 0;
+   return  !(pic->config[1] &  0x0100);
    break;
   }
  return 0;

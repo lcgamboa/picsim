@@ -71,7 +71,9 @@ PIC16F1788_map(void)
  pic->P16Emap.OPTION_REG = &pic->ram[0x95];
  /*
  pic->P16Emap.PCON = &pic->ram[0x96];
+ */ 
  pic->P16Emap.WDTCON = &pic->ram[0x97];
+ /*
  pic->P16Emap.OSCTUNE = &pic->ram[0x98];
  pic->P16Emap.OSCCON = &pic->ram[0x99];
  pic->P16Emap.OSCSTAT = &pic->ram[0x9A];
@@ -440,7 +442,7 @@ PIC16F1788_periferic(void)
   p16e_int_pin();
   p16e_int_portb();
   p16e_tmr0 ();
-  p16e_wdt ();
+  p16e_wdt_2 ();
   p16e_eeprom ();
   p16e_tmr1 ();
   p16e_tmr2 ();
@@ -456,11 +458,10 @@ PIC16F1788_getconf(unsigned int cfg)
    return ((pic->config[0] & 0x0040) > 0);
    break;
   case CFG_WDT:
-   return 0;
-   //return (pic->config[0] &  0x0018);
+   return (pic->config[0] &  0x0018);
    break;
   case CFG_DEBUG:
-   return 0;
+   return ((pic->config[1] & 0x0100) == 0);
    break;
   }
  return 0;

@@ -283,6 +283,7 @@ unsigned char * ADRESH;
 
 //WDT
 unsigned char * WDTCON0;
+unsigned char * WDTCON;
 
 //EEPROM
 unsigned char * EECON2;

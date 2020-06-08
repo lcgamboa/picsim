@@ -40,9 +40,9 @@ static inline void fraddr(void)
       {
        raddr=bank|(opc & 0x00FF);
       }
-     else if(( pic->processor == P18F27K40)||( pic->processor == P18F47K40))//FIXME need better option
+     else if(pic->P18map.RCON) //OLD P18
       {
-       if((opc&0x00FF) > 0x5F)//SFR bank15
+       if(opc & 0x0080)//SFR bank15
         {
          raddr=0xF00|(opc & 0x00FF);
         }
@@ -51,9 +51,9 @@ static inline void fraddr(void)
           raddr=(opc & 0x00FF);
         }
       }
-     else
+     else //NEW P18
       {
-       if(opc & 0x0080)//SFR bank15
+       if((opc&0x00FF) > 0x5F)//SFR bank15
         {
          raddr=0xF00|(opc & 0x00FF);
         }
@@ -254,15 +254,31 @@ pic_decode_18(void)
        if (pic->print)printf ("SLEEP\n");
        pic->wdt = 0;
        pic->sleep = 1;
-       (*pic->P18map.RCON) &= ~0x08;
-       (*pic->P18map.RCON) |= 0x04;
+       if(pic->P18map.RCON)
+        {
+       (*pic->P18map.RCON) &= ~0x08; //TO
+       (*pic->P18map.RCON) |= 0x04;  //PD
+        }
+       else
+        {
+        *status &= ~0x40; //TO
+        *status |= 0x20; //TD
+        }
        break;
       case 0x0004:
        //CLRWDT --   		Clear Watchdog Timer         1     	0000 0000 0000 0100 TO, PD
        if (pic->print)printf ("CLRWDT\n");
        pic->wdt = 0;
-       (*pic->P18map.RCON) |= 0x08;
-       (*pic->P18map.RCON) |= 0x04;
+       if(pic->P18map.RCON)
+        {
+       (*pic->P18map.RCON) |= 0x08; //TO
+       (*pic->P18map.RCON) |= 0x04; //PD
+        }
+       else
+        {
+        *status |= 0x40; //TO
+        *status |= 0x20; //TD
+        }
        break;
       case 0x0005:
        //PUSH   --   		Push top of ret stack(TOS)   1     	0000 0000 0000 0101 None

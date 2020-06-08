@@ -98,3 +98,54 @@ p16e_wdt(void)
   }
 
 }
+
+
+void
+p16e_wdt_2(void)
+{
+ 
+ if ((pic->getconf (CFG_WDT) == 0x18) || //Enabled
+    ((pic->getconf (CFG_WDT) == 0x10)&& pic->sleep) || //Enabled and disabled in sleep    
+    ((pic->getconf (CFG_WDT) == 0x08)&&((*pic->P16Emap.WDTCON) & 0x01))) //Software Enable
+  {
+   pic->twdt += 4.0 / pic->freq;
+
+   int div= ((*pic->P16Emap.WDTCON) & 0x3E) >> 1;
+   
+   if (div > 18)div = 0;
+
+   if (pic->twdt > (1e-3 * fpw2[div]))
+    {
+     printf("pic->twdt=%f\n",pic->twdt);
+     printf("pic->config[0]=0x%04X pic->config[2]=0x%04X \n",pic->config[0],pic->config[1]);
+     
+     pic->twdt = 0;
+     pic->wdt++;
+     if (pic->wdt == pic->WDT_MS)
+      {
+       //reset
+       pic->wdt = 0;
+
+       unsigned char temp;
+       int bk;
+       int offset = 0x007F & sfr_addr (pic->P16Emap.STATUS);
+       temp = (*pic->P16Emap.STATUS);
+       temp &= ~0x10;
+
+       for (bk = 0; bk < 32; bk++)
+        pic->ram[(0x0080 * bk) | offset] = temp;
+
+       if (pic->sleep == 1)
+        {
+         pic->sleep = 0;
+        }
+       else
+        {
+         pic_reset (0);
+        }
+      }
+    }
+
+  }
+
+}
