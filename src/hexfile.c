@@ -66,7 +66,6 @@ read_ihx(const char * fname, int leeprom)
  unsigned int nbytes, addr, type;
  unsigned int addrx;
  unsigned short addrh = 0;
- unsigned short addrl = 0;
  char *mptr;
 
  fin = fopen (fname, "r");
@@ -96,9 +95,7 @@ read_ihx(const char * fname, int leeprom)
        switch (type)
         {
         case 0:
-         addrl = addr / 2;
-
-         if ((((addrh << 16) | addrl) << 1) == 0x400E)
+         if (((addrh << 16) | addr) == 0x400E)
           {
            //config
            mptr = (char*) pic->config;
@@ -111,7 +108,7 @@ read_ihx(const char * fname, int leeprom)
           }
          else
           {
-           if ((((addrh << 16) | addrl) << 1) >= 0x4200)
+           if (((addrh << 16) | addr) >= 0x4200)
             {
              //EEPROM
              if (leeprom == 1)
@@ -124,7 +121,7 @@ read_ihx(const char * fname, int leeprom)
             }
            else
             {
-             if ((((addrh << 16) | addrl) << 1) >= 0x4000)
+             if (((addrh << 16) | addr) >= 0x4000)
               {
                //IDS
                mptr = (char*) pic->id;
@@ -186,7 +183,6 @@ read_ihx_16e(const char * fname, int leeprom)
  unsigned int nbytes, addr, type;
  unsigned int addrx;
  unsigned short addrh = 0;
- unsigned short addrl = 0;
  char *mptr;
 
  fin = fopen (fname, "r");
@@ -216,35 +212,33 @@ read_ihx_16e(const char * fname, int leeprom)
        switch (type)
         {
         case 0:
-         addrl = addr / 2;
-
-         if ((((addrh << 16) | addrl) << 1) == 0x1000E)
+         if (((addrh << 16) | addr ) >= 0x1E000)
           {
-           //config
-           mptr = (char*) pic->config;
-           for (bc = 0; bc < nbytes; bc++)
-            {
-             addrx = ((addrh << 16) | addr) + bc - 0x1000E;
-             if ((addrx / 2) < pic->CONFIGSIZE)
-              mptr[addrx] = parse_hex (line + 9 + (bc * 2), 2);
-            }
+           //EEPROM
+           if (leeprom == 1)
+            for (bc = 0; bc < nbytes; bc += 2)
+             {
+              addrx = (((addrh << 16) | addr) + bc - 0x1E000) / 2;
+              if (addrx < pic->EEPROMSIZE)
+               pic->eeprom[addrx] = parse_hex (line + 9 + (bc * 2), 2);
+             }
           }
          else
           {
-           if ((((addrh << 16) | addrl) << 1) >= 0x1E000)
+           if (((addrh << 16) | addr) >= 0x1000E)
             {
-             //EEPROM
-             if (leeprom == 1)
-              for (bc = 0; bc < nbytes; bc += 2)
-               {
-                addrx = (((addrh << 16) | addr) + bc - 0x1E000) / 2;
-                if (addrx < pic->EEPROMSIZE)
-                 pic->eeprom[addrx] = parse_hex (line + 9 + (bc * 2), 2);
-               }
+             //config
+             mptr = (char*) pic->config;
+             for (bc = 0; bc < nbytes; bc++)
+              {
+               addrx = ((addrh << 16) | addr) + bc - 0x1000E;
+               if ((addrx / 2) < pic->CONFIGSIZE)
+                mptr[addrx] = parse_hex (line + 9 + (bc * 2), 2);
+              }
             }
            else
             {
-             if ((((addrh << 16) | addrl) << 1) >= 0x10000)
+             if (((addrh << 16) | addr) >= 0x10000)
               {
                //IDS
                mptr = (char*) pic->id;
@@ -306,7 +300,6 @@ read_ihx_18(const char * fname, int leeprom)
  unsigned int nbytes, addr, type;
  unsigned int addrx;
  unsigned short addrh = 0;
- //unsigned short addrl=0;
  char *mptr;
 
  fin = fopen (fname, "r");
@@ -948,7 +941,7 @@ write_ihx18(const char * fname)
    //eeprom
    nb = 0;
    sum = 0;
-   if ((pic->processor == P18F27K40)||(pic->processor == P18F47K40)) //FIXME escolher de outra forma
+   if ((pic->processor == P18F27K40) || (pic->processor == P18F47K40)) //FIXME escolher de outra forma
     {
      fprintf (fout, ":020000040031C9\n");
     }
