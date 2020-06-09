@@ -36,6 +36,7 @@ int interrupt18_2(void);
     
 void p18_mssp_rst(void);
 void p18_mssp(void);
+void p18_mssp_2(void);
 
 void p18_adc_rst(void);
 void p18_adc(void);

@@ -311,11 +311,17 @@ unsigned char * CCPR2H;
 unsigned char * CCPR1L;
 unsigned char * CCPR1H;
 
-unsigned char * SSPCON2;
 unsigned char * SSPCON1;
+unsigned char * SSPCON2;
 unsigned char * SSPSTAT;
 unsigned char * SSPADD;
 unsigned char * SSPBUF;
+
+unsigned char * SSP1CON1;
+unsigned char * SSP1CON2;
+unsigned char * SSP1STAT;
+unsigned char * SSP1ADD;
+unsigned char * SSP1BUF;
 
 unsigned char * EECON1;
 unsigned char * EECON2;

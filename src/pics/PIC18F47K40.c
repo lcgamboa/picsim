@@ -322,13 +322,13 @@ PIC18F47K40_map(void)
  pic->P18map.PORTC = &pic->ram[0xF8F];
  pic->P18map.PORTD = &pic->ram[0xF90];
  pic->P18map.PORTE = &pic->ram[0xF91];
- /*
  pic->P18map.SSP1BUF = &pic->ram[0xF92];
  pic->P18map.SSP1ADD = &pic->ram[0xF93];
- pic->P18map.SSP1MSK = &pic->ram[0xF94];
+ //pic->P18map.SSP1MSK = &pic->ram[0xF94];
  pic->P18map.SSP1STAT = &pic->ram[0xF95];
  pic->P18map.SSP1CON1 = &pic->ram[0xF96];
  pic->P18map.SSP1CON2 = &pic->ram[0xF97];
+  /*
  pic->P18map.SSP1CON3 = &pic->ram[0xF98];
  pic->P18map.RC1REG = &pic->ram[0xF99];
  pic->P18map.TX1REG = &pic->ram[0xF9A];
@@ -612,7 +612,7 @@ PIC18F47K40_reset(void)
 void
 PIC18F47K40_periferic (void)
 {
-  //p18_mssp ();
+  p18_mssp_2 ();
   p18_adc_3 ();
   //p18_int_pin();
   //p18_int_portb();
