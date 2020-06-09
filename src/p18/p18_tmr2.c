@@ -134,7 +134,7 @@ p18_tmr2_2(void)
          (*pic->P18map.PIR4) |= 0x02; //TMR2IF
          pic->cp2_ = 0;
         }
-/*
+
        //PWM
 
        if ((pic->CCPCOUNT >= 1)&&(pic->ccp[0] > 0)&&((*pic->P18map.CCP1CON)& 0x0C) == 0x0C)
@@ -150,11 +150,11 @@ p18_tmr2_2(void)
          if (pic->pins[pic->ccp[1] - 1].dir == PD_OUT)
           (*pic->pins[(pic->ccp[1] - 1)].port) |= 0x01 << (pic->pins[(pic->ccp[1] - 1)].pord);
         }
-*/
+
       }
      pic->cp2 = 0;
     }
-/*   
+  
    //PWM - only if TMR2 is on
    //only use 8 bits ! not 10 bits  
    if ((pic->CCPCOUNT >= 1)&&(pic->ccp[0] > 0)&&((*pic->P18map.CCP1CON)& 0x0C) == 0x0C)
@@ -174,7 +174,7 @@ p18_tmr2_2(void)
         (*pic->pins[(pic->ccp[1] - 1)].port) &= ~(0x01 << (pic->pins[(pic->ccp[1] - 1)].pord));
       }
     }
-*/   
+  
   }
  
 }

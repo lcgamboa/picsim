@@ -23,55 +23,43 @@
    For e-mail suggestions :  lcgamboa@yahoo.com
    ######################################################################## */
 
-#ifndef P16E_PERIFERIC_H
-#define P16E_PERIFERIC_H
+#include<stdio.h>
+#include"../../include/picsim.h"
+#include"../../include/periferic18.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-#include"../../include/periferic16e.h"
-        
-int interrupt16E(void);    
-int interrupt16E_2(void);   
+void
+p18_int_ports_rst(void) { }
 
-void p16e_mssp_rst(void);
-void p16e_mssp(void);
+void
+p18_int_ports(void)
+{
 
-void p16e_adc_rst(void);
-void p16e_adc(void);
+ unsigned char temp;
+ unsigned char val;
+ //POSITIVE
+ temp = (*pic->P18map.TRISB)&(*pic->P18map.IOCBP);
+ val = ((*pic->P18map.PORTB) & temp) & ~(pic->portb & temp);
+ if (val)
+  {
+   (*pic->P18map.IOCBF)  |= val;
+   (*pic->P18map.PIR0)   |= 0x10; //IOCIF
+  }
 
-void p16e_tmr0_rst(void);
-void p16e_tmr0(void);
-void p16e_tmr0_2(void);
+ //NEGATIVE
+ temp = (*pic->P18map.TRISB)&(*pic->P18map.IOCBN);
+ val=~((*pic->P18map.PORTB) & temp) & (pic->portb & temp);
+ if (val)
+  {
+   (*pic->P18map.IOCBF) |= val;
+   (*pic->P18map.PIR0)  |= 0x10; //IOCIF
+  }
 
-void p16e_tmr1_rst(void);
-void p16e_tmr1(void);
+ if (pic->lram == sfr_addr (pic->P18map.IOCBF))
+  {
+   if ((*pic->P18map.IOCBF) == 0)
+    {
+     (*pic->P18map.PIR0) &= 0xEF; //IOCIF
+    }
+  }
 
-void p16e_tmr2_rst(void);
-void p16e_tmr2(void);
-
-void p16e_eeprom_rst(void);
-void p16e_eeprom(void);
-void p16e_eeprom_2(void);
-
-void p16e_wdt_rst(void);
-void p16e_wdt(void);    
-void p16e_wdt_2(void);
-
-void p16e_int_pin_rst(void); 
-void p16e_int_pin(void);
-
-void p16e_int_ports_rst(void);
-void p16e_int_ports(void);
-
-void p16e_uart_rst(void);
-void p16e_uart_rst_2(void);
-#define p16e_uart serial
-
-
-#ifdef __cplusplus
 }
-#endif
-
-#endif /* P16E_PERIFERIC_H */
-

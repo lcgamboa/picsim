@@ -430,7 +430,7 @@ PIC16F1788_reset(void)
  p16e_eeprom_rst ();
  p16e_mssp_rst ();
  p16e_int_pin_rst();
- p16e_int_portb_rst();
+ p16e_int_ports_rst();
  p16e_uart_rst_2();
 }
 
@@ -440,7 +440,7 @@ PIC16F1788_periferic(void)
   p16e_mssp ();
   p16e_adc ();
   p16e_int_pin();
-  p16e_int_portb();
+  p16e_int_ports();
   p16e_tmr0 ();
   p16e_wdt_2 ();
   p16e_eeprom ();

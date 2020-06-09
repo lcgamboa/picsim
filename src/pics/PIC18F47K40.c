@@ -182,10 +182,10 @@ PIC18F47K40_map(void)
  pic->P18map.WPUA = &pic->ram[0xF10];
   */ 
  pic->P18map.ANSELA = &pic->ram[0xF11];
- /*
  pic->P18map.IOCBF = &pic->ram[0xF12];
  pic->P18map.IOCBN = &pic->ram[0xF13];
  pic->P18map.IOCBP = &pic->ram[0xF14];
+ /*
  pic->P18map.INLVLB = &pic->ram[0xF15];
  pic->P18map.SLRCONB = &pic->ram[0xF16];
  pic->P18map.ODCONB = &pic->ram[0xF17];
@@ -303,12 +303,12 @@ PIC18F47K40_map(void)
  pic->P18map.CRCXORH = &pic->ram[0xF7B];
  pic->P18map.CRCCON0 = &pic->ram[0xF7C];
  pic->P18map.CRCCON1 = &pic->ram[0xF7D];
+ */
  pic->P18map.NVMADRL = &pic->ram[0xF7E];
  pic->P18map.NVMADRH = &pic->ram[0xF7F];
  pic->P18map.NVMDAT = &pic->ram[0xF80];
  pic->P18map.NVMCON1 = &pic->ram[0xF81];
  pic->P18map.NVMCON2 = &pic->ram[0xF82];
-  */
  pic->P18map.LATA = &pic->ram[0xF83];
  pic->P18map.LATB = &pic->ram[0xF84];
  pic->P18map.LATC = &pic->ram[0xF85];
@@ -544,6 +544,8 @@ PIC18F47K40_reset(void)
 
  pic->mclr = 1;
 
+ pic->ccp[0] = 17;
+ pic->ccp[1] = 16;
 
  pic->adc[0] = 2;
  pic->adc[1] = 3;
@@ -607,7 +609,7 @@ PIC18F47K40_reset(void)
  p18_eeprom_rst ();
  p18_mssp_rst ();
  p18_int_pin_rst();
- p18_int_portb_rst();
+ p18_int_ports_rst();
  p18_uart_rst_3();
 }
 
@@ -616,11 +618,11 @@ PIC18F47K40_periferic (void)
 {
   p18_mssp_2 ();
   p18_adc_3 ();
-  //p18_int_pin();
-  //p18_int_portb();
+  p18_int_pin_2();
+  p18_int_ports();
   p18_tmr0_2 ();
   p18_wdt_2 ();
-  //p18_eeprom ();
+  p18_eeprom_2 ();
   p18_tmr1_2 ();
   p18_tmr2_2 ();
   //p18_tmr3 ();

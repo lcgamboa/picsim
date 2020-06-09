@@ -100,3 +100,75 @@ p18_eeprom(void)
     }
   }
 }
+
+
+
+void
+p18_eeprom_2(void)
+{
+ return;
+ 
+ if (((*pic->P18map.NVMCON1) & 0x04) == 0x04)
+  {
+   if ((*pic->P18map.NVMCON2) != 0)
+    {
+     if ((*pic->P18map.NVMCON2) == 0x55)
+      {
+       (*pic->P18map.NVMCON2) = 0;
+       pic->ee_wr = -1;
+      }
+     else
+      {
+       if (((*pic->P18map.NVMCON2) == 0xAA)&&(pic->ee_wr == -1))
+        {
+         (*pic->P18map.NVMCON2) = 0;
+         pic->ee_wr = 1;
+        }
+       else
+        {
+         (*pic->P18map.NVMCON2) = 0;
+         pic->ee_wr = 0;
+        }
+      }
+    }
+  }
+
+
+ if (((*pic->P18map.NVMCON1) & 0x03) != 0x00)
+  {
+   if (((*pic->P18map.NVMCON1) & 0x01) == 0x01) //RD
+    {
+     if (((*pic->P18map.NVMCON1) & 0x80) == 0)
+      {
+       (*pic->P18map.NVMDAT) = pic->eeprom[((*pic->P18map.NVMADRH)<<8)|(*pic->P18map.NVMADRL)];
+      }
+     /*
+           else
+           {
+              (*pic->P18map.EEDATA)=   (pic->prog[(pic->ram[P18_EEADRH]<<8)|(*pic->P18map.EEADR)])&0x00FF;
+              pic->ram[P18_EEDATAH]= ((pic->prog[(pic->ram[P18_EEADRH]<<8)|(*pic->P18map.EEADR)])&0xFF00)>>8;
+           }
+      */
+     (*pic->P18map.NVMCON1) &= ~0x01;
+    }
+   else
+    {
+     if (pic->ee_wr == 1)
+      {
+       if (((*pic->P18map.NVMCON1) & 0x80) == 0)
+        {
+         pic->eeprom[((*pic->P18map.NVMADRH)<<8)|(*pic->P18map.NVMADRL)] = (*pic->P18map.NVMDAT);
+        }
+       /*
+               else
+               {
+                 pic->prog[(pic->ram[P18_EEADRH]<<8)|(*pic->P18map.EEADR)] = (pic->ram[P18_EEDATAH]<<8) | (*pic->P18map.EEDATA);
+
+               }  
+        */
+       (*pic->P18map.NVMCON1) &= ~0x02;
+       pic->ee_wr = 0;
+      }
+    }
+  }
+}

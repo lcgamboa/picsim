@@ -57,7 +57,6 @@ p18_wdt(void)
 
        if (pic->P18map.RCON)(*pic->P18map.RCON) &= ~0x08; //clear TO
 
-
        if (pic->sleep == 1)
         {
          pic->sleep = 0;

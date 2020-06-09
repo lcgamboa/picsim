@@ -28,10 +28,10 @@
 #include"../../include/periferic16e.h"
 
 void
-p16e_int_portb_rst(void) { }
+p16e_int_ports_rst(void) { }
 
 void
-p16e_int_portb(void)
+p16e_int_ports(void)
 {
 
  unsigned char temp;

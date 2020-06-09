@@ -281,6 +281,10 @@ unsigned char * ANSELC;
 unsigned char * ANSELD;
 unsigned char * ANSELE;
 
+unsigned char * IOCBF;
+unsigned char * IOCBN;
+unsigned char * IOCBP;
+
 unsigned char * ADCON2;
 unsigned char * ADCON1;
 unsigned char * ADCON0;
@@ -328,6 +332,13 @@ unsigned char * EECON2;
 unsigned char * EEDATA;
 unsigned char * EEADR;
 unsigned char * EEADRH;
+
+unsigned char * NVMCON1;
+unsigned char * NVMCON2;
+unsigned char * NVMDAT;
+unsigned char * NVMADRL;
+unsigned char * NVMADRH;
+
 
 unsigned char * RCSTA;
 unsigned char * TXSTA;

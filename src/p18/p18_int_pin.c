@@ -68,3 +68,39 @@ p18_int_pin(void)
   }
  pic->int2v = pic->pins[pic->int2 - 1].value;
 }
+
+
+
+void
+p18_int_pin_2(void)
+{
+ //INT0
+ if ((pic->pins[pic->int0 - 1].dir == PD_IN)&&(pic->pins[pic->int0 - 1].value != pic->int0v))
+  {
+   if (((!pic->int0v) &&((*pic->P18map.INTCON) & 0x01)) || ((pic->int0v) && (!((*pic->P18map.INTCON) & 0x01))))
+    {
+     (*pic->P18map.PIR0) |= 0x01; //INTF
+    }
+  }
+ pic->int0v = pic->pins[pic->int0 - 1].value;
+
+ //INT1
+ if ((pic->pins[pic->int1 - 1].dir == PD_IN)&&(pic->pins[pic->int1 - 1].value != pic->int1v))
+  {
+   if (((!pic->int1v) &&((*pic->P18map.INTCON) & 0x02)) || ((pic->int1v) && (!((*pic->P18map.INTCON) & 0x02))))
+    {
+     (*pic->P18map.PIR0) |= 0x02; //INTF
+    }
+  }
+ pic->int1v = pic->pins[pic->int1 - 1].value;
+
+ //INT2
+ if ((pic->pins[pic->int2 - 1].dir == PD_IN)&&(pic->pins[pic->int2 - 1].value != pic->int2v))
+  {
+   if (((!pic->int2v) &&((*pic->P18map.INTCON) & 0x04)) || ((pic->int2v) && (!((*pic->P18map.INTCON) & 0x04))))
+    {
+     (*pic->P18map.PIR0) |= 0x04; //INTF
+    }
+  }
+ pic->int2v = pic->pins[pic->int2 - 1].value;
+}
