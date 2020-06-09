@@ -345,6 +345,8 @@ unsigned char * T2PR;
 
 unsigned char * WDTCON;
 
+unsigned char * WDTCON0;
+
 /*
 unsigned char * TXREG1;
 unsigned char * RCREG1;

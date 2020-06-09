@@ -115,7 +115,9 @@ PIC18F27K40_map(void)
  pic->P18map.PIR5 = &pic->ram[0xECF];
  pic->P18map.PIR6 = &pic->ram[0xED0];
  pic->P18map.PIR7 = &pic->ram[0xED1];
+ */ 
  pic->P18map.WDTCON0 = &pic->ram[0xED2];
+ /*
  pic->P18map.WDTCON1 = &pic->ram[0xED3];
  pic->P18map.WDTPSL = &pic->ram[0xED4];
  pic->P18map.WDTPSH = &pic->ram[0xED5];
@@ -582,7 +584,7 @@ PIC18F27K40_periferic(void)
   //p18_int_pin();
   //p18_int_portb();
   p18_tmr0_2 ();
-  //p18_wdt ();
+  p18_wdt_2 ();
   //p18_eeprom ();
   p18_tmr1_2 ();
   p18_tmr2_2 ();
@@ -599,7 +601,7 @@ PIC18F27K40_getconf(unsigned int cfg)
    return ((pic->config[1] & 0x0001) > 0);
    break;
   case CFG_WDT:
-   return ((pic->config[2] & 0x0060) > 0);
+   return (pic->config[2] & 0x0060);
    break;
   case CFG_DEBUG:
    return ((pic->config[1] & 0x2000) == 0);

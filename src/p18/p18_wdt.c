@@ -71,3 +71,51 @@ p18_wdt(void)
     }
   }
 }
+
+void
+p18_wdt_2(void)
+{
+  //TODO WDT support window and clock select  
+ /*
+ pic->config[2] &  0x0700  WDTCWS WDT Configuration Clock Select bits
+ pic->config[2] &  0x3800  WDTCCS WDT Configuration Window Select bits
+ pic->config[2] &  0x001F  WDTCPS WDT Configuration Period Select bits
+  */
+ 
+ if ((pic->getconf (CFG_WDT) == 0x60) || //Enabled
+     ((pic->getconf (CFG_WDT) == 0x40) && pic->sleep) || //Enabled and disabled in sleep    
+     ((pic->getconf (CFG_WDT) == 0x20)&&((*pic->P18map.WDTCON0) & 0x01))) //Software Enable
+  {
+        //printf("WDT ON %f   %i  0x%02X\n",pic->twdt ,pic->wdt,(*pic->P18map.STATUS));
+
+   pic->twdt += 4.0 / pic->freq;
+
+   int div = pic->config[2] & 0x001F;
+
+   if (div > 18)div = 0;
+
+   if (pic->twdt > (1e-3 * fpw2[div]))
+    {
+     pic->twdt = 0;
+     pic->wdt++;
+
+     if (pic->wdt == pic->WDT_MS)
+      {
+       //reset
+       pic->wdt = 0;
+
+       (*pic->P18map.STATUS) &= ~0x40; //TO
+
+       if (pic->sleep == 1)
+        {
+         pic->sleep = 0;
+        }
+       else
+        {
+         pic_reset (0);
+        }
+
+      }
+    }
+  }
+}

@@ -48,8 +48,8 @@ p16e_wdt(void)
   */
 
  if ((pic->getconf (CFG_WDT) == 0x60) || //Enabled
-     (pic->getconf (CFG_WDT) && pic->sleep) || //Enabled and disabled in sleep    
-     ((pic->getconf (CFG_WDT) == 0x20)&&((*pic->P16Emap.WDTCON0) & 0x01))) //Software Enable
+    ((pic->getconf (CFG_WDT) == 0x40)&& pic->sleep) || //Enabled and disabled in sleep    
+    ((pic->getconf (CFG_WDT) == 0x20)&&((*pic->P16Emap.WDTCON0) & 0x01))) //Software Enable
   {
    pic->twdt += 4.0 / pic->freq;
 

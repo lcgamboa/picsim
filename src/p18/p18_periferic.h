@@ -63,6 +63,7 @@ void p18_eeprom(void);
 
 void p18_wdt_rst(void);
 void p18_wdt(void);    
+void p18_wdt_2(void); 
 
 void p18_int_pin_rst(void); 
 void p18_int_pin(void);
