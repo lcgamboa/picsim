@@ -253,6 +253,7 @@ pic_decode_18(void)
        //SLEEP  --   		Go into Standby mode         1     	0000 0000 0000 0011 TO, PD
        if (pic->print)printf ("SLEEP\n");
        pic->wdt = 0;
+       pic->twdt = 0;
        pic->sleep = 1;
        if(pic->P18map.RCON)
         {
@@ -269,6 +270,7 @@ pic_decode_18(void)
        //CLRWDT --   		Clear Watchdog Timer         1     	0000 0000 0000 0100 TO, PD
        if (pic->print)printf ("CLRWDT\n");
        pic->wdt = 0;
+       pic->twdt = 0;
        if(pic->P18map.RCON)
         {
        (*pic->P18map.RCON) |= 0x08; //TO

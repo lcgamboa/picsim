@@ -115,10 +115,7 @@ p16e_wdt_2(void)
    if (div > 18)div = 0;
 
    if (pic->twdt > (1e-3 * fpw2[div]))
-    {
-     printf("pic->twdt=%f\n",pic->twdt);
-     printf("pic->config[0]=0x%04X pic->config[2]=0x%04X \n",pic->config[0],pic->config[1]);
-     
+    {   
      pic->twdt = 0;
      pic->wdt++;
      if (pic->wdt == pic->WDT_MS)

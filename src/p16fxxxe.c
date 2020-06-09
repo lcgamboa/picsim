@@ -437,6 +437,7 @@ pic_decode_16E(void)
          //SLEEP   --  	Go into Standby mode         1     0000000 1100011   	TO,PD
          if (pic->print)printf ("SLEEP\n");
          pic->wdt = 0;
+         pic->twdt = 0;
          pic->sleep = 1;
          *status &= ~0x08;
          *status |= 0x10;
@@ -445,6 +446,7 @@ pic_decode_16E(void)
          //CLRWDT  --  	Clear Watchdog Timer         1     0000000 1100100   	TO,PD
          if (pic->print)printf ("CLRWDT\n");
          pic->wdt = 0;
+         pic->twdt = 0;
          *status |= 0x08;
          *status |= 0x10;
          break;
