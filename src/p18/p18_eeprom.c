@@ -106,7 +106,6 @@ p18_eeprom(void)
 void
 p18_eeprom_2(void)
 {
- return;
  
  if (((*pic->P18map.NVMCON1) & 0x04) == 0x04)
   {
