@@ -84,6 +84,7 @@ extern "C" {
 #define P16F1789     0x302A  
 #define P16F18855    0X306C
 #define P16F1939     0x23C0
+#define P16F18324    0x303A
 
     //P18 processors
 #define P18F452     0x0420

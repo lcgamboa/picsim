@@ -159,7 +159,7 @@ p18_tmr2_2(void)
    //only use 8 bits ! not 10 bits  
    if ((pic->CCPCOUNT >= 1)&&(pic->ccp[0] > 0)&&((*pic->P18map.CCP1CON)& 0x0C) == 0x0C)
     {
-     if ((*pic->P18map.TMR2) >= (*pic->P18map.CCPR1H))
+     if ((*pic->P18map.T2TMR) >= (*pic->P18map.CCPR1H))
       {
        if (pic->pins[pic->ccp[0] - 1].dir == PD_OUT)
         (*pic->pins[(pic->ccp[0] - 1)].port) &= ~(0x01 << (pic->pins[(pic->ccp[0] - 1)].pord));
@@ -168,7 +168,7 @@ p18_tmr2_2(void)
 
    if ((pic->CCPCOUNT >= 2)&&(pic->ccp[1] > 0)&&((*pic->P18map.CCP2CON)& 0x0C) == 0x0C)
     {
-     if ((*pic->P18map.TMR2) >= (*pic->P18map.CCPR2H))
+     if ((*pic->P18map.T2TMR) >= (*pic->P18map.CCPR2H))
       {
        if (pic->pins[pic->ccp[1] - 1].dir == PD_OUT)
         (*pic->pins[(pic->ccp[1] - 1)].port) &= ~(0x01 << (pic->pins[(pic->ccp[1] - 1)].pord));

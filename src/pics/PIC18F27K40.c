@@ -623,7 +623,7 @@ PIC18F27K40_start(void)
  pic->IDSIZE = 8;
  pic->CONFIGSIZE = 6;
  pic->STACKSIZE = 31;
- pic->CCPCOUNT = 0;
+ pic->CCPCOUNT = 2;
  pic->ADCCOUNT = 24;
  pic->WDT_MS = 1;
  pic->reset = PIC18F27K40_reset;

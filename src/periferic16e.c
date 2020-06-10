@@ -220,7 +220,7 @@ periferic16E_step_out(void)
  //PINOUTS
 
  if (((*pic->P16Emap.PORTA) != pic->porta) ||
-     ((*pic->P16Emap.PORTB) != pic->portb) ||
+     ((pic->P16Emap.PORTB)&&((*pic->P16Emap.PORTB) != pic->portb)) ||
      ((*pic->P16Emap.PORTC) != pic->portc) ||
      ((pic->P16Emap.PORTD)&&((*pic->P16Emap.PORTD) != pic->portd)) ||
      ((pic->P16Emap.PORTE)&&((*pic->P16Emap.PORTE) != pic->porte)))
@@ -256,7 +256,7 @@ periferic16E_step_out(void)
        };
     }
    pic->porta = (*pic->P16Emap.PORTA);
-   pic->portb = (*pic->P16Emap.PORTB);
+   if (pic->P16Emap.PORTB)pic->portb = (*pic->P16Emap.PORTB);
    pic->portc = (*pic->P16Emap.PORTC);
    if (pic->P16Emap.PORTD)pic->portd = (*pic->P16Emap.PORTD);
    if (pic->P16Emap.PORTE)pic->porte = (*pic->P16Emap.PORTE);
@@ -265,7 +265,7 @@ periferic16E_step_out(void)
 
 
  if (((*pic->P16Emap.TRISA) != pic->trisa) ||
-     ((*pic->P16Emap.TRISB) != pic->trisb) ||
+     ((pic->P16Emap.TRISD)&&((*pic->P16Emap.TRISB) != pic->trisb)) ||
      ((*pic->P16Emap.TRISC) != pic->trisc) ||
      ((pic->P16Emap.TRISD)&&((*pic->P16Emap.TRISD) != pic->trisd)) ||
      ((pic->P16Emap.TRISE)&&((*pic->P16Emap.TRISE) != pic->trise)))
@@ -290,7 +290,7 @@ periferic16E_step_out(void)
       }
     }
    pic->trisa = (*pic->P16Emap.TRISA);
-   pic->trisb = (*pic->P16Emap.TRISB);
+   if (pic->P16Emap.TRISB)pic->trisb = (*pic->P16Emap.TRISB);
    pic->trisc = (*pic->P16Emap.TRISC);
    if (pic->P16Emap.TRISD)pic->trisd = (*pic->P16Emap.TRISD);
    if (pic->P16Emap.TRISE)pic->trise = (*pic->P16Emap.TRISE);

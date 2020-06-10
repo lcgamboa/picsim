@@ -123,7 +123,7 @@ pic_decode_18(void)
     }
 
    return;
-  };
+  }
 
  if (pic->print)printf ("pc=%#06X\t", pic->pc);
  // debug

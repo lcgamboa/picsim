@@ -46,7 +46,8 @@ getprocbyname(const char *str)
  if (!strcmp ("PIC16F1789", str))return P16F1789;
  if (!strcmp ("PIC16F18855", str))return P16F18855;
  if (!strcmp ("PIC16F1939", str))return P16F1939;
-
+ if (!strcmp ("PIC16F18324", str))return P16F18324;
+ 
  if (!strcmp ("PIC18F452", str))return P18F452;
  if (!strcmp ("PIC18F4520", str))return P18F4520;
  if (!strcmp ("PIC18F4620", str))return P18F4620;
@@ -107,6 +108,10 @@ getnamebyproc(int proc, char *str)
   case P16F1939:
    strcpy (str, "PIC16F1939");
    break;
+   
+  case P16F18324:
+   strcpy (str, "PIC16F18324");
+   break; 
 
   case P18F452:
    strcpy (str, "PIC18F452");
@@ -161,6 +166,7 @@ getfprocbyname(const char *str)
  if (!strcmp ("PIC16F1789", str))return P16E;
  if (!strcmp ("PIC16F18855", str))return P16E;
  if (!strcmp ("PIC16F1939", str))return P16E;
+ if (!strcmp ("PIC16F18324", str))return P16E;
 
  if (!strcmp ("PIC18F452", str))return P18;
  if (!strcmp ("PIC18F4520", str))return P18;
@@ -191,7 +197,8 @@ getfprocbynumber(int proc)
  if (P16F1789 == proc)return P16E;
  if (P16F18855 == proc)return P16E;
  if (P16F1939 == proc)return P16E;
-
+ if (P16F18324 == proc)return P16E;
+ 
  if (P18F452 == proc)return P18;
  if (P18F4520 == proc)return P18;
  if (P18F4620 == proc)return P18;

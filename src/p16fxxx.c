@@ -65,7 +65,7 @@ pic_decode_16(void)
      pic->jpc = 0xFFFFF;
     }
    return;
-  };
+  }
 
 
 

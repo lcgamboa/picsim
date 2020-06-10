@@ -44,6 +44,7 @@ void PIC16F1788_start(void);
 void PIC16F1789_start(void);
 void PIC16F18855_start(void);
 void PIC16F1939_start(void);
+void PIC16F18324_start(void);
 
 void PIC18F4520_start(void);
 void PIC18F452_start(void);
@@ -162,6 +163,9 @@ pic_init(_pic * pic_, int processor, const char * fname, int lrom, float freq)
     case P16F1939:
      PIC16F1939_start ();
      break;
+    case P16F18324:
+     PIC16F18324_start ();
+     break;  
     default:
      printf ("unknown processor! 0x%04X\n", processor);
      return 0;
@@ -342,14 +346,14 @@ pic_reset(int flags)
     }
 
    (*pic->P16Emap.TRISA) = 0xFF;
-   (*pic->P16Emap.TRISB) = 0xFF;
-   (*pic->P16Emap.TRISC) = 0xFF;
+   if (pic->P16Emap.TRISB)(*pic->P16Emap.TRISB) = 0xFF;
+   if (pic->P16Emap.TRISC)(*pic->P16Emap.TRISC) = 0xFF;
    if (pic->P16Emap.TRISD)(*pic->P16Emap.TRISD) = 0xFF;
    if (pic->P16Emap.TRISE)(*pic->P16Emap.TRISE) = 0x07;
    if (pic->P16Emap.PR2)(*pic->P16Emap.PR2) = 0xFF;
 
    (*pic->P16Emap.ANSELA) = 0xFF;
-   (*pic->P16Emap.ANSELB) = 0xFF;
+   if (pic->P16Emap.ANSELB)(*pic->P16Emap.ANSELB) = 0xFF;
    if (pic->P16Emap.ANSELC)(*pic->P16Emap.ANSELC) = 0xFF;
    if (pic->P16Emap.ANSELD)(*pic->P16Emap.ANSELD) = 0xFF;
    if (pic->P16Emap.ANSELE)(*pic->P16Emap.ANSELE) = 0xFF;
