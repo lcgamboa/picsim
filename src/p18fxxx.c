@@ -118,14 +118,16 @@ pic_decode_18(void)
    pic->s2 = 0;
    if (pic->jpc != 0xFFFFF)
     {
+     if (pic->print)printf ("NEW_PC = 0x%06X     OLD_PC = 0x%06X \n", pic->jpc,pic->pc);
      pic->pc = pic->jpc;
      pic->jpc = 0xFFFFF;
     }
-
    return;
   }
 
  if (pic->print)printf ("pc=%#06X\t", pic->pc);
+ fflush(stdout);
+     
  // debug
  if ((pic->pc >= 0x200028)&&((pic->pc <= 0x200037)))
   {
@@ -750,6 +752,7 @@ pic_decode_18(void)
         {
          (*pic->P18map.STKPTR) |= 0x40; //set STKUNF  
          pic->jpc = 0;
+         if (pic->print)printf ("STKUNF !!!!!!!\n");
         }
        pic->lram = sfr_addr (pic->P18map.STKPTR);
 
@@ -2354,7 +2357,7 @@ pic_decode_18(void)
    if (plram == pic->P18map.TOSU)
     {
      if (((*pic->P18map.STKPTR) & 0x1F) > 0)
-      pic->stack[((*pic->P18map.STKPTR) & 0x1F) - 1] = (pic->stack[((*pic->P18map.STKPTR) & 0x1F) - 1] & 0x00FFFF) | (((*pic->P18map.TOSH)&0x1F) << 16);
+      pic->stack[((*pic->P18map.STKPTR) & 0x1F) - 1] = (pic->stack[((*pic->P18map.STKPTR) & 0x1F) - 1] & 0x00FFFF) | (((*pic->P18map.TOSU)&0x1F) << 16);
     }
 
    if (plram == pic->P18map.LATA)
@@ -2510,6 +2513,14 @@ pic_decode_18(void)
  if ((pic->print)&&(pic->rram != 0x8000))printf ("mem read  %#06X: %10s= %#06X\n", pic->rram, getFSRname_18 (pic->rram), pic->ram[pic->rram]);
  if ((pic->print)&&(pic->lram != 0x8000))printf ("mem write %#06X: %10s= %#06X\n", pic->lram, getFSRname_18 (pic->lram), pic->ram[pic->lram]);
  /*
+ if ((pic->print)&&(pic->lram ==  sfr_addr (pic->P18map.STKPTR)))
+  {
+   printf("STKPTR=%u\n",(*pic->P18map.STKPTR));
+   for(int i=0;i< pic->STACKSIZE ; i++)
+    {
+     printf("  stack[%02i]=0x%06X \n",i,pic->stack[i]);
+    }
+  }
    if(((*pic->P18map.PCL)) != (pc_ant&0x00FF))
    {
      pic->pc=(((*pic->P18map.PCLATH)&0x1F)<<8)|pic->ram[PCL];//conferir
