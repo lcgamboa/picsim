@@ -8,6 +8,11 @@ SUBDIRS= src include
 
 all:$(SUBDIRS) 
 
+doc:
+	doxygen
+	gitchangelog > CHANGELOG.md
+	! leasot -r markdown  src/*.{c,h} src/*/*.{c,h}  > TODO.md 
+
 install:$(SUBDIRS) 
 	
 clean:$(SUBDIRS) 

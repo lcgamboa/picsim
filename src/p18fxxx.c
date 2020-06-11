@@ -63,7 +63,8 @@ static inline void fraddr(void)
         }
       }
  }
-   
+
+//TODO add [or not] support to extended instructions 
 void
 pic_decode_18(void)
 {
@@ -1755,7 +1756,7 @@ pic_decode_18(void)
      if (opc & 0x0200)
       {
        *status &= ~0x08;
-       //TODO P18 incompleto SUBWFB flags
+       //TODO P18 incomplet SUBWFB flags
        /*
        if ((pic->ram[raddr] & 0x80)!=(ctemp&0x80))  
         *status|=0x08;
@@ -1776,7 +1777,7 @@ pic_decode_18(void)
      else
       {
        *status &= ~0x08;
-       //TODO P18  incompleto  SUBWFB flags
+       //TODO P18  incomplet  SUBWFB flags
        /* 
        if (((*pic->P18map.WREG) & 0x80)!=(ctemp&0x80))  
         *status|=0x08;
@@ -1817,7 +1818,7 @@ pic_decode_18(void)
      if (opc & 0x0200)
       {
        *status &= ~0x08;
-       //TODO P18  incompleto  SUBWF flags
+       //TODO P18  incomplet  SUBWF flags
        /* 
        if ((pic->ram[raddr] & 0x80)!=(ctemp&0x80))  
         *status|=0x08;
@@ -1838,7 +1839,7 @@ pic_decode_18(void)
      else
       {
        *status &= ~0x08;
-       //TODO  P18 incompleto SUBWF flags
+       //TODO  P18 incomplet SUBWF flags
        /*
       if (((*pic->P18map.WREG) & 0x80)!=(ctemp&0x80))  
         *status|=0x08;

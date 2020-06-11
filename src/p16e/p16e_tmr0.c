@@ -98,7 +98,7 @@ p16e_tmr0_2(void)
 
      if (pic->cp0 >= fpw2[(*pic->P16Emap.T0CON1)&0x0F])
       {
-       //TODO postscaler!!!
+       //TODO implement TMR0 postscaler
        //8 bit mode   
        if (((*pic->P16Emap.T0CON0) & 0x10)&& (((*pic->P16Emap.TMR0L) + 1) == 0x100))(*pic->P16Emap.PIR0) |= 0x20; //T0IF
 

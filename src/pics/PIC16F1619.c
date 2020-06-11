@@ -520,7 +520,7 @@ PIC16F1619_reset(void)
 
  pic->t0cki=17;
  pic->t1cki=2;
-//FIXME P16E pin interrupt support
+//TODO add P16E pin interrupt support
  /* 
  pic->int0 = 0;
  pic->int1 = 0;

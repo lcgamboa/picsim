@@ -72,11 +72,6 @@ ReadIndf(unsigned short *afsr)
     }
   }
 
- //FIXME memory invalid read 
- //(*pic->P16Emap.INDF1)=pic->ram[afsr[1]];
-
-
-
  //mirror on all banks
  offset = 0x007F & sfr_addr (pic->P16Emap.INDF0);
  unsigned char temp0 = (*pic->P16Emap.INDF0);
@@ -190,7 +185,7 @@ pic_decode_16E(void)
          pic->debug = 0;
          pic->sstep = 0;
          pic->dbg = 0;
-         //TODO	P16E DEBUG
+         //TODO	P16E HW DEBUG support
          //pic->ram[P16E_ICKBUG]&=~0x80;
          break;
         case 0x0009:
@@ -257,7 +252,7 @@ pic_decode_16E(void)
          //CALLW    -     Call Subroutine with W             2    00 0000 0000 1010    
          if (pic->print)printf ("CALLW\n");
          for (temp = 15; temp > 0; temp--)
-          pic->stack[temp] = pic->stack[temp - 1]; //TODO P16E implement acess to stack  and STKPTR
+          pic->stack[temp] = pic->stack[temp - 1]; 
          pic->stack[0] = pic->pc;
          pic->jpc = (((*pic->P16Emap.PCLATH)&0x1F) << 8) | (*pic->P16Emap.WREG);
          pic->s2 = 1;
@@ -265,7 +260,7 @@ pic_decode_16E(void)
         case 0x000B:
          //BRW      -     Relative Branch with W             2    00 0000 0000 1011   
          if (pic->print)printf ("BRW\n");
-         //TODO P16E DEBUG
+         //TODO P16E HW DEBUG support
          /*          
                  if(((pic->config[0] & 0x0800) == 0)&&(((pic->ram[P16E_ICKBUG])&0x80)== 0x80) )//DEBUG ON
          //	  pic->jpc=((0x18)<<8)|(opc & 0x07FF);
@@ -902,7 +897,7 @@ pic_decode_16E(void)
      //CALL    k  	Call subroutine              2     100 kkkkkkkkkkk
      if (pic->print)printf ("CALL %#05X\n", opc & 0x07FF);
      for (temp = 15; temp > 0; temp--)
-      pic->stack[temp] = pic->stack[temp - 1]; //TODO P16E implement acess to stack  and STKPTR
+      pic->stack[temp] = pic->stack[temp - 1]; 
      pic->stack[0] = pic->pc;
      pic->jpc = ((pic->ram[bank | (sfr_addr (pic->P16Emap.PCLATH) & 0x007F)]&0x18) << 8) | (opc & 0x07FF);
      pic->s2 = 1;
@@ -910,7 +905,7 @@ pic_decode_16E(void)
     case 0x0800:
      //GOTO    k  	Go to address                2     101 kkkkkkkkkkk
      if (pic->print)printf ("GOTO %#05X\n", opc & 0x07FF);
-     //TODO P16E DEBUG
+     //TODO P16E HW DEBUG support
      /*          
                if(((pic->config[0] & 0x0800) == 0)&&(((pic->ram[P16E_ICKBUG])&0x80)== 0x80) )//DEBUG ON
      //	    pic->jpc=((0x18)<<8)|(opc & 0x07FF);
@@ -973,7 +968,7 @@ pic_decode_16E(void)
      jrange = (((short) ((opc & 0x01FF) << 7)) / 64);
      //if(pic->print)printf("BRA %#05X\n",opc & 0x01FF);
      if (pic->print)printf ("BRA %#06X\n", (pic->pc + jrange)&((pic->ROMSIZE << 1) - 1));
-     //TODO P16E DEBUG
+     //TODO P16E HW DEBUG support
      /*          
              if(((pic->config[0] & 0x0800) == 0)&&(((pic->ram[P16E_ICKBUG])&0x80)== 0x80) )//DEBUG ON
      //	  pic->jpc=((0x18)<<8)|(opc & 0x07FF);

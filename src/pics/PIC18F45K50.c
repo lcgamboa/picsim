@@ -383,7 +383,7 @@ PIC18F45K50_reset(void)
  pic->adc[10] = 34;
  pic->adc[11] = 37;
  pic->adc[12] = 33;
- //FIXME
+ //TODO add all ADC channels
  /*
  pic->adc[13] = 38;
  pic->adc[14] = 17;

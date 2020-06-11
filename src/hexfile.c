@@ -212,7 +212,7 @@ read_ihx_16e(const char * fname, int leeprom)
        switch (type)
         {
         case 0:
-         if (((addrh << 16) | addr ) >= 0x1E000)
+         if (((addrh << 16) | addr) >= 0x1E000)
           {
            //EEPROM
            if (leeprom == 1)
@@ -941,15 +941,15 @@ write_ihx18(const char * fname)
    //eeprom
    nb = 0;
    sum = 0;
-   if ((pic->processor == P18F27K40) || (pic->processor == P18F47K40)) //FIXME escolher de outra forma
+   if (pic->P18map.RCON)
     {
-     fprintf (fout, ":020000040031C9\n");
+     fprintf (fout, ":0200000400F00A\n");
     }
    else
     {
-     fprintf (fout, ":0200000400F00A\n");
-
+     fprintf (fout, ":020000040031C9\n");
     }
+   
    for (i = 0; i < pic->EEPROMSIZE; i++)
     {
 

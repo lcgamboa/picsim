@@ -111,7 +111,7 @@ p18_tmr0_2(void)
           {
            (*pic->P18map.PIR0) |= 0x20; //TMR0IF
            (*pic->P18map.TMR0L)=0;
-           //TODO buffer TMR0H writes
+           //TODO buffer TMR0H writes latch
           }
 
          //16 bit mode;

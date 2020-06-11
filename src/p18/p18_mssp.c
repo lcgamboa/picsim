@@ -56,7 +56,7 @@ p18_mssp(void)
     case 0x01://SPI Master mode, clock = FOSC/16
     case 0x02://SPI Master mode, clock = FOSC/64
     case 0x03://SPI Master mode, clock = TMR2 output/2
-     //TODO: CLK POL and FREQ READ OP
+     //TODO: CLK POL and FREQ READ OP support
      if (pic->lram == sfr_addr (pic->P18map.SSPBUF))
       {
        pic->ssp_bit = 8;
@@ -347,7 +347,7 @@ p18_mssp_2(void)
     case 0x01://SPI Master mode, clock = FOSC/16
     case 0x02://SPI Master mode, clock = FOSC/64
     case 0x03://SPI Master mode, clock = TMR2 output/2
-     //TODO: CLK POL and FREQ READ OP
+     //TODO: CLK POL and FREQ READ OP support
      if (pic->lram == sfr_addr (pic->P18map.SSP1BUF))
       {
        pic->ssp_bit = 8;

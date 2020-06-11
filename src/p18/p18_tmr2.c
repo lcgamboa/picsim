@@ -116,7 +116,7 @@ p18_tmr2(void)
 void
 p18_tmr2_2(void)
 {
- //TODO TMR2 incomplete
+ //TODO TMR2 incomplet
  if ((*pic->P18map.T2CON) & 0x80) //TMR2EN
   {
    pic->cp2++;

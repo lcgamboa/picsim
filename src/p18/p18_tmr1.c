@@ -124,7 +124,7 @@ p18_tmr1_2(void)
 
  if ((*pic->P18map.T1CON) & 0x01) //ON
   {
-      //TODO support all modes
+      //TODO support all modes 
       if ((((*pic->P18map.T1CLK) & 0x0F) == 0x01) || //TMRICS=FOSC/4 
           ((((*pic->P18map.T1CLK) & 0x0F) == 0x00)&&((pic->t1cki_ == 0)&&(pic->pins[pic->t1cki - 1].value == 1)))) //TMRICS=t1cki  
     {

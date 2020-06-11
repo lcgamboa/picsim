@@ -501,7 +501,7 @@ pic_set_pin(unsigned char pin, unsigned char value)
          if (pic->processor != P16F84A)
           pic->ram[sfr_addr (pic->pins[(pin - 1)].port) | 0x100] = (*pic->pins[(pin - 1)].port); //espelhamento bank2 = bank0
          break;
-        case P16E: //FIXME verificar P16E set pin with ansel
+        case P16E: 
          break;
 #ifdef ICSPDBG                    
         case P18:

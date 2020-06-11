@@ -35,7 +35,8 @@ p16e_uart_rst(void)
 
  pic->serial_TXSTA = pic->P16Emap.TXSTA;
  pic->serial_RCSTA = pic->P16Emap.RCSTA;
- pic->serial_SPBRG = pic->P16Emap.SP1BRGL; //FIXME 16bits SPBRG
+ //FIXME only 16bits SPBRG
+ pic->serial_SPBRG = pic->P16Emap.SP1BRGL; 
  pic->serial_RCREG = pic->P16Emap.RCREG;
  pic->serial_TXREG = pic->P16Emap.TXREG;
  pic->serial_TXREG_ADDR = sfr_addr (pic->P16Emap.TXREG);
@@ -53,7 +54,8 @@ p16e_uart_rst_2(void)
  pic->serial_PIE1 = pic->P16Emap.PIE1;
  pic->serial_TXSTA = pic->P16Emap.TX1STA;
  pic->serial_RCSTA = pic->P16Emap.RC1STA;
- pic->serial_SPBRG = pic->P16Emap.SP1BRGL; //FIXME 16bits SPBRG
+ //FIXME only 16bits SPBRG
+ pic->serial_SPBRG = pic->P16Emap.SP1BRGL; 
  pic->serial_RCREG = pic->P16Emap.RC1REG;
  pic->serial_TXREG = pic->P16Emap.TX1REG;
  pic->serial_TXREG_ADDR = sfr_addr (pic->P16Emap.TX1REG);
