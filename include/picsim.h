@@ -23,6 +23,18 @@
    For e-mail suggestions :  lcgamboa@yahoo.com
    ######################################################################## */
 
+/**
+ * @file picsim.h
+ * @author Luis Claudio Gamboa Lopes
+ *
+ * @brief PICsim - PIC Simulator - API
+ *
+ * PICsim emulates a microcontroller PIC16F84A/16F628/16F777/16F877A/18F452/18F4520/18F4550/18F4620 
+ * and periferics such as USART and timers, the simulator architecture permit easy implementation of 
+ * external elements in c language.
+ * @see https://github.com/lcgamboa/picsim
+ */
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -39,34 +51,57 @@ extern "C" {
 #include"p16fxxxe_defs.h"
 #include"p18fxxx_defs.h"
 
+    /**
+     * @brief PICsim pin structure
+     *
+     * Internal structure used to describe one pin.
+     */
     typedef struct {
-        unsigned char ptype; //type
-        unsigned char dir; //dir
-        unsigned char value; //value
-        unsigned char lvalue; //latch value
-        char pord; //pin port number
-        unsigned char * port; //port address
-        float avalue; //analog input value
-        unsigned char ovalue; //defaut open pin value
-        float oavalue; //analog output value
+        unsigned char ptype;  ///< @ref pintype
+        unsigned char dir;    ///< @ref pindir
+        unsigned char value;  ///< value
+        unsigned char lvalue; ///< latch value
+        char pord;            ///< pin port number
+        unsigned char * port; ///< port address
+        float avalue;         ///< analog input value
+        unsigned char ovalue; ///< defaut open pin value
+        float oavalue;        ///< analog output value
     } picpin;
 
+    /**
+     * \defgroup pindir pin dir
+     * @{
+     */
 #define PD_OUT   0x00
 #define PD_IN    0x01
+    /**@}*/
 
-
+    /**
+     * \defgroup pintype pin types
+     * @{
+     */
 #define PT_CMOS    0x01
 #define PT_TTL     0x02 
 #define PT_ANALOG  0x04
 #define PT_ANAREF  0x05
 #define PT_USART   0x06
 #define PT_NC      0xFF
+    /**@}*/
 
-
+    /**
+     * \defgroup family pic family
+     * @{
+     */
     //family
 #define P16   1
 #define P18   2
 #define P16E  3
+    /**@}*/
+
+    /**
+     * \defgroup procid pic microcontollers ID
+     * @{
+     */
 
     //P16 processors
 #define P16F84A      0x0560
@@ -94,12 +129,33 @@ extern "C" {
 #define P18F45K50   0x5C00
 #define P18F27K40   0x6960
 #define P18F47K40   0x6900
+    /**@}*/
+
+    /**
+     * \defgroup cfg config flags
+     * @{
+     */
+    //CFG bits
+#define CFG_MCLR   0x01
+#define CFG_WDT    0x02
+#define CFG_DEBUG  0x04
+    /**@}*/
+
+    /**
+     * \defgroup packaging packaging type
+     * @{
+     */
+    //PACKAGING
+#define PDIP 0
+#define QFN  1
+    /**@}*/
+
 
     //4K word
 #define BUFFMAX 8192 
 
 
-extern unsigned char NO_IO[5];
+    extern unsigned char NO_IO[5];
 
     //pin without IO
 #define P_VDD &NO_IO[0]
@@ -108,17 +164,13 @@ extern unsigned char NO_IO[5];
 #define P_OSC &NO_IO[3]
 #define P_USB &NO_IO[4]
 
-    //CFG bits
-#define CFG_MCLR   0x01
-#define CFG_WDT    0x02
-#define CFG_DEBUG  0x04
-
-   //PACKAGING
-#define PDIP 0
-#define QFN  1
-
+    /**
+     @brief PICsim PIC structure
+     
+    Structure used to describe pic microcontroller .
+     */
     typedef struct {
-        unsigned char print; //print information ON/OFF  
+        unsigned char print; ///< print information ON/OFF  
         unsigned int RAMSIZE;
         unsigned int ROMSIZE;
         unsigned int EEPROMSIZE;
@@ -129,8 +181,8 @@ extern unsigned char NO_IO[5];
         unsigned char CCPCOUNT;
         unsigned char ADCCOUNT;
         unsigned char WDT_MS;
-        unsigned char family;
-        unsigned int processor;
+        unsigned char family; ///< @ref family
+        unsigned int processor; ///< @ref procid
         unsigned short debugv[8];
         unsigned char *ram;
         unsigned short *prog;
@@ -139,15 +191,15 @@ extern unsigned char NO_IO[5];
         unsigned short *config;
         unsigned int pc;
         unsigned int jpc;
-        unsigned short lram; //loaded register 
-        unsigned short rram; //readed register 
+        unsigned short lram; ///< loaded register 
+        unsigned short rram; ///< readed register 
         unsigned int *stack;
         unsigned char w;
         unsigned char wdt;
         unsigned char s2;
-        float freq;
-        unsigned char sleep; //sleep mode on
-        unsigned char pkg; //packaging
+        float freq;          ///< frequency
+        unsigned char sleep; ///< sleep mode on
+        unsigned char pkg;   ///<  @ref packaging
         picpin *pins;
         unsigned char mclr;
         unsigned char *ccp;
@@ -252,10 +304,10 @@ extern unsigned char NO_IO[5];
 
         void (*reset)(void);
         void (*mmap)(void);
-        int  (*getconf)(unsigned int);
+        int (*getconf)(unsigned int);
         void (*periferic)(void);
-        int  (*interrupt)(void);
-        
+        int (*interrupt)(void);
+
         union {
             P16map_t P16map;
             P16Emap_t P16Emap;
@@ -263,21 +315,109 @@ extern unsigned char NO_IO[5];
         };
     } _pic;
 
-    extern _pic * pic; //global pointer 
+    extern _pic * pic; ///<global pointer 
 
 
+    /**
+     * @brief Configure the serial port connection
+     *
+     *  Use to link the PICSim serial to one serial port   
+     * 
+     * @param pic_ pointer to pic object
+     * @param name Name of serial port 
+     * @param flowcontrol use flowcontrol 
+     * @param ctspin  CTS pin if flowcontrol = 1
+     * @param rtspin  RTS pin if flowcontrol = 1
+     */
     void pic_set_serial(_pic * pic_, const char * name, int flowcontrol, int ctspin, int rtspin);
-    int pic_init(_pic * pic_, int processor, const char * fname, int lrom, float freq);
+
+    /**
+     * @brief Initialize one pic object
+     *
+     *  Use to initialize the _pic object structure 
+     * 
+     * @param pic_ pointer to pic object
+     * @param processor microcontroller ID
+     * @param fname Name of hex file to load
+     * @param leeprom Load EEprom from file if equal to 1 
+     * @param freq Frequency of microcontoller  
+     * @return  Return 1 if success, 0 otherwise 
+     */
+    int pic_init(_pic * pic_, int processor, const char * fname, int leeprom, float freq);
+
+    /**
+     * @brief Reset the microcontroller
+     *
+     *  Reset the microcontroller to initial state  
+     * 
+     * @param flags  0 = WDT reset  1 = Power on reset   -1 = MCLRE pin reset
+     * @return Return 1 if success, 0 otherwise 
+     */
     int pic_reset(int flags);
+
+    /**
+     * @brief erase the microcontroller FLASH
+     *
+     */
     void pic_erase_flash(void);
+
+    /**
+     * @brief Execute one simulation step
+     *
+     * Execute one simulation step, must be call continuously to run the program
+     * in pic flash memory 
+     */
     void pic_step(void);
+
+    /**
+     * @brief finalize and free pic object internal memory
+     *
+     */
     void pic_end(void);
 
+    /**
+     * @brief Get digital value of one pin
+     *
+     * @param pin pin number 
+     * @return pin value 0 or 1
+     */
     unsigned char pic_get_pin(unsigned char pin);
+
+    /**
+     * @brief Set digital value of one pin
+     *
+     * @param pin pin number 
+     * @param value pin value 0 or 1
+     * @return  Return 1 if success, 0 otherwise 
+     */
     int pic_set_pin(unsigned char pin, unsigned char value);
+
+    /**
+     * @brief Set digital value of one pin
+     *
+     * @param pin pin number 
+     * @param value pin analog value from 0 to 5
+     * @return Return 1 if success, 0 otherwise 
+     */
     int pic_set_apin(unsigned char pin, float value);
+
+    /**
+     * @brief Get type of one pin
+     *
+     * @param pin pin number 
+     * @return @ref pintype 
+     */
     unsigned char pic_get_pin_type(unsigned char pin);
+
+    /**
+     * @brief Get dir of one pin
+     *
+     * @param pin pin number 
+     * @return @ref pindir 
+     */
     unsigned char pic_get_pin_dir(unsigned char pin);
+
+
     unsigned char pic_get_pin_DOV(unsigned char pin); //get default open value
     int pic_set_pin_DOV(unsigned char pin, unsigned char value); //set default open value
 

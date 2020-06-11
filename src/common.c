@@ -101,7 +101,7 @@ pic_erase_flash(void)
 }
 
 int
-pic_init(_pic * pic_, int processor, const char * fname, int lrom, float freq)
+pic_init(_pic * pic_, int processor, const char * fname, int leeprom, float freq)
 {
  int i;
  int retcode = 0;
@@ -222,7 +222,7 @@ pic_init(_pic * pic_, int processor, const char * fname, int lrom, float freq)
  pic_erase_flash ();
 
 
- if (lrom == 1)
+ if (leeprom == 1)
   memset (pic->eeprom, 0xFF, pic->EEPROMSIZE);
 
  pic->sleep = 0;
@@ -236,13 +236,13 @@ pic_init(_pic * pic_, int processor, const char * fname, int lrom, float freq)
    switch (pic->family)
     {
     case P16:
-     retcode = read_ihx (fname, lrom);
+     retcode = read_ihx (fname, leeprom);
      break;
     case P16E:
-     retcode = read_ihx_16e (fname, lrom);
+     retcode = read_ihx_16e (fname, leeprom);
      break;
     case P18:
-     retcode = read_ihx_18 (fname, lrom);
+     retcode = read_ihx_18 (fname, leeprom);
      break;
     default:
      break;
