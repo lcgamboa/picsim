@@ -237,6 +237,23 @@ Macros</h2></td></tr>
 <tr class="memitem:gacc0f07b8739a0bb06587f245031c8e15"><td class="memItemLeft" align="right" valign="top">
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>QFN</b>&#160;&#160;&#160;1</td></tr>
 <tr class="separator:gacc0f07b8739a0bb06587f245031c8e15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf5caca4114b75abbabbc0af34041d3a0"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hexload.html#gaf5caca4114b75abbabbc0af34041d3a0">HEX_OK</a>&#160;&#160;&#160;0</td></tr>
+<tr class="memdesc:gaf5caca4114b75abbabbc0af34041d3a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">No erro <br  />
+ <br /></td></tr>
+<tr class="separator:gaf5caca4114b75abbabbc0af34041d3a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad21f3f13dd6dcdf56f9f71ddfc874919"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hexload.html#gad21f3f13dd6dcdf56f9f71ddfc874919">HEX_NFOUND</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memdesc:gad21f3f13dd6dcdf56f9f71ddfc874919"><td class="mdescLeft">&#160;</td><td class="mdescRight">File not found. <br /></td></tr>
+<tr class="separator:gad21f3f13dd6dcdf56f9f71ddfc874919"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2b411db808ed095099649e85c0101a0c"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hexload.html#ga2b411db808ed095099649e85c0101a0c">HEX_CHKSUM</a>&#160;&#160;&#160;2</td></tr>
+<tr class="memdesc:ga2b411db808ed095099649e85c0101a0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checksum error. <br /></td></tr>
+<tr class="separator:ga2b411db808ed095099649e85c0101a0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga98d4765ee56347c140cdd2d8d7461ab8"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hexload.html#ga98d4765ee56347c140cdd2d8d7461ab8">HEX_NWRITE</a>&#160;&#160;&#160;3</td></tr>
+<tr class="memdesc:ga98d4765ee56347c140cdd2d8d7461ab8"><td class="mdescLeft">&#160;</td><td class="mdescRight">File write error. <br /></td></tr>
+<tr class="separator:ga98d4765ee56347c140cdd2d8d7461ab8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae49bc53e5aca442c9db88992f0d83d29"><td class="memItemLeft" align="right" valign="top"><a id="ae49bc53e5aca442c9db88992f0d83d29"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>BUFFMAX</b>&#160;&#160;&#160;8192</td></tr>
 <tr class="separator:ae49bc53e5aca442c9db88992f0d83d29"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -255,18 +272,10 @@ Macros</h2></td></tr>
 <tr class="memitem:a3ffa9430a0d8c3f04d9cc233cdff9bf2"><td class="memItemLeft" align="right" valign="top"><a id="a3ffa9430a0d8c3f04d9cc233cdff9bf2"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>P_USB</b>&#160;&#160;&#160;&amp;NO_IO[4]</td></tr>
 <tr class="separator:a3ffa9430a0d8c3f04d9cc233cdff9bf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad3f645030581a6df299b459bc6aa480b"><td class="memItemLeft" align="right" valign="top"><a id="ad3f645030581a6df299b459bc6aa480b"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>sfr_addr</b>(fsr)&#160;&#160;&#160;(fsr - <a class="el" href="picsim_8h.html#adbff3908f44b954fbfd6567b88eab817">pic</a>-&gt;ram)</td></tr>
+<tr class="memitem:ad3f645030581a6df299b459bc6aa480b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="picsim_8h.html#ad3f645030581a6df299b459bc6aa480b">sfr_addr</a>(fsr)&#160;&#160;&#160;(fsr - <a class="el" href="picsim_8h.html#adbff3908f44b954fbfd6567b88eab817">pic</a>-&gt;ram)</td></tr>
+<tr class="memdesc:ad3f645030581a6df299b459bc6aa480b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the mapped address of FSR struct member <br  />
+  <a href="picsim_8h.html#ad3f645030581a6df299b459bc6aa480b">More...</a><br /></td></tr>
 <tr class="separator:ad3f645030581a6df299b459bc6aa480b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad21f3f13dd6dcdf56f9f71ddfc874919"><td class="memItemLeft" align="right" valign="top"><a id="ad21f3f13dd6dcdf56f9f71ddfc874919"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>HEX_NFOUND</b>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:ad21f3f13dd6dcdf56f9f71ddfc874919"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2b411db808ed095099649e85c0101a0c"><td class="memItemLeft" align="right" valign="top"><a id="a2b411db808ed095099649e85c0101a0c"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>HEX_CHKSUM</b>&#160;&#160;&#160;2</td></tr>
-<tr class="separator:a2b411db808ed095099649e85c0101a0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98d4765ee56347c140cdd2d8d7461ab8"><td class="memItemLeft" align="right" valign="top"><a id="a98d4765ee56347c140cdd2d8d7461ab8"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>HEX_NWRITE</b>&#160;&#160;&#160;3</td></tr>
-<tr class="separator:a98d4765ee56347c140cdd2d8d7461ab8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -303,68 +312,70 @@ Functions</h2></td></tr>
 <tr class="memitem:a0b37c3eb5757c235f7030878acdc5eb9"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="picsim_8h.html#a0b37c3eb5757c235f7030878acdc5eb9">pic_get_pin_dir</a> (unsigned char pin)</td></tr>
 <tr class="memdesc:a0b37c3eb5757c235f7030878acdc5eb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get dir of one pin.  <a href="picsim_8h.html#a0b37c3eb5757c235f7030878acdc5eb9">More...</a><br /></td></tr>
 <tr class="separator:a0b37c3eb5757c235f7030878acdc5eb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:addcd50602d8fcb3e967f3b162f94cb4e"><td class="memItemLeft" align="right" valign="top"><a id="addcd50602d8fcb3e967f3b162f94cb4e"></a>
-unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>pic_get_pin_DOV</b> (unsigned char pin)</td></tr>
+<tr class="memitem:addcd50602d8fcb3e967f3b162f94cb4e"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="picsim_8h.html#addcd50602d8fcb3e967f3b162f94cb4e">pic_get_pin_DOV</a> (unsigned char pin)</td></tr>
+<tr class="memdesc:addcd50602d8fcb3e967f3b162f94cb4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Default Open Value of one pin (external PULL UP)  <a href="picsim_8h.html#addcd50602d8fcb3e967f3b162f94cb4e">More...</a><br /></td></tr>
 <tr class="separator:addcd50602d8fcb3e967f3b162f94cb4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a39b3cbd37f0e787cb1320fc6b729e6d8"><td class="memItemLeft" align="right" valign="top"><a id="a39b3cbd37f0e787cb1320fc6b729e6d8"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>pic_set_pin_DOV</b> (unsigned char pin, unsigned char value)</td></tr>
+<tr class="memitem:a39b3cbd37f0e787cb1320fc6b729e6d8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="picsim_8h.html#a39b3cbd37f0e787cb1320fc6b729e6d8">pic_set_pin_DOV</a> (unsigned char pin, unsigned char value)</td></tr>
+<tr class="memdesc:a39b3cbd37f0e787cb1320fc6b729e6d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Default Open Value of one pin (external PULL UP)  <a href="picsim_8h.html#a39b3cbd37f0e787cb1320fc6b729e6d8">More...</a><br /></td></tr>
 <tr class="separator:a39b3cbd37f0e787cb1320fc6b729e6d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6eddfd04c86fd0e4361dad3faa18e62e"><td class="memItemLeft" align="right" valign="top"><a id="a6eddfd04c86fd0e4361dad3faa18e62e"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>pic_icsp_init</b> (void)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="picsim_8h.html#a6eddfd04c86fd0e4361dad3faa18e62e">pic_icsp_init</a> (void)</td></tr>
+<tr class="memdesc:a6eddfd04c86fd0e4361dad3faa18e62e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize P16 ICSP support. <br /></td></tr>
 <tr class="separator:a6eddfd04c86fd0e4361dad3faa18e62e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21d0eb6b690bf079364ffd8c796dd033"><td class="memItemLeft" align="right" valign="top"><a id="a21d0eb6b690bf079364ffd8c796dd033"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>pic_icsp</b> (void)</td></tr>
+<tr class="memitem:a21d0eb6b690bf079364ffd8c796dd033"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="picsim_8h.html#a21d0eb6b690bf079364ffd8c796dd033">pic_icsp</a> (void)</td></tr>
+<tr class="memdesc:a21d0eb6b690bf079364ffd8c796dd033"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run P16 ICSP (must be pooling)  <a href="picsim_8h.html#a21d0eb6b690bf079364ffd8c796dd033">More...</a><br /></td></tr>
 <tr class="separator:a21d0eb6b690bf079364ffd8c796dd033"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6b1c0dd3b5845c1540a8a45e53f21e9f"><td class="memItemLeft" align="right" valign="top"><a id="a6b1c0dd3b5845c1540a8a45e53f21e9f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>pic_icsp_init18</b> (void)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="picsim_8h.html#a6b1c0dd3b5845c1540a8a45e53f21e9f">pic_icsp_init18</a> (void)</td></tr>
+<tr class="memdesc:a6b1c0dd3b5845c1540a8a45e53f21e9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize P18 ICSP support. <br /></td></tr>
 <tr class="separator:a6b1c0dd3b5845c1540a8a45e53f21e9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9bf932b07d1f9f78699704aec99e332b"><td class="memItemLeft" align="right" valign="top"><a id="a9bf932b07d1f9f78699704aec99e332b"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>pic_icsp18</b> (void)</td></tr>
+<tr class="memitem:a9bf932b07d1f9f78699704aec99e332b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="picsim_8h.html#a9bf932b07d1f9f78699704aec99e332b">pic_icsp18</a> (void)</td></tr>
+<tr class="memdesc:a9bf932b07d1f9f78699704aec99e332b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run P18 ICSP (must be pooling)  <a href="picsim_8h.html#a9bf932b07d1f9f78699704aec99e332b">More...</a><br /></td></tr>
 <tr class="separator:a9bf932b07d1f9f78699704aec99e332b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f304e7d505cdecb717faeee459e2519"><td class="memItemLeft" align="right" valign="top"><a id="a7f304e7d505cdecb717faeee459e2519"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>read_ihx</b> (const char *fname, int leeprom)</td></tr>
+<tr class="memitem:a7f304e7d505cdecb717faeee459e2519"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="picsim_8h.html#a7f304e7d505cdecb717faeee459e2519">read_ihx</a> (const char *fname, int leeprom)</td></tr>
+<tr class="memdesc:a7f304e7d505cdecb717faeee459e2519"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read HEX file to P16 microcontroller.  <a href="picsim_8h.html#a7f304e7d505cdecb717faeee459e2519">More...</a><br /></td></tr>
 <tr class="separator:a7f304e7d505cdecb717faeee459e2519"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a795b3b44f273b386db211603a8f9a7c5"><td class="memItemLeft" align="right" valign="top"><a id="a795b3b44f273b386db211603a8f9a7c5"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>read_ihx_16e</b> (const char *fname, int leeprom)</td></tr>
+<tr class="memitem:a795b3b44f273b386db211603a8f9a7c5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="picsim_8h.html#a795b3b44f273b386db211603a8f9a7c5">read_ihx_16e</a> (const char *fname, int leeprom)</td></tr>
+<tr class="memdesc:a795b3b44f273b386db211603a8f9a7c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read HEX file to P16E microcontroller.  <a href="picsim_8h.html#a795b3b44f273b386db211603a8f9a7c5">More...</a><br /></td></tr>
 <tr class="separator:a795b3b44f273b386db211603a8f9a7c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45cd6c93a7ad41b38104c814cdb81807"><td class="memItemLeft" align="right" valign="top"><a id="a45cd6c93a7ad41b38104c814cdb81807"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>read_ihx_18</b> (const char *fname, int leeprom)</td></tr>
+<tr class="memitem:a45cd6c93a7ad41b38104c814cdb81807"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="picsim_8h.html#a45cd6c93a7ad41b38104c814cdb81807">read_ihx_18</a> (const char *fname, int leeprom)</td></tr>
+<tr class="memdesc:a45cd6c93a7ad41b38104c814cdb81807"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read HEX file to P18 microcontroller.  <a href="picsim_8h.html#a45cd6c93a7ad41b38104c814cdb81807">More...</a><br /></td></tr>
 <tr class="separator:a45cd6c93a7ad41b38104c814cdb81807"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e709f2130ea31e3ac098cbe6136353f"><td class="memItemLeft" align="right" valign="top"><a id="a5e709f2130ea31e3ac098cbe6136353f"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>write_ihx</b> (const char *fname)</td></tr>
+<tr class="memitem:a5e709f2130ea31e3ac098cbe6136353f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="picsim_8h.html#a5e709f2130ea31e3ac098cbe6136353f">write_ihx</a> (const char *fname)</td></tr>
+<tr class="memdesc:a5e709f2130ea31e3ac098cbe6136353f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dump all non volatile P16 microcontroller memory to HEX file.  <a href="picsim_8h.html#a5e709f2130ea31e3ac098cbe6136353f">More...</a><br /></td></tr>
 <tr class="separator:a5e709f2130ea31e3ac098cbe6136353f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab86215ad61969b9422fc5d64d492e1d0"><td class="memItemLeft" align="right" valign="top"><a id="ab86215ad61969b9422fc5d64d492e1d0"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>write_ihx16e</b> (const char *fname)</td></tr>
+<tr class="memitem:ab86215ad61969b9422fc5d64d492e1d0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="picsim_8h.html#ab86215ad61969b9422fc5d64d492e1d0">write_ihx16e</a> (const char *fname)</td></tr>
+<tr class="memdesc:ab86215ad61969b9422fc5d64d492e1d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dump all non volatile P16E microcontroller memory to HEX file.  <a href="picsim_8h.html#ab86215ad61969b9422fc5d64d492e1d0">More...</a><br /></td></tr>
 <tr class="separator:ab86215ad61969b9422fc5d64d492e1d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a782b6a6b0c2997125e097da37860b801"><td class="memItemLeft" align="right" valign="top"><a id="a782b6a6b0c2997125e097da37860b801"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>write_ihx18</b> (const char *fname)</td></tr>
+<tr class="memitem:a782b6a6b0c2997125e097da37860b801"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="picsim_8h.html#a782b6a6b0c2997125e097da37860b801">write_ihx18</a> (const char *fname)</td></tr>
+<tr class="memdesc:a782b6a6b0c2997125e097da37860b801"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dump all non volatile P18 microcontroller memory to HEX file.  <a href="picsim_8h.html#a782b6a6b0c2997125e097da37860b801">More...</a><br /></td></tr>
 <tr class="separator:a782b6a6b0c2997125e097da37860b801"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac9ac8ff6b93351f57c8baf694b07098a"><td class="memItemLeft" align="right" valign="top"><a id="ac9ac8ff6b93351f57c8baf694b07098a"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>getprocbyname</b> (const char *str)</td></tr>
+<tr class="memitem:ac9ac8ff6b93351f57c8baf694b07098a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="picsim_8h.html#ac9ac8ff6b93351f57c8baf694b07098a">getprocbyname</a> (const char *str)</td></tr>
+<tr class="memdesc:ac9ac8ff6b93351f57c8baf694b07098a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return processor ID by name.  <a href="picsim_8h.html#ac9ac8ff6b93351f57c8baf694b07098a">More...</a><br /></td></tr>
 <tr class="separator:ac9ac8ff6b93351f57c8baf694b07098a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6f2711eee37faea4021739254165064"><td class="memItemLeft" align="right" valign="top"><a id="aa6f2711eee37faea4021739254165064"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>getfprocbyname</b> (const char *str)</td></tr>
+<tr class="memitem:aa6f2711eee37faea4021739254165064"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="picsim_8h.html#aa6f2711eee37faea4021739254165064">getfprocbyname</a> (const char *str)</td></tr>
+<tr class="memdesc:aa6f2711eee37faea4021739254165064"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return processor family ID by name.  <a href="picsim_8h.html#aa6f2711eee37faea4021739254165064">More...</a><br /></td></tr>
 <tr class="separator:aa6f2711eee37faea4021739254165064"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a447cc5d367cfea758a8db516156c8842"><td class="memItemLeft" align="right" valign="top"><a id="a447cc5d367cfea758a8db516156c8842"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>getfprocbynumber</b> (int proc)</td></tr>
+<tr class="memitem:a447cc5d367cfea758a8db516156c8842"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="picsim_8h.html#a447cc5d367cfea758a8db516156c8842">getfprocbynumber</a> (int proc)</td></tr>
+<tr class="memdesc:a447cc5d367cfea758a8db516156c8842"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return processor family ID by ID.  <a href="picsim_8h.html#a447cc5d367cfea758a8db516156c8842">More...</a><br /></td></tr>
 <tr class="separator:a447cc5d367cfea758a8db516156c8842"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1471ffe76824660cdd15323279ed0231"><td class="memItemLeft" align="right" valign="top"><a id="a1471ffe76824660cdd15323279ed0231"></a>
-char *&#160;</td><td class="memItemRight" valign="bottom"><b>getnamebyproc</b> (int proc, char *str)</td></tr>
+<tr class="memitem:a1471ffe76824660cdd15323279ed0231"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="picsim_8h.html#a1471ffe76824660cdd15323279ed0231">getnamebyproc</a> (int proc, char *str)</td></tr>
+<tr class="memdesc:a1471ffe76824660cdd15323279ed0231"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return processor name by ID.  <a href="picsim_8h.html#a1471ffe76824660cdd15323279ed0231">More...</a><br /></td></tr>
 <tr class="separator:a1471ffe76824660cdd15323279ed0231"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acabd596d2916f38a0f4d81755bedc496"><td class="memItemLeft" align="right" valign="top"><a id="acabd596d2916f38a0f4d81755bedc496"></a>
-const char *&#160;</td><td class="memItemRight" valign="bottom"><b>getFSRname_16</b> (unsigned int addr)</td></tr>
+<tr class="memitem:acabd596d2916f38a0f4d81755bedc496"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="picsim_8h.html#acabd596d2916f38a0f4d81755bedc496">getFSRname_16</a> (unsigned int addr)</td></tr>
+<tr class="memdesc:acabd596d2916f38a0f4d81755bedc496"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return P16 FSR name by address.  <a href="picsim_8h.html#acabd596d2916f38a0f4d81755bedc496">More...</a><br /></td></tr>
 <tr class="separator:acabd596d2916f38a0f4d81755bedc496"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5151e96a40702a00f23e52dff8370001"><td class="memItemLeft" align="right" valign="top"><a id="a5151e96a40702a00f23e52dff8370001"></a>
-const char *&#160;</td><td class="memItemRight" valign="bottom"><b>getFSRname_16E</b> (unsigned int addr)</td></tr>
+<tr class="memitem:a5151e96a40702a00f23e52dff8370001"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="picsim_8h.html#a5151e96a40702a00f23e52dff8370001">getFSRname_16E</a> (unsigned int addr)</td></tr>
+<tr class="memdesc:a5151e96a40702a00f23e52dff8370001"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return P16E FSR name by address.  <a href="picsim_8h.html#a5151e96a40702a00f23e52dff8370001">More...</a><br /></td></tr>
 <tr class="separator:a5151e96a40702a00f23e52dff8370001"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a627709e1f8b92be029043f15877a2cdb"><td class="memItemLeft" align="right" valign="top"><a id="a627709e1f8b92be029043f15877a2cdb"></a>
-const char *&#160;</td><td class="memItemRight" valign="bottom"><b>getFSRname_16E2</b> (unsigned int addr)</td></tr>
+<tr class="memitem:a627709e1f8b92be029043f15877a2cdb"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="picsim_8h.html#a627709e1f8b92be029043f15877a2cdb">getFSRname_16E2</a> (unsigned int addr)</td></tr>
+<tr class="memdesc:a627709e1f8b92be029043f15877a2cdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return P16E2 FSR name by address.  <a href="picsim_8h.html#a627709e1f8b92be029043f15877a2cdb">More...</a><br /></td></tr>
 <tr class="separator:a627709e1f8b92be029043f15877a2cdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac088e01d49b1c27b8ee88a0e37f80ee2"><td class="memItemLeft" align="right" valign="top"><a id="ac088e01d49b1c27b8ee88a0e37f80ee2"></a>
-const char *&#160;</td><td class="memItemRight" valign="bottom"><b>getFSRname_18</b> (unsigned int addr)</td></tr>
+<tr class="memitem:ac088e01d49b1c27b8ee88a0e37f80ee2"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="picsim_8h.html#ac088e01d49b1c27b8ee88a0e37f80ee2">getFSRname_18</a> (unsigned int addr)</td></tr>
+<tr class="memdesc:ac088e01d49b1c27b8ee88a0e37f80ee2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return P18 FSR name by address.  <a href="picsim_8h.html#ac088e01d49b1c27b8ee88a0e37f80ee2">More...</a><br /></td></tr>
 <tr class="separator:ac088e01d49b1c27b8ee88a0e37f80ee2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a68e787d59c22066c8b66049936245fc0"><td class="memItemLeft" align="right" valign="top"><a id="a68e787d59c22066c8b66049936245fc0"></a>
-const char *&#160;</td><td class="memItemRight" valign="bottom"><b>getPinName</b> (<a class="el" href="struct__pic.html">_pic</a> *<a class="el" href="picsim_8h.html#adbff3908f44b954fbfd6567b88eab817">pic</a>, int pin, char *pname)</td></tr>
+<tr class="memitem:a68e787d59c22066c8b66049936245fc0"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="picsim_8h.html#a68e787d59c22066c8b66049936245fc0">getPinName</a> (<a class="el" href="struct__pic.html">_pic</a> *<a class="el" href="picsim_8h.html#adbff3908f44b954fbfd6567b88eab817">pic</a>, int pin, char *pname)</td></tr>
+<tr class="memdesc:a68e787d59c22066c8b66049936245fc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pin name.  <a href="picsim_8h.html#a68e787d59c22066c8b66049936245fc0">More...</a><br /></td></tr>
 <tr class="separator:a68e787d59c22066c8b66049936245fc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
@@ -381,7 +392,309 @@ unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>NO_IO</b> [5
 <div class="textblock"><p>PICsim - PIC Simulator - API. </p>
 <dl class="section author"><dt>Author</dt><dd>Luis Claudio Gamboa Lopes</dd></dl>
 <p>PICsim emulates a microcontroller PIC16F84A/16F628/16F777/16F877A/18F452/18F4520/18F4550/18F4620 and periferics such as USART and timers, the simulator architecture permit easy implementation of external elements in c language. </p><dl class="section see"><dt>See also</dt><dd><a href="https://github.com/lcgamboa/picsim">https://github.com/lcgamboa/picsim</a> </dd></dl>
-</div><h2 class="groupheader">Function Documentation</h2>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ad3f645030581a6df299b459bc6aa480b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3f645030581a6df299b459bc6aa480b">&#9670;&nbsp;</a></span>sfr_addr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define sfr_addr</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">fsr</td><td>)</td>
+          <td>&#160;&#160;&#160;(fsr - <a class="el" href="picsim_8h.html#adbff3908f44b954fbfd6567b88eab817">pic</a>-&gt;ram)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return the mapped address of FSR struct member <br  />
+ </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fsr</td><td><a class="el" href="struct_p16map__t.html" title="PICsim P16 memory map structure.">P16map_t</a>, <a class="el" href="struct_p16_emap__t.html" title="PICsim P16E memory map structure.">P16Emap_t</a> or <a class="el" href="struct_p18map__t.html" title="PICsim P18 memory map structure.">P18map_t</a> struct member. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>address of ram </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="aa6f2711eee37faea4021739254165064"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6f2711eee37faea4021739254165064">&#9670;&nbsp;</a></span>getfprocbyname()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int getfprocbyname </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return processor family ID by name. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>name of microcontoller </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>family ID of microcontroller </dd></dl>
+
+</div>
+</div>
+<a id="a447cc5d367cfea758a8db516156c8842"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a447cc5d367cfea758a8db516156c8842">&#9670;&nbsp;</a></span>getfprocbynumber()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int getfprocbynumber </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>proc</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return processor family ID by ID. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">proc</td><td>ID of microcontoller </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>family ID of microcontroller </dd></dl>
+
+</div>
+</div>
+<a id="acabd596d2916f38a0f4d81755bedc496"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acabd596d2916f38a0f4d81755bedc496">&#9670;&nbsp;</a></span>getFSRname_16()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* getFSRname_16 </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>addr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return P16 FSR name by address. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">addr</td><td>address of FSR </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>FSR name </dd></dl>
+
+</div>
+</div>
+<a id="a5151e96a40702a00f23e52dff8370001"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5151e96a40702a00f23e52dff8370001">&#9670;&nbsp;</a></span>getFSRname_16E()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* getFSRname_16E </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>addr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return P16E FSR name by address. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">addr</td><td>address of FSR </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>FSR name </dd></dl>
+
+</div>
+</div>
+<a id="a627709e1f8b92be029043f15877a2cdb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a627709e1f8b92be029043f15877a2cdb">&#9670;&nbsp;</a></span>getFSRname_16E2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* getFSRname_16E2 </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>addr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return P16E2 FSR name by address. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">addr</td><td>address of FSR </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>FSR name </dd></dl>
+
+</div>
+</div>
+<a id="ac088e01d49b1c27b8ee88a0e37f80ee2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac088e01d49b1c27b8ee88a0e37f80ee2">&#9670;&nbsp;</a></span>getFSRname_18()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* getFSRname_18 </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>addr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return P18 FSR name by address. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">addr</td><td>address of FSR </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>FSR name </dd></dl>
+
+</div>
+</div>
+<a id="a1471ffe76824660cdd15323279ed0231"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1471ffe76824660cdd15323279ed0231">&#9670;&nbsp;</a></span>getnamebyproc()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* getnamebyproc </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>proc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>str</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return processor name by ID. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">proc</td><td>ID of microcontoller </td></tr>
+    <tr><td class="paramname">str</td><td>string to return the name of microcontroller <br  />
+ </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>filled str parameter </dd></dl>
+
+</div>
+</div>
+<a id="a68e787d59c22066c8b66049936245fc0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a68e787d59c22066c8b66049936245fc0">&#9670;&nbsp;</a></span>getPinName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* getPinName </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct__pic.html">_pic</a> *&#160;</td>
+          <td class="paramname"><em>pic</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>pin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>pname</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return pin name. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pic_</td><td>pointer to pic object </td></tr>
+    <tr><td class="paramname">pin</td><td>pin number </td></tr>
+    <tr><td class="paramname">str</td><td>string to return the name of pin </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>filled str parameter </dd></dl>
+
+</div>
+</div>
+<a id="ac9ac8ff6b93351f57c8baf694b07098a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9ac8ff6b93351f57c8baf694b07098a">&#9670;&nbsp;</a></span>getprocbyname()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int getprocbyname </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return processor ID by name. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>name of microcontoller </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ID of microcontroller </dd></dl>
+
+</div>
+</div>
 <a id="aad8e35b8dfa6c994097048490549e1fb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aad8e35b8dfa6c994097048490549e1fb">&#9670;&nbsp;</a></span>pic_end()</h2>
 
@@ -476,6 +789,33 @@ unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>NO_IO</b> [5
 
 </div>
 </div>
+<a id="addcd50602d8fcb3e967f3b162f94cb4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#addcd50602d8fcb3e967f3b162f94cb4e">&#9670;&nbsp;</a></span>pic_get_pin_DOV()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char pic_get_pin_DOV </td>
+          <td>(</td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>pin</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get Default Open Value of one pin (external PULL UP) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pin</td><td>pin number </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>value 0 or 1 </dd></dl>
+
+</div>
+</div>
 <a id="a462ec8b157bb81e7b12311ab01478a5e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a462ec8b157bb81e7b12311ab01478a5e">&#9670;&nbsp;</a></span>pic_get_pin_type()</h2>
 
@@ -500,6 +840,49 @@ unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>NO_IO</b> [5
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__pintype.html">pin types</a> </dd></dl>
+
+</div>
+</div>
+<a id="a21d0eb6b690bf079364ffd8c796dd033"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21d0eb6b690bf079364ffd8c796dd033">&#9670;&nbsp;</a></span>pic_icsp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int pic_icsp </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Run P16 ICSP (must be pooling) </p>
+<dl class="section return"><dt>Returns</dt><dd>Return 1 if success, 0 otherwise <br  />
+ </dd></dl>
+
+</div>
+</div>
+<a id="a9bf932b07d1f9f78699704aec99e332b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9bf932b07d1f9f78699704aec99e332b">&#9670;&nbsp;</a></span>pic_icsp18()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int pic_icsp18 </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Run P18 ICSP (must be pooling) </p>
+<dl class="section return"><dt>Returns</dt><dd>Return 1 if success, 0 otherwise </dd></dl>
 
 </div>
 </div>
@@ -669,6 +1052,44 @@ unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>NO_IO</b> [5
 
 </div>
 </div>
+<a id="a39b3cbd37f0e787cb1320fc6b729e6d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39b3cbd37f0e787cb1320fc6b729e6d8">&#9670;&nbsp;</a></span>pic_set_pin_DOV()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int pic_set_pin_DOV </td>
+          <td>(</td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>pin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set Default Open Value of one pin (external PULL UP) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pin</td><td>pin number </td></tr>
+    <tr><td class="paramname">value</td><td>pin default value 0 or 1 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Return 1 if success, 0 otherwise </dd></dl>
+
+</div>
+</div>
 <a id="a28621e020650741bed0a99de19948308"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a28621e020650741bed0a99de19948308">&#9670;&nbsp;</a></span>pic_set_serial()</h2>
 
@@ -747,6 +1168,204 @@ unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>NO_IO</b> [5
 
 <p>Execute one simulation step. </p>
 <p>Execute one simulation step, must be call continuously to run the program in pic flash memory </p>
+
+</div>
+</div>
+<a id="a7f304e7d505cdecb717faeee459e2519"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f304e7d505cdecb717faeee459e2519">&#9670;&nbsp;</a></span>read_ihx()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int read_ihx </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>fname</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>leeprom</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read HEX file to P16 microcontroller. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fname</td><td>name of .hex file </td></tr>
+    <tr><td class="paramname">leeprom</td><td>flag to load or not the microcontroller data eeprom form file <br  />
+ </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__hexload.html">HEX functions errors</a> </dd></dl>
+
+</div>
+</div>
+<a id="a795b3b44f273b386db211603a8f9a7c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a795b3b44f273b386db211603a8f9a7c5">&#9670;&nbsp;</a></span>read_ihx_16e()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int read_ihx_16e </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>fname</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>leeprom</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read HEX file to P16E microcontroller. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fname</td><td>name of .hex file </td></tr>
+    <tr><td class="paramname">leeprom</td><td>flag to load or not the microcontroller data eeprom form file <br  />
+ </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__hexload.html">HEX functions errors</a> </dd></dl>
+
+</div>
+</div>
+<a id="a45cd6c93a7ad41b38104c814cdb81807"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45cd6c93a7ad41b38104c814cdb81807">&#9670;&nbsp;</a></span>read_ihx_18()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int read_ihx_18 </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>fname</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>leeprom</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read HEX file to P18 microcontroller. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fname</td><td>name of .hex file </td></tr>
+    <tr><td class="paramname">leeprom</td><td>flag to load or not the microcontroller data eeprom form file <br  />
+ </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__hexload.html">HEX functions errors</a> </dd></dl>
+
+</div>
+</div>
+<a id="a5e709f2130ea31e3ac098cbe6136353f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e709f2130ea31e3ac098cbe6136353f">&#9670;&nbsp;</a></span>write_ihx()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int write_ihx </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>fname</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Dump all non volatile P16 microcontroller memory to HEX file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fname</td><td>name of .hex file </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__hexload.html">HEX functions errors</a> </dd></dl>
+
+</div>
+</div>
+<a id="ab86215ad61969b9422fc5d64d492e1d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab86215ad61969b9422fc5d64d492e1d0">&#9670;&nbsp;</a></span>write_ihx16e()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int write_ihx16e </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>fname</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Dump all non volatile P16E microcontroller memory to HEX file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fname</td><td>name of .hex file </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__hexload.html">HEX functions errors</a> </dd></dl>
+
+</div>
+</div>
+<a id="a782b6a6b0c2997125e097da37860b801"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a782b6a6b0c2997125e097da37860b801">&#9670;&nbsp;</a></span>write_ihx18()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int write_ihx18 </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>fname</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Dump all non volatile P18 microcontroller memory to HEX file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fname</td><td>name of .hex file </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__hexload.html">HEX functions errors</a> </dd></dl>
 
 </div>
 </div>

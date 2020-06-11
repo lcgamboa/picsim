@@ -5,5 +5,6 @@ var modules =
     [ "pic family", "group__family.html", null ],
     [ "pic microcontollers ID", "group__procid.html", null ],
     [ "config flags", "group__cfg.html", null ],
-    [ "packaging type", "group__packaging.html", null ]
+    [ "packaging type", "group__packaging.html", null ],
+    [ "HEX functions errors", "group__hexload.html", "group__hexload" ]
 ];

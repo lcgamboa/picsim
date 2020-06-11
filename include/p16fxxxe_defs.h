@@ -26,768 +26,629 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-/*
-//bank 0    
-//core    
-#define P16E_INDF0	0x000
-#define P16E_INDF1	0x001
-#define P16E_PCL	0x002
-#define P16E_STATUS 	0x003
-#define P16E_FSR0L	0x004
-#define P16E_FSR0H	0x005
-#define P16E_FSR1L	0x006
-#define P16E_FSR1H	0x007
-#define P16E_BSR	0x008
-#define P16E_WREG	0x009
-#define P16E_PCLATH	0x00A
-#define P16E_INTCON     0x00B
-    
-#define P16E_PORTA	0x00C
-#define P16E_PORTB	0x00D
-#define P16E_PORTC	0x00E
-#define P16E_PORTD	0x00F
-#define P16E_PORTE	0x010
-#define P16E_PIR1	0x010
-#define P16E_PIR2	0x011
-#define P16E_PIR3	0x012
-#define P16E_PIR4       0x013
-#define P16E_PIR5       0x014
-#define P16E_TMR0	0x015
-#define P16E_TMR1L 	0x016
-#define P16E_TMR1H	0x017
-#define P16E_T1CON	0x018
-#define P16E_T1GCON	0x019
-#define P16E_TMR2	0x01A
-#define P16E_PR2	0x01B
-#define P16E_T2CON 	0x01C
-#define P16E_T2HLT	0x01D
-#define P16E_T2CLKCON   0x01E
-#define P16E_T2RST      0x01F
-
- //bank 1   
-#define P16E_TRISA	0x08C
-#define P16E_TRISB	0x08D
-#define P16E_TRISC	0x08E
-#define P16E_TRISD	0x08F
-#define P16E_PIE1       0x090   
-#define P16E_PIE2       0x091
-#define P16E_PIE3	0x092
-#define P16E_PIE4       0x093
-#define P16E_PIE5       0x094
-#define P16E_OPTION_REG 0x095
-#define P16E_PCON       0x096
-//    
-#define P16E_OSCTUNE	0x098
-#define	P16E_OSCCON	0x099
-#define P16E_OSCSTAT    0x09A
-#define P16E_ADRESL     0x09B
-#define P16E_ADRESH     0x09C
-#define P16E_ADCON0     0x09D
-#define P16E_ADCON1     0x09E
-#define P16E_ADCON2     0x09F
-    
-//bank 2
-#define P16E_LATA       0x10C    
-#define P16E_LATB       0x10D  
-#define P16E_LATC       0x10E  
-#define P16E_LATD       0x10F  
-    
-//bank 3
-#define P16E_ANSELA     0x18C    
-#define P16E_ANSELB     0x18D  
-#define P16E_ANSELC     0x18E  
-  
-#define P16E_RC1REG     0x199
-#define P16E_TX1REG     0x19A
-#define P16E_SP1BGRL    0x19B
-#define P16E_SP1BGRH    0x19C
-#define P16E_RC1STA     0x19D
-#define P16E_TX1STA     0x19E
-#define P16E_BAUD1CON   0x19F    
-
-    
-//bank 4   
-#define P16E_WPUA       0x20C    
-#define P16E_WPUB       0x20D  
-#define P16E_WPUC       0x20E      
-//bank 5
-#define P16E_ODCONA     0x28C    
-#define P16E_ODCONB     0x28D 
-#define P16E_ODCONC     0x28E 
-
-#define P16E_CCP1RL     0x291
-#define P16E_CCP1RH     0x292
-#define P16E_CCP1CON    0x293
-#define P16E_CCP1CAP    0x294
-
-#define P16E_CCP2RL     0x298
-#define P16E_CCP2RH     0x299
-#define P16E_CCP2CON    0x29A
-#define P16E_CCP2CAP    0x29B
-
-#define P16E_CCPTMRS    0x29E    
-//bank 6
-//bank 7
-//bank 8
-//bank 9
-//bank 10
-//bank 11
-//bank 12
-//bank 13
-//bank 14
-#define P16E_WDTCON0    0x711
-#define P16E_WDTCON1    0x712
-#define P16E_WDTPSL     0x713
-#define P16E_WDTPSH     0x714
-#define P16E_WDTTMR     0x715    
-//bank 15
-//bank 16
-//bank 17
-//bank 18  Unimplemented
-//bank 19  Unimplemented
-//bank 20  Unimplemented
-//bank 21  Unimplemented
-//bank 22  Unimplemented
-//bank 23  Unimplemented
-//bank 24  Unimplemented
-//bank 25  Unimplemented
-//bank 26  Unimplemented
-//bank 27
-//bank 28
-//bank 29
-//bank 30
-//bank 31
-#define P16E_STATUS_SHAD    0xFE4  
-#define P16E_WREG_SHAD      0xFE5
-#define P16E_BSR_SHAD       0xFE6
-#define P16E_PCLATH_SHAD    0xFE7
-#define P16E_FSR0L_SHAD     0xFE8
-#define P16E_FSR0H_SHAD     0xFE9    
-#define P16E_FSR1L_SHAD     0xFEA
-#define P16E_FSR1H_SHAD     0xFEB
-//
-#define P16E_STKPTR         0xFED
-#define P16E_TOSL           0xFEE
-#define P16E_TOSH           0xFEF    
-    */
-    
-/*  where is in the new core???    
-#define ICKBUG	0x18E
-#define BIGBUG  0x18F
-*/
-   
-typedef struct
-{
-//core
-unsigned char * INDF0;
-unsigned char * INDF1;    
-unsigned char * PCL;
-unsigned char * STATUS;
-unsigned char * FSR0L;
-unsigned char * FSR0H;
-unsigned char * FSR1L;
-unsigned char * FSR1H;    
-unsigned char * BSR;
-unsigned char * WREG;
-unsigned char * PCLATH;
-unsigned char * INTCON;
-
-//SHADOW
-unsigned char * STATUS_SHAD;
-unsigned char * WREG_SHAD;
-unsigned char * BSR_SHAD;
-unsigned char * PCLATH_SHAD;
-unsigned char * FSR0L_SHAD;
-unsigned char * FSR0H_SHAD;
-unsigned char * FSR1L_SHAD;
-unsigned char * FSR1H_SHAD;
-
-unsigned char * STKPTR;
-unsigned char * TOSL;
-unsigned char * TOSH;
-unsigned char * OPTION_REG;
-
-//INTERRUPTS
-unsigned char * PIR0;
-unsigned char * PIR1;
-unsigned char * PIR2;
-unsigned char * PIE0;
-unsigned char * PIE1;
-unsigned char * PIE2;
-
-//IO
-unsigned char * PORTA;
-unsigned char * PORTB;
-unsigned char * PORTC;
-unsigned char * PORTD;
-unsigned char * PORTE;
-unsigned char * TRISA;
-unsigned char * TRISB;
-unsigned char * TRISC;
-unsigned char * TRISD;
-unsigned char * TRISE;
-unsigned char * LATA;
-unsigned char * LATB;
-unsigned char * LATC;
-unsigned char * LATD;
-unsigned char * LATE;
-unsigned char * ANSELA;
-unsigned char * ANSELB; 
-unsigned char * ANSELC;
-unsigned char * ANSELD;
-unsigned char * ANSELE;
-
-//USART
-unsigned char * RC1REG;
-unsigned char * TX1REG;
-unsigned char * RC1STA;
-unsigned char * TX1STA;
-unsigned char * SP1BRGL;
-unsigned char * SP1BRGH;
-
-unsigned char * TXSTA;
-unsigned char * RCSTA;
-unsigned char * TXREG;
-unsigned char * RCREG;
-
-//TMR0
-unsigned char * TMR0; 
-unsigned char * T0CON0;
-unsigned char * T0CON1;
-unsigned char * TMR0L;
-unsigned char * TMR0H; 
-
-//TMR1
-unsigned char * T1CON;
-unsigned char * TMR1L;
-unsigned char * TMR1H;
-
-//CCP
-unsigned char * CCP1CON;
-unsigned char * CCP2CON;
-unsigned char * CCPR1L;
-unsigned char * CCPR1H;
-unsigned char * CCPR2L;
-unsigned char * CCPR2H;
-
-//TMR2
-unsigned char * T2CON;
-unsigned char * TMR2;
-unsigned char * PR2;
-
-//ADC
-unsigned char * ADCON0;
-unsigned char * ADCON1;
-unsigned char * ADRESL;
-unsigned char * ADRESH;
-
-//WDT
-unsigned char * WDTCON0;
-unsigned char * WDTCON;
-
-//EEPROM
-unsigned char * EECON2;
-unsigned char * EECON1;
-unsigned char * EEADRL; 
-unsigned char * EEADRH; 
-unsigned char * EEDATL; 
-unsigned char * EEDATH;
- 
-//MSSP
-unsigned char * SSP1STAT;
-unsigned char * SSP1CON2;
-unsigned char * SSP1CON1;
-unsigned char * SSP1BUF;
-unsigned char * SSP1ADD;
-
-//INTERRUPT-ON-CHANGE PORTB
-unsigned char * IOCBP;
-unsigned char * IOCBN;
-unsigned char * IOCBF;
-
-/*    
-unsigned char * SSPCON3;
-unsigned char * CCP1CAP;
-unsigned char * CCP2CAP; 
-unsigned char * WDTCON;
-unsigned char * ADPREVL;
-unsigned char * ADPREVH;
-unsigned char * ADACCL;
-unsigned char * ADACCH;
-unsigned char * ADLTHL;
-unsigned char * ADLTHH;
-unsigned char * ADUTHL;
-unsigned char * ADUTHH;
-unsigned char * ADSTPTL;
-unsigned char * ADSTPTH;
-unsigned char * ADFLTRL;
-unsigned char * ADFLTRH;
-unsigned char * ADERRL;
-unsigned char * ADERRH;
-
-unsigned char * TMR3L;
-unsigned char * TMR3H;
-unsigned char * TMR5L;
-unsigned char * TMR5H;
-
-unsigned char * CCPR3L;
-unsigned char * CCPR3H;
-unsigned char * CCPR4L;
-unsigned char * CCPR4H;
-unsigned char * CCPR5L;
-unsigned char * CCPR5H;
-unsigned char * PWM6DCL;
-unsigned char * PWM6DCH;
-unsigned char * PWM7DCL;
-unsigned char * PWM7DCH;
-unsigned char * CRCDATL;
-unsigned char * CRCDATH;
-unsigned char * CRCACCL;
-unsigned char * CRCACCH;
-unsigned char * CRCSHIFTL;
-unsigned char * CRCSHIFTH;
-unsigned char * CRCXORL;
-unsigned char * CRCXORH;
-unsigned char * SMT1TMRL;
-unsigned char * SMT1TMRH;
-unsigned char * SMT1TMRU;
-unsigned char * SMT1CPRL;
-unsigned char * SMT1CPRH;
-unsigned char * SMT1CPRU;
-unsigned char * SMT1CPWL;
-unsigned char * SMT1CPWH;
-unsigned char * SMT1CPWU;
-unsigned char * SMT1PRL;
-unsigned char * SMT1PRH;
-unsigned char * SMT1PRU;
-unsigned char * SMT2TMRL;
-unsigned char * SMT2TMRH;
-unsigned char * SMT2TMRU;
-unsigned char * SMT2CPRL;
-unsigned char * SMT2CPRH;
-unsigned char * SMT2CPRU;
-unsigned char * SMT2CPWL;
-unsigned char * SMT2CPWH;
-unsigned char * SMT2CPWU;
-unsigned char * SMT2PRL;
-unsigned char * SMT2PRH;
-unsigned char * SMT2PRU;
-unsigned char * NCO1ACCL;
-unsigned char * NCO1ACCH;
-unsigned char * NCO1ACCU;
-unsigned char * NCO1INCL;
-unsigned char * NCO1INCH;
-unsigned char * NCO1INCU;
 
 
-unsigned char * ADCON2;
-unsigned char * ADCON3;
-unsigned char * ADSTAT;
-unsigned char * ADCLK;
-unsigned char * ADACT;
-unsigned char * ADREF;
-unsigned char * ADCAP;
-unsigned char * ADPRE;
-unsigned char * ADACQ;
-unsigned char * ADPCH;
-unsigned char * ADCNT;
-unsigned char * ADRPT;
+    /*  where is in the new core???    
+    #define ICKBUG	0x18E
+    #define BIGBUG  0x18F
+     */
 
-unsigned char * BAUD1CON;
-unsigned char * WPUA;
-unsigned char * WPUB;
-unsigned char * WPUC;
+    /**
+     * @brief PICsim P16E memory map structure
+     *
+     * Internal structure used to map P16E memory.
+     */
+    typedef struct {
+        //core
+        unsigned char * INDF0;
+        unsigned char * INDF1;
+        unsigned char * PCL;
+        unsigned char * STATUS;
+        unsigned char * FSR0L;
+        unsigned char * FSR0H;
+        unsigned char * FSR1L;
+        unsigned char * FSR1H;
+        unsigned char * BSR;
+        unsigned char * WREG;
+        unsigned char * PCLATH;
+        unsigned char * INTCON;
+
+        //SHADOW
+        unsigned char * STATUS_SHAD;
+        unsigned char * WREG_SHAD;
+        unsigned char * BSR_SHAD;
+        unsigned char * PCLATH_SHAD;
+        unsigned char * FSR0L_SHAD;
+        unsigned char * FSR0H_SHAD;
+        unsigned char * FSR1L_SHAD;
+        unsigned char * FSR1H_SHAD;
+
+        unsigned char * STKPTR;
+        unsigned char * TOSL;
+        unsigned char * TOSH;
+        unsigned char * OPTION_REG;
+
+        //INTERRUPTS
+        unsigned char * PIR0;
+        unsigned char * PIR1;
+        unsigned char * PIR2;
+        unsigned char * PIE0;
+        unsigned char * PIE1;
+        unsigned char * PIE2;
+
+        //IO
+        unsigned char * PORTA;
+        unsigned char * PORTB;
+        unsigned char * PORTC;
+        unsigned char * PORTD;
+        unsigned char * PORTE;
+        unsigned char * TRISA;
+        unsigned char * TRISB;
+        unsigned char * TRISC;
+        unsigned char * TRISD;
+        unsigned char * TRISE;
+        unsigned char * LATA;
+        unsigned char * LATB;
+        unsigned char * LATC;
+        unsigned char * LATD;
+        unsigned char * LATE;
+        unsigned char * ANSELA;
+        unsigned char * ANSELB;
+        unsigned char * ANSELC;
+        unsigned char * ANSELD;
+        unsigned char * ANSELE;
+
+        //USART
+        unsigned char * RC1REG;
+        unsigned char * TX1REG;
+        unsigned char * RC1STA;
+        unsigned char * TX1STA;
+        unsigned char * SP1BRGL;
+        unsigned char * SP1BRGH;
+
+        unsigned char * TXSTA;
+        unsigned char * RCSTA;
+        unsigned char * TXREG;
+        unsigned char * RCREG;
+
+        //TMR0
+        unsigned char * TMR0;
+        unsigned char * T0CON0;
+        unsigned char * T0CON1;
+        unsigned char * TMR0L;
+        unsigned char * TMR0H;
+
+        //TMR1
+        unsigned char * T1CON;
+        unsigned char * TMR1L;
+        unsigned char * TMR1H;
+
+        //CCP
+        unsigned char * CCP1CON;
+        unsigned char * CCP2CON;
+        unsigned char * CCPR1L;
+        unsigned char * CCPR1H;
+        unsigned char * CCPR2L;
+        unsigned char * CCPR2H;
+
+        //TMR2
+        unsigned char * T2CON;
+        unsigned char * TMR2;
+        unsigned char * PR2;
+
+        //ADC
+        unsigned char * ADCON0;
+        unsigned char * ADCON1;
+        unsigned char * ADRESL;
+        unsigned char * ADRESH;
+
+        //WDT
+        unsigned char * WDTCON0;
+        unsigned char * WDTCON;
+
+        //EEPROM
+        unsigned char * EECON2;
+        unsigned char * EECON1;
+        unsigned char * EEADRL;
+        unsigned char * EEADRH;
+        unsigned char * EEDATL;
+        unsigned char * EEDATH;
+
+        //MSSP
+        unsigned char * SSP1STAT;
+        unsigned char * SSP1CON2;
+        unsigned char * SSP1CON1;
+        unsigned char * SSP1BUF;
+        unsigned char * SSP1ADD;
+
+        //INTERRUPT-ON-CHANGE PORTB
+        unsigned char * IOCBP;
+        unsigned char * IOCBN;
+        unsigned char * IOCBF;
+
+        /*    
+        unsigned char * SSPCON3;
+        unsigned char * CCP1CAP;
+        unsigned char * CCP2CAP; 
+        unsigned char * WDTCON;
+        unsigned char * ADPREVL;
+        unsigned char * ADPREVH;
+        unsigned char * ADACCL;
+        unsigned char * ADACCH;
+        unsigned char * ADLTHL;
+        unsigned char * ADLTHH;
+        unsigned char * ADUTHL;
+        unsigned char * ADUTHH;
+        unsigned char * ADSTPTL;
+        unsigned char * ADSTPTH;
+        unsigned char * ADFLTRL;
+        unsigned char * ADFLTRH;
+        unsigned char * ADERRL;
+        unsigned char * ADERRH;
+
+        unsigned char * TMR3L;
+        unsigned char * TMR3H;
+        unsigned char * TMR5L;
+        unsigned char * TMR5H;
+
+        unsigned char * CCPR3L;
+        unsigned char * CCPR3H;
+        unsigned char * CCPR4L;
+        unsigned char * CCPR4H;
+        unsigned char * CCPR5L;
+        unsigned char * CCPR5H;
+        unsigned char * PWM6DCL;
+        unsigned char * PWM6DCH;
+        unsigned char * PWM7DCL;
+        unsigned char * PWM7DCH;
+        unsigned char * CRCDATL;
+        unsigned char * CRCDATH;
+        unsigned char * CRCACCL;
+        unsigned char * CRCACCH;
+        unsigned char * CRCSHIFTL;
+        unsigned char * CRCSHIFTH;
+        unsigned char * CRCXORL;
+        unsigned char * CRCXORH;
+        unsigned char * SMT1TMRL;
+        unsigned char * SMT1TMRH;
+        unsigned char * SMT1TMRU;
+        unsigned char * SMT1CPRL;
+        unsigned char * SMT1CPRH;
+        unsigned char * SMT1CPRU;
+        unsigned char * SMT1CPWL;
+        unsigned char * SMT1CPWH;
+        unsigned char * SMT1CPWU;
+        unsigned char * SMT1PRL;
+        unsigned char * SMT1PRH;
+        unsigned char * SMT1PRU;
+        unsigned char * SMT2TMRL;
+        unsigned char * SMT2TMRH;
+        unsigned char * SMT2TMRU;
+        unsigned char * SMT2CPRL;
+        unsigned char * SMT2CPRH;
+        unsigned char * SMT2CPRU;
+        unsigned char * SMT2CPWL;
+        unsigned char * SMT2CPWH;
+        unsigned char * SMT2CPWU;
+        unsigned char * SMT2PRL;
+        unsigned char * SMT2PRH;
+        unsigned char * SMT2PRU;
+        unsigned char * NCO1ACCL;
+        unsigned char * NCO1ACCH;
+        unsigned char * NCO1ACCU;
+        unsigned char * NCO1INCL;
+        unsigned char * NCO1INCH;
+        unsigned char * NCO1INCU;
 
 
-unsigned char * SSPMSK;
+        unsigned char * ADCON2;
+        unsigned char * ADCON3;
+        unsigned char * ADSTAT;
+        unsigned char * ADCLK;
+        unsigned char * ADACT;
+        unsigned char * ADREF;
+        unsigned char * ADCAP;
+        unsigned char * ADPRE;
+        unsigned char * ADACQ;
+        unsigned char * ADPCH;
+        unsigned char * ADCNT;
+        unsigned char * ADRPT;
+
+        unsigned char * BAUD1CON;
+        unsigned char * WPUA;
+        unsigned char * WPUB;
+        unsigned char * WPUC;
 
 
-unsigned char * BAUDCON; //duplicated ?
-unsigned char * SSP1BUF;
-unsigned char * SSP1ADD;
-unsigned char * SSP1MSK;
-unsigned char * SSP1STAT;
-unsigned char * SSP1CON1;
-unsigned char * SSP1CON2;
-unsigned char * SSP1CON3;
-unsigned char * SSP2BUF;
-unsigned char * SSP2ADD;
-unsigned char * SSP2MSK;
-unsigned char * SSP2STAT;
-unsigned char * SSP2CON1;
-unsigned char * SSP2CON2;
-unsigned char * SSP2CON3;
-unsigned char * T1GCON;
-unsigned char * T1GATE;
-unsigned char * T1CLK;
-unsigned char * T3CON;
-unsigned char * T3GCON;
-unsigned char * T3GATE;
-unsigned char * T3CLK;
-unsigned char * T5CON;
-unsigned char * T5GCON;
-unsigned char * T5GATE;
-unsigned char * T5CLK;
-unsigned char * CCPTMRS0;
-unsigned char * CCPTMRS1;
-unsigned char * T2TMR;
-unsigned char * T2PR;
+        unsigned char * SSPMSK;
 
-unsigned char * T2HLT;
-unsigned char * T2CLKCON;
-unsigned char * T2RST;
-unsigned char * T4TMR;
-unsigned char * T4PR;
-unsigned char * T4CON;
-unsigned char * T4HLT;
-unsigned char * T4CLKCON;
-unsigned char * T4RST;
-unsigned char * T6TMR;
-unsigned char * T6PR;
-unsigned char * T6CON;
-unsigned char * T6HLT;
-unsigned char * T6CLKCON;
-unsigned char * T6RST;
-unsigned char * CCP3CON;
-unsigned char * CCP3CAP;
-unsigned char * CCP4CON;
-unsigned char * CCP4CAP;
-unsigned char * CCP5CON;
-unsigned char * CCP5CAP;
-unsigned char * PWM6CON;
-unsigned char * PWM7CON;
-unsigned char * SCANLADRL;
-unsigned char * SCANLADRH;
-unsigned char * SCANHADRL;
-unsigned char * SCANHADRH;
-unsigned char * SCANCON0;
-unsigned char * SCANTRIG;
-unsigned char * CRCCON0;
-unsigned char * CRCCON1;
-unsigned char * AT1CON0;
-unsigned char * AT1CON1;
-unsigned char * AT1IR0;
-unsigned char * AT1IE0;
-unsigned char * AT1IR1;
-unsigned char * AT1IE1;
-unsigned char * AT1CLK;
-unsigned char * AT1SIG;
-unsigned char * AT1CSEL1;
-unsigned char * AT1CCON1;
-unsigned char * AT1CSEL2;
-unsigned char * AT1CCON2;
-unsigned char * AT1CSEL3;
-unsigned char * AT1CCON3;
-unsigned char * SMT1CON0;
-unsigned char * SMT1CON1;
-unsigned char * SMT1STAT;
-unsigned char * SMT1CLK;
-unsigned char * SMT1SIG;
-unsigned char * SMT1WIN;
-unsigned char * SMT2CON0;
-unsigned char * SMT2CON1;
-unsigned char * SMT2STAT;
-unsigned char * SMT2CLK;
-unsigned char * SMT2SIG;
-unsigned char * SMT2WIN;
-unsigned char * NCO1CON;
-unsigned char * NCO1CLK;
-unsigned char * CWG1CLKCON;
-unsigned char * CWG1ISM;
-unsigned char * CWG1DBR;
-unsigned char * CWG1DBF;
-unsigned char * CWG1CON0;
-unsigned char * CWG1CON1;
-unsigned char * CWG1AS0;
-unsigned char * CWG1AS1;
-unsigned char * CWG1STR;
-unsigned char * CWG2CLKCON;
-unsigned char * CWG2ISM;
-unsigned char * CWG2DBR;
-unsigned char * CWG2DBF;
-unsigned char * CWG2CON0;
-unsigned char * CWG2CON1;
-unsigned char * CWG2AS0;
-unsigned char * CWG2AS1;
-unsigned char * CWG2STR;
-unsigned char * CWG3CLKCON;
-unsigned char * CWG3ISM;
-unsigned char * CWG3DBR;
-unsigned char * CWG3DBF;
-unsigned char * CWG3CON0;
-unsigned char * CWG3CON1;
-unsigned char * CWG3AS0;
-unsigned char * CWG3AS1;
-unsigned char * CWG3STR;
+
+        unsigned char * BAUDCON; //duplicated ?
+        unsigned char * SSP1BUF;
+        unsigned char * SSP1ADD;
+        unsigned char * SSP1MSK;
+        unsigned char * SSP1STAT;
+        unsigned char * SSP1CON1;
+        unsigned char * SSP1CON2;
+        unsigned char * SSP1CON3;
+        unsigned char * SSP2BUF;
+        unsigned char * SSP2ADD;
+        unsigned char * SSP2MSK;
+        unsigned char * SSP2STAT;
+        unsigned char * SSP2CON1;
+        unsigned char * SSP2CON2;
+        unsigned char * SSP2CON3;
+        unsigned char * T1GCON;
+        unsigned char * T1GATE;
+        unsigned char * T1CLK;
+        unsigned char * T3CON;
+        unsigned char * T3GCON;
+        unsigned char * T3GATE;
+        unsigned char * T3CLK;
+        unsigned char * T5CON;
+        unsigned char * T5GCON;
+        unsigned char * T5GATE;
+        unsigned char * T5CLK;
+        unsigned char * CCPTMRS0;
+        unsigned char * CCPTMRS1;
+        unsigned char * T2TMR;
+        unsigned char * T2PR;
+
+        unsigned char * T2HLT;
+        unsigned char * T2CLKCON;
+        unsigned char * T2RST;
+        unsigned char * T4TMR;
+        unsigned char * T4PR;
+        unsigned char * T4CON;
+        unsigned char * T4HLT;
+        unsigned char * T4CLKCON;
+        unsigned char * T4RST;
+        unsigned char * T6TMR;
+        unsigned char * T6PR;
+        unsigned char * T6CON;
+        unsigned char * T6HLT;
+        unsigned char * T6CLKCON;
+        unsigned char * T6RST;
+        unsigned char * CCP3CON;
+        unsigned char * CCP3CAP;
+        unsigned char * CCP4CON;
+        unsigned char * CCP4CAP;
+        unsigned char * CCP5CON;
+        unsigned char * CCP5CAP;
+        unsigned char * PWM6CON;
+        unsigned char * PWM7CON;
+        unsigned char * SCANLADRL;
+        unsigned char * SCANLADRH;
+        unsigned char * SCANHADRL;
+        unsigned char * SCANHADRH;
+        unsigned char * SCANCON0;
+        unsigned char * SCANTRIG;
+        unsigned char * CRCCON0;
+        unsigned char * CRCCON1;
+        unsigned char * AT1CON0;
+        unsigned char * AT1CON1;
+        unsigned char * AT1IR0;
+        unsigned char * AT1IE0;
+        unsigned char * AT1IR1;
+        unsigned char * AT1IE1;
+        unsigned char * AT1CLK;
+        unsigned char * AT1SIG;
+        unsigned char * AT1CSEL1;
+        unsigned char * AT1CCON1;
+        unsigned char * AT1CSEL2;
+        unsigned char * AT1CCON2;
+        unsigned char * AT1CSEL3;
+        unsigned char * AT1CCON3;
+        unsigned char * SMT1CON0;
+        unsigned char * SMT1CON1;
+        unsigned char * SMT1STAT;
+        unsigned char * SMT1CLK;
+        unsigned char * SMT1SIG;
+        unsigned char * SMT1WIN;
+        unsigned char * SMT2CON0;
+        unsigned char * SMT2CON1;
+        unsigned char * SMT2STAT;
+        unsigned char * SMT2CLK;
+        unsigned char * SMT2SIG;
+        unsigned char * SMT2WIN;
+        unsigned char * NCO1CON;
+        unsigned char * NCO1CLK;
+        unsigned char * CWG1CLKCON;
+        unsigned char * CWG1ISM;
+        unsigned char * CWG1DBR;
+        unsigned char * CWG1DBF;
+        unsigned char * CWG1CON0;
+        unsigned char * CWG1CON1;
+        unsigned char * CWG1AS0;
+        unsigned char * CWG1AS1;
+        unsigned char * CWG1STR;
+        unsigned char * CWG2CLKCON;
+        unsigned char * CWG2ISM;
+        unsigned char * CWG2DBR;
+        unsigned char * CWG2DBF;
+        unsigned char * CWG2CON0;
+        unsigned char * CWG2CON1;
+        unsigned char * CWG2AS0;
+        unsigned char * CWG2AS1;
+        unsigned char * CWG2STR;
+        unsigned char * CWG3CLKCON;
+        unsigned char * CWG3ISM;
+        unsigned char * CWG3DBR;
+        unsigned char * CWG3DBF;
+        unsigned char * CWG3CON0;
+        unsigned char * CWG3CON1;
+        unsigned char * CWG3AS0;
+        unsigned char * CWG3AS1;
+        unsigned char * CWG3STR;
 
 
 
-unsigned char * PIR3;
-unsigned char * PIR4;
-unsigned char * PIR5;
-unsigned char * PIR6;
-unsigned char * PIR7;
-unsigned char * PIR8;
+        unsigned char * PIR3;
+        unsigned char * PIR4;
+        unsigned char * PIR5;
+        unsigned char * PIR6;
+        unsigned char * PIR7;
+        unsigned char * PIR8;
 
 
-unsigned char * PIE3;
-unsigned char * PIE4;
-unsigned char * PIE5;
-unsigned char * PIE6;
-unsigned char * PIE7;
-unsigned char * PIE8;
-unsigned char * PMD0;
-unsigned char * PMD1;
-unsigned char * PMD2;
-unsigned char * PMD3;
-unsigned char * PMD4;
-unsigned char * PMD5;
+        unsigned char * PIE3;
+        unsigned char * PIE4;
+        unsigned char * PIE5;
+        unsigned char * PIE6;
+        unsigned char * PIE7;
+        unsigned char * PIE8;
+        unsigned char * PMD0;
+        unsigned char * PMD1;
+        unsigned char * PMD2;
+        unsigned char * PMD3;
+        unsigned char * PMD4;
+        unsigned char * PMD5;
 
-unsigned char * WDTCON1;
-unsigned char * WDTPSL;
-unsigned char * WDTPSH;
-unsigned char * WDTTMR;
-unsigned char * BORCON;
-unsigned char * VREGCON;
-unsigned char * PCON0;
-unsigned char * CCDCON;
-unsigned char * NVMADRL;
-unsigned char * NVMADRH;
-unsigned char * NVMDATL;
-unsigned char * NVMDATH;
-unsigned char * NVMCON1;
-unsigned char * NVMCON2;
-unsigned char * CPUDOZE;
-unsigned char * OSCCON1;
-unsigned char * OSCCON2;
-unsigned char * OSCCON3;
-unsigned char * OSCSTAT;
-unsigned char * OSCEN;
-unsigned char * OSCTUNE;
-unsigned char * OSCFRQ;
-unsigned char * CLKRCON;
-unsigned char * CLKRCLK;
-unsigned char * MDCON0;
-unsigned char * MDCON1;
-unsigned char * MDSRC;
-unsigned char * MDCARL;
-unsigned char * MDCARH;
-unsigned char * FVRCON;
-unsigned char * DAC1CON0;
-unsigned char * DAC1CON1;
-unsigned char * ZCD1CON;
-unsigned char * CMOUT;
-unsigned char * CM1CON0;
-unsigned char * CM1CON1;
-unsigned char * CM1NSEL;
-unsigned char * CM1PSEL;
-unsigned char * CM2CON0;
-unsigned char * CM2CON1;
-unsigned char * CM2NSEL;
-unsigned char * CM2PSEL;
-unsigned char * CLCDATA;
-unsigned char * CLC1CON;
-unsigned char * CLC1POL;
-unsigned char * CLC1SEL0;
-unsigned char * CLC1SEL1;
-unsigned char * CLC1SEL2;
-unsigned char * CLC1SEL3;
-unsigned char * CLC1GLS0;
-unsigned char * CLC1GLS1;
-unsigned char * CLC1GLS2;
-unsigned char * CLC1GLS3;
-unsigned char * CLC2CON;
-unsigned char * CLC2POL;
-unsigned char * CLC2SEL0;
-unsigned char * CLC2SEL1;
-unsigned char * CLC2SEL2;
-unsigned char * CLC2SEL3;
-unsigned char * CLC2GLS0;
-unsigned char * CLC2GLS1;
-unsigned char * CLC2GLS2;
-unsigned char * CLC2GLS3;
-unsigned char * CLC3CON;
-unsigned char * CLC3POL;
-unsigned char * CLC3SEL0;
-unsigned char * CLC3SEL1;
-unsigned char * CLC3SEL2;
-unsigned char * CLC3SEL3;
-unsigned char * CLC3GLS0;
-unsigned char * CLC3GLS1;
-unsigned char * CLC3GLS2;
-unsigned char * CLC3GLS3;
-unsigned char * CLC4CON;
-unsigned char * CLC4POL;
-unsigned char * CLC4SEL0;
-unsigned char * CLC4SEL1;
-unsigned char * CLC4SEL2;
-unsigned char * CLC4SEL3;
-unsigned char * CLC4GLS0;
-unsigned char * CLC4GLS1;
-unsigned char * CLC4GLS2;
-unsigned char * CLC4GLS3;
-unsigned char * PPSLOCK;
-unsigned char * INTPPS;
-unsigned char * T0CKIPPS;
-unsigned char * T1CKIPPS;
-unsigned char * T1GPPS;
-unsigned char * T3CKIPPS;
-unsigned char * T3GPPS;
-unsigned char * T5CKIPPS;
-unsigned char * T5GPPS;
-unsigned char * T2AINPPS;
-unsigned char * T4AINPPS;
-unsigned char * T6AINPPS;
-unsigned char * CCP1PPS;
-unsigned char * CCP2PPS;
-unsigned char * CCP3PPS;
-unsigned char * CCP4PPS;
-unsigned char * CCP5PPS;
-unsigned char * SMT1WINPPS;
-unsigned char * SMT1SIGPPS;
-unsigned char * SMT2WINPPS;
-unsigned char * SMT2SIGPPS;
-unsigned char * CWG1PPS;
-unsigned char * CWG2PPS;
-unsigned char * CWG3PPS;
-unsigned char * MDCARLPPS;
-unsigned char * MDCARHPPS;
-unsigned char * MDSRCPPS;
-unsigned char * CLCIN0PPS;
-unsigned char * CLCIN1PPS;
-unsigned char * CLCIN2PPS;
-unsigned char * CLCIN3PPS;
-unsigned char * ADCACTPPS;
-unsigned char * SSP1CLKPPS;
-unsigned char * SSP1DATPPS;
-unsigned char * SSP1SSPPS;
-unsigned char * SSP2CLKPPS;
-unsigned char * SSP2DATPPS;
-unsigned char * SSP2SSPPS;
-unsigned char * RXPPS;
-unsigned char * TXPPS;
-unsigned char * RA0PPS;
-unsigned char * RA1PPS;
-unsigned char * RA2PPS;
-unsigned char * RA3PPS;
-unsigned char * RA4PPS;
-unsigned char * RA5PPS;
-unsigned char * RA6PPS;
-unsigned char * RA7PPS;
-unsigned char * RB0PPS;
-unsigned char * RB1PPS;
-unsigned char * RB2PPS;
-unsigned char * RB3PPS;
-unsigned char * RB4PPS;
-unsigned char * RB5PPS;
-unsigned char * RB6PPS;
-unsigned char * RB7PPS;
-unsigned char * RC0PPS;
-unsigned char * RC1PPS;
-unsigned char * RC2PPS;
-unsigned char * RC3PPS;
-unsigned char * RC4PPS;
-unsigned char * RC5PPS;
-unsigned char * RC6PPS;
-unsigned char * RC7PPS;
+        unsigned char * WDTCON1;
+        unsigned char * WDTPSL;
+        unsigned char * WDTPSH;
+        unsigned char * WDTTMR;
+        unsigned char * BORCON;
+        unsigned char * VREGCON;
+        unsigned char * PCON0;
+        unsigned char * CCDCON;
+        unsigned char * NVMADRL;
+        unsigned char * NVMADRH;
+        unsigned char * NVMDATL;
+        unsigned char * NVMDATH;
+        unsigned char * NVMCON1;
+        unsigned char * NVMCON2;
+        unsigned char * CPUDOZE;
+        unsigned char * OSCCON1;
+        unsigned char * OSCCON2;
+        unsigned char * OSCCON3;
+        unsigned char * OSCSTAT;
+        unsigned char * OSCEN;
+        unsigned char * OSCTUNE;
+        unsigned char * OSCFRQ;
+        unsigned char * CLKRCON;
+        unsigned char * CLKRCLK;
+        unsigned char * MDCON0;
+        unsigned char * MDCON1;
+        unsigned char * MDSRC;
+        unsigned char * MDCARL;
+        unsigned char * MDCARH;
+        unsigned char * FVRCON;
+        unsigned char * DAC1CON0;
+        unsigned char * DAC1CON1;
+        unsigned char * ZCD1CON;
+        unsigned char * CMOUT;
+        unsigned char * CM1CON0;
+        unsigned char * CM1CON1;
+        unsigned char * CM1NSEL;
+        unsigned char * CM1PSEL;
+        unsigned char * CM2CON0;
+        unsigned char * CM2CON1;
+        unsigned char * CM2NSEL;
+        unsigned char * CM2PSEL;
+        unsigned char * CLCDATA;
+        unsigned char * CLC1CON;
+        unsigned char * CLC1POL;
+        unsigned char * CLC1SEL0;
+        unsigned char * CLC1SEL1;
+        unsigned char * CLC1SEL2;
+        unsigned char * CLC1SEL3;
+        unsigned char * CLC1GLS0;
+        unsigned char * CLC1GLS1;
+        unsigned char * CLC1GLS2;
+        unsigned char * CLC1GLS3;
+        unsigned char * CLC2CON;
+        unsigned char * CLC2POL;
+        unsigned char * CLC2SEL0;
+        unsigned char * CLC2SEL1;
+        unsigned char * CLC2SEL2;
+        unsigned char * CLC2SEL3;
+        unsigned char * CLC2GLS0;
+        unsigned char * CLC2GLS1;
+        unsigned char * CLC2GLS2;
+        unsigned char * CLC2GLS3;
+        unsigned char * CLC3CON;
+        unsigned char * CLC3POL;
+        unsigned char * CLC3SEL0;
+        unsigned char * CLC3SEL1;
+        unsigned char * CLC3SEL2;
+        unsigned char * CLC3SEL3;
+        unsigned char * CLC3GLS0;
+        unsigned char * CLC3GLS1;
+        unsigned char * CLC3GLS2;
+        unsigned char * CLC3GLS3;
+        unsigned char * CLC4CON;
+        unsigned char * CLC4POL;
+        unsigned char * CLC4SEL0;
+        unsigned char * CLC4SEL1;
+        unsigned char * CLC4SEL2;
+        unsigned char * CLC4SEL3;
+        unsigned char * CLC4GLS0;
+        unsigned char * CLC4GLS1;
+        unsigned char * CLC4GLS2;
+        unsigned char * CLC4GLS3;
+        unsigned char * PPSLOCK;
+        unsigned char * INTPPS;
+        unsigned char * T0CKIPPS;
+        unsigned char * T1CKIPPS;
+        unsigned char * T1GPPS;
+        unsigned char * T3CKIPPS;
+        unsigned char * T3GPPS;
+        unsigned char * T5CKIPPS;
+        unsigned char * T5GPPS;
+        unsigned char * T2AINPPS;
+        unsigned char * T4AINPPS;
+        unsigned char * T6AINPPS;
+        unsigned char * CCP1PPS;
+        unsigned char * CCP2PPS;
+        unsigned char * CCP3PPS;
+        unsigned char * CCP4PPS;
+        unsigned char * CCP5PPS;
+        unsigned char * SMT1WINPPS;
+        unsigned char * SMT1SIGPPS;
+        unsigned char * SMT2WINPPS;
+        unsigned char * SMT2SIGPPS;
+        unsigned char * CWG1PPS;
+        unsigned char * CWG2PPS;
+        unsigned char * CWG3PPS;
+        unsigned char * MDCARLPPS;
+        unsigned char * MDCARHPPS;
+        unsigned char * MDSRCPPS;
+        unsigned char * CLCIN0PPS;
+        unsigned char * CLCIN1PPS;
+        unsigned char * CLCIN2PPS;
+        unsigned char * CLCIN3PPS;
+        unsigned char * ADCACTPPS;
+        unsigned char * SSP1CLKPPS;
+        unsigned char * SSP1DATPPS;
+        unsigned char * SSP1SSPPS;
+        unsigned char * SSP2CLKPPS;
+        unsigned char * SSP2DATPPS;
+        unsigned char * SSP2SSPPS;
+        unsigned char * RXPPS;
+        unsigned char * TXPPS;
+        unsigned char * RA0PPS;
+        unsigned char * RA1PPS;
+        unsigned char * RA2PPS;
+        unsigned char * RA3PPS;
+        unsigned char * RA4PPS;
+        unsigned char * RA5PPS;
+        unsigned char * RA6PPS;
+        unsigned char * RA7PPS;
+        unsigned char * RB0PPS;
+        unsigned char * RB1PPS;
+        unsigned char * RB2PPS;
+        unsigned char * RB3PPS;
+        unsigned char * RB4PPS;
+        unsigned char * RB5PPS;
+        unsigned char * RB6PPS;
+        unsigned char * RB7PPS;
+        unsigned char * RC0PPS;
+        unsigned char * RC1PPS;
+        unsigned char * RC2PPS;
+        unsigned char * RC3PPS;
+        unsigned char * RC4PPS;
+        unsigned char * RC5PPS;
+        unsigned char * RC6PPS;
+        unsigned char * RC7PPS;
 
-unsigned char * ODCONA;
-unsigned char * SLRCONA;
-unsigned char * INLVLA;
-unsigned char * IOCAP;
-unsigned char * IOCAN;
-unsigned char * IOCAF;
-unsigned char * CCDNA;
-unsigned char * CCDPA;
+        unsigned char * ODCONA;
+        unsigned char * SLRCONA;
+        unsigned char * INLVLA;
+        unsigned char * IOCAP;
+        unsigned char * IOCAN;
+        unsigned char * IOCAF;
+        unsigned char * CCDNA;
+        unsigned char * CCDPA;
 
-unsigned char * ODCONB;
-unsigned char * SLRCONB;
-unsigned char * INLVLB;
-unsigned char * CCDNB;
-unsigned char * CCDPB;
+        unsigned char * ODCONB;
+        unsigned char * SLRCONB;
+        unsigned char * INLVLB;
+        unsigned char * CCDNB;
+        unsigned char * CCDPB;
 
-unsigned char * ODCONC;
-unsigned char * SLRCONC;
-unsigned char * INLVLC;
-unsigned char * IOCCP;
-unsigned char * IOCCN;
-unsigned char * IOCCF;
-unsigned char * CCDNC;
-unsigned char * CCDPC;
-unsigned char * WPUE;
-unsigned char * INLVLE;
-unsigned char * IOCEP;
-unsigned char * IOCEN;
-unsigned char * IOCEF;
-unsigned char * LCDCON;
-unsigned char * LCDPS;
-unsigned char * LCDREF;
-unsigned char * LCDCST;
-unsigned char * LCDRL;
-unsigned char * LCDSE0;
-unsigned char * LCDSE1;
-unsigned char * LCDSE2;
-unsigned char * LCDDATA0;
-unsigned char * LCDDATA1;
-unsigned char * LCDDATA2;
-unsigned char * LCDDATA3;
-unsigned char * LCDDATA4;
-unsigned char * LCDDATA5;
-unsigned char * LCDDATA6;
-unsigned char * LCDDATA7;
-unsigned char * LCDDATA8;
-unsigned char * LCDDATA9;
-unsigned char * LCDDATA10;
-unsigned char * LCDDATA11;
+        unsigned char * ODCONC;
+        unsigned char * SLRCONC;
+        unsigned char * INLVLC;
+        unsigned char * IOCCP;
+        unsigned char * IOCCN;
+        unsigned char * IOCCF;
+        unsigned char * CCDNC;
+        unsigned char * CCDPC;
+        unsigned char * WPUE;
+        unsigned char * INLVLE;
+        unsigned char * IOCEP;
+        unsigned char * IOCEN;
+        unsigned char * IOCEF;
+        unsigned char * LCDCON;
+        unsigned char * LCDPS;
+        unsigned char * LCDREF;
+        unsigned char * LCDCST;
+        unsigned char * LCDRL;
+        unsigned char * LCDSE0;
+        unsigned char * LCDSE1;
+        unsigned char * LCDSE2;
+        unsigned char * LCDDATA0;
+        unsigned char * LCDDATA1;
+        unsigned char * LCDDATA2;
+        unsigned char * LCDDATA3;
+        unsigned char * LCDDATA4;
+        unsigned char * LCDDATA5;
+        unsigned char * LCDDATA6;
+        unsigned char * LCDDATA7;
+        unsigned char * LCDDATA8;
+        unsigned char * LCDDATA9;
+        unsigned char * LCDDATA10;
+        unsigned char * LCDDATA11;
 
-unsigned char * ATCC1PPS;
-unsigned char * ATCC2PPS;
-unsigned char * ATCC3PPS;
-unsigned char * SSPSSPPS;
-unsigned char * T2PPS;
-unsigned char * T4PPS;
-unsigned char * T6PPS;
-unsigned char * SSPCLKPP;
-unsigned char * CKPPS;
-unsigned char * CWGINPPS;
-unsigned char * SSPDATPPS;
-unsigned char * SSPCLKPPS;
-unsigned char * ATINPPS;
-unsigned char * CWG1OCON0;
-unsigned char * PWM3CON;
-unsigned char * PWM4CON;
-unsigned char * PID1CON;
-unsigned char * HIDRVC;
-unsigned char * CCPTMRS;
-unsigned char * PMCON2;
-unsigned char * PMCON1;
-unsigned char * OSCCON;
-unsigned char * PCON;
+        unsigned char * ATCC1PPS;
+        unsigned char * ATCC2PPS;
+        unsigned char * ATCC3PPS;
+        unsigned char * SSPSSPPS;
+        unsigned char * T2PPS;
+        unsigned char * T4PPS;
+        unsigned char * T6PPS;
+        unsigned char * SSPCLKPP;
+        unsigned char * CKPPS;
+        unsigned char * CWGINPPS;
+        unsigned char * SSPDATPPS;
+        unsigned char * SSPCLKPPS;
+        unsigned char * ATINPPS;
+        unsigned char * CWG1OCON0;
+        unsigned char * PWM3CON;
+        unsigned char * PWM4CON;
+        unsigned char * PID1CON;
+        unsigned char * HIDRVC;
+        unsigned char * CCPTMRS;
+        unsigned char * PMCON2;
+        unsigned char * PMCON1;
+        unsigned char * OSCCON;
+        unsigned char * PCON;
 
-unsigned char * TMR4;
-unsigned char * TMR6;
-unsigned char * PR4;
-unsigned char * PR6;
-unsigned char * PSTR3CON;
-unsigned char * CCP3AS;
-unsigned char * PSTR2CON;
-unsigned char * CCP2AS;
-unsigned char * PWM2CON;
-unsigned char * PSTR1CON;
-unsigned char * CCP1AS;
-unsigned char * PWM1CON;
-unsigned char * APFCON;
-unsigned char * SRCON1;
-unsigned char * SRCON0;
-unsigned char * DACCON1;
-unsigned char * DACCON0;
+        unsigned char * TMR4;
+        unsigned char * TMR6;
+        unsigned char * PR4;
+        unsigned char * PR6;
+        unsigned char * PSTR3CON;
+        unsigned char * CCP3AS;
+        unsigned char * PSTR2CON;
+        unsigned char * CCP2AS;
+        unsigned char * PWM2CON;
+        unsigned char * PSTR1CON;
+        unsigned char * CCP1AS;
+        unsigned char * PWM1CON;
+        unsigned char * APFCON;
+        unsigned char * SRCON1;
+        unsigned char * SRCON0;
+        unsigned char * DACCON1;
+        unsigned char * DACCON0;
 
-unsigned char * CPSCON1;
-unsigned char * CPSCON0;
+        unsigned char * CPSCON1;
+        unsigned char * CPSCON0;
 
 
- */ 
-}P16Emap_t;
+         */
+    } P16Emap_t;
 
 
 #ifdef __cplusplus

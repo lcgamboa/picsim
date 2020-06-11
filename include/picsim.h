@@ -35,6 +35,24 @@
  * @see https://github.com/lcgamboa/picsim
  */
 
+/** @mainpage notitle
+ *
+ * @section intro_sec Introduction
+ *
+ * This is the documentation of using the picsim simulation library functions.
+ *
+ * @section example Library functions usage simple example 
+ *
+ * Demonstration of a simple example of using picsim library functions
+ * 
+ * @subsection simple picsim_simple.c
+ * @include picsim_simple.c
+ * 
+ * @subsection makefile Makefile
+ * @include Makefile
+ * 
+ */
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -57,15 +75,15 @@ extern "C" {
      * Internal structure used to describe one pin.
      */
     typedef struct {
-        unsigned char ptype;  ///< @ref pintype
-        unsigned char dir;    ///< @ref pindir
-        unsigned char value;  ///< value
+        unsigned char ptype; ///< @ref pintype
+        unsigned char dir; ///< @ref pindir
+        unsigned char value; ///< value
         unsigned char lvalue; ///< latch value
-        char pord;            ///< pin port number
+        char pord; ///< pin port number
         unsigned char * port; ///< port address
-        float avalue;         ///< analog input value
+        float avalue; ///< analog input value
         unsigned char ovalue; ///< defaut open pin value
-        float oavalue;        ///< analog output value
+        float oavalue; ///< analog output value
     } picpin;
 
     /**
@@ -150,6 +168,17 @@ extern "C" {
 #define QFN  1
     /**@}*/
 
+    /**
+     * \defgroup hexload HEX functions errors
+     * @{
+     */
+    //HEX load Errors
+#define HEX_OK     0 ///< No erro    
+#define HEX_NFOUND 1 ///< File not found
+#define HEX_CHKSUM 2 ///< Checksum error
+#define HEX_NWRITE 3 ///< File write error
+    /**@}*/
+
 
     //4K word
 #define BUFFMAX 8192 
@@ -197,9 +226,9 @@ extern "C" {
         unsigned char w;
         unsigned char wdt;
         unsigned char s2;
-        float freq;          ///< frequency
+        float freq; ///< frequency
         unsigned char sleep; ///< sleep mode on
-        unsigned char pkg;   ///<  @ref packaging
+        unsigned char pkg; ///<  @ref packaging
         picpin *pins;
         unsigned char mclr;
         unsigned char *ccp;
@@ -417,41 +446,178 @@ extern "C" {
      */
     unsigned char pic_get_pin_dir(unsigned char pin);
 
+    /**
+     * @brief Get Default Open Value of one pin (external PULL UP)
+     *
+     * @param pin pin number 
+     * @return value 0 or 1 
+     */
+    unsigned char pic_get_pin_DOV(unsigned char pin);
 
-    unsigned char pic_get_pin_DOV(unsigned char pin); //get default open value
-    int pic_set_pin_DOV(unsigned char pin, unsigned char value); //set default open value
+    /**
+     * @brief Set Default Open Value of one pin (external PULL UP)
+     *
+     * @param pin pin number 
+     * @param value pin default value 0 or 1
+     * @return Return 1 if success, 0 otherwise 
+     */
+    int pic_set_pin_DOV(unsigned char pin, unsigned char value);
 
+    /**
+     * @brief Initialize P16 ICSP support
+     */
     void pic_icsp_init(void);
+
+    /**
+     * @brief Run P16 ICSP (must be pooling)
+     * @return Return 1 if success, 0 otherwise  
+     */
     int pic_icsp(void);
 
+    /**
+     * @brief Initialize P18 ICSP support
+     */
     void pic_icsp_init18(void);
+
+    /**
+     * @brief Run P18 ICSP (must be pooling)
+     * @return Return 1 if success, 0 otherwise 
+     */
     int pic_icsp18(void);
 
+    /**
+     * @brief Read HEX file to P16 microcontroller
+     * 
+     * @param fname name of .hex file
+     * @param leeprom flag to load or not the microcontroller data eeprom form file   
+     * @return @ref hexload
+     */
     int read_ihx(const char * fname, int leeprom);
+
+    /**
+     * @brief Read HEX file to P16E microcontroller
+     * 
+     * @param fname name of .hex file
+     * @param leeprom flag to load or not the microcontroller data eeprom form file   
+     * @return @ref hexload 
+     */
     int read_ihx_16e(const char * fname, int leeprom);
+
+    /**
+     * @brief Read HEX file to P18 microcontroller
+     * 
+     * @param fname name of .hex file
+     * @param leeprom flag to load or not the microcontroller data eeprom form file   
+     * @return @ref hexload 
+     */
     int read_ihx_18(const char * fname, int leeprom);
 
+    /**
+     * @brief Dump all non volatile P16 microcontroller memory to HEX file 
+     * 
+     * @param fname name of .hex file
+     * @return @ref hexload 
+     */
     int write_ihx(const char * fname);
+
+    /**
+     * @brief Dump all non volatile P16E microcontroller memory to HEX file 
+     * 
+     * @param fname name of .hex file
+     * @return @ref hexload 
+     */
     int write_ihx16e(const char * fname);
+
+    /**
+     * @brief Dump all non volatile P18 microcontroller memory to HEX file 
+     * 
+     * @param fname name of .hex file
+     * @return @ref hexload 
+     */
     int write_ihx18(const char * fname);
 
+    /**
+     * @brief Return processor ID by name 
+     * 
+     * @param str name of microcontoller 
+     * @return ID of microcontroller 
+     */
     int getprocbyname(const char *str);
+
+    /**
+     * @brief Return processor family ID by name 
+     * 
+     * @param str name of microcontoller 
+     * @return family ID of microcontroller 
+     */
     int getfprocbyname(const char *str);
+
+    /**
+     * @brief Return processor family ID by ID 
+     * 
+     * @param proc ID of microcontoller 
+     * @return family ID of microcontroller 
+     */
     int getfprocbynumber(int proc);
+
+    /**
+     * @brief Return processor name by ID 
+     * 
+     * @param proc ID of microcontoller 
+     * @param str string to return the name of microcontroller  
+     * @return filled str parameter
+     */
     char * getnamebyproc(int proc, char *str);
+
+    /**
+     * @brief Return P16 FSR name by address 
+     * 
+     * @param addr address of FSR 
+     * @return FSR name
+     */
     const char * getFSRname_16(unsigned int addr);
+
+    /**
+     * @brief Return P16E FSR name by address 
+     * 
+     * @param addr address of FSR 
+     * @return FSR name
+     */
     const char * getFSRname_16E(unsigned int addr);
+
+    /**
+     * @brief Return P16E2 FSR name by address 
+     * 
+     * @param addr address of FSR 
+     * @return FSR name
+     */
     const char * getFSRname_16E2(unsigned int addr);
+
+    /**
+     * @brief Return P18 FSR name by address 
+     * 
+     * @param addr address of FSR 
+     * @return FSR name
+     */
     const char * getFSRname_18(unsigned int addr);
+
+    /**
+     * @brief Return pin name 
+     * 
+     * @param pic_ pointer to pic object
+     * @param pin pin number 
+     * @param str string to return the name of pin
+     * @return filled str parameter
+     */
     const char * getPinName(_pic * pic, int pin, char * pname);
 
+     /**
+     * @brief Return the mapped address of FSR struct member  
+     * 
+     * @param fsr P16map_t, P16Emap_t or P18map_t struct member.
+     * @return address of ram
+     */
 #define sfr_addr(fsr) (fsr - pic->ram)
-
-
-    //Errors
-#define HEX_NFOUND 1
-#define HEX_CHKSUM 2
-#define HEX_NWRITE 3
 
 
 #endif

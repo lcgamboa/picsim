@@ -1,31 +1,5 @@
 var searchData=
 [
-  ['pic_20family_10',['pic family',['../group__family.html',1,'']]],
-  ['p16emap_5ft_11',['P16Emap_t',['../struct_p16_emap__t.html',1,'']]],
-  ['p16map_5ft_12',['P16map_t',['../struct_p16map__t.html',1,'']]],
-  ['p18map_5ft_13',['P18map_t',['../struct_p18map__t.html',1,'']]],
-  ['packaging_20type_14',['packaging type',['../group__packaging.html',1,'']]],
-  ['pic_15',['pic',['../picsim_8h.html#adbff3908f44b954fbfd6567b88eab817',1,'picsim.h']]],
-  ['pic_5fend_16',['pic_end',['../picsim_8h.html#aad8e35b8dfa6c994097048490549e1fb',1,'picsim.h']]],
-  ['pic_5ferase_5fflash_17',['pic_erase_flash',['../picsim_8h.html#a554c01e1fff9cbc773c4dcafa06a310c',1,'picsim.h']]],
-  ['pic_5fget_5fpin_18',['pic_get_pin',['../picsim_8h.html#a5e487a112bed4fea6cbe6ab9fea496ef',1,'picsim.h']]],
-  ['pic_5fget_5fpin_5fdir_19',['pic_get_pin_dir',['../picsim_8h.html#a0b37c3eb5757c235f7030878acdc5eb9',1,'picsim.h']]],
-  ['pic_5fget_5fpin_5ftype_20',['pic_get_pin_type',['../picsim_8h.html#a462ec8b157bb81e7b12311ab01478a5e',1,'picsim.h']]],
-  ['pic_5finit_21',['pic_init',['../picsim_8h.html#a136f2a71b80acd53bf6b5a39b9932c3f',1,'picsim.h']]],
-  ['pic_5freset_22',['pic_reset',['../picsim_8h.html#a4668c123846c147c34db94efe53d9059',1,'picsim.h']]],
-  ['pic_5fset_5fapin_23',['pic_set_apin',['../picsim_8h.html#a790e6d979ac65db4aba4217a3a730317',1,'picsim.h']]],
-  ['pic_5fset_5fpin_24',['pic_set_pin',['../picsim_8h.html#a9081d88de575cc4245adbe58964cdb9d',1,'picsim.h']]],
-  ['pic_5fset_5fserial_25',['pic_set_serial',['../picsim_8h.html#a28621e020650741bed0a99de19948308',1,'picsim.h']]],
-  ['pic_5fstep_26',['pic_step',['../picsim_8h.html#a4b8c56c0a9a3f6330a4224dcc511cadc',1,'picsim.h']]],
-  ['picpin_27',['picpin',['../structpicpin.html',1,'']]],
-  ['picsim_2eh_28',['picsim.h',['../picsim_8h.html',1,'']]],
-  ['pin_20dir_29',['pin dir',['../group__pindir.html',1,'']]],
-  ['pin_20types_30',['pin types',['../group__pintype.html',1,'']]],
-  ['pkg_31',['pkg',['../struct__pic.html#ae1eb36d903a4aeb499ffc361fa513765',1,'_pic']]],
-  ['pord_32',['pord',['../structpicpin.html#a91b5771ad657c155b52bf20b5c304eda',1,'picpin']]],
-  ['port_33',['port',['../structpicpin.html#acfd0f535e96821828729527373021c5a',1,'picpin']]],
-  ['print_34',['print',['../struct__pic.html#a61102273361fa4e2b1ada532d9023b8c',1,'_pic']]],
-  ['processor_35',['processor',['../struct__pic.html#a446ed71bc856f54accf8e347b307c6e4',1,'_pic']]],
-  ['pic_20microcontollers_20id_36',['pic microcontollers ID',['../group__procid.html',1,'']]],
-  ['ptype_37',['ptype',['../structpicpin.html#a342a873658ac72f7977293ae9c80a2c1',1,'picpin']]]
+  ['lram_20',['lram',['../struct__pic.html#a2af25516f69cad3d13025bc001611684',1,'_pic']]],
+  ['lvalue_21',['lvalue',['../structpicpin.html#a2eb176571ece589cc231f3a4b3718a6a',1,'picpin']]]
 ];

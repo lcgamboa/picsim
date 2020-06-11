@@ -82,13 +82,78 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </iframe>
 </div>
 
-<div class="header">
-  <div class="headertitle">
-<div class="title">PICSim Documentation</div>  </div>
-</div><!--header-->
-<div class="contents">
+<div class="PageDoc"><div class="contents">
+<div class="textblock"><h1><a class="anchor" id="intro_sec"></a>
+Introduction</h1>
+<p>This is the documentation of using the picsim simulation library functions.</p>
+<h1><a class="anchor" id="example"></a>
+Library functions usage simple example</h1>
+<p>Demonstration of a simple example of using picsim library functions</p>
+<h2><a class="anchor" id="simple"></a>
+picsim_simple.c</h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include&lt;picsim/picsim.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include&lt;stdio.h&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordtype">int</span> i;</div>
+<div class="line">  <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> val;</div>
+<div class="line">  <span class="comment">//microcontroller object</span></div>
+<div class="line">  <a class="code" href="struct__pic.html">_pic</a> pic1; </div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">//set serial port</span></div>
+<div class="line">  <a class="code" href="picsim_8h.html#a28621e020650741bed0a99de19948308">pic_set_serial</a>(&amp;pic1,<span class="stringliteral">&quot;/dev/tnt2&quot;</span>,0,0,0);</div>
+<div class="line">  <span class="comment">//pic_set_serial(&amp;pic1,&quot;COM2&quot;,0,0,0);</span></div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">//initialization and program loading</span></div>
+<div class="line">  <a class="code" href="picsim_8h.html#a136f2a71b80acd53bf6b5a39b9932c3f">pic_init</a>(&amp;pic1, P16F628A, <span class="stringliteral">&quot;../../../examples/shift/shift.hex&quot;</span>,1,20e6);</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">//enable print messages of internal instruction execution (slow down the simulation speed) </span></div>
+<div class="line">  pic1.<a class="code" href="struct__pic.html#a61102273361fa4e2b1ada532d9023b8c">print</a>=1;</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">//loop </span></div>
+<div class="line">  <span class="keywordflow">for</span>(i=0;i&lt;1000;i++)</div>
+<div class="line">  {</div>
+<div class="line">      <span class="comment">//execute one instruction cycle      </span></div>
+<div class="line">      <a class="code" href="picsim_8h.html#a4b8c56c0a9a3f6330a4224dcc511cadc">pic_step</a>();</div>
+<div class="line">      <span class="comment">//read digital pin 1</span></div>
+<div class="line">      val=<a class="code" href="picsim_8h.html#a5e487a112bed4fea6cbe6ab9fea496ef">pic_get_pin</a>(1);</div>
+<div class="line">      <span class="comment">//write digital pin 2</span></div>
+<div class="line">      <a class="code" href="picsim_8h.html#a9081d88de575cc4245adbe58964cdb9d">pic_set_pin</a>(2, val);</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">//free internal memory</span></div>
+<div class="line">  <a class="code" href="picsim_8h.html#aad8e35b8dfa6c994097048490549e1fb">pic_end</a>();</div>
+<div class="line">} </div>
+</div><!-- fragment --><h2><a class="anchor" id="makefile"></a>
+Makefile</h2>
+<div class="fragment"><div class="line"> </div>
+<div class="line">CC= gcc</div>
+<div class="line"> </div>
+<div class="line">FLAGS= -Wall -ggdb</div>
+<div class="line"> </div>
+<div class="line">all: picsim_simple.c</div>
+<div class="line">    $(CC) $(FLAGS) picsim_simple.c -o picsim_simple -lpicsim</div>
+<div class="line"> </div>
+<div class="line">clean:</div>
+<div class="line">    rm -rf picsim_simple</div>
+<div class="line"> </div>
+<div class="line">run:</div>
+<div class="line">    picsim_simple P16F628A ../../examples/shift.hex</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"> </div>
+</div><!-- fragment --> </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->
+<div class="ttc" id="apicsim_8h_html_a4b8c56c0a9a3f6330a4224dcc511cadc"><div class="ttname"><a href="picsim_8h.html#a4b8c56c0a9a3f6330a4224dcc511cadc">pic_step</a></div><div class="ttdeci">void pic_step(void)</div><div class="ttdoc">Execute one simulation step.</div></div>
+<div class="ttc" id="astruct__pic_html"><div class="ttname"><a href="struct__pic.html">_pic</a></div><div class="ttdoc">PICsim PIC structure.</div><div class="ttdef"><b>Definition:</b> picsim.h:201</div></div>
+<div class="ttc" id="apicsim_8h_html_a28621e020650741bed0a99de19948308"><div class="ttname"><a href="picsim_8h.html#a28621e020650741bed0a99de19948308">pic_set_serial</a></div><div class="ttdeci">void pic_set_serial(_pic *pic_, const char *name, int flowcontrol, int ctspin, int rtspin)</div><div class="ttdoc">Configure the serial port connection.</div></div>
+<div class="ttc" id="apicsim_8h_html_aad8e35b8dfa6c994097048490549e1fb"><div class="ttname"><a href="picsim_8h.html#aad8e35b8dfa6c994097048490549e1fb">pic_end</a></div><div class="ttdeci">void pic_end(void)</div><div class="ttdoc">finalize and free pic object internal memory</div></div>
+<div class="ttc" id="astruct__pic_html_a61102273361fa4e2b1ada532d9023b8c"><div class="ttname"><a href="struct__pic.html#a61102273361fa4e2b1ada532d9023b8c">_pic::print</a></div><div class="ttdeci">unsigned char print</div><div class="ttdoc">print information ON/OFF</div><div class="ttdef"><b>Definition:</b> picsim.h:202</div></div>
+<div class="ttc" id="apicsim_8h_html_a9081d88de575cc4245adbe58964cdb9d"><div class="ttname"><a href="picsim_8h.html#a9081d88de575cc4245adbe58964cdb9d">pic_set_pin</a></div><div class="ttdeci">int pic_set_pin(unsigned char pin, unsigned char value)</div><div class="ttdoc">Set digital value of one pin.</div></div>
+<div class="ttc" id="apicsim_8h_html_a5e487a112bed4fea6cbe6ab9fea496ef"><div class="ttname"><a href="picsim_8h.html#a5e487a112bed4fea6cbe6ab9fea496ef">pic_get_pin</a></div><div class="ttdeci">unsigned char pic_get_pin(unsigned char pin)</div><div class="ttdoc">Get digital value of one pin.</div></div>
+<div class="ttc" id="apicsim_8h_html_a136f2a71b80acd53bf6b5a39b9932c3f"><div class="ttname"><a href="picsim_8h.html#a136f2a71b80acd53bf6b5a39b9932c3f">pic_init</a></div><div class="ttdeci">int pic_init(_pic *pic_, int processor, const char *fname, int leeprom, float freq)</div><div class="ttdoc">Initialize one pic object.</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

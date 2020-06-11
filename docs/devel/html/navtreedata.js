@@ -23,6 +23,11 @@ for the JavaScript code in this file
 var NAVTREE =
 [
   [ "PICSim", "index.html", [
+    [ "Introduction", "index.html#intro_sec", null ],
+    [ "Library functions usage simple example", "index.html#example", [
+      [ "picsim_simple.c", "index.html#simple", null ],
+      [ "Makefile", "index.html#makefile", null ]
+    ] ],
     [ "Modules", "modules.html", "modules" ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
@@ -37,7 +42,8 @@ var NAVTREE =
       [ "Globals", "globals.html", [
         [ "All", "globals.html", null ],
         [ "Functions", "globals_func.html", null ],
-        [ "Variables", "globals_vars.html", null ]
+        [ "Variables", "globals_vars.html", null ],
+        [ "Macros", "globals_defs.html", null ]
       ] ]
     ] ]
   ] ]
@@ -46,8 +52,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"struct_p16_emap__t.html#a355ac6531f5989eaa58fe6580b0c46d7",
-"struct_p18map__t.html#abc2a72d78421602b8595c9fa45ba33cb"
+"struct_p16_emap__t.html#a152cbd6bd4b1bf153aee412d79797e8d",
+"struct_p18map__t.html#aae789eb9d47e60551845a645b1831e1b"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
