@@ -804,7 +804,7 @@ write_ihx18(const char * fname)
  unsigned int iaddr = 0;
  int i;
  char values[100];
- char tmp[100];
+ char tmp[200];
 
  fout = fopen (fname, "w");
 

@@ -37,7 +37,7 @@ It can be used as a standalone simulator (picsim executable) or as a library in 
 
 - com0com	- For serial emulation in windows  http://com0com.sourceforge.net/ 
 
-- tty0tty 	- For serial emulation in linux    https://github.com/lcgamboa/tty0tty or http://tty0tty.sourceforge.net/
+- tty0tty 	- For serial emulation in linux    https://github.com/lcgamboa/tty0tty 
 
 - gputils	- For assemble examples            http://gputils.sourceforge.net/
 

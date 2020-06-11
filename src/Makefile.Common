@@ -1,6 +1,5 @@
+include ../VERSION
 
-LIBVER=0.6
-LIBMAINVER=0
 OBJS= common.o p16fxxx.o p16fxxxe.o p18fxxx.o hexfile.o periferic16.o periferic16e.o periferic18.o \
       serial.o icsp.o icsp18.o util.o \
       p16/p16_mssp.o p16/p16_adc.o p16/p16_tmr0.o p16/p16_tmr1.o p16/p16_tmr2.o \

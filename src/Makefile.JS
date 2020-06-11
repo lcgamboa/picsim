@@ -1,3 +1,5 @@
+include Makefile.Common
+
 CC= emcc
 RM= rm -f
 AR= emar
@@ -5,9 +7,9 @@ LN= ln -sfn
 CP= cp
 MKDIR = mkdir -p
 
-LIBVER=0.6
-LIBMAINVER=0
-FLAGS= -Os 
+FLAGS=  -Werror -Os -s DEMANGLE_SUPPORT=0 -s SAFE_HEAP=0 -s ASSERTIONS=0 \
+	 -s TOTAL_MEMORY=16MB -s --preload-file assets  -s --pre-js load.js
+
 #FLAGS+=-s USE_PTHREADS=1 -s PTHREAD_POOL_SIZE=2
 
 prefix = /usr
@@ -17,23 +19,10 @@ bindir = ${exec_prefix}/bin
 libdir = ${exec_prefix}/lib
 
 
-OBJS= common.o p16fxxx.o p16fxxxe.o p18fxxx.o hexfile.o periferic16.o periferic16e.o periferic18.o \
-      serial.o icsp.o icsp18.o util.o \
-      p16/p16_mssp.o p16/p16_adc.o p16/p16_tmr0.o p16/p16_tmr1.o p16/p16_tmr2.o \
-      p16/p16_eeprom.o p16/p16_wdt.o p16/p16_int_pin.o p16/p16_int_portb.o p16/p16_uart.o\
-      p16e/p16e_mssp.o p16e/p16e_adc.o p16e/p16e_tmr0.o p16e/p16e_tmr1.o p16e/p16e_tmr2.o p16e/p16e_interrupt.o\
-      p16e/p16e_eeprom.o p16e/p16e_wdt.o p16e/p16e_int_pin.o p16e/p16e_int_portb.o p16e/p16e_uart.o\
-      p18/p18_mssp.o p18/p18_adc.o p18/p18_tmr0.o p18/p18_tmr1.o p18/p18_tmr2.o p18/p18_tmr3.o\
-      p18/p18_eeprom.o p18/p18_wdt.o p18/p18_int_pin.o p18/p18_int_portb.o p18/p18_uart.o\
-      pics/PIC18F4520.o pics/PIC18F452.o pics/PIC18F4550.o pics/PIC18F45K50.o pics/PIC18F4620.o \
-      pics/PIC16F628A.o pics/PIC16F648A.o pics/PIC16F777.o pics/PIC16F877A.o pics/PIC16F84A.o \
-      pics/PIC16F1619.o pics/PIC16F18855.o pics/PIC16F1939.o pics/PIC16F1788.o pics/PIC16F1789.o \
-      pics/PIC18F27K40.o pics/PIC18F47K40.o
-
 all: all-lib picsim
 
 picsim: libpicsim_js.a picsim.c 
-	$(CC) $(FLAGS) picsim.c -o picsim  libpicsim_js.a 
+	$(CC) $(FLAGS) picsim.c -o picsim.html  libpicsim_js.a 
 
 
 %.o: %.c  
