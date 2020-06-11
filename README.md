@@ -1,8 +1,8 @@
 
 # PICsim - PIC Simulator
 
-PICsim emulates a microcontroller PIC16F84A/16F628/16F777/16F877A/18F452/18F4520/18F4550/18F4620 and periferics such as USART and timers, the simulator architecture permit easy implementation of external elements in c language.
-
+PICsim emulates some PIC microcontroller and periferics such as USART and timers, the simulator architecture permit easy implementation of external elements in c language.
+It can be used as a standalone simulator (picsim executable) or as a library in other programs (As in [PICSimLab](https://github.com/lcgamboa/picsimlab)).
 
 
 
@@ -24,14 +24,24 @@ PICsim emulates a microcontroller PIC16F84A/16F628/16F777/16F877A/18F452/18F4520
 ![PICsim Hardware Support](docs/support.png?raw=true "PICsim Hardware support")
 
 
+[Online Documentation](https://lcgamboa.github.io/picsim/)
+
+[Changelog](./CHANGELOG.md)
+
+
+[TODO list](./TODO.md)
+
+
 ## Utils:
 
 
-com0com		- For serial emulation in windows  http://com0com.sourceforge.net/ 
+- com0com	- For serial emulation in windows  http://com0com.sourceforge.net/ 
 
-tty0tty 	- For serial emulation in linux    https://github.com/lcgamboa/tty0tty or http://tty0tty.sourceforge.net/
+- tty0tty 	- For serial emulation in linux    https://github.com/lcgamboa/tty0tty or http://tty0tty.sourceforge.net/
 
-gputils		- For assemble examples            http://gputils.sourceforge.net/
+- gputils	- For assemble examples            http://gputils.sourceforge.net/
 
-sdcc		- For compile examples             http://sdcc.sourceforge.net/
+- sdcc		- For compile examples             http://sdcc.sourceforge.net/
+
+- PICSimLab       - Simulator that use PICsim       https://github.com/lcgamboa/picsimlab
 
