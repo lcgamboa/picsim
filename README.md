@@ -21,7 +21,7 @@ PICsim emulates a microcontroller PIC16F84A/16F628/16F777/16F877A/18F452/18F4520
 * EEPROM
 * IO PORTS
 
-![PICsim Hardware Support](doc/support.png?raw=true "PICsim Hardware support")
+![PICsim Hardware Support](docs/support.png?raw=true "PICsim Hardware support")
 
 
 ## Utils:
