@@ -5,6 +5,7 @@ PICsim emulates some PIC microcontroller and periferics such as USART and timers
 It can be used as a standalone simulator (picsim executable) or as a library in other programs (As in [PICSimLab](https://github.com/lcgamboa/picsimlab)).
 
 
+![PICsim screen](docs/screen.png?raw=true "PICsim screen")
 
 ## Pic supported hardware:
 
@@ -15,14 +16,16 @@ It can be used as a standalone simulator (picsim executable) or as a library in 
 * TMR1
 * TMR2
 * USART
-* CCP1 ->PWM (8bits) and Comparator
-* CCP2 ->PWM (8bits) and Comparator
-* CCP3 ->PWM (8bits) and Comparator
+* CCP1 - PWM (8bits) and Comparator
+* CCP2 - PWM (8bits) and Comparator
+* CCP3 - PWM (8bits) and Comparator
 * EEPROM
 * IO PORTS
 
+
 ![PICsim Hardware Support](docs/support.png?raw=true "PICsim Hardware support")
 
+## Info:
 
 [Online Documentation](https://lcgamboa.github.io/picsim/)
 

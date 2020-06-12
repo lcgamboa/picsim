@@ -1,11 +1,46 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>PICSim Online Help</title>
+		<title>PICsim Online Help</title>
 	</head>
 	<body>
-		<h1>PICSim Online Help</h1>
-		<br><a href="devel/html/index.html">PICSim code documentation</a>	
+		<h1>PICsim Online Help</h1>
+<br>		
+
+PICsim can be used as a :
+<ul>
+<li> Standalone simulator (Described below)</li>
+<li> Library called by other programs (as described in <a href="devel/html/index.html">PICsim library docs</a>).</li>
+</ul>
+
+<h2>PICsim simulator</h2>
+Picsim is a console program simulator. To use it is necessary to enter the name of the microcontroller and the .hex file to be used.
+
+<pre><code>
+use: ./picsim PICXXFXXX file.hex
+supported processors PIC16:
+         PIC16F84A PIC16F628 PIC16F628A PIC16F877 PIC16F877A PIC16F648A 
+         PIC16F777 PIC16F1619 PIC16F18855 PIC16F18324
+supported processors PIC18:
+         PIC18F452 PIC18F4520 PIC18F4620 PIC18F4550 PIC18F45K50 PIC18F27K40
+         PIC18F47K40
+</code></pre>
+
+<pre><code>
+cli commands:
+  b - goto breakpoint
+  f - goto breakpoint without print (fast)
+  n - run n steps
+  m - show memory
+  r - reset
+  h - help
+  q - quit
+</code></pre>
+
+             <center>
+               <img src='screen.png'>
+               </center> 
+	
 		<br>
                <br>
                <center>
