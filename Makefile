@@ -6,10 +6,10 @@ SUBDIRS= src include
 
 .PHONY: $(SUBDIRS)  
 
-all:$(SUBDIRS) 
+all:$(SUBDIRS) doc
 
 doc:
-	doxygen
+	doxygen 1>/dev/null 2>/dev/null
 	gitchangelog > CHANGELOG.md
 	! leasot -r markdown  src/*.{c,h} src/*/*.{c,h}  > TODO.md 
 

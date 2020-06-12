@@ -31,7 +31,6 @@ It can be used as a standalone simulator (picsim executable) or as a library in 
 
 [Changelog](./CHANGELOG.md)
 
-
 [TODO list](./TODO.md)
 
 
