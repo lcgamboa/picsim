@@ -153,6 +153,13 @@ extern "C" {
         unsigned char * EEADRH;
         unsigned char * EEDATL;
         unsigned char * EEDATH;
+        
+        unsigned char * NVMCON1;
+        unsigned char * NVMCON2;
+        unsigned char * NVMDATL;
+        unsigned char * NVMDATH;
+        unsigned char * NVMADRL;
+        unsigned char * NVMADRH;
 
         //MSSP
         unsigned char * SSP1STAT;

@@ -57,6 +57,7 @@ void p16e_eeprom_2(void);
 void p16e_wdt_rst(void);
 void p16e_wdt(void);    
 void p16e_wdt_2(void);
+void p16e_wdt_3(void);
 
 void p16e_int_pin_rst(void); 
 void p16e_int_pin(void);

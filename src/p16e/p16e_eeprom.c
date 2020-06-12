@@ -103,5 +103,73 @@ p16e_eeprom(void)
       }
     }
   }
+}
 
+void
+p16e_eeprom_2(void)
+{
+ //EEPROM
+
+ if (pic->P16Emap.NVMCON1)
+  {
+   if (((*pic->P16Emap.NVMCON1) & 0x04) == 0x04)
+    {
+     if ((*pic->P16Emap.NVMCON2) != 0)
+      {
+       if ((*pic->P16Emap.NVMCON2) == 0x55)
+        {
+         (*pic->P16Emap.NVMCON2) = 0;
+         pic->ee_wr = -1;
+        }
+       else
+        {
+         if (((*pic->P16Emap.NVMCON2) == 0xAA)&&(pic->ee_wr == -1))
+          {
+           (*pic->P16Emap.NVMCON2) = 0;
+           pic->ee_wr = 1;
+          }
+         else
+          {
+           (*pic->P16Emap.NVMCON2) = 0;
+           pic->ee_wr = 0;
+          }
+        }
+      }
+    }
+
+
+
+   if (((*pic->P16Emap.NVMCON1) & 0x03) != 0x00)
+    {
+     if (((*pic->P16Emap.NVMCON1) & 0x01) == 0x01) //RD
+      {
+       if (((*pic->P16Emap.NVMCON1) & 0x80) == 0)
+        {
+         (*pic->P16Emap.NVMDATL) = pic->eeprom[(*pic->P16Emap.NVMADRL)];
+        }
+       else
+        {
+         (*pic->P16Emap.NVMDATL) = (pic->prog[((*pic->P16Emap.NVMADRH) << 8) | (*pic->P16Emap.NVMADRL)])&0x00FF;
+         (*pic->P16Emap.NVMDATH) = ((pic->prog[((*pic->P16Emap.NVMADRH) << 8) | (*pic->P16Emap.NVMADRL)])&0xFF00) >> 8;
+        }
+       (*pic->P16Emap.NVMCON1) &= ~0x01;
+      }
+     else
+      {
+       if (pic->ee_wr == 1)
+        {
+         if (((*pic->P16Emap.NVMCON1) & 0x80) == 0)
+          {
+           pic->eeprom[(*pic->P16Emap.NVMADRL)] = (*pic->P16Emap.NVMDATL);
+          }
+         else
+          {
+           pic->prog[((*pic->P16Emap.NVMADRH) << 8) | (*pic->P16Emap.NVMADRL)] = ((*pic->P16Emap.NVMDATH) << 8) | (*pic->P16Emap.NVMDATL);
+          }
+         (*pic->P16Emap.NVMCON1) &= ~0x02;
+         pic->ee_wr = 0;
+        }
+      }
+    }
+  }
 }

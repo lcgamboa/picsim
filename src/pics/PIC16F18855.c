@@ -314,12 +314,14 @@ PIC16F18855_map(void)
  pic->P16Emap.VREGCON = &pic->ram[0x812];
  pic->P16Emap.PCON0 = &pic->ram[0x813];
  pic->P16Emap.CCDCON = &pic->ram[0x814];
+ */
  pic->P16Emap.NVMADRL = &pic->ram[0x81A];
  pic->P16Emap.NVMADRH = &pic->ram[0x81B];
  pic->P16Emap.NVMDATL = &pic->ram[0x81C];
  pic->P16Emap.NVMDATH = &pic->ram[0x81D];
  pic->P16Emap.NVMCON1 = &pic->ram[0x81E];
  pic->P16Emap.NVMCON2 = &pic->ram[0x81F];
+  /* 
  pic->P16Emap.CPUDOZE = &pic->ram[0x88C];
  pic->P16Emap.OSCCON1 = &pic->ram[0x88D];
  pic->P16Emap.OSCCON2 = &pic->ram[0x88E];
@@ -693,7 +695,7 @@ PIC16F18855_periferic(void)
   p16e_int_ports();
   p16e_tmr0_2 ();
   p16e_wdt ();
-  //p16e_eeprom ();
+  p16e_eeprom_2 ();
   p16e_tmr1 ();
   p16e_tmr2 ();
   p16e_uart ();

@@ -14,6 +14,7 @@
 | [src/p16e/p16e_mssp.c](src/p16e/p16e_mssp.c#L59) | 59 | add CLK POL and FREQ READ OP support
 | [src/p16e/p16e_tmr0.c](src/p16e/p16e_tmr0.c#L101) | 101 | implement TMR0 postscaler
 | [src/p16e/p16e_wdt.c](src/p16e/p16e_wdt.c#L43) | 43 | WDT support window and clock select
+| [src/p16e/p16e_wdt.c](src/p16e/p16e_wdt.c#L150) | 150 | WDT support window and clock select
 | [src/p18/p18_mssp.c](src/p18/p18_mssp.c#L59) | 59 | CLK POL and FREQ READ OP support
 | [src/p18/p18_mssp.c](src/p18/p18_mssp.c#L350) | 350 | CLK POL and FREQ READ OP support
 | [src/p18/p18_tmr0.c](src/p18/p18_tmr0.c#L114) | 114 | buffer TMR0H writes latch
@@ -22,7 +23,7 @@
 | [src/p18/p18_tmr2.c](src/p18/p18_tmr2.c#L119) | 119 | TMR2 incomplet
 | [src/p18/p18_wdt.c](src/p18/p18_wdt.c#L77) | 77 | WDT support window and clock select
 | [src/pics/PIC16F1619.c](src/pics/PIC16F1619.c#L523) | 523 | add P16E pin interrupt support
-| [src/pics/PIC16F18855.c](src/pics/PIC16F18855.c#L668) | 668 | add P16E pin interrupt support
+| [src/pics/PIC16F18855.c](src/pics/PIC16F18855.c#L670) | 670 | add P16E pin interrupt support
 | [src/pics/PIC18F45K50.c](src/pics/PIC18F45K50.c#L386) | 386 | add all ADC channels
 
 ### FIXMEs
