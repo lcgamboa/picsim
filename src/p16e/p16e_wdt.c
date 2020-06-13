@@ -154,9 +154,9 @@ p16e_wdt_3(void)
  pic->config[2] &  0x001F  WDTCPS WDT Configuration Period Select bits
   */
 
- if ((pic->getconf (CFG_WDT) == 0xC0) || //Enabled
-    ((pic->getconf (CFG_WDT) == 0x80)&& pic->sleep) || //Enabled and disabled in sleep    
-    ((pic->getconf (CFG_WDT) == 0x40)&&((*pic->P16Emap.WDTCON) & 0x01))) //Software Enable
+ if ((pic->getconf (CFG_WDT) == 0x0C) || //Enabled
+    ((pic->getconf (CFG_WDT) == 0x08)&& pic->sleep) || //Enabled and disabled in sleep    
+    ((pic->getconf (CFG_WDT) == 0x04)&&((*pic->P16Emap.WDTCON) & 0x01))) //Software Enable
   {
    pic->twdt += 4.0 / pic->freq;
 
@@ -170,7 +170,7 @@ p16e_wdt_3(void)
      pic->twdt = 0;
      pic->wdt++;
      if (pic->wdt == pic->WDT_MS)
-      {
+      {   
        //reset
        pic->wdt = 0;
 

@@ -50,9 +50,10 @@ p16e_adc(void)
     {
 
 
-     chn = ((*pic->P16Emap.ADCON0)&0x7C) >> 2;
+     chn = ((*pic->P16Emap.ADCON0)&0xFC) >> 2;
 
-     if (pic->pins[pic->adc[chn] - 1].ptype == PT_ANALOG)
+     
+     if((pic->adc[chn])&&(pic->pins[pic->adc[chn] - 1].ptype == PT_ANALOG))
       {
        val = pic->pins[pic->adc[chn] - 1].avalue;
       }

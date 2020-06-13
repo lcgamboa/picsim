@@ -690,7 +690,7 @@ void
 PIC16F18855_periferic(void)
 {
   p16e_mssp ();
-  p16e_adc ();
+  //p16e_adc_2 ();
   //p16e_int_pin();
   p16e_int_ports();
   p16e_tmr0_2 ();

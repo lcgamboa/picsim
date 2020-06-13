@@ -5,6 +5,8 @@
 
 ### New
 
+* PIC16F18324 WDT and EEPROM support. [lcgamboa]
+
 * Doxygen docs. [lcgamboa]
 
 * PIC18F4XK40 eeprom support. [lcgamboa]

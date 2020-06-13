@@ -367,14 +367,25 @@ PIC16F18324_reset(void)
  pic->adc[0] = 13;
  pic->adc[1] = 12;
  pic->adc[2] = 11;
- pic->adc[3] = 3;
- pic->adc[4] = 2;
- pic->adc[5] = 10;
- pic->adc[6] = 9;
- pic->adc[7] = 8;
- pic->adc[8] = 7;
- pic->adc[9] = 6;
- pic->adc[10] = 5;
+ pic->adc[3] = 0;
+ pic->adc[4] = 3;
+ pic->adc[5] = 2;
+ pic->adc[6] = 0;
+ pic->adc[7] = 0;
+ pic->adc[8] = 0;
+ pic->adc[9] = 0;
+ pic->adc[10] = 0;
+ pic->adc[11] = 0;
+ pic->adc[12] = 0;
+ pic->adc[13] = 0;
+ pic->adc[14] = 0;
+ pic->adc[15] = 0;
+ pic->adc[16] = 10;
+ pic->adc[17] = 9;
+ pic->adc[18] = 8;
+ pic->adc[19] = 7;
+ pic->adc[20] = 6;
+ pic->adc[21] = 5;
 
  pic->usart[0] = 5;
  pic->usart[1] = 6;
@@ -429,7 +440,7 @@ PIC16F18324_getconf(unsigned int cfg)
    return (pic->config[1] & 0x0001);
    break;
   case CFG_WDT:
-   return (pic->config[1] &  0x00C0);
+   return (pic->config[1] &  0x000C);
    break;
   case CFG_DEBUG:
    return  !(pic->config[1] &  0x0200);
@@ -449,7 +460,7 @@ PIC16F18324_start(void)
  pic->CONFIGSIZE = 4;
  pic->STACKSIZE = 16;
  pic->CCPCOUNT = 4;
- pic->ADCCOUNT = 11;
+ pic->ADCCOUNT = 22;
  pic->WDT_MS = 1;
  pic->reset = PIC16F18324_reset;
  pic->mmap = PIC16F18324_map;
