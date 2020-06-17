@@ -18,6 +18,7 @@
 | [src/p16e/p16e_wdt.c](src/p16e/p16e_wdt.c#L150) | 150 | WDT support window and clock select
 | [src/p18/p18_mssp.c](src/p18/p18_mssp.c#L59) | 59 | CLK POL and FREQ READ OP support
 | [src/p18/p18_mssp.c](src/p18/p18_mssp.c#L350) | 350 | CLK POL and FREQ READ OP support
+| [src/p18/p18_pps_out.c](src/p18/p18_pps_out.c#L29) | 29 | implement PPS Lock
 | [src/p18/p18_tmr0.c](src/p18/p18_tmr0.c#L114) | 114 | buffer TMR0H writes latch
 | [src/p18/p18_tmr0.c](src/p18/p18_tmr0.c#L125) | 125 | implement postscaler
 | [src/p18/p18_tmr1.c](src/p18/p18_tmr1.c#L127) | 127 | support all modes

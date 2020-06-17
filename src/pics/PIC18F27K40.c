@@ -138,6 +138,7 @@ PIC18F27K40_map(void)
  pic->P18map.PMD3 = &pic->ram[0xEE4];
  pic->P18map.PMD4 = &pic->ram[0xEE5];
  pic->P18map.PMD5 = &pic->ram[0xEE6];
+ */ 
  pic->P18map.RA0PPS = &pic->ram[0xEE7];
  pic->P18map.RA1PPS = &pic->ram[0xEE8];
  pic->P18map.RA2PPS = &pic->ram[0xEE9];
@@ -162,6 +163,7 @@ PIC18F27K40_map(void)
  pic->P18map.RC5PPS = &pic->ram[0xEFC];
  pic->P18map.RC6PPS = &pic->ram[0xEFD];
  pic->P18map.RC7PPS = &pic->ram[0xEFE];
+ /*
  pic->P18map.IOCAF = &pic->ram[0xF0A];
  pic->P18map.IOCAN = &pic->ram[0xF0B];
  pic->P18map.IOCAP = &pic->ram[0xF0C];
@@ -582,6 +584,7 @@ PIC18F27K40_reset(void)
 void
 PIC18F27K40_periferic(void)
 {
+  p18_pps_out();
   p18_mssp_2 ();
   p18_adc_3 ();
   p18_int_pin_2();
