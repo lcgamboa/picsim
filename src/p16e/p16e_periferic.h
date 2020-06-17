@@ -70,6 +70,8 @@ void p16e_uart_rst(void);
 void p16e_uart_rst_2(void);
 #define p16e_uart serial
 
+void p16e_pps_out_rst(void);
+void p16e_pps_out(void);
 
 #ifdef __cplusplus
 }

@@ -431,6 +431,7 @@ PIC16F18855_map(void)
  pic->P16Emap.SSP2SSPPS = &pic->ram[0xECA];
  pic->P16Emap.RXPPS = &pic->ram[0xECB];
  pic->P16Emap.TXPPS = &pic->ram[0xECC];
+ */ 
  pic->P16Emap.RA0PPS = &pic->ram[0xF10];
  pic->P16Emap.RA1PPS = &pic->ram[0xF11];
  pic->P16Emap.RA2PPS = &pic->ram[0xF12];
@@ -455,7 +456,6 @@ PIC16F18855_map(void)
  pic->P16Emap.RC5PPS = &pic->ram[0xF25];
  pic->P16Emap.RC6PPS = &pic->ram[0xF26];
  pic->P16Emap.RC7PPS = &pic->ram[0xF27];
- */
  pic->P16Emap.ANSELA = &pic->ram[0xF38];
  /*
  pic->P16Emap.WPUA = &pic->ram[0xF39];
@@ -674,6 +674,7 @@ PIC16F18855_reset(void)
  pic->int2 = 0;
   */ 
  
+ p16e_pps_out_rst();
  p16e_tmr0_rst ();
  p16e_tmr1_rst ();
  p16e_tmr2_rst ();
@@ -689,6 +690,7 @@ PIC16F18855_reset(void)
 void
 PIC16F18855_periferic(void)
 {
+  p16e_pps_out();
   p16e_mssp ();
   //p16e_adc_2 ();
   p16e_int_pin_2();

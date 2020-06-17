@@ -568,6 +568,7 @@ PIC18F27K40_reset(void)
  pic->int1 = 14;
  pic->int2 = 15;
 
+ p18_pps_out_rst();
  p18_tmr0_rst ();
  p18_tmr1_rst ();
  p18_tmr2_rst ();

@@ -5,6 +5,8 @@
 
 ### New
 
+* PIC18Fx7K40 PPS output support added. [lcgamboa]
+
 * PIC16F18324 WDT and EEPROM support. [lcgamboa]
 
 * Doxygen docs. [lcgamboa]

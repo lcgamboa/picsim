@@ -248,6 +248,7 @@ PIC16F18324_map(void)
  pic->P16Emap.T3GPPS = &pic->ram[0xE2D];
  pic->P16Emap.T5CKIPPS = &pic->ram[0xE2E];
  pic->P16Emap.T5GPPS = &pic->ram[0xE2F];
+ */ 
  pic->P16Emap.RA0PPS = &pic->ram[0xE90];
  pic->P16Emap.RA1PPS = &pic->ram[0xE91];
  pic->P16Emap.RA2PPS = &pic->ram[0xE92];
@@ -259,6 +260,7 @@ PIC16F18324_map(void)
  pic->P16Emap.RC3PPS = &pic->ram[0xEA3];
  pic->P16Emap.RC4PPS = &pic->ram[0xEA4];
  pic->P16Emap.RC5PPS = &pic->ram[0xEA5];
+ /*
  pic->P16Emap.CLCDATA = &pic->ram[0xF0F];
  pic->P16Emap.CLC1CON = &pic->ram[0xF10];
  pic->P16Emap.CLC1POL = &pic->ram[0xF11];
@@ -404,6 +406,7 @@ PIC16F18324_reset(void)
  pic->int1 = 0;
  pic->int2 = 0;
 
+ p16e_pps_out_rst();
  p16e_tmr0_rst ();
  p16e_tmr1_rst ();
  p16e_tmr2_rst ();
@@ -419,6 +422,7 @@ PIC16F18324_reset(void)
 void
 PIC16F18324_periferic (void)
 {
+ p16e_pps_out();
  p16e_mssp ();
  p16e_adc ();
  p16e_int_pin_2();
