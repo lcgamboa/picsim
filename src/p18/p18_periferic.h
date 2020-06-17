@@ -81,6 +81,9 @@ void p18_uart_rst_2(void);
 void p18_uart_rst_3(void);
 #define p18_uart serial
 
+void p18_pps_out_rst(void);
+void p18_pps_out(void);
+
 
 #ifdef __cplusplus
 }

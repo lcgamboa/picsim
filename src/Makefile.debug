@@ -9,7 +9,7 @@ MKDIR = mkdir -p
 
 FLAGS= -ggdb -Wall 
 
-#FLAGS+=-fsanitize=address
+FLAGS+=-fsanitize=address
 
 prefix = /usr
 exec_prefix = ${prefix}

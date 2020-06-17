@@ -52,3 +52,9 @@ p16e_int_pin(void)
  pic->int0v = pic->pins[pic->int0 - 1].value;
 
 }
+
+void
+p16e_int_pin_2(void)
+{
+  //TODO add support to PIC16F18XXX
+}

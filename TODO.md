@@ -11,6 +11,7 @@
 | [src/p18fxxx.c](src/p18fxxx.c#L1821) | 1821 | P18  incomplet  SUBWF flags
 | [src/p18fxxx.c](src/p18fxxx.c#L1842) | 1842 | P18 incomplet SUBWF flags
 | [src/p16/p16_mssp.c](src/p16/p16_mssp.c#L59) | 59 | add CLK POL and FREQ READ OP support
+| [src/p16e/p16e_int_pin.c](src/p16e/p16e_int_pin.c#L59) | 59 | add support to PIC16F18XXX
 | [src/p16e/p16e_mssp.c](src/p16e/p16e_mssp.c#L59) | 59 | add CLK POL and FREQ READ OP support
 | [src/p16e/p16e_tmr0.c](src/p16e/p16e_tmr0.c#L101) | 101 | implement TMR0 postscaler
 | [src/p16e/p16e_wdt.c](src/p16e/p16e_wdt.c#L43) | 43 | WDT support window and clock select

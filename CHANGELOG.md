@@ -37,6 +37,8 @@
 
 ### Fix
 
+* PIC16F18324 ADC and WDT fixed. [lcgamboa]
+
 * P18 TOSU write bug fixed. [lcgamboa]
 
 * WDT time error bug fixed. [lcgamboa]

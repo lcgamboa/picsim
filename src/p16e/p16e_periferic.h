@@ -61,6 +61,7 @@ void p16e_wdt_3(void);
 
 void p16e_int_pin_rst(void); 
 void p16e_int_pin(void);
+void p16e_int_pin_2(void);
 
 void p16e_int_ports_rst(void);
 void p16e_int_ports(void);

@@ -421,7 +421,7 @@ PIC16F18324_periferic (void)
 {
  p16e_mssp ();
  p16e_adc ();
- p16e_int_pin ();
+ p16e_int_pin_2();
  //p16e_int_ports ();
  p16e_tmr0_2 ();
  p16e_wdt_3 ();
