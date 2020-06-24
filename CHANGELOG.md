@@ -1,9 +1,11 @@
 # Changelog
 
 
-## (unreleased)
+## v0.8.1 (2020-06-17)
 
 ### New
+
+* PIC16E PPS output support added. [lcgamboa]
 
 * PIC18Fx7K40 PPS output support added. [lcgamboa]
 
