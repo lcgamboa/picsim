@@ -45,16 +45,16 @@ extern void pic_decode_18(_pic * pic);
  
   
 
-int            icsp_type;
-int            icsp_mode;
-unsigned int   icsp_addr;  
-unsigned short icsp_data[10];
-unsigned short icsp_datac;
-unsigned int   icsp_cmddata;
-unsigned int   icsp_bit;
-unsigned char  icsp_sda;
-unsigned char  icsp_sck;
-unsigned char  icsp_cmd;  
+static int            icsp_type;
+static int            icsp_mode;
+static unsigned int   icsp_addr;  
+//static unsigned short icsp_data[10];
+static unsigned short icsp_datac;
+static unsigned int   icsp_cmddata;
+static unsigned int   icsp_bit;
+static unsigned char  icsp_sda;
+static unsigned char  icsp_sck;
+static unsigned char  icsp_cmd;  
 
 
 
