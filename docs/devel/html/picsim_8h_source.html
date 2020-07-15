@@ -449,7 +449,7 @@ $(document).ready(function(){initNavTree('picsim_8h_source.html',''); initResiza
 <div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;    <span class="keyword">extern</span> <span class="keywordtype">int</span> PIC_count;</div>
 <div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160; </div>
 <div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;<span class="preprocessor">#define init_pic(function, family, ID)  \</span></div>
-<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;<span class="preprocessor">       static pic_desc desc_ ## function  = { ID , &quot;function&quot;, family  , function ## _start };\</span></div>
+<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;<span class="preprocessor">       static pic_desc desc_ ## function  = { ID , #function , family  , function ## _start };\</span></div>
 <div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;<span class="preprocessor">       static void __attribute__((constructor)) init_ ## function(void);\</span></div>
 <div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;<span class="preprocessor">       static void init_ ## function (void){ \</span></div>
 <div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;<span class="preprocessor">       pic_register(desc_ ## function);}</span></div>

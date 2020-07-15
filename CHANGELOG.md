@@ -7,6 +7,10 @@
 
 * Microcontroller dynamic register. [lcgamboa]
 
+### Fix
+
+* Correct name of PIC in register macro. [lcgamboa]
+
 
 ## v0.8.1 (2020-06-17)
 
