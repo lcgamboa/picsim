@@ -637,7 +637,7 @@ extern "C" {
     extern int PIC_count;
 
 #define init_pic(function, family, ID)  \
-       static pic_desc desc_ ## function  = { ID , "function", family  , function ## _start };\
+       static pic_desc desc_ ## function  = { ID , #function , family  , function ## _start };\
        static void __attribute__((constructor)) init_ ## function(void);\
        static void init_ ## function (void){ \
        pic_register(desc_ ## function);}
