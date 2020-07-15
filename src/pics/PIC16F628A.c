@@ -229,3 +229,4 @@ PIC16F628A_start(void)
  pic->periferic = PIC16F628A_periferic;
 }
 
+init_pic(PIC16F628A, P16, 0x1060);

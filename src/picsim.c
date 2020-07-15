@@ -235,8 +235,6 @@ main_loop(void)
 
  if (c != 'q') c = 0;
 
-
-
 }
 
 int
@@ -290,6 +288,7 @@ main(int argc, char** argv)
   }
  else
   {
+   //TODO use the dyanmic list PICS[]
    printf ("use: %s PICXXFXXX file.hex\n", argv[0]);
    printf ("supported processors PIC16:\n");
    printf ("         PIC16F84A PIC16F628 PIC16F628A PIC16F877 PIC16F877A PIC16F648A \n");

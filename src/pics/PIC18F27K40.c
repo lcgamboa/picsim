@@ -637,3 +637,5 @@ PIC18F27K40_start(void)
  pic->interrupt = interrupt18_2;
 }
 
+init_pic(PIC18F27K40, P18, 0x6960);
+

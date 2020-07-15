@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2008-2020  Luis Claudio GambÃ´a Lopes
+   Copyright (c) : 2008-2020  Luis Claudio Gambôa Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -28,184 +28,63 @@
 
 #include "../include/picsim.h"
 
-int
+unsigned int
 getprocbyname(const char *str)
 {
+ int i;
+ for (i = 0; i < PIC_count; i++)
+  {
+   if (strcmp (PICS[i].name, str) == 0)
+    {
+     return PICS[i].ID;
+    }
+  }
 
- if (!strcmp ("PIC16F84A", str))return P16F84A;
- if (!strcmp ("PIC16F628", str))return P16F628;
- if (!strcmp ("PIC16F628A", str))return P16F628A;
- if (!strcmp ("PIC16F648A", str))return P16F648A;
- if (!strcmp ("PIC16F648AICD", str))return P16F648AICD;
- if (!strcmp ("PIC16F877", str))return P16F877;
- if (!strcmp ("PIC16F877A", str))return P16F877A;
- if (!strcmp ("PIC16F777", str))return P16F777;
-
- if (!strcmp ("PIC16F1619", str))return P16F1619;
- if (!strcmp ("PIC16F1788", str))return P16F1788;
- if (!strcmp ("PIC16F1789", str))return P16F1789;
- if (!strcmp ("PIC16F18855", str))return P16F18855;
- if (!strcmp ("PIC16F1939", str))return P16F1939;
- if (!strcmp ("PIC16F18324", str))return P16F18324;
- 
- if (!strcmp ("PIC18F452", str))return P18F452;
- if (!strcmp ("PIC18F4520", str))return P18F4520;
- if (!strcmp ("PIC18F4620", str))return P18F4620;
- if (!strcmp ("PIC18F4550", str))return P18F4550;
- if (!strcmp ("PIC18F45K50", str))return P18F45K50;
- if (!strcmp ("PIC18F27K40", str))return P18F27K40;
- if (!strcmp ("PIC18F47K40", str))return P18F47K40;
- 
  return 0;
 }
 
 char *
 getnamebyproc(int proc, char *str)
 {
- switch (proc)
+
+ int i;
+ for (i = 0; i < PIC_count; i++)
   {
-  case P16F84A:
-   strcpy (str, "PIC16F84A");
-   break;
-  case P16F628:
-   strcpy (str, "PIC16F628");
-   break;
-  case P16F628A:
-   strcpy (str, "PIC16F628A");
-   break;
-  case P16F648A:
-   strcpy (str, "PIC16F648A");
-   break;
-  case P16F648AICD:
-   strcpy (str, "PIC16F648AICD");
-   break;
-  case P16F877:
-   strcpy (str, "PIC16F877");
-   break;
-  case P16F877A:
-   strcpy (str, "PIC16F877A");
-   break;
-  case P16F777:
-   strcpy (str, "PIC16F777");
-   break;
-
-  case P16F1619:
-   strcpy (str, "PIC16F1619");
-   break;
-
-  case P16F1788:
-   strcpy (str, "PIC16F1788");
-   break;
-
-  case P16F1789:
-   strcpy (str, "PIC16F1789");
-   break;
-
-  case P16F18855:
-   strcpy (str, "PIC16F18855");
-   break;
-
-  case P16F1939:
-   strcpy (str, "PIC16F1939");
-   break;
-   
-  case P16F18324:
-   strcpy (str, "PIC16F18324");
-   break; 
-
-  case P18F452:
-   strcpy (str, "PIC18F452");
-   break;
-
-  case P18F4520:
-   strcpy (str, "PIC18F4520");
-   break;
-
-  case P18F4620:
-   strcpy (str, "PIC18F4620");
-   break;
-
-  case P18F4550:
-   strcpy (str, "PIC18F4550");
-   break;
-
-  case P18F45K50:
-   strcpy (str, "PIC18F45K50");
-   break;
-
-  case P18F27K40:
-   strcpy (str, "PIC18F27K40");
-   break;
-  
-  case P18F47K40:
-   strcpy (str, "PIC18F47K40");
-   break;
-
-  default:
-   str = NULL;
+   if (PICS[i].ID == proc)
+    {
+     strcpy (str, PICS[i].name);
+     return str;
+    }
   }
-
+ str = NULL;
  return str;
-};
+}
 
-int
+unsigned int
 getfprocbyname(const char *str)
 {
-
- if (!strcmp ("PIC16F84A", str))return P16;
- if (!strcmp ("PIC16F628", str))return P16;
- if (!strcmp ("PIC16F628A", str))return P16;
- if (!strcmp ("PIC16F648A", str))return P16;
- if (!strcmp ("PIC16F648AICD", str))return P16;
- if (!strcmp ("PIC16F877", str))return P16;
- if (!strcmp ("PIC16F877A", str))return P16;
- if (!strcmp ("PIC16F777", str))return P16;
-
- if (!strcmp ("PIC16F1619", str))return P16E;
- if (!strcmp ("PIC16F1788", str))return P16E;
- if (!strcmp ("PIC16F1789", str))return P16E;
- if (!strcmp ("PIC16F18855", str))return P16E;
- if (!strcmp ("PIC16F1939", str))return P16E;
- if (!strcmp ("PIC16F18324", str))return P16E;
-
- if (!strcmp ("PIC18F452", str))return P18;
- if (!strcmp ("PIC18F4520", str))return P18;
- if (!strcmp ("PIC18F4620", str))return P18;
- if (!strcmp ("PIC18F4550", str))return P18;
- if (!strcmp ("PIC18F45K50", str))return P18;
- if (!strcmp ("PIC18F27K40", str))return P18;
- if (!strcmp ("PIC18F47K40", str))return P18;
- 
+ int i;
+ for (i = 0; i < PIC_count; i++)
+  {
+   if (strcmp (PICS[i].name, str) == 0)
+    {
+     return PICS[i].family;
+    }
+  }
  return 0;
 }
 
-int
+unsigned int
 getfprocbynumber(int proc)
 {
-
- if (P16F84A == proc)return P16;
- if (P16F628 == proc)return P16;
- if (P16F628A == proc)return P16;
- if (P16F648A == proc)return P16;
- if (P16F648AICD == proc)return P16;
- if (P16F877 == proc)return P16;
- if (P16F877A == proc)return P16;
- if (P16F777 == proc)return P16;
-
- if (P16F1619 == proc)return P16E;
- if (P16F1788 == proc)return P16E;
- if (P16F1789 == proc)return P16E;
- if (P16F18855 == proc)return P16E;
- if (P16F1939 == proc)return P16E;
- if (P16F18324 == proc)return P16E;
- 
- if (P18F452 == proc)return P18;
- if (P18F4520 == proc)return P18;
- if (P18F4620 == proc)return P18;
- if (P18F4550 == proc)return P18;
- if (P18F45K50 == proc)return P18;
- if (P18F27K40 == proc)return P18;
- if (P18F47K40 == proc)return P18;
+ int i;
+ for (i = 0; i < PIC_count; i++)
+  {
+   if (PICS[i].ID == proc)
+    {
+     return PICS[i].family;
+    }
+  }
 
  return 0;
 }

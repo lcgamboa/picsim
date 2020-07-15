@@ -7,7 +7,7 @@ LN= ln -sfn
 CP= cp
 MKDIR = mkdir -p
 
-FLAGS= -Wall -O3 -fpic -fsigned-char -Winline 
+FLAGS= -Wall -O2 -fpic -fsigned-char -Winline 
 
 prefix = /usr
 exec_prefix = ${prefix}
@@ -18,8 +18,9 @@ libdir = ${exec_prefix}/lib
 
 all: all-lib picsim
 
-picsim: libpicsim.a picsim.c 
+picsim: libpicsim.a picsim.c modules.c
 	$(CC) $(FLAGS) picsim.c -o picsim  libpicsim.a 
+	$(CC) $(FLAGS) $(OBJS) modules.c -o modules 
 
 %.o: %.c  
 	$(CC) -c $(FLAGS) $< -o $@ 

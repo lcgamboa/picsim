@@ -286,3 +286,4 @@ PIC16F877A_start(void)
  pic->periferic = PIC16F877A_periferic;
 }
 
+init_pic(PIC16F877A, P16, 0x0e20);

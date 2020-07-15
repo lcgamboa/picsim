@@ -408,3 +408,4 @@ PIC16F1939_start(void)
  pic->interrupt = interrupt16E;
 }
 
+init_pic(PIC16F1939, P16E, 0x23C0);

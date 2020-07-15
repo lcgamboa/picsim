@@ -527,3 +527,4 @@ PIC16F1789_start(void)
  pic->interrupt = interrupt16E;
 }
 
+init_pic(PIC16F1789, P16E, 0x302A);

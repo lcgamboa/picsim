@@ -181,3 +181,5 @@ PIC16F84A_start(void)
  pic->periferic = PIC16F84A_periferic;
 }
 
+init_pic(PIC16F84A, P16, 0x0560);
+

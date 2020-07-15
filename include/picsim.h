@@ -116,38 +116,42 @@ extern "C" {
 #define P16E  3
     /**@}*/
 
-    /**
-     * \defgroup procid pic microcontollers ID
-     * @{
-     */
-
+ //FIXME remove all IDs 
+    
     //P16 processors
 #define P16F84A      0x0560
-#define P16F628      0x07C0
+
+/*
+  #define P16F628      0x07C0
 #define P16F877      0x09A0
 #define P16F628A     0x1060 
 #define P16F648A     0x1100 
 #define P16F648AICD  0x1120 
 #define P16F877A     0x0E20
+ */ 
 #define P16F777      0x0DE0
-
+/*
     //P16E processors
 #define P16F1619     0x307D
 #define P16F1788     0x302B
 #define P16F1789     0x302A  
+ */ 
 #define P16F18855    0X306C
+/*
 #define P16F1939     0x23C0
 #define P16F18324    0x303A
 
     //P18 processors
+ */ 
 #define P18F452     0x0420
+/*
 #define P18F4520    0x1080
 #define P18F4620    0x0C00
 #define P18F4550    0x1200
 #define P18F45K50   0x5C00
 #define P18F27K40   0x6960
 #define P18F47K40   0x6900
-    /**@}*/
+    */
 
     /**
      * \defgroup cfg config flags
@@ -542,7 +546,7 @@ extern "C" {
      * @param str name of microcontoller 
      * @return ID of microcontroller 
      */
-    int getprocbyname(const char *str);
+    unsigned int getprocbyname(const char *str);
 
     /**
      * @brief Return processor family ID by name 
@@ -550,7 +554,7 @@ extern "C" {
      * @param str name of microcontoller 
      * @return family ID of microcontroller 
      */
-    int getfprocbyname(const char *str);
+    unsigned int getfprocbyname(const char *str);
 
     /**
      * @brief Return processor family ID by ID 
@@ -558,7 +562,7 @@ extern "C" {
      * @param proc ID of microcontoller 
      * @return family ID of microcontroller 
      */
-    int getfprocbynumber(int proc);
+    unsigned int getfprocbynumber(int proc);
 
     /**
      * @brief Return processor name by ID 
@@ -611,7 +615,7 @@ extern "C" {
      */
     const char * getPinName(_pic * pic, int pin, char * pname);
 
-     /**
+    /**
      * @brief Return the mapped address of FSR struct member  
      * 
      * @param fsr P16map_t, P16Emap_t or P18map_t struct member.
@@ -619,6 +623,27 @@ extern "C" {
      */
 #define sfr_addr(fsr) (fsr - pic->ram)
 
+    typedef struct {
+        unsigned short ID;
+        char name [30];
+        unsigned char family;
+        void (*start) (void);
+    } pic_desc;
+
+
+#define PMAX 20
+
+    extern pic_desc PICS[PMAX];
+    extern int PIC_count;
+
+#define init_pic(function, family, ID)  \
+       static pic_desc desc_ ## function  = { ID , "function", family  , function ## _start };\
+       static void __attribute__((constructor)) init_ ## function(void);\
+       static void init_ ## function (void){ \
+       pic_register(desc_ ## function);}
+       
+
+    void pic_register(pic_desc picd);
 
 #endif
 

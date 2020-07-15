@@ -392,3 +392,4 @@ PIC18F4550_start(void)
  pic->interrupt = interrupt18;
 }
 
+init_pic(PIC18F4550, P18, 0x1200);

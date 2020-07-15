@@ -473,3 +473,4 @@ PIC16F18324_start(void)
  pic->interrupt = interrupt16E_2;
 }
 
+init_pic(PIC16F18324, P16E, 0x303A);

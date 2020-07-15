@@ -10,6 +10,7 @@
 | [src/p18fxxx.c](src/p18fxxx.c#L1780) | 1780 | P18  incomplet  SUBWFB flags
 | [src/p18fxxx.c](src/p18fxxx.c#L1821) | 1821 | P18  incomplet  SUBWF flags
 | [src/p18fxxx.c](src/p18fxxx.c#L1842) | 1842 | P18 incomplet SUBWF flags
+| [src/picsim.c](src/picsim.c#L291) | 291 | use the dyanmic list PICS[]
 | [src/p16/p16_mssp.c](src/p16/p16_mssp.c#L59) | 59 | add CLK POL and FREQ READ OP support
 | [src/p16e/p16e_int_pin.c](src/p16e/p16e_int_pin.c#L59) | 59 | add support to PIC16F18XXX
 | [src/p16e/p16e_mssp.c](src/p16e/p16e_mssp.c#L59) | 59 | add CLK POL and FREQ READ OP support

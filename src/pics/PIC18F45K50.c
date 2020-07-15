@@ -485,3 +485,5 @@ PIC18F45K50_start(void)
  pic->interrupt = interrupt18;
 }
 
+init_pic(PIC18F45K50, P18, 0x5c00);
+

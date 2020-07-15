@@ -300,3 +300,4 @@ PIC16F777_start(void)
  pic->periferic = PIC16F777_periferic;
 }
 
+init_pic(PIC16F777, P16, 0x0de0);

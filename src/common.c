@@ -32,27 +32,7 @@
 #include"../include/periferic16e.h"
 #include"../include/periferic18.h"
 
-
-void PIC16F628A_start(void);
-void PIC16F648A_start(void);
-void PIC16F777_start(void);
-void PIC16F877A_start(void);
-void PIC16F84A_start(void);
-
-void PIC16F1619_start(void);
-void PIC16F1788_start(void);
-void PIC16F1789_start(void);
-void PIC16F18855_start(void);
-void PIC16F1939_start(void);
-void PIC16F18324_start(void);
-
-void PIC18F4520_start(void);
-void PIC18F452_start(void);
-void PIC18F4550_start(void);
-void PIC18F45K50_start(void);
-void PIC18F4620_start(void);
-void PIC18F27K40_start(void);
-void PIC18F47K40_start(void);
+#include"modules.h" //dirt hack to include dynamic load in static lib
 
 _pic * pic; //global object
 
@@ -66,6 +46,10 @@ extern void
 pic_decode_18(void);
 
 unsigned char NO_IO[5] = {1, 2, 3, 4, 5};
+
+int PIC_count;
+
+pic_desc PICS[PMAX];
 
 unsigned short *
 memsets(unsigned short * mem, unsigned short value, unsigned long size)
@@ -116,94 +100,20 @@ pic_init(_pic * pic_, int processor, const char * fname, int leeprom, float freq
 
  pic->pkg = PDIP;
 
- switch (pic->family)
+ retcode = 0;
+ for (i = 0; i < PIC_count; i++)
   {
-  case P16:
-   switch (processor)
+   if (PICS[i].ID == processor)
     {
-    case P16F84A:
-     PIC16F84A_start ();
-     break;
-    case P16F628:
-    case P16F628A:
-     PIC16F628A_start ();
-     break;
-    case P16F648A:
-    case P16F648AICD:
-     PIC16F648A_start ();
-     break;
-    case P16F877:
-    case P16F877A:
-     PIC16F877A_start ();
-     break;
-    case P16F777:
-     PIC16F777_start ();
-     break;
-    default:
-     printf ("unknown processor! 0x%04X\n", processor);
-     return 0;
-     break;
+     retcode = i;
+     PICS[i].start ();
     }
-   break;
-  case P16E:
-   switch (processor)
-    {
-    case P16F1619:
-     PIC16F1619_start ();
-     break;
-    case P16F1788:
-     PIC16F1788_start ();
-     break;
-    case P16F1789:
-     PIC16F1789_start ();
-     break;
-    case P16F18855:
-     PIC16F18855_start ();
-     break;
-    case P16F1939:
-     PIC16F1939_start ();
-     break;
-    case P16F18324:
-     PIC16F18324_start ();
-     break;  
-    default:
-     printf ("unknown processor! 0x%04X\n", processor);
-     return 0;
-     break;
-    }
-   break;
-  case P18:
-   switch (processor)
-    {
-    case P18F452:
-     PIC18F452_start ();
-     break;
-    case P18F4520:
-     PIC18F4520_start ();
-     break;
-    case P18F4620:
-     PIC18F4620_start ();
-     break;
-    case P18F4550:
-     PIC18F4550_start ();
-     break;
-    case P18F45K50:
-     PIC18F45K50_start ();
-     break;
-    case P18F27K40:
-     PIC18F27K40_start ();
-     break;
-    case P18F47K40:
-     PIC18F47K40_start ();
-     break;
-    default:
-     printf ("unknown processor 0x%04X!\n", processor);
-     return 0;
-    }
-   break;
-  default:
-   printf ("unknown family %d of processor 0X%04X!\n", pic->family, processor);
-   return 0;
+  }
+
+ if (retcode == 0)
+  {
+   printf ("unknown processor 0x%04X!\n", processor);
+   return 1;
   }
 
  pic->ram = calloc (pic->RAMSIZE, sizeof (char));
@@ -293,7 +203,7 @@ pic_reset(int flags)
 
  /*memory clear*/
  memset (pic->ram, 0, pic->RAMSIZE);
- memset (pic->stack, 0, pic->STACKSIZE * sizeof(int));
+ memset (pic->stack, 0, pic->STACKSIZE * sizeof (int));
 
  for (i = 0; i < pic->PINCOUNT; i++)
   {
@@ -501,7 +411,7 @@ pic_set_pin(unsigned char pin, unsigned char value)
          if (pic->processor != P16F84A)
           pic->ram[sfr_addr (pic->pins[(pin - 1)].port) | 0x100] = (*pic->pins[(pin - 1)].port); //espelhamento bank2 = bank0
          break;
-        case P16E: 
+        case P16E:
          break;
 #ifdef ICSPDBG                    
         case P18:
@@ -595,4 +505,18 @@ pic_get_pin_DOV(unsigned char pin)
   return 0;
 }
 
+void
+pic_register(pic_desc picd)
+{
+ if (PIC_count == PMAX)
+  {
+   printf ("Error PIC_count > PMAX !\n");
+   exit (-1);
+  }
+
+ memcpy ((void*) &PICS[PIC_count], (void *) &picd, sizeof (pic_desc));
+ PIC_count++;
+
+ //printf ("%02i register PIC 0x%04X family=%i %s \n",PIC_count,  picd.ID, picd.family, picd.name);
+}
 
