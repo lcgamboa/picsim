@@ -1,6 +1,13 @@
 # Changelog
 
 
+## (unreleased)
+
+### New
+
+* Microcontroller dynamic register. [lcgamboa]
+
+
 ## v0.8.1 (2020-06-17)
 
 ### New
