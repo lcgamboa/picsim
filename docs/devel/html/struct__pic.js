@@ -90,7 +90,9 @@ var struct__pic =
     [ "trisd", "struct__pic.html#af8d081fedfcef627afa867d9866aac09", null ],
     [ "trise", "struct__pic.html#a7cb620b2e06d3cf7c034c3f3430fbd31", null ],
     [ "twdt", "struct__pic.html#ac76f9b055b57412cb6b64f15f72e1ac2", null ],
-    [ "usart", "struct__pic.html#aceaaffde8c5c2fc8ed03dd7e6d6a2992", null ],
+    [ "usart_rx", "struct__pic.html#ab5e518796468838c5562824467b0cfe8", null ],
+    [ "usart_tx", "struct__pic.html#a889a47e9c36f48deca61040ba798c631", null ],
+    [ "USARTCOUNT", "struct__pic.html#a4cf1e5803e0daac7f2da732165f7ad41", null ],
     [ "w", "struct__pic.html#aaec053e00617ad045308abb5d0d60bc7", null ],
     [ "wdt", "struct__pic.html#a0fe5362eb793d4776e51b58b939b79f3", null ],
     [ "WDT_MS", "struct__pic.html#a353a9837ad11d79b01981fcbf452d1b5", null ]

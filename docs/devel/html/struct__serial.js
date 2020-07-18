@@ -7,9 +7,10 @@ var struct__serial =
     [ "RCREG2", "struct__serial.html#a0dfcd37308a01ec71ad149c70158c8ee", null ],
     [ "recb", "struct__serial.html#a8f5ef713bdea036235ee7ec3674b36df", null ],
     [ "rtspin", "struct__serial.html#a4b0a828003a25e74b69fe901c873b44f", null ],
+    [ "RXIF_mask", "struct__serial.html#a28a5f3c04864a285fe747329c1b942dc", null ],
     [ "s_open", "struct__serial.html#a70da499575a32f59a43324da89f16c9e", null ],
-    [ "serial_PIE1", "struct__serial.html#a5e1b57cc852a7011a4d37869d2e3a7c4", null ],
-    [ "serial_PIR1", "struct__serial.html#a5684e09cd9d473cf1ba21e295341593b", null ],
+    [ "serial_PIE", "struct__serial.html#ae46a6e1af2b4a776526f8303de2dc30b", null ],
+    [ "serial_PIR", "struct__serial.html#a253d936ca48b0894de27e42e736aed3c", null ],
     [ "serial_RCREG", "struct__serial.html#a016210640d9a07d93f7d1e8a3fe7f711", null ],
     [ "serial_RCREG_ADDR", "struct__serial.html#ad714c22e70a6adcc966621a316d59aad", null ],
     [ "serial_RCSTA", "struct__serial.html#a792ab1778bb8cc5d480a89bf564c8e4f", null ],
@@ -26,6 +27,7 @@ var struct__serial =
     [ "serialexbaud", "struct__serial.html#a6016913bb6873b305d3a3c6fda8059ed", null ],
     [ "serialfd", "struct__serial.html#a08a1d2fc5ab03b945f899328453e9a58", null ],
     [ "sr", "struct__serial.html#ae042e6d8d7d5ff74c9cde9af2f3dfe72", null ],
+    [ "TXIF_mask", "struct__serial.html#adf91062a6fe92592e3e3496353a7892d", null ],
     [ "txtc", "struct__serial.html#a68036685772982176471671ff924fbae", null ],
     [ "txtemp", "struct__serial.html#ae12c82c5799c79ef39bb298c27e8c603", null ]
 ];

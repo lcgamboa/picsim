@@ -5,6 +5,10 @@
 
 ### New
 
+* PIC18Fx7K40 second usart support. [lcgamboa]
+
+* Support to multiple serial. [lcgamboa]
+
 * Microcontroller dynamic register. [lcgamboa]
 
 ### Fix
