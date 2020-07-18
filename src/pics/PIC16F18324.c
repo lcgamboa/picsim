@@ -389,8 +389,8 @@ PIC16F18324_reset(void)
  pic->adc[20] = 6;
  pic->adc[21] = 5;
 
- pic->usart[0] = 5;
- pic->usart[1] = 6;
+ pic->usart_rx[0] = 5;
+ pic->usart_tx[0] = 6;
 
  pic->pgc = 12;
  pic->pgd = 13;
@@ -471,6 +471,7 @@ PIC16F18324_start(void)
  pic->STACKSIZE = 16;
  pic->CCPCOUNT = 4;
  pic->ADCCOUNT = 22;
+ pic->USARTCOUNT = 1;
  pic->WDT_MS = 1;
  pic->reset = PIC16F18324_reset;
  pic->mmap = PIC16F18324_map;

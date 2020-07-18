@@ -32,7 +32,7 @@ extern "C" {
      *
      * Internal structure used to map P18 memory.
      */
-    typedef struct {            
+    typedef struct {
         //shadow stack	
         unsigned char WS;
         unsigned char STATUSS;
@@ -45,7 +45,7 @@ extern "C" {
         unsigned char * BDMSR1;
         unsigned char * BDMSR0;
 #endif
-        
+
         //maped 
         unsigned char * STATUS;
         unsigned char * PLUSW2;
@@ -185,12 +185,27 @@ extern "C" {
         unsigned char * NVMADRH;
 
 
-        unsigned char * RCSTA;
-        unsigned char * TXSTA;
-        unsigned char * TXREG;
         unsigned char * RCREG;
+        unsigned char * TXREG;
         unsigned char * SPBRG;
         unsigned char * SPBRGH;
+        unsigned char * RCSTA;
+        unsigned char * TXSTA;
+
+        unsigned char * RC1REG;
+        unsigned char * TX1REG;
+        unsigned char * SP1BRGL;
+        unsigned char * SP1BRGH;
+        unsigned char * RC1STA;
+        unsigned char * TX1STA;
+
+        unsigned char * RC2REG;
+        unsigned char * TX2REG;
+        unsigned char * SP2BRGL;
+        unsigned char * SP2BRGH;
+        unsigned char * RC2STA;
+        unsigned char * TX2STA;
+
 
         unsigned char * T2CON;
         unsigned char * PR2;
@@ -239,7 +254,7 @@ extern "C" {
         unsigned char *RE0PPS;
         unsigned char *RE1PPS;
         unsigned char *RE2PPS;
-        
+
         /*
         unsigned char * TXREG1;
         unsigned char * RCREG1;

@@ -30,8 +30,10 @@
 void
 p16_uart_rst(void)
 {
- pic->serial[0].serial_PIR1 = pic->P16map.PIR1;
- pic->serial[0].serial_PIE1 = pic->P16map.PIE1;
+ pic->serial[0].serial_PIR = pic->P16map.PIR1;
+ pic->serial[0].serial_PIE = pic->P16map.PIE1;
+ pic->serial[0].RXIF_mask = 0x20;
+ pic->serial[0].TXIF_mask = 0x10;
  pic->serial[0].serial_TXSTA = pic->P16map.TXSTA;
  pic->serial[0].serial_RCSTA = pic->P16map.RCSTA;
  pic->serial[0].serial_SPBRG = pic->P16map.SPBRG;
@@ -40,8 +42,8 @@ p16_uart_rst(void)
  pic->serial[0].serial_TXREG_ADDR = sfr_addr (pic->P16map.TXREG);
  pic->serial[0].serial_RCSTA_ADDR = sfr_addr (pic->P16map.RCSTA);
  pic->serial[0].serial_RCREG_ADDR = sfr_addr (pic->P16map.RCREG);
- pic->serial[0].serial_TRIS_RX = &pic->ram[sfr_addr (pic->pins[pic->usart[0] - 1].port) + 0x80];
- pic->serial[0].serial_TRIS_RX_MASK = (0x01 << pic->pins[pic->usart[0] - 1].pord);
+ pic->serial[0].serial_TRIS_RX = &pic->ram[sfr_addr (pic->pins[pic->usart_rx[0] - 1].port) + 0x80];
+ pic->serial[0].serial_TRIS_RX_MASK = (0x01 << pic->pins[pic->usart_rx[0] - 1].pord);
  pic->serial[0].s_open = 1;
 }
 

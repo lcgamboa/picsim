@@ -170,6 +170,15 @@ interrupt18_2(void)
      //TMR0IE TMR0IF
      if (((*pic->P18map.PIE0) & 0x20)&&((*pic->P18map.PIR0) & 0x20)&&((*pic->P18map.IPR0) & 0x20)) return 1;
 
+     //TX1IE TX1IF
+     if (((*pic->P18map.PIE3) & 0x10)&&((*pic->P18map.PIR3) & 0x10)&&((*pic->P18map.IPR3) & 0x10)) return 1;
+     //RX1IE RX1IF
+     if (((*pic->P18map.PIE3) & 0x20)&&((*pic->P18map.PIR3) & 0x20)&&((*pic->P18map.IPR3) & 0x20)) return 1;
+     //TX2IE TX2IF
+     if (((*pic->P18map.PIE3) & 0x40)&&((*pic->P18map.PIR3) & 0x40)&&((*pic->P18map.IPR3) & 0x40)) return 1;
+     //RX2IE RX2IF
+     if (((*pic->P18map.PIE3) & 0x80)&&((*pic->P18map.PIR3) & 0x80)&&((*pic->P18map.IPR3) & 0x80)) return 1;
+
      //TMR1IE TMR1IF
      if (((*pic->P18map.PIE4) & 0x01)&&((*pic->P18map.PIR4) & 0x01)&&((*pic->P18map.IPR4) & 0x01)) return 1;
      //TMR2IE TMR2I
@@ -188,6 +197,16 @@ interrupt18_2(void)
        if (((*pic->P18map.PIE0) & 0x10)&&((*pic->P18map.PIR0) & 0x10)&&(!((*pic->P18map.IPR0) & 0x10))) return 2;
        //TMR0IE TMR0IF
        if (((*pic->P18map.PIE0) & 0x20)&&((*pic->P18map.PIR0) & 0x20)&&(!((*pic->P18map.IPR0) & 0x20))) return 2;
+
+       //TX1IE TX1IF
+       if (((*pic->P18map.PIE3) & 0x10)&&((*pic->P18map.PIR3) & 0x10)&&(!((*pic->P18map.IPR3) & 0x10))) return 2;
+       //RX1IE RX1IF
+       if (((*pic->P18map.PIE3) & 0x20)&&((*pic->P18map.PIR3) & 0x20)&&(!((*pic->P18map.IPR3) & 0x20))) return 2;
+       //TX2IE TX2IF
+       if (((*pic->P18map.PIE3) & 0x40)&&((*pic->P18map.PIR3) & 0x40)&&(!((*pic->P18map.IPR3) & 0x40))) return 2;
+       //RX2IE RX2IF
+       if (((*pic->P18map.PIE3) & 0x80)&&((*pic->P18map.PIR3) & 0x80)&&(!((*pic->P18map.IPR3) & 0x80))) return 2;
+
        //TMR1IE TMR1IF
        if (((*pic->P18map.PIE4) & 0x01)&&((*pic->P18map.PIR4) & 0x01)&&(!((*pic->P18map.IPR4) & 0x01))) return 2;
        //TMR2IE TMR2I
@@ -214,6 +233,15 @@ interrupt18_2(void)
 
      if ((*pic->P18map.INTCON) & 0x40) //PEIE
       {
+       //TX1IE TX1IF
+       if (((*pic->P18map.PIE3) & 0x10)&&((*pic->P18map.PIR3) & 0x10)) return 1;
+       //RX1IE RX1IF
+       if (((*pic->P18map.PIE3) & 0x20)&&((*pic->P18map.PIR3) & 0x20)) return 1;
+       //TX2IE TX2IF
+       if (((*pic->P18map.PIE3) & 0x40)&&((*pic->P18map.PIR3) & 0x40)) return 1;
+       //RX2IE RX2IF
+       if (((*pic->P18map.PIE3) & 0x80)&&((*pic->P18map.PIR3) & 0x80)) return 1;
+
        //TMR1IE TMR1IF
        if (((*pic->P18map.PIE4) & 0x01)&&((*pic->P18map.PIR4) & 0x01)) return 1;
        //TMR2IE TMR2IF

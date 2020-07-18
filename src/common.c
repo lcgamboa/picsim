@@ -102,6 +102,7 @@ pic_init(_pic * pic_, int processor, const char * fname, int leeprom, float freq
     {
      retcode = i;
      PICS[i].start ();
+     break;
     }
   }
 
@@ -120,7 +121,8 @@ pic_init(_pic * pic_, int processor, const char * fname, int leeprom, float freq
  pic->pins = calloc (pic->PINCOUNT, sizeof (picpin));
  pic->ccp = calloc (pic->CCPCOUNT, sizeof (char));
  pic->adc = calloc (pic->ADCCOUNT, sizeof (char));
- pic->usart = calloc (2, sizeof (char));
+ pic->usart_rx = calloc (pic->USARTCOUNT, sizeof (char));
+ pic->usart_tx = calloc (pic->USARTCOUNT, sizeof (char));
 
  pic->mmap ();
 
@@ -355,7 +357,8 @@ pic_end(void)
  if (pic->pins)free (pic->pins);
  if (pic->ccp)free (pic->ccp);
  if (pic->adc)free (pic->adc);
- if (pic->usart)free (pic->usart);
+ if (pic->usart_rx)free (pic->usart_rx);
+ if (pic->usart_tx)free (pic->usart_tx);
 
  pic->stop();
  

@@ -405,8 +405,8 @@ PIC16F1788_reset(void)
  pic->adc[9] = 24;
  pic->adc[10] = 22;
 
- pic->usart[0] = 28;
- pic->usart[1] = 27;
+ pic->usart_rx[0] = 28;
+ pic->usart_tx[0] = 27;
 
  pic->pgc = 0;
  pic->pgd = 28;
@@ -486,6 +486,7 @@ PIC16F1788_start(void)
  pic->STACKSIZE = 16;
  pic->CCPCOUNT = 3;
  pic->ADCCOUNT = 11;
+ pic->USARTCOUNT = 1;
  pic->WDT_MS = 1;
  pic->reset = PIC16F1788_reset;
  pic->mmap = PIC16F1788_map;

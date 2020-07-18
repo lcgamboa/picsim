@@ -117,9 +117,11 @@ typedef struct{
         int rtspin;
         unsigned char buff[BUFFMAX];
         int bc;
-        unsigned char * serial_PIR1;
         unsigned char * serial_TXSTA;
-        unsigned char * serial_PIE1;
+        unsigned char * serial_PIR;
+        unsigned char * serial_PIE;
+        unsigned char  RXIF_mask;
+        unsigned char  TXIF_mask;
         unsigned char * serial_RCSTA;
         unsigned char * serial_SPBRG;
         unsigned char * serial_RCREG;
@@ -254,6 +256,7 @@ typedef struct{
         unsigned char PINCOUNT;
         unsigned char CCPCOUNT;
         unsigned char ADCCOUNT;
+        unsigned char USARTCOUNT; 
         unsigned char WDT_MS;
         unsigned char family; ///< @ref family
         unsigned int processor; ///< @ref procid
@@ -278,7 +281,8 @@ typedef struct{
         unsigned char mclr;
         unsigned char *ccp;
         unsigned char *adc;
-        unsigned char *usart;
+        unsigned char *usart_rx;
+        unsigned char *usart_tx;
         unsigned char pgc;
         unsigned char pgd;
         unsigned char sck;

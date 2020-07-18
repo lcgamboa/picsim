@@ -262,6 +262,7 @@ main(int argc, char** argv)
    family = getfprocbyname (argv[1]);
 
    pic_set_serial (&pic1, 0, "/dev/tnt2", 0, 0, 0);
+   pic_set_serial (&pic1, 1, "", 0, 0, 0);
 
    if ((error = pic_init (&pic1, proc, argv[2], 1, 20e6)))
     {

@@ -110,8 +110,8 @@ PIC16F84A_reset(void)
 
 
 
- pic->usart[0] = 0;
- pic->usart[1] = 0;
+ pic->usart_rx[0] = 0;
+ pic->usart_tx[0] = 0;
 
  pic->pgc = 12;
  pic->pgd = 13;
@@ -179,6 +179,7 @@ PIC16F84A_start(void)
  pic->STACKSIZE = 8;
  pic->CCPCOUNT = 0;
  pic->ADCCOUNT = 0;
+ pic->USARTCOUNT = 0;
  pic->WDT_MS = 18;
  pic->reset = PIC16F84A_reset;
  pic->mmap = PIC16F84A_map;

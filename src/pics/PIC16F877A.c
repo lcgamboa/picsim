@@ -205,8 +205,8 @@ PIC16F877A_reset(void)
  pic->adc[6] = 9;
  pic->adc[7] = 10;
 
- pic->usart[0] = 26;
- pic->usart[1] = 25;
+ pic->usart_rx[0] = 26;
+ pic->usart_tx[0] = 25;
 
  pic->pgc = 39;
  pic->pgd = 40;
@@ -285,6 +285,7 @@ PIC16F877A_start(void)
  pic->STACKSIZE = 8;
  pic->CCPCOUNT = 2;
  pic->ADCCOUNT = 8;
+ pic->USARTCOUNT = 1;
  pic->WDT_MS = 18;
  pic->reset = PIC16F877A_reset;
  pic->mmap = PIC16F877A_map;

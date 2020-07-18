@@ -511,8 +511,8 @@ PIC16F1619_reset(void)
  pic->ccp[0]= 5; 
  pic->ccp[1]= 7;
 
- pic->usart[0]=12;  
- pic->usart[1]=10;  
+ pic->usart_rx[0]=12;  
+ pic->usart_tx[0]=10;  
 
  pic->sck=11;
  pic->sdo=9;
@@ -590,6 +590,7 @@ PIC16F1619_start(void)
  pic->STACKSIZE = 16;
  pic->CCPCOUNT = 2;
  pic->ADCCOUNT = 12;
+ pic->USARTCOUNT = 1;
  pic->WDT_MS = 1;
  pic->reset = PIC16F1619_reset;
  pic->mmap = PIC16F1619_map;

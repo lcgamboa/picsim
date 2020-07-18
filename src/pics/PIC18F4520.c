@@ -269,8 +269,8 @@ PIC18F4520_reset(void)
  pic->adc[11] = 37;
  pic->adc[12] = 33;
 
- pic->usart[0] = 26;
- pic->usart[1] = 25;
+ pic->usart_rx[0] = 26;
+ pic->usart_tx[0] = 25;
 
  pic->pgc = 39;
  pic->pgd = 40;
@@ -360,6 +360,7 @@ PIC18F4520_start(void)
  pic->STACKSIZE = 31;
  pic->CCPCOUNT = 2;
  pic->ADCCOUNT = 13;
+ pic->USARTCOUNT = 1;
  pic->WDT_MS = 4;
  pic->reset = PIC18F4520_reset;
  pic->mmap = PIC18F4520_map;

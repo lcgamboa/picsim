@@ -657,8 +657,8 @@ PIC16F18855_reset(void)
  pic->ccp[3]= 18; 
  pic->ccp[4]= 3; 
       
- pic->usart[0]=9;  
- pic->usart[1]=8;  
+ pic->usart_rx[0]=9;  
+ pic->usart_tx[0]=8;  
 
  pic->sck=11;
  pic->sdo=7;
@@ -739,6 +739,7 @@ PIC16F18855_start(void)
  pic->STACKSIZE = 16;
  pic->CCPCOUNT = 5;
  pic->ADCCOUNT = 24;
+ pic->USARTCOUNT = 1;
  pic->WDT_MS = 1;
  pic->reset = PIC16F18855_reset;
  pic->mmap = PIC16F18855_map;

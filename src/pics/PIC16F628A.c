@@ -152,8 +152,8 @@ PIC16F628A_reset(void)
   pic->adc[2] = 1;
   pic->adc[3] = 2;
   */
- pic->usart[0] = 7;
- pic->usart[1] = 8;
+ pic->usart_rx[0] = 7;
+ pic->usart_tx[0] = 8;
 
  pic->pgc = 12;
  pic->pgd = 13;
@@ -228,6 +228,7 @@ PIC16F628A_start(void)
  pic->STACKSIZE = 8;
  pic->CCPCOUNT = 1;
  pic->ADCCOUNT = 0; //4;
+ pic->USARTCOUNT = 1;
  pic->WDT_MS = 18;
  pic->reset = PIC16F628A_reset;
  pic->mmap = PIC16F628A_map;

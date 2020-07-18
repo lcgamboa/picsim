@@ -79,7 +79,7 @@ void p18_int_ports(void);
 
 void p18_uart_rst(void);
 void p18_uart_rst_2(void);
-void p18_uart_rst_3(void);
+void p18_uart_rst_3(int nser);
 #define p18_uart(X) serial(X)
 #define p18_uart_start(X) serial_open (X);
 #define p18_uart_stop(X) serial_close (X);

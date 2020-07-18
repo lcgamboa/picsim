@@ -221,8 +221,8 @@ PIC16F777_reset(void)
  pic->adc[12] = 33;
  pic->adc[13] = 38;
 
- pic->usart[0] = 26;
- pic->usart[1] = 25;
+ pic->usart_rx[0] = 26;
+ pic->usart_tx[0] = 25;
 
  pic->pgc = 39;
  pic->pgd = 40;
@@ -299,6 +299,7 @@ PIC16F777_start(void)
  pic->STACKSIZE = 8;
  pic->CCPCOUNT = 3;
  pic->ADCCOUNT = 14;
+ pic->USARTCOUNT = 1;
  pic->WDT_MS = 1;
  pic->reset = PIC16F777_reset;
  pic->mmap = PIC16F777_map;

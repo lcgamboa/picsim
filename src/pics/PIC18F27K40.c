@@ -52,12 +52,14 @@ PIC18F27K40_map(void)
  pic->P18map.SSP2CON1 = &pic->ram[0xE96];
  pic->P18map.SSP2CON2 = &pic->ram[0xE97];
  pic->P18map.SSP2CON3 = &pic->ram[0xE98];
+  */ 
  pic->P18map.RC2REG = &pic->ram[0xE99];
  pic->P18map.TX2REG = &pic->ram[0xE9A];
  pic->P18map.SP2BRGL = &pic->ram[0xE9B];
  pic->P18map.SP2BRGH = &pic->ram[0xE9C];
  pic->P18map.RC2STA = &pic->ram[0xE9D];
  pic->P18map.TX2STA = &pic->ram[0xE9E];
+ /*
  pic->P18map.BAUD2CON = &pic->ram[0xE9F];
  pic->P18map.PPSLOCK = &pic->ram[0xEA0];
  pic->P18map.INT0PPS = &pic->ram[0xEA1];
@@ -306,12 +308,14 @@ PIC18F27K40_map(void)
  pic->P18map.SSP1CON2 = &pic->ram[0xF97];
  /*
  pic->P18map.SSP1CON3 = &pic->ram[0xF98];
+  */ 
  pic->P18map.RC1REG = &pic->ram[0xF99];
  pic->P18map.TX1REG = &pic->ram[0xF9A];
  pic->P18map.SP1BRGL = &pic->ram[0xF9B];
  pic->P18map.SP1BRGH = &pic->ram[0xF9C];
  pic->P18map.RC1STA = &pic->ram[0xF9D];
  pic->P18map.TX1STA = &pic->ram[0xF9E];
+ /*
  pic->P18map.BAUD1CON = &pic->ram[0xF9F];
  pic->P18map.PWM4DCL = &pic->ram[0xFA0];
  pic->P18map.PWM4DCH = &pic->ram[0xFA1];
@@ -551,8 +555,10 @@ PIC18F27K40_reset(void)
  pic->adc[22] = 17;
  pic->adc[23] = 18;
 
- pic->usart[0] = 26;
- pic->usart[1] = 25;
+ pic->usart_rx[0] = 18;
+ pic->usart_tx[0] = 17;
+ pic->usart_rx[1] = 28;
+ pic->usart_tx[1] = 27;
 
  pic->pgc = 27;
  pic->pgd = 28;
@@ -579,7 +585,8 @@ PIC18F27K40_reset(void)
  p18_mssp_rst ();
  p18_int_pin_rst();
  p18_int_ports_rst();
- p18_uart_rst_3();
+ p18_uart_rst_3(0);
+ p18_uart_rst_3(1);
 }
 
 void
@@ -597,6 +604,7 @@ PIC18F27K40_periferic(void)
   p18_tmr2_2 ();
   //p18_tmr3 ();
   p18_uart (0);
+  p18_uart (1);
 }
 
 int
@@ -621,6 +629,7 @@ void
 PIC18F27K40_stop(void)
 {
  p18_uart_stop (0);
+ p18_uart_stop (1);
 }
 
 void
@@ -635,6 +644,7 @@ PIC18F27K40_start(void)
  pic->STACKSIZE = 31;
  pic->CCPCOUNT = 2;
  pic->ADCCOUNT = 24;
+ pic->USARTCOUNT = 2;
  pic->WDT_MS = 1;
  pic->reset = PIC18F27K40_reset;
  pic->mmap = PIC18F27K40_map;
@@ -644,6 +654,7 @@ PIC18F27K40_start(void)
  pic->stop = PIC18F27K40_stop;
  
  p18_uart_start (0);
+ p18_uart_start (1);
 }
 
 init_pic(PIC18F27K40, P18, 0x6960);

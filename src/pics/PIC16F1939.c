@@ -326,8 +326,8 @@ PIC16F1939_reset(void)
  pic->adc[12] = 33;
  pic->adc[13] = 38;
 
- pic->usart[0] = 26;
- pic->usart[1] = 25;
+ pic->usart_rx[0] = 26;
+ pic->usart_tx[0] = 25;
 
  pic->pgc = 39;
  pic->pgd = 40;
@@ -406,6 +406,7 @@ PIC16F1939_start(void)
  pic->STACKSIZE = 16;
  pic->CCPCOUNT = 5;
  pic->ADCCOUNT = 14;
+ pic->USARTCOUNT = 1;
  pic->WDT_MS = 1;
  pic->reset = PIC16F1939_reset;
  pic->mmap = PIC16F1939_map;

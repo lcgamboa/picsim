@@ -149,7 +149,7 @@ set_pps(unsigned char val, unsigned char * port, unsigned char pin)
      //case EUSART2_TX_CK: break;
      //case EUSART1_DT: break;
     case TX_CK:
-     pic->usart[1] = pinn;
+     pic->usart_tx[0] = pinn;
      break;
      //case PWM4: break;
      //case PWM3: break;
@@ -175,7 +175,7 @@ set_pps(unsigned char val, unsigned char * port, unsigned char pin)
     case LATxy:
      if (pic->sdo == pinn) pic->sdo = 0;
      if (pic->sck == pinn) pic->sck = 0;
-     if (pic->usart[1] == pinn) pic->usart[1] = 0;
+     if (pic->usart_tx[0] == pinn) pic->usart_tx[0] = 0;
      if (pic->ccp[1] == pinn) pic->ccp[1] = 0;
      if (pic->ccp[0] == pinn) pic->ccp[0] = 0;
      if (pic->ccp[2] == pinn) pic->ccp[2] = 0;
@@ -207,7 +207,7 @@ set_pps(unsigned char val, unsigned char * port, unsigned char pin)
      //case EUSART2_TX_CK: break;
      //case EUSART1_DT: break;
     case _TX_CK:
-     pic->usart[1] = pinn;
+     pic->usart_tx[0] = pinn;
      break;
      //case PWM4: break;
      //case PWM3: break;
@@ -230,7 +230,7 @@ set_pps(unsigned char val, unsigned char * port, unsigned char pin)
     case _LATxy:
      if (pic->sdo == pinn) pic->sdo = 0;
      if (pic->sck == pinn) pic->sck = 0;
-     if (pic->usart[1] == pinn) pic->usart[1] = 0;
+     if (pic->usart_tx[0] == pinn) pic->usart_tx[0] = 0;
      if (pic->ccp[3] == pinn) pic->ccp[3] = 0;
      if (pic->ccp[2] == pinn) pic->ccp[2] = 0;
      if (pic->ccp[1] == pinn) pic->ccp[1] = 0;
