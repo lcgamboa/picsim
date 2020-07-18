@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2019-2020  Luis Claudio Gamboa Lopes
+   Copyright (c) : 2008-2020  Luis Claudio Gambôa Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -23,52 +23,17 @@
    For e-mail suggestions :  lcgamboa@yahoo.com
    ######################################################################## */
 
-#ifndef P16_PERIFERIC_H
-#define P16_PERIFERIC_H
-
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include"../../include/periferic16.h"
-#include"../../include/serial.h"
-    
-void p16_mssp_rst(void);
-void p16_mssp(void);
 
-void p16_adc_rst(void);
-void p16_adc(void);
-
-void p16_tmr0_rst(void);
-void p16_tmr0(void);
-
-void p16_tmr1_rst(void);
-void p16_tmr1(void);
-
-void p16_tmr2_rst(void);
-void p16_tmr2(void);
-
-void p16_eeprom_rst(void);
-void p16_eeprom(void);
-void p16_eeprom_2(void);
-
-void p16_wdt_rst(void);
-void p16_wdt(void);    
-
-void p16_int_pin_rst(void); 
-void p16_int_pin(void);
-
-void p16_int_portb_rst(void);
-void p16_int_portb(void);
-
-void p16_uart_rst(void);
-#define p16_uart(X) serial(X)
-#define p16_uart_start(X) serial_open (X);
-#define p16_uart_stop(X) serial_close (X);
+int serial_open(int nser);
+void serial(int nser);
+int serial_close(int nser);
 
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* P16_PERIFERIC_H */
 

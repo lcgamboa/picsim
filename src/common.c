@@ -36,14 +36,9 @@
 
 _pic * pic; //global object
 
-extern int serial_open(void);
-extern int serial_close(void);
-
-
 extern void pic_decode_16(void);
 extern void pic_decode_16E(void);
-extern void
-pic_decode_18(void);
+extern void pic_decode_18(void);
 
 unsigned char NO_IO[5] = {1, 2, 3, 4, 5};
 
@@ -166,8 +161,6 @@ pic_init(_pic * pic_, int processor, const char * fname, int leeprom, float freq
   {
    pic->pins[i].ovalue = 1; //put default pin values to 1  
   }
-
- serial_open ();
 
  return retcode;
 }
@@ -315,10 +308,12 @@ pic_reset(int flags)
   default:
    break;
   }
-
- pic->serialbaud = 9600;
- pic->serialexbaud = 9600.0;
-
+ 
+ for(i=0 ; i < SERIAL_MAX; i++)
+  {
+    pic->serial[i].serialbaud = 9600;
+    pic->serial[i].serialexbaud = 9600.0;
+  }
 
  //  pic->debug=0;
 
@@ -362,8 +357,8 @@ pic_end(void)
  if (pic->adc)free (pic->adc);
  if (pic->usart)free (pic->usart);
 
- serial_close ();
-
+ pic->stop();
+ 
  pic = NULL;
 }
 

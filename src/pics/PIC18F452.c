@@ -294,7 +294,7 @@ PIC18F452_periferic(void)
   p18_tmr1 ();
   p18_tmr2 ();
   p18_tmr3 ();
-  p18_uart ();
+  p18_uart (0);
 }
 
 int
@@ -316,6 +316,12 @@ PIC18F452_getconf(unsigned int cfg)
 }
 
 void
+PIC18F452_stop(void)
+{
+ p18_uart_stop (0);
+}
+
+void
 PIC18F452_start(void)
 {
  pic->ROMSIZE = 16384;
@@ -333,6 +339,9 @@ PIC18F452_start(void)
  pic->getconf = PIC18F452_getconf;
  pic->periferic = PIC18F452_periferic;
  pic->interrupt = interrupt18;
+ pic->stop = PIC18F452_stop;
+ 
+ p18_uart_start (0);
 }
 
 init_pic(PIC18F452, P18, 0x0420);

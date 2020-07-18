@@ -30,7 +30,8 @@
 extern "C" {
 #endif
 #include"../../include/periferic16e.h"
-        
+#include"../../include/serial.h"
+    
 int interrupt16E(void);    
 int interrupt16E_2(void);   
 
@@ -68,7 +69,11 @@ void p16e_int_ports(void);
 
 void p16e_uart_rst(void);
 void p16e_uart_rst_2(void);
-#define p16e_uart serial
+#define p16e_uart(X) serial(X)
+#define p16e_uart_start(X) serial_open (X);
+#define p16e_uart_stop(X) serial_close (X);
+
+
 
 void p16e_pps_out_rst(void);
 void p16e_pps_out(void);

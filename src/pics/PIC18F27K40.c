@@ -596,7 +596,7 @@ PIC18F27K40_periferic(void)
   p18_tmr1_2 ();
   p18_tmr2_2 ();
   //p18_tmr3 ();
-  p18_uart ();
+  p18_uart (0);
 }
 
 int
@@ -618,6 +618,12 @@ PIC18F27K40_getconf(unsigned int cfg)
 }
 
 void
+PIC18F27K40_stop(void)
+{
+ p18_uart_stop (0);
+}
+
+void
 PIC18F27K40_start(void)
 {
  pic->ROMSIZE = 65536;
@@ -635,6 +641,9 @@ PIC18F27K40_start(void)
  pic->getconf = PIC18F27K40_getconf;
  pic->periferic = PIC18F27K40_periferic;
  pic->interrupt = interrupt18_2;
+ pic->stop = PIC18F27K40_stop;
+ 
+ p18_uart_start (0);
 }
 
 init_pic(PIC18F27K40, P18, 0x6960);

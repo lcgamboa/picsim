@@ -7,5 +7,6 @@ var dir_d44c64559bbebec7f509842c48db8b23 =
     [ "periferic16.h", "periferic16_8h_source.html", null ],
     [ "periferic16e.h", "periferic16e_8h_source.html", null ],
     [ "periferic18.h", "periferic18_8h_source.html", null ],
-    [ "picsim.h", "picsim_8h.html", "picsim_8h" ]
+    [ "picsim.h", "picsim_8h.html", "picsim_8h" ],
+    [ "serial.h", "serial_8h_source.html", null ]
 ];

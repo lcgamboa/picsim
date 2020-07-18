@@ -446,7 +446,7 @@ PIC16F1788_periferic(void)
   p16e_eeprom ();
   p16e_tmr1 ();
   p16e_tmr2 ();
-  p16e_uart ();
+  p16e_uart (0);
 }
 
 int
@@ -466,6 +466,14 @@ PIC16F1788_getconf(unsigned int cfg)
   }
  return 0;
 }
+
+void
+PIC16F1788_stop(void)
+{
+ p16e_uart_stop (0);
+}
+
+
 void
 PIC16F1788_start(void)
 {
@@ -484,6 +492,9 @@ PIC16F1788_start(void)
  pic->getconf = PIC16F1788_getconf;
  pic->periferic = PIC16F1788_periferic;
  pic->interrupt = interrupt16E;
+ pic->stop = PIC16F1788_stop;
+ 
+ p16e_uart_start (0);
 }
 
 init_pic(PIC16F1788, P16E, 0x302B);

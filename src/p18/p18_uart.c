@@ -30,20 +30,20 @@
 void
 p18_uart_rst(void)
 {
- pic->serial_PIR1 = pic->P18map.PIR1;
- pic->serial_PIE1 = pic->P18map.PIE1;
- pic->serial_TXSTA = pic->P18map.TXSTA;
- pic->serial_RCSTA = pic->P18map.RCSTA;
- pic->serial_SPBRG = pic->P18map.SPBRG;
- pic->serial_RCREG = pic->P18map.RCREG;
- pic->serial_TXREG = pic->P18map.TXREG;
- pic->serial_TXREG_ADDR = sfr_addr (pic->P18map.TXREG);
- pic->serial_RCSTA_ADDR = sfr_addr (pic->P18map.RCSTA);
- pic->serial_RCREG_ADDR = sfr_addr (pic->P18map.RCREG);
- pic->serial_TRIS_RX = &pic->ram[sfr_addr (pic->pins[pic->usart[0] - 1].port) + 0x12];
- pic->serial_TRIS_RX_MASK = (0x01 << pic->pins[pic->usart[0] - 1].pord);
+ pic->serial[0].serial_PIR1 = pic->P18map.PIR1;
+ pic->serial[0].serial_PIE1 = pic->P18map.PIE1;
+ pic->serial[0].serial_TXSTA = pic->P18map.TXSTA;
+ pic->serial[0].serial_RCSTA = pic->P18map.RCSTA;
+ pic->serial[0].serial_SPBRG = pic->P18map.SPBRG;
+ pic->serial[0].serial_RCREG = pic->P18map.RCREG;
+ pic->serial[0].serial_TXREG = pic->P18map.TXREG;
+ pic->serial[0].serial_TXREG_ADDR = sfr_addr (pic->P18map.TXREG);
+ pic->serial[0].serial_RCSTA_ADDR = sfr_addr (pic->P18map.RCSTA);
+ pic->serial[0].serial_RCREG_ADDR = sfr_addr (pic->P18map.RCREG);
+ pic->serial[0].serial_TRIS_RX = &pic->ram[sfr_addr (pic->pins[pic->usart[0] - 1].port) + 0x12];
+ pic->serial[0].serial_TRIS_RX_MASK = (0x01 << pic->pins[pic->usart[0] - 1].pord);
  
-  pic->s_open = 1;
+  pic->serial[0].s_open = 1;
 }
 
 void
@@ -68,9 +68,9 @@ p18_uart_rst_3(void)
  pic->P18map.RCREG = &pic->ram[0xF99];
  pic->P18map.TXREG = &pic->ram[0xF9A];
  p18_uart_rst();
- pic->serial_PIR1 = pic->P18map.PIR3;
- pic->serial_PIE1 = pic->P18map.PIE3;
- pic->serial_TRIS_RX = &pic->ram[sfr_addr (pic->pins[pic->usart[0] - 1].port) - 0x05];
+ pic->serial[0].serial_PIR1 = pic->P18map.PIR3;
+ pic->serial[0].serial_PIE1 = pic->P18map.PIE3;
+ pic->serial[0].serial_TRIS_RX = &pic->ram[sfr_addr (pic->pins[pic->usart[0] - 1].port) - 0x05];
 }
 
 /*

@@ -31,8 +31,6 @@ void periferic16_rst(void);
 void periferic16_step_in(void);
 void periferic16_step_out(void);
 
-void serial(void);
-
 #ifdef __cplusplus
 }
 #endif 

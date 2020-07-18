@@ -367,7 +367,7 @@ PIC16F1939_periferic(void)
   p16e_eeprom ();
   p16e_tmr1 ();
   p16e_tmr2 ();
-  p16e_uart ();
+  p16e_uart (0);
 }
 
 int
@@ -389,6 +389,12 @@ PIC16F1939_getconf(unsigned int cfg)
 }
 
 void
+PIC16F1939_stop(void)
+{
+ p16e_uart_stop (0);
+}
+
+void
 PIC16F1939_start(void)
 {
  pic->ROMSIZE = 16384;
@@ -406,6 +412,9 @@ PIC16F1939_start(void)
  pic->getconf = PIC16F1939_getconf;
  pic->periferic = PIC16F1939_periferic;
  pic->interrupt = interrupt16E;
+ pic->stop = PIC16F1939_stop;
+ 
+ p16e_uart_start (0);
 }
 
 init_pic(PIC16F1939, P16E, 0x23C0);

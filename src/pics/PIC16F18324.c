@@ -432,7 +432,7 @@ PIC16F18324_periferic (void)
  p16e_eeprom_2 ();
  p16e_tmr1 ();
  p16e_tmr2 ();
- p16e_uart ();
+ p16e_uart (0);
 }
 
 int
@@ -454,6 +454,12 @@ PIC16F18324_getconf(unsigned int cfg)
 }
 
 void
+PIC16F18324_stop(void)
+{
+ p16e_uart_stop (0);
+}
+
+void
 PIC16F18324_start(void)
 {
  pic->ROMSIZE = 4096;
@@ -471,6 +477,9 @@ PIC16F18324_start(void)
  pic->getconf = PIC16F18324_getconf;
  pic->periferic = PIC16F18324_periferic;
  pic->interrupt = interrupt16E_2;
+ pic->stop = PIC16F18324_stop;
+ 
+ p16e_uart_start (0);
 }
 
 init_pic(PIC16F18324, P16E, 0x303A);

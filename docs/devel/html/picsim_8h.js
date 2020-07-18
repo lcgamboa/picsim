@@ -1,6 +1,7 @@
 var picsim_8h =
 [
     [ "picpin", "structpicpin.html", "structpicpin" ],
+    [ "_serial", "struct__serial.html", "struct__serial" ],
     [ "_pic", "struct__pic.html", "struct__pic" ],
     [ "pic_desc", "structpic__desc.html", "structpic__desc" ],
     [ "BUFFMAX", "picsim_8h.html#ae49bc53e5aca442c9db88992f0d83d29", null ],
@@ -36,6 +37,7 @@ var picsim_8h =
     [ "PT_TTL", "group__pintype.html#ga603631e0637282246aff52a71145ee61", null ],
     [ "PT_USART", "group__pintype.html#ga711cfaff61d81821e475e71cd7fe4997", null ],
     [ "QFN", "group__packaging.html#gacc0f07b8739a0bb06587f245031c8e15", null ],
+    [ "SERIAL_MAX", "picsim_8h.html#adf8a9f3de62af63c141b8a0450641562", null ],
     [ "sfr_addr", "picsim_8h.html#ad3f645030581a6df299b459bc6aa480b", null ],
     [ "getfprocbyname", "picsim_8h.html#a2a7bba7914544b328ad88b206ee25690", null ],
     [ "getfprocbynumber", "picsim_8h.html#a0a773acfd69a0b8631421def50ee118c", null ],
@@ -62,7 +64,7 @@ var picsim_8h =
     [ "pic_set_apin", "picsim_8h.html#a790e6d979ac65db4aba4217a3a730317", null ],
     [ "pic_set_pin", "picsim_8h.html#a9081d88de575cc4245adbe58964cdb9d", null ],
     [ "pic_set_pin_DOV", "picsim_8h.html#a39b3cbd37f0e787cb1320fc6b729e6d8", null ],
-    [ "pic_set_serial", "picsim_8h.html#a28621e020650741bed0a99de19948308", null ],
+    [ "pic_set_serial", "picsim_8h.html#ae484b831548df85e4db9622c21f4a6e0", null ],
     [ "pic_step", "picsim_8h.html#a4b8c56c0a9a3f6330a4224dcc511cadc", null ],
     [ "read_ihx", "picsim_8h.html#a7f304e7d505cdecb717faeee459e2519", null ],
     [ "read_ihx_16e", "picsim_8h.html#a795b3b44f273b386db211603a8f9a7c5", null ],

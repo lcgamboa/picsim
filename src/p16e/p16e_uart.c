@@ -30,40 +30,40 @@
 void
 p16e_uart_rst(void)
 {
- pic->serial_PIR1 = pic->P16Emap.PIR1;
- pic->serial_PIE1 = pic->P16Emap.PIE1;
+ pic->serial[0].serial_PIR1 = pic->P16Emap.PIR1;
+ pic->serial[0].serial_PIE1 = pic->P16Emap.PIE1;
 
- pic->serial_TXSTA = pic->P16Emap.TXSTA;
- pic->serial_RCSTA = pic->P16Emap.RCSTA;
+ pic->serial[0].serial_TXSTA = pic->P16Emap.TXSTA;
+ pic->serial[0].serial_RCSTA = pic->P16Emap.RCSTA;
  //FIXME only 16bits SPBRG
- pic->serial_SPBRG = pic->P16Emap.SP1BRGL; 
- pic->serial_RCREG = pic->P16Emap.RCREG;
- pic->serial_TXREG = pic->P16Emap.TXREG;
- pic->serial_TXREG_ADDR = sfr_addr (pic->P16Emap.TXREG);
- pic->serial_RCSTA_ADDR = sfr_addr (pic->P16Emap.RCSTA);
- pic->serial_RCREG_ADDR = sfr_addr (pic->P16Emap.RCREG);
- pic->serial_TRIS_RX = &pic->ram[sfr_addr (pic->pins[pic->usart[0] - 1].port)+(sfr_addr (pic->P16Emap.TRISA) - sfr_addr (pic->P16Emap.PORTA)) ];
- pic->serial_TRIS_RX_MASK = (0x01 << pic->pins[pic->usart[0] - 1].pord);
- pic->s_open = 1;
+ pic->serial[0].serial_SPBRG = pic->P16Emap.SP1BRGL; 
+ pic->serial[0].serial_RCREG = pic->P16Emap.RCREG;
+ pic->serial[0].serial_TXREG = pic->P16Emap.TXREG;
+ pic->serial[0].serial_TXREG_ADDR = sfr_addr (pic->P16Emap.TXREG);
+ pic->serial[0].serial_RCSTA_ADDR = sfr_addr (pic->P16Emap.RCSTA);
+ pic->serial[0].serial_RCREG_ADDR = sfr_addr (pic->P16Emap.RCREG);
+ pic->serial[0].serial_TRIS_RX = &pic->ram[sfr_addr (pic->pins[pic->usart[0] - 1].port)+(sfr_addr (pic->P16Emap.TRISA) - sfr_addr (pic->P16Emap.PORTA)) ];
+ pic->serial[0].serial_TRIS_RX_MASK = (0x01 << pic->pins[pic->usart[0] - 1].pord);
+ pic->serial[0].s_open = 1;
 }
 
 void
 p16e_uart_rst_2(void)
 {
- pic->serial_PIR1 = pic->P16Emap.PIR1;
- pic->serial_PIE1 = pic->P16Emap.PIE1;
- pic->serial_TXSTA = pic->P16Emap.TX1STA;
- pic->serial_RCSTA = pic->P16Emap.RC1STA;
+ pic->serial[0].serial_PIR1 = pic->P16Emap.PIR1;
+ pic->serial[0].serial_PIE1 = pic->P16Emap.PIE1;
+ pic->serial[0].serial_TXSTA = pic->P16Emap.TX1STA;
+ pic->serial[0].serial_RCSTA = pic->P16Emap.RC1STA;
  //FIXME only 16bits SPBRG
- pic->serial_SPBRG = pic->P16Emap.SP1BRGL; 
- pic->serial_RCREG = pic->P16Emap.RC1REG;
- pic->serial_TXREG = pic->P16Emap.TX1REG;
- pic->serial_TXREG_ADDR = sfr_addr (pic->P16Emap.TX1REG);
- pic->serial_RCSTA_ADDR = sfr_addr (pic->P16Emap.RC1STA);
- pic->serial_RCREG_ADDR = sfr_addr (pic->P16Emap.RC1REG);
- pic->serial_TRIS_RX = &pic->ram[sfr_addr (pic->pins[pic->usart[0] - 1].port)+(sfr_addr (pic->P16Emap.TRISA) - sfr_addr (pic->P16Emap.PORTA)) ];
- pic->serial_TRIS_RX_MASK = (0x01 << pic->pins[pic->usart[0] - 1].pord);
- pic->s_open = 1;
+ pic->serial[0].serial_SPBRG = pic->P16Emap.SP1BRGL; 
+ pic->serial[0].serial_RCREG = pic->P16Emap.RC1REG;
+ pic->serial[0].serial_TXREG = pic->P16Emap.TX1REG;
+ pic->serial[0].serial_TXREG_ADDR = sfr_addr (pic->P16Emap.TX1REG);
+ pic->serial[0].serial_RCSTA_ADDR = sfr_addr (pic->P16Emap.RC1STA);
+ pic->serial[0].serial_RCREG_ADDR = sfr_addr (pic->P16Emap.RC1REG);
+ pic->serial[0].serial_TRIS_RX = &pic->ram[sfr_addr (pic->pins[pic->usart[0] - 1].port)+(sfr_addr (pic->P16Emap.TRISA) - sfr_addr (pic->P16Emap.PORTA)) ];
+ pic->serial[0].serial_TRIS_RX_MASK = (0x01 << pic->pins[pic->usart[0] - 1].pord);
+ pic->serial[0].s_open = 1;
 }
 
 

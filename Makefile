@@ -6,7 +6,7 @@ SUBDIRS= src include
 
 .PHONY: $(SUBDIRS)  
 
-all:$(SUBDIRS) doc
+all:$(SUBDIRS) 
 
 doc:
 	doxygen 1>/dev/null 2>/dev/null

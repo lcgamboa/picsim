@@ -351,7 +351,7 @@ PIC18F4550_periferic(void)
   p18_tmr1 ();
   p18_tmr2 ();
   p18_tmr3 ();
-  p18_uart ();
+  p18_uart (0);
 }
 
 int
@@ -370,6 +370,11 @@ PIC18F4550_getconf(unsigned int cfg)
    break;
   }
  return 0;
+}
+void
+PIC18F4550_stop(void)
+{
+ p18_uart_stop (0);
 }
 
 void
@@ -390,6 +395,9 @@ PIC18F4550_start(void)
  pic->getconf = PIC18F4550_getconf; 
  pic->periferic = PIC18F4550_periferic;
  pic->interrupt = interrupt18;
+ pic->stop = PIC18F4550_stop;
+ 
+ p18_uart_start (0);
 }
 
 init_pic(PIC18F4550, P18, 0x1200);

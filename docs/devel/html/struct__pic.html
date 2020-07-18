@@ -99,11 +99,12 @@ Collaboration diagram for _pic:</div>
 <div class="dyncontent">
 <div class="center"><img src="struct__pic__coll__graph.png" border="0" usemap="#__pic_coll__map" alt="Collaboration graph"/></div>
 <map name="__pic_coll__map" id="__pic_coll__map">
-<area shape="rect" title="PICsim PIC structure." alt="" coords="185,95,233,121"/>
+<area shape="rect" title="PICsim PIC structure." alt="" coords="235,95,283,121"/>
 <area shape="rect" href="struct_p18map__t.html" title="PICsim P18 memory map structure." alt="" coords="5,5,92,32"/>
 <area shape="rect" href="struct_p16map__t.html" title="PICsim P16 memory map structure." alt="" coords="116,5,203,32"/>
-<area shape="rect" href="structpicpin.html" title="PICsim pin structure." alt="" coords="227,5,289,32"/>
-<area shape="rect" href="struct_p16_emap__t.html" title="PICsim P16E memory map structure." alt="" coords="313,5,408,32"/>
+<area shape="rect" href="struct__serial.html" title="PICsim serial structure." alt="" coords="227,5,292,32"/>
+<area shape="rect" href="structpicpin.html" title="PICsim pin structure." alt="" coords="317,5,378,32"/>
+<area shape="rect" href="struct_p16_emap__t.html" title="PICsim P16E memory map structure." alt="" coords="403,5,497,32"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -370,90 +371,9 @@ unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>sspsr</b></t
 <tr class="memitem:ae945d844771b5f26d0728eff1779cb10"><td class="memItemLeft" align="right" valign="top"><a id="ae945d844771b5f26d0728eff1779cb10"></a>
 unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>ssp_bit</b></td></tr>
 <tr class="separator:ae945d844771b5f26d0728eff1779cb10"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae042e6d8d7d5ff74c9cde9af2f3dfe72"><td class="memItemLeft" align="right" valign="top"><a id="ae042e6d8d7d5ff74c9cde9af2f3dfe72"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>sr</b></td></tr>
-<tr class="separator:ae042e6d8d7d5ff74c9cde9af2f3dfe72"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f5ef713bdea036235ee7ec3674b36df"><td class="memItemLeft" align="right" valign="top"><a id="a8f5ef713bdea036235ee7ec3674b36df"></a>
-unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>recb</b></td></tr>
-<tr class="separator:a8f5ef713bdea036235ee7ec3674b36df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:affc26d663534c67603a59168e0b09b0a"><td class="memItemLeft" align="right" valign="top"><a id="affc26d663534c67603a59168e0b09b0a"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>serialc</b></td></tr>
-<tr class="separator:affc26d663534c67603a59168e0b09b0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae12c82c5799c79ef39bb298c27e8c603"><td class="memItemLeft" align="right" valign="top"><a id="ae12c82c5799c79ef39bb298c27e8c603"></a>
-unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>txtemp</b> [2]</td></tr>
-<tr class="separator:ae12c82c5799c79ef39bb298c27e8c603"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a68036685772982176471671ff924fbae"><td class="memItemLeft" align="right" valign="top"><a id="a68036685772982176471671ff924fbae"></a>
-char&#160;</td><td class="memItemRight" valign="bottom"><b>txtc</b></td></tr>
-<tr class="separator:a68036685772982176471671ff924fbae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0dfcd37308a01ec71ad149c70158c8ee"><td class="memItemLeft" align="right" valign="top"><a id="a0dfcd37308a01ec71ad149c70158c8ee"></a>
-unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>RCREG2</b></td></tr>
-<tr class="separator:a0dfcd37308a01ec71ad149c70158c8ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0daa76f77a7c178df58699e920d28019"><td class="memItemLeft" align="right" valign="top"><a id="a0daa76f77a7c178df58699e920d28019"></a>
-char&#160;</td><td class="memItemRight" valign="bottom"><b>SERIALDEVICE</b> [100]</td></tr>
-<tr class="separator:a0daa76f77a7c178df58699e920d28019"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e5f528e4652c2b39c14faa62a26f6a3"><td class="memItemLeft" align="right" valign="top"><a id="a0e5f528e4652c2b39c14faa62a26f6a3"></a>
-unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>serialbaud</b></td></tr>
-<tr class="separator:a0e5f528e4652c2b39c14faa62a26f6a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6016913bb6873b305d3a3c6fda8059ed"><td class="memItemLeft" align="right" valign="top"><a id="a6016913bb6873b305d3a3c6fda8059ed"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>serialexbaud</b></td></tr>
-<tr class="separator:a6016913bb6873b305d3a3c6fda8059ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08a1d2fc5ab03b945f899328453e9a58"><td class="memItemLeft" align="right" valign="top"><a id="a08a1d2fc5ab03b945f899328453e9a58"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>serialfd</b></td></tr>
-<tr class="separator:a08a1d2fc5ab03b945f899328453e9a58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70da499575a32f59a43324da89f16c9e"><td class="memItemLeft" align="right" valign="top"><a id="a70da499575a32f59a43324da89f16c9e"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>s_open</b></td></tr>
-<tr class="separator:a70da499575a32f59a43324da89f16c9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ade192a27f876d2f43e1dd01f6e741628"><td class="memItemLeft" align="right" valign="top"><a id="ade192a27f876d2f43e1dd01f6e741628"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>flowcontrol</b></td></tr>
-<tr class="separator:ade192a27f876d2f43e1dd01f6e741628"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a491cc0d76fca50b9922f9e4c3e2334"><td class="memItemLeft" align="right" valign="top"><a id="a5a491cc0d76fca50b9922f9e4c3e2334"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>ctspin</b></td></tr>
-<tr class="separator:a5a491cc0d76fca50b9922f9e4c3e2334"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b0a828003a25e74b69fe901c873b44f"><td class="memItemLeft" align="right" valign="top"><a id="a4b0a828003a25e74b69fe901c873b44f"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>rtspin</b></td></tr>
-<tr class="separator:a4b0a828003a25e74b69fe901c873b44f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a58cfb9e1cd5626ca8a90049e9e2d0c0d"><td class="memItemLeft" align="right" valign="top"><a id="a58cfb9e1cd5626ca8a90049e9e2d0c0d"></a>
-unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>buff</b> [BUFFMAX]</td></tr>
-<tr class="separator:a58cfb9e1cd5626ca8a90049e9e2d0c0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a97102b52a1cf13a343a1a414bc865cde"><td class="memItemLeft" align="right" valign="top"><a id="a97102b52a1cf13a343a1a414bc865cde"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>bc</b></td></tr>
-<tr class="separator:a97102b52a1cf13a343a1a414bc865cde"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5684e09cd9d473cf1ba21e295341593b"><td class="memItemLeft" align="right" valign="top"><a id="a5684e09cd9d473cf1ba21e295341593b"></a>
-unsigned char *&#160;</td><td class="memItemRight" valign="bottom"><b>serial_PIR1</b></td></tr>
-<tr class="separator:a5684e09cd9d473cf1ba21e295341593b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2c36a73e68488867b6962e603356e10"><td class="memItemLeft" align="right" valign="top"><a id="ad2c36a73e68488867b6962e603356e10"></a>
-unsigned char *&#160;</td><td class="memItemRight" valign="bottom"><b>serial_TXSTA</b></td></tr>
-<tr class="separator:ad2c36a73e68488867b6962e603356e10"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e1b57cc852a7011a4d37869d2e3a7c4"><td class="memItemLeft" align="right" valign="top"><a id="a5e1b57cc852a7011a4d37869d2e3a7c4"></a>
-unsigned char *&#160;</td><td class="memItemRight" valign="bottom"><b>serial_PIE1</b></td></tr>
-<tr class="separator:a5e1b57cc852a7011a4d37869d2e3a7c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a792ab1778bb8cc5d480a89bf564c8e4f"><td class="memItemLeft" align="right" valign="top"><a id="a792ab1778bb8cc5d480a89bf564c8e4f"></a>
-unsigned char *&#160;</td><td class="memItemRight" valign="bottom"><b>serial_RCSTA</b></td></tr>
-<tr class="separator:a792ab1778bb8cc5d480a89bf564c8e4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab0170ff0c42d86d93295ca7696cbfa19"><td class="memItemLeft" align="right" valign="top"><a id="ab0170ff0c42d86d93295ca7696cbfa19"></a>
-unsigned char *&#160;</td><td class="memItemRight" valign="bottom"><b>serial_SPBRG</b></td></tr>
-<tr class="separator:ab0170ff0c42d86d93295ca7696cbfa19"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a016210640d9a07d93f7d1e8a3fe7f711"><td class="memItemLeft" align="right" valign="top"><a id="a016210640d9a07d93f7d1e8a3fe7f711"></a>
-unsigned char *&#160;</td><td class="memItemRight" valign="bottom"><b>serial_RCREG</b></td></tr>
-<tr class="separator:a016210640d9a07d93f7d1e8a3fe7f711"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0c538d3acda170fc4c7fd878d4094e86"><td class="memItemLeft" align="right" valign="top"><a id="a0c538d3acda170fc4c7fd878d4094e86"></a>
-unsigned char *&#160;</td><td class="memItemRight" valign="bottom"><b>serial_TXREG</b></td></tr>
-<tr class="separator:a0c538d3acda170fc4c7fd878d4094e86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa20d4b64e850e92d0d99c9225148c0a0"><td class="memItemLeft" align="right" valign="top"><a id="aa20d4b64e850e92d0d99c9225148c0a0"></a>
-unsigned short&#160;</td><td class="memItemRight" valign="bottom"><b>serial_TXREG_ADDR</b></td></tr>
-<tr class="separator:aa20d4b64e850e92d0d99c9225148c0a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa73f978c7a3611ca7d500039f3746c05"><td class="memItemLeft" align="right" valign="top"><a id="aa73f978c7a3611ca7d500039f3746c05"></a>
-unsigned short&#160;</td><td class="memItemRight" valign="bottom"><b>serial_RCSTA_ADDR</b></td></tr>
-<tr class="separator:aa73f978c7a3611ca7d500039f3746c05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad714c22e70a6adcc966621a316d59aad"><td class="memItemLeft" align="right" valign="top"><a id="ad714c22e70a6adcc966621a316d59aad"></a>
-unsigned short&#160;</td><td class="memItemRight" valign="bottom"><b>serial_RCREG_ADDR</b></td></tr>
-<tr class="separator:ad714c22e70a6adcc966621a316d59aad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a79bfc49318588d614a1b9a72a5fc9ef5"><td class="memItemLeft" align="right" valign="top"><a id="a79bfc49318588d614a1b9a72a5fc9ef5"></a>
-unsigned char *&#160;</td><td class="memItemRight" valign="bottom"><b>serial_TRIS_RX</b></td></tr>
-<tr class="separator:a79bfc49318588d614a1b9a72a5fc9ef5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a15476b52ae430d7f07c81196a279c35e"><td class="memItemLeft" align="right" valign="top"><a id="a15476b52ae430d7f07c81196a279c35e"></a>
-unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>serial_TRIS_RX_MASK</b></td></tr>
-<tr class="separator:a15476b52ae430d7f07c81196a279c35e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a9aef793693f06947f6defea905b356"><td class="memItemLeft" align="right" valign="top"><a id="a8a9aef793693f06947f6defea905b356"></a>
+<a class="el" href="struct__serial.html">_serial</a>&#160;</td><td class="memItemRight" valign="bottom"><b>serial</b> [SERIAL_MAX]</td></tr>
+<tr class="separator:a8a9aef793693f06947f6defea905b356"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af8aa0cbf3c1127a604a083d56fcfce79"><td class="memItemLeft" align="right" valign="top"><a id="af8aa0cbf3c1127a604a083d56fcfce79"></a>
 void(*&#160;</td><td class="memItemRight" valign="bottom"><b>reset</b> )(void)</td></tr>
 <tr class="separator:af8aa0cbf3c1127a604a083d56fcfce79"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -469,6 +389,9 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><b>periferic</b> )(voi
 <tr class="memitem:a3fc99ac4db560181ddb5e9fbeee21e9a"><td class="memItemLeft" align="right" valign="top"><a id="a3fc99ac4db560181ddb5e9fbeee21e9a"></a>
 int(*&#160;</td><td class="memItemRight" valign="bottom"><b>interrupt</b> )(void)</td></tr>
 <tr class="separator:a3fc99ac4db560181ddb5e9fbeee21e9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab036cf6700cf4136530250522cec4224"><td class="memItemLeft" align="right" valign="top"><a id="ab036cf6700cf4136530250522cec4224"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><b>stop</b> )(void)</td></tr>
+<tr class="separator:ab036cf6700cf4136530250522cec4224"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a50259d849845769ea859991e83b33063"><td class="memItemLeft" ><a id="a50259d849845769ea859991e83b33063"></a>
 union {</td></tr>
 <tr class="memitem:a88b196b88d413cf6e7f632f2f9e331be"><td class="memItemLeft" >

@@ -246,7 +246,7 @@ PIC16F877A_periferic(void)
   p16_eeprom_2 ();
   p16_tmr1 ();
   p16_tmr2 ();
-  p16_uart ();
+  p16_uart (0);
 }
 
 int
@@ -268,6 +268,12 @@ PIC16F877A_getconf(unsigned int cfg)
 }
 
 void
+PIC16F877A_stop(void)
+{
+ p16_uart_stop (0);
+}
+
+void
 PIC16F877A_start(void)
 {
  pic->ROMSIZE = 8192;
@@ -284,6 +290,9 @@ PIC16F877A_start(void)
  pic->mmap = PIC16F877A_map;
  pic->getconf = PIC16F877A_getconf;
  pic->periferic = PIC16F877A_periferic;
+ pic->stop = PIC16F877A_stop;
+ 
+ p16_uart_start (0);
 }
 
 init_pic(PIC16F877A, P16, 0x0e20);

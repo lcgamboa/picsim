@@ -69,6 +69,9 @@ extern "C" {
 #include"p16fxxxe_defs.h"
 #include"p18fxxx_defs.h"
 
+#define SERIAL_MAX 2   
+#define BUFFMAX 8192  //4K word
+    
     /**
      * @brief PICsim pin structure
      *
@@ -85,6 +88,48 @@ extern "C" {
         unsigned char ovalue; ///< defaut open pin value
         float oavalue; ///< analog output value
     } picpin;
+    
+    /**
+     * @brief PICsim serial structure
+     *
+     * Internal structure used to describe one serial connection.
+     */    
+typedef struct{
+        //USART 
+        int sr;
+        unsigned char recb;
+        int serialc;
+        unsigned char txtemp[2];
+        char txtc;
+        unsigned char RCREG2;
+        //serial emulation
+        char SERIALDEVICE[100];
+        unsigned int serialbaud; //serial baud emulated
+        float serialexbaud; //exac serial baud
+#ifdef _WIN_
+        HANDLE serialfd;
+#else
+        int serialfd;
+#endif
+        int s_open;
+        int flowcontrol;
+        int ctspin;
+        int rtspin;
+        unsigned char buff[BUFFMAX];
+        int bc;
+        unsigned char * serial_PIR1;
+        unsigned char * serial_TXSTA;
+        unsigned char * serial_PIE1;
+        unsigned char * serial_RCSTA;
+        unsigned char * serial_SPBRG;
+        unsigned char * serial_RCREG;
+        unsigned char * serial_TXREG;
+        unsigned short serial_TXREG_ADDR;
+        unsigned short serial_RCSTA_ADDR;
+        unsigned short serial_RCREG_ADDR;
+        unsigned char * serial_TRIS_RX;
+        unsigned char serial_TRIS_RX_MASK;   
+    } _serial;
 
     /**
      * \defgroup pindir pin dir
@@ -182,10 +227,6 @@ extern "C" {
 #define HEX_CHKSUM 2 ///< Checksum error
 #define HEX_NWRITE 3 ///< File write error
     /**@}*/
-
-
-    //4K word
-#define BUFFMAX 8192 
 
 
     extern unsigned char NO_IO[5];
@@ -299,48 +340,16 @@ extern "C" {
         unsigned char ssp_scka;
         unsigned char sspsr;
         unsigned char ssp_bit;
-        //USART 
-        int sr;
-        unsigned char recb;
-        int serialc;
-        unsigned char txtemp[2];
-        char txtc;
-        unsigned char RCREG2;
-        //serial emulation
-        char SERIALDEVICE[100];
-        unsigned int serialbaud; //serial baud emulated
-        float serialexbaud; //exac serial baud
-        //  FILE * sfout;
-#ifdef _WIN_
-        HANDLE serialfd;
-#else
-        int serialfd;
-#endif
-        int s_open;
-        int flowcontrol;
-        int ctspin;
-        int rtspin;
-        unsigned char buff[BUFFMAX];
-        int bc;
-        unsigned char * serial_PIR1;
-        unsigned char * serial_TXSTA;
-        unsigned char * serial_PIE1;
-        unsigned char * serial_RCSTA;
-        unsigned char * serial_SPBRG;
-        unsigned char * serial_RCREG;
-        unsigned char * serial_TXREG;
-        unsigned short serial_TXREG_ADDR;
-        unsigned short serial_RCSTA_ADDR;
-        unsigned short serial_RCREG_ADDR;
-        unsigned char * serial_TRIS_RX;
-        unsigned char serial_TRIS_RX_MASK;
-
+            
+        _serial serial[SERIAL_MAX];
+        
         void (*reset)(void);
         void (*mmap)(void);
         int (*getconf)(unsigned int);
         void (*periferic)(void);
         int (*interrupt)(void);
-
+        void (*stop)(void);
+        
         union {
             P16map_t P16map;
             P16Emap_t P16Emap;
@@ -357,12 +366,14 @@ extern "C" {
      *  Use to link the PICSim serial to one serial port   
      * 
      * @param pic_ pointer to pic object
+     * @param nser number of serial
      * @param name Name of serial port 
      * @param flowcontrol use flowcontrol 
      * @param ctspin  CTS pin if flowcontrol = 1
      * @param rtspin  RTS pin if flowcontrol = 1
+     * @return  Return 0 if success, 1 otherwise  
      */
-    void pic_set_serial(_pic * pic_, const char * name, int flowcontrol, int ctspin, int rtspin);
+    int pic_set_serial(_pic * pic_, int nser , const char * name, int flowcontrol, int ctspin, int rtspin);
 
     /**
      * @brief Initialize one pic object

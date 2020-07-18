@@ -117,6 +117,9 @@ Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpicpin.html">picpin</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">PICsim pin structure.  <a href="structpicpin.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__serial.html">_serial</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">PICsim serial structure.  <a href="struct__serial.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__pic.html">_pic</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">PICsim PIC structure.  <a href="struct__pic.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -128,6 +131,12 @@ Macros</h2></td></tr>
 <tr class="memitem:a0451696c6941ef365b1fb3129bc4ca63"><td class="memItemLeft" align="right" valign="top"><a id="a0451696c6941ef365b1fb3129bc4ca63"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>PICSIM</b></td></tr>
 <tr class="separator:a0451696c6941ef365b1fb3129bc4ca63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf8a9f3de62af63c141b8a0450641562"><td class="memItemLeft" align="right" valign="top"><a id="adf8a9f3de62af63c141b8a0450641562"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>SERIAL_MAX</b>&#160;&#160;&#160;2</td></tr>
+<tr class="separator:adf8a9f3de62af63c141b8a0450641562"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae49bc53e5aca442c9db88992f0d83d29"><td class="memItemLeft" align="right" valign="top"><a id="ae49bc53e5aca442c9db88992f0d83d29"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BUFFMAX</b>&#160;&#160;&#160;8192</td></tr>
+<tr class="separator:ae49bc53e5aca442c9db88992f0d83d29"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga44222b7661237c8d76fcb5fb04d19d94"><td class="memItemLeft" align="right" valign="top">
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>PD_OUT</b>&#160;&#160;&#160;0x00</td></tr>
 <tr class="separator:ga44222b7661237c8d76fcb5fb04d19d94"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -205,9 +214,6 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hexload.html#ga98d4765ee56347c140cdd2d8d7461ab8">HEX_NWRITE</a>&#160;&#160;&#160;3</td></tr>
 <tr class="memdesc:ga98d4765ee56347c140cdd2d8d7461ab8"><td class="mdescLeft">&#160;</td><td class="mdescRight">File write error. <br /></td></tr>
 <tr class="separator:ga98d4765ee56347c140cdd2d8d7461ab8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae49bc53e5aca442c9db88992f0d83d29"><td class="memItemLeft" align="right" valign="top"><a id="ae49bc53e5aca442c9db88992f0d83d29"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>BUFFMAX</b>&#160;&#160;&#160;8192</td></tr>
-<tr class="separator:ae49bc53e5aca442c9db88992f0d83d29"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abc5d9c600c828dc5244a812f447c5f6c"><td class="memItemLeft" align="right" valign="top"><a id="abc5d9c600c828dc5244a812f447c5f6c"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>P_VDD</b>&#160;&#160;&#160;&amp;NO_IO[0]</td></tr>
 <tr class="separator:abc5d9c600c828dc5244a812f447c5f6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -235,9 +241,9 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a28621e020650741bed0a99de19948308"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="picsim_8h.html#a28621e020650741bed0a99de19948308">pic_set_serial</a> (<a class="el" href="struct__pic.html">_pic</a> *pic_, const char *name, int flowcontrol, int ctspin, int rtspin)</td></tr>
-<tr class="memdesc:a28621e020650741bed0a99de19948308"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the serial port connection.  <a href="picsim_8h.html#a28621e020650741bed0a99de19948308">More...</a><br /></td></tr>
-<tr class="separator:a28621e020650741bed0a99de19948308"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae484b831548df85e4db9622c21f4a6e0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="picsim_8h.html#ae484b831548df85e4db9622c21f4a6e0">pic_set_serial</a> (<a class="el" href="struct__pic.html">_pic</a> *pic_, int nser, const char *name, int flowcontrol, int ctspin, int rtspin)</td></tr>
+<tr class="memdesc:ae484b831548df85e4db9622c21f4a6e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the serial port connection.  <a href="picsim_8h.html#ae484b831548df85e4db9622c21f4a6e0">More...</a><br /></td></tr>
+<tr class="separator:ae484b831548df85e4db9622c21f4a6e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a136f2a71b80acd53bf6b5a39b9932c3f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="picsim_8h.html#a136f2a71b80acd53bf6b5a39b9932c3f">pic_init</a> (<a class="el" href="struct__pic.html">_pic</a> *pic_, int processor, const char *fname, int leeprom, float freq)</td></tr>
 <tr class="memdesc:a136f2a71b80acd53bf6b5a39b9932c3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize one pic object.  <a href="picsim_8h.html#a136f2a71b80acd53bf6b5a39b9932c3f">More...</a><br /></td></tr>
 <tr class="separator:a136f2a71b80acd53bf6b5a39b9932c3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1093,17 +1099,23 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>PIC_count</b></td></tr
 
 </div>
 </div>
-<a id="a28621e020650741bed0a99de19948308"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a28621e020650741bed0a99de19948308">&#9670;&nbsp;</a></span>pic_set_serial()</h2>
+<a id="ae484b831548df85e4db9622c21f4a6e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae484b831548df85e4db9622c21f4a6e0">&#9670;&nbsp;</a></span>pic_set_serial()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void pic_set_serial </td>
+          <td class="memname">int pic_set_serial </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="struct__pic.html">_pic</a> *&#160;</td>
           <td class="paramname"><em>pic_</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>nser</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1143,6 +1155,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>PIC_count</b></td></tr
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">pic_</td><td>pointer to pic object </td></tr>
+    <tr><td class="paramname">nser</td><td>number of serial </td></tr>
     <tr><td class="paramname">name</td><td>Name of serial port </td></tr>
     <tr><td class="paramname">flowcontrol</td><td>use flowcontrol </td></tr>
     <tr><td class="paramname">ctspin</td><td>CTS pin if flowcontrol = 1 </td></tr>
@@ -1150,6 +1163,8 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>PIC_count</b></td></tr
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>Return 0 if success, 1 otherwise <br  />
+ </dd></dl>
 
 </div>
 </div>
@@ -1374,7 +1389,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>PIC_count</b></td></tr
 </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="astructpic__desc_html"><div class="ttname"><a href="structpic__desc.html">pic_desc</a></div><div class="ttdef"><b>Definition:</b> picsim.h:626</div></div>
+<div class="ttc" id="astructpic__desc_html"><div class="ttname"><a href="structpic__desc.html">pic_desc</a></div><div class="ttdef"><b>Definition:</b> picsim.h:637</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

@@ -53,43 +53,45 @@
 
 
 int 
-serial_open(void)
+serial_open(int nser)
 {
-      if(pic->SERIALDEVICE[0] == 0)
+      if(nser >= SERIAL_MAX) return 1;
+ 
+      if(pic->serial[nser].SERIALDEVICE[0] == 0)
       { 	
 #ifdef _WIN_
-        strcpy(pic->SERIALDEVICE,"COM2");
+        strcpy(pic->serial[nser].SERIALDEVICE,"COM2");
 #else
-        strcpy(pic->SERIALDEVICE,"/dev/tnt2");
+        strcpy(pic->serial[nser].SERIALDEVICE,"/dev/tnt2");
 #endif
       }
 
-  pic->bc=0;
-  pic->sr=0;
-  pic->serialc=0;
-  pic->recb=0;
-  pic->s_open=0;
+  pic->serial[nser].bc=0;
+  pic->serial[nser].sr=0;
+  pic->serial[nser].serialc=0;
+  pic->serial[nser].recb=0;
+  pic->serial[nser].s_open=0;
 
 #ifdef _WIN_
-  pic->serialfd = CreateFile(pic->SERIALDEVICE, GENERIC_READ | GENERIC_WRITE,
+  pic->serial[nser].serialfd = CreateFile(pic->serial[nser].SERIALDEVICE, GENERIC_READ | GENERIC_WRITE,
 0, // exclusive access
 NULL, // no security
 OPEN_EXISTING,
 0, // no overlapped I/O
 NULL); // null template
-  if( pic->serialfd == INVALID_HANDLE_VALUE)
+  if( pic->serial[nser].serialfd == INVALID_HANDLE_VALUE)
   {
-     pic->serialfd=0;
-//     printf("Erro on Port Open:%s!\n",pic->SERIALDEVICE);
+     pic->serial[nser].serialfd=0;
+//     printf("Erro on Port Open:%s!\n",pic->serial[nser].SERIALDEVICE);
      return 0; 
   }
 #else
-  pic->serialfd = open(pic->SERIALDEVICE, O_RDWR | O_NOCTTY | O_NONBLOCK);
+  pic->serial[nser].serialfd = open(pic->serial[nser].SERIALDEVICE, O_RDWR | O_NOCTTY | O_NONBLOCK);
  
-  if (pic->serialfd < 0) 
+  if (pic->serial[nser].serialfd < 0) 
   {
-    pic->serialfd=0;
-    perror(pic->SERIALDEVICE); 
+    pic->serial[nser].serialfd=0;
+    perror(pic->serial[nser].SERIALDEVICE); 
 //    printf("Erro on Port Open:%s!\n",pic->SERIALDEVICE);
     return 0; 
   }
@@ -99,16 +101,18 @@ NULL); // null template
 }
 
 int 
-serial_close(void)
+serial_close(int nser)
 {
-  if (pic->serialfd != 0) 
+  if(nser >= SERIAL_MAX) return 1;
+  
+  if (pic->serial[nser].serialfd != 0) 
   {
 #ifdef _WIN_
-  CloseHandle(pic->serialfd);
+  CloseHandle(pic->serial[nser].serialfd);
 #else    
-    close(pic->serialfd);
+    close(pic->serial[nser].serialfd);
 #endif
-    pic->serialfd=0;
+    pic->serial[nser].serialfd=0;
   }
   return 0;
 }
@@ -116,27 +120,28 @@ serial_close(void)
 
 
 int
-serial_cfg(void)
+serial_cfg(int nser)
 {
     unsigned int BAUDRATE;
    
+    if(nser >= SERIAL_MAX) return 1;
     
-    if(*pic->serial_TXSTA & 0x04) //BRGH=1 
+    if(*pic->serial[nser].serial_TXSTA & 0x04) //BRGH=1 
     {
-        pic->serialexbaud=pic->freq/(16*((*pic->serial_SPBRG) +1));
+        pic->serial[nser].serialexbaud=pic->freq/(16*((*pic->serial[nser].serial_SPBRG) +1));
     }
     else
     {
-        pic->serialexbaud=pic->freq/(64*((*pic->serial_SPBRG) +1));
+        pic->serial[nser].serialexbaud=pic->freq/(64*((*pic->serial[nser].serial_SPBRG) +1));
     }
       
 
 
 
-    switch(((int)((pic->serialexbaud/300.0)+0.5))) 
+    switch(((int)((pic->serial[nser].serialexbaud/300.0)+0.5))) 
     {
        case 0 ... 1:
-          pic->serialbaud=300;
+          pic->serial[nser].serialbaud=300;
           #ifndef _WIN_
           BAUDRATE=B300;
           #else
@@ -144,7 +149,7 @@ serial_cfg(void)
           #endif  
           break; 
        case 2 ... 3:
-          pic->serialbaud=600;
+          pic->serial[nser].serialbaud=600;
           #ifndef _WIN_
           BAUDRATE=B600;
           #else
@@ -152,7 +157,7 @@ serial_cfg(void)
           #endif  
           break; 
        case 4 ... 7:
-          pic->serialbaud=1200;
+          pic->serial[nser].serialbaud=1200;
           #ifndef _WIN_
           BAUDRATE=B1200;
           #else
@@ -160,7 +165,7 @@ serial_cfg(void)
           #endif  
           break; 
        case 8 ... 15:
-          pic->serialbaud=2400;
+          pic->serial[nser].serialbaud=2400;
           #ifndef _WIN_
           BAUDRATE=B2400;
           #else
@@ -168,7 +173,7 @@ serial_cfg(void)
           #endif  
           break; 
        case 16 ... 31:
-          pic->serialbaud=4800;
+          pic->serial[nser].serialbaud=4800;
           #ifndef _WIN_
           BAUDRATE=B4800;
           #else
@@ -176,7 +181,7 @@ serial_cfg(void)
           #endif  
           break; 
        case 32 ... 63:
-          pic->serialbaud=9600;
+          pic->serial[nser].serialbaud=9600;
           #ifndef _WIN_
           BAUDRATE=B9600;
           #else
@@ -184,7 +189,7 @@ serial_cfg(void)
           #endif  
           break; 
        case 64 ... 127:
-          pic->serialbaud=19200;
+          pic->serial[nser].serialbaud=19200;
           #ifndef _WIN_
           BAUDRATE=B19200;
           #else
@@ -192,7 +197,7 @@ serial_cfg(void)
           #endif  
           break; 
        case 128 ... 191:
-          pic->serialbaud=38400;
+          pic->serial[nser].serialbaud=38400;
           #ifndef _WIN_
           BAUDRATE=B38400;
           #else
@@ -200,7 +205,7 @@ serial_cfg(void)
           #endif  
           break; 
        case 192 ... 383:
-          pic->serialbaud=57600;
+          pic->serial[nser].serialbaud=57600;
           #ifndef _WIN_
           BAUDRATE=B57600;
           #else
@@ -208,7 +213,7 @@ serial_cfg(void)
           #endif  
           break; 
        default:
-          pic->serialbaud=115200;
+          pic->serial[nser].serialbaud=115200;
           #ifndef _WIN_
           BAUDRATE=B115200;
           #else
@@ -218,11 +223,11 @@ serial_cfg(void)
     } 
 
 #ifdef _WIN_
-  BOOL bPortReady;
+  //BOOL bPortReady;
   DCB dcb;
   COMMTIMEOUTS CommTimeouts;
 
-bPortReady = GetCommState(pic->serialfd , &dcb);
+/*bPortReady =*/ GetCommState(pic->serial[nser].serialfd , &dcb);
 dcb.BaudRate = BAUDRATE;
 dcb.ByteSize = 8;
 dcb.Parity = NOPARITY;
@@ -242,11 +247,11 @@ dcb.fOutxDsrFlow = FALSE; // turn off DSR flow control
 dcb.fDtrControl = DTR_CONTROL_DISABLE; //
 // dcb.fDtrControl = DTR_CONTROL_HANDSHAKE; //
 
-bPortReady = SetCommState(pic->serialfd , &dcb);
+/*bPortReady =*/ SetCommState(pic->serial[nser].serialfd , &dcb);
 
 // Communication timeouts are optional
 
-bPortReady = GetCommTimeouts (pic->serialfd , &CommTimeouts);
+/*bPortReady =*/ GetCommTimeouts (pic->serial[nser].serialfd , &CommTimeouts);
 
 CommTimeouts.ReadIntervalTimeout = MAXDWORD;
 CommTimeouts.ReadTotalTimeoutConstant = 0;
@@ -254,10 +259,10 @@ CommTimeouts.ReadTotalTimeoutMultiplier = 0;
 CommTimeouts.WriteTotalTimeoutConstant = 0;
 CommTimeouts.WriteTotalTimeoutMultiplier = 0;
 
-bPortReady = SetCommTimeouts (pic->serialfd , &CommTimeouts);
+/*bPortReady =*/ SetCommTimeouts (pic->serial[nser].serialfd , &CommTimeouts);
 	
 
-EscapeCommFunction(pic->serialfd ,SETRTS );
+EscapeCommFunction(pic->serial[nser].serialfd ,SETRTS );
 
 #else
    struct termios newtio;
@@ -276,11 +281,11 @@ EscapeCommFunction(pic->serialfd ,SETRTS );
         newtio.c_cc[VTIME]    = 0;   /* inter-character timer unused */
         newtio.c_cc[VMIN]     = 5;   /* blocking read until 5 chars received */
         
-        tcflush(pic->serialfd, TCIFLUSH);
-        tcsetattr(pic->serialfd,TCSANOW,&newtio);
+        tcflush(pic->serial[nser].serialfd, TCIFLUSH);
+        tcsetattr(pic->serial[nser].serialfd,TCSANOW,&newtio);
         
 	cmd=TIOCM_RTS;
-	ioctl(pic->serialfd, TIOCMBIS ,&cmd);
+	ioctl(pic->serial[nser].serialfd, TIOCMBIS ,&cmd);
 #endif
 
 	return 0; 
@@ -288,35 +293,35 @@ EscapeCommFunction(pic->serialfd ,SETRTS );
 
 
       
-unsigned long serial_send(unsigned char c)
+unsigned long serial_send(int nser, unsigned char c)
 {
-  if(pic->serialfd)
+  if(pic->serial[nser].serialfd)
   {
 #ifdef _WIN_
    unsigned long nbytes;
     
-   WriteFile(pic->serialfd, &c, 1, &nbytes,NULL);
+   WriteFile(pic->serial[nser].serialfd, &c, 1, &nbytes,NULL);
    return nbytes;
 #else
-  return write (pic->serialfd,&c,1);   
+  return write (pic->serial[nser].serialfd,&c,1);   
 #endif
   }
   else
     return 0;
 }
 
-unsigned long serial_rec(_pic * pic, unsigned char * c)
+unsigned long serial_rec(_pic * pic, int nser, unsigned char * c)
 {
-  if(pic->serialfd)
+  if(pic->serial[nser].serialfd)
   {
 #ifdef _WIN_
     unsigned long nbytes;
       
-    ReadFile(pic->serialfd, c, 1,&nbytes, NULL);
+    ReadFile(pic->serial[nser].serialfd, c, 1,&nbytes, NULL);
 #else
     long nbytes;
 
-     nbytes = read (pic->serialfd,c,1);   
+     nbytes = read (pic->serial[nser].serialfd,c,1);   
      if(nbytes<0)nbytes=0;
 #endif    
     return nbytes;
@@ -325,24 +330,24 @@ unsigned long serial_rec(_pic * pic, unsigned char * c)
      return 0;
 }
 
-unsigned long serial_rec_tout( unsigned char * c)
+unsigned long serial_rec_tout(int nser, unsigned char * c)
 {
  unsigned int tout=0;
 
-  if(pic->serialfd)
+  if(pic->serial[nser].serialfd)
   {
 #ifdef _WIN_
     unsigned long nbytes;
     do
     { 
       Sleep(1);	
-      ReadFile(pic->serialfd, c, 1,&nbytes, NULL);
+      ReadFile(pic->serial[nser].serialfd, c, 1,&nbytes, NULL);
 #else
     long nbytes;
     do
     { 
       usleep(100);
-      nbytes = read (pic->serialfd,c,1);   
+      nbytes = read (pic->serial[nser].serialfd,c,1);   
       if(nbytes<0)nbytes=0;
 #endif    
       tout++;
@@ -354,34 +359,34 @@ unsigned long serial_rec_tout( unsigned char * c)
 }
 
 
-unsigned long serial_recbuff( unsigned char * c)
+unsigned long serial_recbuff(int nser, unsigned char * c)
 {
 int i;
 
 
-  if(pic->flowcontrol)
+  if(pic->serial[nser].flowcontrol)
   {
   
-   if(serial_rec(pic,&pic->buff[pic->bc]) == 1)
+   if(serial_rec(pic,nser, &pic->serial[nser].buff[pic->serial[nser].bc]) == 1)
     {
-     pic->bc++;
+     pic->serial[nser].bc++;
 
-     if(pic->bc > BUFFMAX)
+     if(pic->serial[nser].bc > BUFFMAX)
      {
        printf("serial buffer overflow \n") ;
-       pic->bc = BUFFMAX-1;  
+       pic->serial[nser].bc = BUFFMAX-1;  
 //       getchar();	
      };
     }
 
 
-    if((pic_get_pin(pic->ctspin) == 0)&&(pic->bc > 0))
+    if((pic_get_pin(pic->serial[nser].ctspin) == 0)&&(pic->serial[nser].bc > 0))
     {
-      *c=pic->buff[0];
+      *c=pic->serial[nser].buff[0];
 
-      pic->bc--;
-      for(i=0;i<pic->bc;i++)
-        pic->buff[i]=pic->buff[i+1]; 
+      pic->serial[nser].bc--;
+      for(i=0;i<pic->serial[nser].bc;i++)
+        pic->serial[nser].buff[i]=pic->serial[nser].buff[i+1]; 
       return 1;
     }
     else
@@ -391,7 +396,7 @@ int i;
   }
   else
   {
-     return serial_rec(pic,c);
+     return serial_rec(pic,nser, c);
   }
   
 }
@@ -399,42 +404,42 @@ int i;
 
 
 
-void serial(void)
+void serial(int nser)
 {
   unsigned char rctemp;
 
-   if(pic->lram == pic->serial_TXREG_ADDR)    
+   if(pic->lram == pic->serial[nser].serial_TXREG_ADDR)    
     {
-      pic->txtc++;
-      if(pic->txtc > 1)pic->txtc=1; 
-      pic->txtemp[(unsigned char)pic->txtc]= *pic->serial_TXREG;
-      *pic->serial_TXSTA &=~0x02; //TRMT=0 full   
-      *pic->serial_PIR1 &=~0x10; //TXIF=0 trasmiting
+      pic->serial[nser].txtc++;
+      if(pic->serial[nser].txtc > 1)pic->serial[nser].txtc=1; 
+      pic->serial[nser].txtemp[(unsigned char)pic->serial[nser].txtc]= *pic->serial[nser].serial_TXREG;
+      *pic->serial[nser].serial_TXSTA &=~0x02; //TRMT=0 full   
+      *pic->serial[nser].serial_PIR1 &=~0x10; //TXIF=0 trasmiting
     }
 
-   if(pic->lram == pic->serial_RCSTA_ADDR)
+   if(pic->lram == pic->serial[nser].serial_RCSTA_ADDR)
    {               //CREN 
-      if((*pic->serial_RCSTA & 0x10) == 0)
+      if((*pic->serial[nser].serial_RCSTA & 0x10) == 0)
       {  
-       *pic->serial_RCSTA &=~0x02; //clear OERR
-       pic->serialc=0;
+       *pic->serial[nser].serial_RCSTA &=~0x02; //clear OERR
+       pic->serial[nser].serialc=0;
       }
    }    
 
 
-   if(pic->rram == pic->serial_RCREG_ADDR)    
+   if(pic->rram == pic->serial[nser].serial_RCREG_ADDR)    
     { 
-      switch(pic->recb)
+      switch(pic->serial[nser].recb)
       {
         case 1:
-          *pic->serial_RCREG=0;
-          *pic->serial_PIR1 &=~0x20; //clear RCIF
-          pic->recb--;    
+          *pic->serial[nser].serial_RCREG=0;
+          *pic->serial[nser].serial_PIR1 &=~0x20; //clear RCIF
+          pic->serial[nser].recb--;    
           break;
         case 2:
-          *pic->serial_RCREG=pic->RCREG2;
-          pic->RCREG2=0; 
-	  pic->recb--;    
+          *pic->serial[nser].serial_RCREG=pic->serial[nser].RCREG2;
+          pic->serial[nser].RCREG2=0; 
+	  pic->serial[nser].recb--;    
           break;
         default:
         break; 
@@ -444,115 +449,115 @@ void serial(void)
 
 
 
-  if((*pic->serial_RCSTA & 0x80)==0x80)
+  if((*pic->serial[nser].serial_RCSTA & 0x80)==0x80)
   {
-    if(pic->s_open == 0) 
+    if(pic->serial[nser].s_open == 0) 
     {
 
-      if(pic->serialfd > 0)
+      if(pic->serial[nser].serialfd > 0)
       {
-        serial_cfg();
-        pic->s_open=1;
-       if(pic->print)printf("#Open Port:%s!\n",pic->SERIALDEVICE);
+        serial_cfg(nser);
+        pic->serial[nser].s_open=1;
+       if(pic->print)printf("#Open Port:%s!\n",pic->serial[nser].SERIALDEVICE);
       }
       else
       {
-        if(pic->print)printf("#Erro Open Port:%s!\n",pic->SERIALDEVICE);
-        pic->s_open=-1;
+        if(pic->print)printf("#Erro Open Port:%s!\n",pic->serial[nser].SERIALDEVICE);
+        pic->serial[nser].s_open=-1;
       }
-      *pic->serial_TXSTA |=0x02; //TRMT=1 empty 
-      *pic->serial_PIR1 |=0x10; //TXIF=1  
-      pic->txtc=-1;
+      *pic->serial[nser].serial_TXSTA |=0x02; //TRMT=1 empty 
+      *pic->serial[nser].serial_PIR1 |=0x10; //TXIF=1  
+      pic->serial[nser].txtc=-1;
       
       pic->pins[pic->usart[0]-1].ptype=PT_USART;
       pic->pins[pic->usart[1]-1].ptype=PT_USART;
-      if(pic->flowcontrol)pic_set_pin( pic->rtspin,0); //enable send
+      if(pic->serial[nser].flowcontrol)pic_set_pin( pic->serial[nser].rtspin,0); //enable send
     }
 
   
   
     //envia byte para TSTR
-    if((*pic->serial_TXSTA & 0x02)&&(pic->txtc >= 0)) 
+    if((*pic->serial[nser].serial_TXSTA & 0x02)&&(pic->serial[nser].txtc >= 0)) 
     {
-         pic->txtc--;
+         pic->serial[nser].txtc--;
          
-         if(!pic->txtc)
+         if(!pic->serial[nser].txtc)
          {
-           pic->txtemp[(unsigned char)pic->txtc]= *pic->serial_TXREG;
-           *pic->serial_TXSTA &=~0x02; //TRMT=0 full   
-           *pic->serial_PIR1 &=~0x10; //TXIF=0 trasmiting
+           pic->serial[nser].txtemp[(unsigned char)pic->serial[nser].txtc]= *pic->serial[nser].serial_TXREG;
+           *pic->serial[nser].serial_TXSTA &=~0x02; //TRMT=0 full   
+           *pic->serial[nser].serial_PIR1 &=~0x10; //TXIF=0 trasmiting
          }
     }
 
 
-    pic->serialc++;
+    pic->serial[nser].serialc++;
 
-    if(*pic->serial_TXSTA & 0x04)
+    if(*pic->serial[nser].serial_TXSTA & 0x04)
     {
        //BRGH=1  start + 8 bits + stop
-       if(pic->serialc >= (((*pic->serial_SPBRG)+1)*40))pic->sr =1;
+       if(pic->serial[nser].serialc >= (((*pic->serial[nser].serial_SPBRG)+1)*40))pic->serial[nser].sr =1;
     }
     else
     {
        //BRGH=0  start + 8 bits + stop
-       if(pic->serialc >= (((*pic->serial_SPBRG)+1)*160))pic->sr =1;
+       if(pic->serial[nser].serialc >= (((*pic->serial[nser].serial_SPBRG)+1)*160))pic->serial[nser].sr =1;
     }
 
   
-    if(pic->sr ==1 )
+    if(pic->serial[nser].sr ==1 )
     {
     
-     pic->serialc=0;
+     pic->serial[nser].serialc=0;
      
       
-      if((pic->s_open != 0)&&(( *pic->serial_TRIS_RX &  pic->serial_TRIS_RX_MASK) != 0)) //work only if RX tris bit is set
+      if((pic->serial[nser].s_open != 0)&&(( *pic->serial[nser].serial_TRIS_RX &  pic->serial[nser].serial_TRIS_RX_MASK) != 0)) //work only if RX tris bit is set
      {
-      if(serial_recbuff(&rctemp) == 1)
+      if(serial_recbuff(nser, &rctemp) == 1)
       {
 
-        if((*pic->serial_RCSTA & 0x12) == 0x10)//CREN=1  OERR=0 
+        if((*pic->serial[nser].serial_RCSTA & 0x12) == 0x10)//CREN=1  OERR=0 
         { 
-         switch(pic->recb)
+         switch(pic->serial[nser].recb)
          {
          case 0: 
-           *pic->serial_RCREG=rctemp;
-	   pic->RCREG2=0;
-           pic->recb++;
+           *pic->serial[nser].serial_RCREG=rctemp;
+	       pic->serial[nser].RCREG2=0;
+           pic->serial[nser].recb++;
            break;
          case 1: 
-           pic->RCREG2=rctemp;
-           pic->recb++;
+           pic->serial[nser].RCREG2=rctemp;
+           pic->serial[nser].recb++;
            break; 
          default: 
-           *pic->serial_RCSTA |=0x02; //set OERR
+           *pic->serial[nser].serial_RCSTA |=0x02; //set OERR
            break; 
           }
         }
         
    //       printf("reb=%i temp=%02X RCREG=%02X RECREG2=%02X  RCSTA=%02X\n",pic->recb,rctemp,pic->ram[RCREG],pic->RCREG2,pic->ram[RCSTA]);
         
-         if(((*pic->serial_PIE1 & 0x20) == 0x20)&&((*pic->serial_PIR1 & 0x20) != 0x20))
+         if(((*pic->serial[nser].serial_PIE1 & 0x20) == 0x20)&&((*pic->serial[nser].serial_PIR1 & 0x20) != 0x20))
          {
            if(pic->print)printf("serial rx interrupt (%#04X)\n",rctemp);
          }
          //set RCIF
-         *pic->serial_PIR1 |=0x20;  
+         *pic->serial[nser].serial_PIR1 |=0x20;  
       }
      } 
     
       //if(((pic->ram[P18_TXSTA] & 0x02) == 0 ) &&((pic->ram[pic->pins[pic->usart[1]-1].port+0x12] &  (0x01 << pic->pins[pic->usart[1]-1].pord)) == 0))
-      if((*pic->serial_TXSTA & 0x02) == 0 )
+      if((*pic->serial[nser].serial_TXSTA & 0x02) == 0 )
        {   
-        if(pic->s_open == 1 ) serial_send(pic->txtemp[0]);
-        *pic->serial_TXSTA |=0x02; //TRMT=1 empty  
+        if(pic->serial[nser].s_open == 1 ) serial_send(nser,pic->serial[nser].txtemp[0]);
+        *pic->serial[nser].serial_TXSTA |=0x02; //TRMT=1 empty  
         
-        if(((*pic->serial_PIE1 & 0x10) == 0x10)&&((*pic->serial_PIR1 & 0x10) != 0x10))
+        if(((*pic->serial[nser].serial_PIE1 & 0x10) == 0x10)&&((*pic->serial[nser].serial_PIR1 & 0x10) != 0x10))
         {
-          if(pic->print)printf("serial tx interrupt (%#04X)\n",pic->txtemp[0]);
+          if(pic->print)printf("serial tx interrupt (%#04X)\n",pic->serial[nser].txtemp[0]);
         }
-        *pic->serial_PIR1 |=0x10; //TXIF=1  
+        *pic->serial[nser].serial_PIR1 |=0x10; //TXIF=1  
       }   
-      pic->sr=0;
+      pic->serial[nser].sr=0;
     }
 
 //Hardware flowcontrol
@@ -560,28 +565,30 @@ void serial(void)
    }
   else
   {
-    if(pic->s_open == 1)
+    if(pic->serial[nser].s_open == 1)
     {
-      pic->s_open=0;
+      pic->serial[nser].s_open=0;
       pic->pins[pic->usart[0]-1].ptype=PT_CMOS;
       pic->pins[pic->usart[1]-1].ptype=PT_CMOS;
-      if(pic->flowcontrol)pic_set_pin( pic->rtspin,1); //disable send
+      if(pic->serial[nser].flowcontrol)pic_set_pin( pic->serial[nser].rtspin,1); //disable send
     }
   }
 
 }
 
-void 
-pic_set_serial(_pic * pic_,const char * name, int flowcontrol,int ctspin,int  rtspin)
+int 
+pic_set_serial(_pic * pic_, int nser, const char * name, int flowcontrol,int ctspin,int  rtspin)
 {
+  if(nser >= SERIAL_MAX) return 1;
   pic=pic_;   
-  strcpy(pic->SERIALDEVICE,name);
+  strcpy(pic->serial[nser].SERIALDEVICE,name);
   
-  pic->flowcontrol=flowcontrol;
-  pic->serialfd=0;
+  pic->serial[nser].flowcontrol=flowcontrol;
+  pic->serial[nser].serialfd=0;
   if(flowcontrol == 1)
   {
-    pic->ctspin=ctspin;
-    pic->rtspin=rtspin;
+    pic->serial[nser].ctspin=ctspin;
+    pic->serial[nser].rtspin=rtspin;
   }
-};
+  return 0;
+}

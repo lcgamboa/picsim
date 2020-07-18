@@ -320,7 +320,7 @@ PIC18F4620_periferic(void)
   p18_tmr1 ();
   p18_tmr2 ();
   p18_tmr3 ();
-  p18_uart ();
+  p18_uart (0);
 }
 
 int
@@ -342,6 +342,12 @@ PIC18F4620_getconf(unsigned int cfg)
 }
 
 void
+PIC18F4620_stop(void)
+{
+ p18_uart_stop (0);
+}
+
+void
 PIC18F4620_start(void)
 {
  pic->ROMSIZE = 32768;
@@ -359,6 +365,9 @@ PIC18F4620_start(void)
  pic->getconf = PIC18F4620_getconf;
  pic->periferic = PIC18F4620_periferic;
  pic->interrupt = interrupt18;
+ pic->stop = PIC18F4620_stop;
+ 
+ p18_uart_start (0);
 }
 
 init_pic(PIC18F4620, P18, 0x0c00);

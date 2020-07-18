@@ -163,6 +163,11 @@ PIC16F84A_getconf(unsigned int cfg)
 }
 
 void
+PIC16F84A_stop(void)
+{
+}
+
+void
 PIC16F84A_start(void)
 {
  pic->ROMSIZE = 1024;
@@ -179,6 +184,8 @@ PIC16F84A_start(void)
  pic->mmap = PIC16F84A_map;
  pic->getconf = PIC16F84A_getconf;
  pic->periferic = PIC16F84A_periferic;
+ pic->stop = PIC16F84A_stop;
+
 }
 
 init_pic(PIC16F84A, P16, 0x0560);

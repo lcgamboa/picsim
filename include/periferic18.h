@@ -31,8 +31,6 @@ void periferic18_rst(void);
 void periferic18_step_in(void);
 void periferic18_step_out(void);
 
-void serial(void);
-
 #ifdef __cplusplus
 }
 #endif 
