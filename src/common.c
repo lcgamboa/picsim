@@ -95,7 +95,7 @@ pic_init(_pic * pic_, int processor, const char * fname, int leeprom, float freq
 
  pic->pkg = PDIP;
 
- retcode = 0;
+ retcode = -1;
  for (i = 0; i < PIC_count; i++)
   {
    if (PICS[i].ID == processor)
@@ -106,9 +106,9 @@ pic_init(_pic * pic_, int processor, const char * fname, int leeprom, float freq
     }
   }
 
- if (retcode == 0)
+ if (retcode == -1)
   {
-   printf ("unknown processor 0x%04X!\n", processor);
+   printf ("picsim error: unknown processor 0x%04X!\n", processor);
    return 1;
   }
 
