@@ -18,6 +18,7 @@
  void PIC18F27K40_start(void);
  void PIC18F47K40_start(void);
  void PIC16F18324_start(void);
+ void PIC18F46J50_start(void);
 
 
 void dirt_load (void)
@@ -40,4 +41,5 @@ void dirt_load (void)
  PIC18F27K40_start();
  PIC18F47K40_start();
  PIC16F18324_start();
+ PIC18F46J50_start();
 };
