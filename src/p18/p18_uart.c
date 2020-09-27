@@ -28,36 +28,43 @@
 #include"../../include/periferic18.h"
 
 void
-p18_uart_rst(void)
+p18_uart_rst(int nser)
 {
- pic->serial[0].serial_PIR = pic->P18map.PIR1;
- pic->serial[0].serial_PIE = pic->P18map.PIE1;
- pic->serial[0].RXIF_mask = 0x20;
- pic->serial[0].TXIF_mask = 0x10;
- pic->serial[0].serial_TXSTA = pic->P18map.TXSTA;
- pic->serial[0].serial_RCSTA = pic->P18map.RCSTA;
- pic->serial[0].serial_SPBRG = pic->P18map.SPBRG;
- pic->serial[0].serial_RCREG = pic->P18map.RCREG;
- pic->serial[0].serial_TXREG = pic->P18map.TXREG;
- pic->serial[0].serial_TXREG_ADDR = sfr_addr (pic->P18map.TXREG);
- pic->serial[0].serial_RCSTA_ADDR = sfr_addr (pic->P18map.RCSTA);
- pic->serial[0].serial_RCREG_ADDR = sfr_addr (pic->P18map.RCREG);
- pic->serial[0].serial_TRIS_RX = &pic->ram[sfr_addr (pic->pins[pic->usart_rx[0] - 1].port) + 0x12];
- pic->serial[0].serial_TRIS_RX_MASK = (0x01 << pic->pins[pic->usart_rx[0] - 1].pord);
+ if (nser == 0)
+  {
+   pic->serial[0].serial_PIR = pic->P18map.PIR1;
+   pic->serial[0].serial_PIE = pic->P18map.PIE1;
+   pic->serial[0].RXIF_mask = 0x20;
+   pic->serial[0].TXIF_mask = 0x10;
+   pic->serial[0].serial_TXSTA = pic->P18map.TXSTA;
+   pic->serial[0].serial_RCSTA = pic->P18map.RCSTA;
+   pic->serial[0].serial_SPBRG = pic->P18map.SPBRG;
+   pic->serial[0].serial_RCREG = pic->P18map.RCREG;
+   pic->serial[0].serial_TXREG = pic->P18map.TXREG;
+   pic->serial[0].serial_TXREG_ADDR = sfr_addr (pic->P18map.TXREG);
+   pic->serial[0].serial_RCSTA_ADDR = sfr_addr (pic->P18map.RCSTA);
+   pic->serial[0].serial_RCREG_ADDR = sfr_addr (pic->P18map.RCREG);
+   pic->serial[0].serial_TRIS_RX = &pic->ram[sfr_addr (pic->pins[pic->usart_rx[0] - 1].port) + 0x12];
+   pic->serial[0].serial_TRIS_RX_MASK = (0x01 << pic->pins[pic->usart_rx[0] - 1].pord);
 
- pic->serial[0].s_open = 1;
+   pic->serial[0].s_open = 1;
+  }
 }
 
 void
-p18_uart_rst_2(void)
+p18_uart_rst_2(int nser)
 {
  //serial compat
- pic->P18map.TXSTA = &pic->ram[0xFAC];
- pic->P18map.RCSTA = &pic->ram[0xFAB];
- pic->P18map.SPBRG = &pic->ram[0xFAF];
- pic->P18map.RCREG = &pic->ram[0xFAE];
- pic->P18map.TXREG = &pic->ram[0xFAD];
- p18_uart_rst ();
+ if (nser == 0)
+  {
+   pic->P18map.TXSTA = pic->P18map.TX1STA;
+   pic->P18map.RCSTA = pic->P18map.RC1STA;
+   pic->P18map.SPBRG = pic->P18map.SP1BRGL; //TODO support to SP1BRGL
+   pic->P18map.RCREG = pic->P18map.RC1REG;
+   pic->P18map.TXREG = pic->P18map.TX1REG;
+   p18_uart_rst (nser);
+  }
+
 }
 
 void

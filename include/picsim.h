@@ -205,9 +205,10 @@ typedef struct{
      * @{
      */
     //CFG bits
-#define CFG_MCLR   0x01
-#define CFG_WDT    0x02
-#define CFG_DEBUG  0x04
+#define CFG_MCLR    0x01
+#define CFG_WDT     0x02
+#define CFG_DEBUG   0x04
+#define CFG_WDT_DIV 0x08   
     /**@}*/
 
     /**
@@ -231,7 +232,7 @@ typedef struct{
     /**@}*/
 
 
-    extern unsigned char NO_IO[5];
+extern unsigned char NO_IO[6];
 
     //pin without IO
 #define P_VDD &NO_IO[0]
@@ -239,7 +240,8 @@ typedef struct{
 #define P_RST &NO_IO[2]
 #define P_OSC &NO_IO[3]
 #define P_USB &NO_IO[4]
-
+#define P_NC  &NO_IO[5]
+    
     /**
      @brief PICsim PIC structure
      

@@ -652,6 +652,9 @@ PIC18F47K40_getconf(unsigned int cfg)
   case CFG_WDT:
    return (pic->config[2] & 0x0060);
    break;
+  case CFG_WDT_DIV:
+   return (pic->config[2] & 0x001F);
+   break;    
   case CFG_DEBUG:
    return ((pic->config[1] & 0x2000) == 0);
    break;

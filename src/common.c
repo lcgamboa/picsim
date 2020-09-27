@@ -40,7 +40,7 @@ extern void pic_decode_16(void);
 extern void pic_decode_16E(void);
 extern void pic_decode_18(void);
 
-unsigned char NO_IO[5] = {1, 2, 3, 4, 5};
+unsigned char NO_IO[6] = {1, 2, 3, 4, 5, 6};
 
 int PIC_count;
 

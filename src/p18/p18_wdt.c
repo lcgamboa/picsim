@@ -45,7 +45,7 @@ p18_wdt(void)
 
    pic->twdt += 4.0 / pic->freq;
 
-   if (pic->twdt > (1e-3 * fpw2[(pic->config[1] & 0x0E00) >> 9]))
+   if (pic->twdt > (1e-3 * fpw2[pic->getconf(CFG_WDT_DIV)]))
     {
      pic->twdt = 0;
      pic->wdt++;
@@ -89,7 +89,7 @@ p18_wdt_2(void)
 
    pic->twdt += 4.0 / pic->freq;
 
-   int div = pic->config[2] & 0x001F;
+   int div = pic->getconf(CFG_WDT_DIV);
 
    if (div > 18)div = 0;
 

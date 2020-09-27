@@ -198,7 +198,7 @@ extern "C" {
         unsigned char * SP1BRGH;
         unsigned char * RC1STA;
         unsigned char * TX1STA;
-
+        
         unsigned char * RC2REG;
         unsigned char * TX2REG;
         unsigned char * SP2BRGL;

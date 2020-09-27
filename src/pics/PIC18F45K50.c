@@ -27,6 +27,13 @@
 #include"../p18/p18_periferic.h"
 #include <string.h>
 
+#define RCREG1 RC1REG
+#define TXREG1 TX1REG
+#define SPBRG1 SP1BRGL
+#define SPBRGH1 SP1BRGH
+#define RCSTA1 RC1STA
+#define TXSTA1 TX1STA  
+
 void
 PIC18F45K50_map(void)
 {
@@ -159,14 +166,12 @@ PIC18F45K50_map(void)
  pic->P18map.EECON2 = &pic->ram[0xFA7];
  pic->P18map.EEDATA = &pic->ram[0xFA8];
  pic->P18map.EEADR = &pic->ram[0xFA9];
- /*
  pic->P18map.RCSTA1 = &pic->ram[0xFAB];
  pic->P18map.TXSTA1 = &pic->ram[0xFAC];
  pic->P18map.TXREG1 = &pic->ram[0xFAD];
  pic->P18map.RCREG1 = &pic->ram[0xFAE];
  pic->P18map.SPBRG1 = &pic->ram[0xFAF];
  pic->P18map.SPBRGH1 = &pic->ram[0xFB0];
-  */
  pic->P18map.T3CON = &pic->ram[0xFB1];
  /*
  pic->P18map.T3GCON = &pic->ram[0xFB4];
@@ -428,7 +433,7 @@ PIC18F45K50_reset(void)
  p18_mssp_rst ();
  p18_int_pin_rst();
  p18_int_portb_rst();
- p18_uart_rst_2();
+ p18_uart_rst_2(0);
 }
 
 void
@@ -458,6 +463,9 @@ PIC18F45K50_getconf(unsigned int cfg)
   case CFG_WDT:
    return ((pic->config[1] & 0x0100) > 0);
    break;
+  case CFG_WDT_DIV:
+   return ((pic->config[1] & 0x1E00) >> 9);
+   break;    
   case CFG_DEBUG:
    return ((pic->config[3] & 0x0080) == 0);
    break;

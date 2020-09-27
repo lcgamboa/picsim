@@ -335,7 +335,7 @@ PIC18F4550_reset(void)
  p18_mssp_rst ();
  p18_int_pin_rst();
  p18_int_portb_rst();
- p18_uart_rst();
+ p18_uart_rst(0);
 }
 
 void
@@ -365,6 +365,9 @@ PIC18F4550_getconf(unsigned int cfg)
   case CFG_WDT:
    return ((pic->config[1] & 0x0100) > 0);
    break;
+  case CFG_WDT_DIV:
+   return ((pic->config[1] & 0x1E00) >> 9);
+   break;    
   case CFG_DEBUG:
    return ((pic->config[3] & 0x0080) == 0);
    break;
