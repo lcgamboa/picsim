@@ -140,7 +140,7 @@ p18_tmr2_2(void)
         {
          (*pic->P18map.CCPR1H) = (*pic->P18map.CCPR1L);
          if (pic->pins[pic->ccp[0] - 1].dir == PD_OUT)
-          (*pic->pins[(pic->ccp[0] - 1)].port) = 0x01 << (pic->pins[(pic->ccp[0] - 1)].pord);
+          (*pic->pins[(pic->ccp[0] - 1)].port) |= 0x01 << (pic->pins[(pic->ccp[0] - 1)].pord);
         }
 
        if ((pic->CCPCOUNT >= 2)&&(pic->ccp[1] > 0)&&((*pic->P18map.CCP2CON)& 0x0C) == 0x0C)
