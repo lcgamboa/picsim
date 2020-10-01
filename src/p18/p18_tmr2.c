@@ -71,13 +71,12 @@ p18_tmr2(void)
          pic->cp2_ = 0;
         }
 
-       //PWM
-
+       //PWM       
        if ((pic->CCPCOUNT >= 1)&&(pic->ccp[0] > 0)&&((*pic->P18map.CCP1CON)& 0x0C) == 0x0C)
         {
          (*pic->P18map.CCPR1H) = (*pic->P18map.CCPR1L);
          if (pic->pins[pic->ccp[0] - 1].dir == PD_OUT)
-          (*pic->pins[(pic->ccp[0] - 1)].port) = 0x01 << (pic->pins[(pic->ccp[0] - 1)].pord);
+          (*pic->pins[(pic->ccp[0] - 1)].port) |= 0x01 << (pic->pins[(pic->ccp[0] - 1)].pord);
         }
 
        if ((pic->CCPCOUNT >= 2)&&(pic->ccp[1] > 0)&&((*pic->P18map.CCP2CON)& 0x0C) == 0x0C)
@@ -86,7 +85,6 @@ p18_tmr2(void)
          if (pic->pins[pic->ccp[1] - 1].dir == PD_OUT)
           (*pic->pins[(pic->ccp[1] - 1)].port) |= 0x01 << (pic->pins[(pic->ccp[1] - 1)].pord);
         }
-
       }
      pic->cp2 = 0;
     }
@@ -110,6 +108,7 @@ p18_tmr2(void)
         (*pic->pins[(pic->ccp[1] - 1)].port) &= ~(0x01 << (pic->pins[(pic->ccp[1] - 1)].pord));
       }
     }
+  
   }
 }
 
