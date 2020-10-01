@@ -24,11 +24,11 @@
 | [src/p18/p18_tmr0.c](src/p18/p18_tmr0.c#L114) | 114 | buffer TMR0H writes latch
 | [src/p18/p18_tmr0.c](src/p18/p18_tmr0.c#L125) | 125 | implement postscaler
 | [src/p18/p18_tmr1.c](src/p18/p18_tmr1.c#L127) | 127 | support all modes
-| [src/p18/p18_tmr2.c](src/p18/p18_tmr2.c#L119) | 119 | TMR2 incomplet
+| [src/p18/p18_tmr2.c](src/p18/p18_tmr2.c#L118) | 118 | TMR2 incomplet
 | [src/p18/p18_wdt.c](src/p18/p18_wdt.c#L77) | 77 | WDT support window and clock select
 | [src/pics/PIC16F1619.c](src/pics/PIC16F1619.c#L523) | 523 | add P16E pin interrupt support
 | [src/pics/PIC16F18855.c](src/pics/PIC16F18855.c#L670) | 670 | add P16E pin interrupt support
-| [src/pics/PIC18F45K50.c](src/pics/PIC18F45K50.c#L386) | 386 | add all ADC channels
+| [src/pics/PIC18F45K50.c](src/pics/PIC18F45K50.c#L391) | 391 | add all ADC channels
 
 ### FIXMEs
 | Filename | line # | FIXME

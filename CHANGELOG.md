@@ -5,6 +5,8 @@
 
 ### New
 
+* Initial suppport to PIC18F46J50. [lcgamboa]
+
 * PIC18Fx7K40 second usart support. [lcgamboa]
 
 * Support to multiple serial. [lcgamboa]
@@ -12,6 +14,12 @@
 * Microcontroller dynamic register. [lcgamboa]
 
 ### Fix
+
+* PIC18F CCP1 PWM output bug fixed. [lcgamboa]
+
+* Missing ADC channels added in PIC16F1788. [lcgamboa]
+
+* Missing first PIC in list bug fixed. [lcgamboa]
 
 * Correct name of PIC in register macro. [lcgamboa]
 
