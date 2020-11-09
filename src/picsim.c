@@ -297,7 +297,7 @@ main(int argc, char** argv)
 	  
    pc = getproclist(plist, PMAX);
 
-   int j;
+   int j=0;
    for(int i=0; i < pc; i++)
    {
      printf("\t%s", &plist[i][0]);
