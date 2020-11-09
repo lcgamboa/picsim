@@ -556,6 +556,14 @@ extern unsigned char NO_IO[6];
      * @return @ref hexload 
      */
     int write_ihx18(const char * fname);
+    
+    /**
+     * @brief Return list name of supported processors  
+     * 
+     * @param variable to return the number of supported processors
+     * @return array of names
+     */
+    int getproclist(char list[][30], int size);
 
     /**
      * @brief Return processor ID by name 

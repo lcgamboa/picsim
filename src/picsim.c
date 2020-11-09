@@ -289,14 +289,26 @@ main(int argc, char** argv)
   }
  else
   {
-   //TODO use the dyanmic list PICS[]
-   printf ("use: %s PICXXFXXX file.hex\n", argv[0]);
-   printf ("supported processors PIC16:\n");
-   printf ("         PIC16F84A PIC16F628 PIC16F628A PIC16F877 PIC16F877A PIC16F648A \n");
-   printf ("         PIC16F777 PIC16F1619 PIC16F18855 PIC16F18324\n");
-   printf ("supported processors PIC18:\n");
-   printf ("         PIC18F452 PIC18F4520 PIC18F4620 PIC18F4550 PIC18F45K50 PIC18F27K40\n");
-   printf ("         PIC18F47K40\n");
+   int pc;
+   char plist[PMAX][30];
+   
+   printf ("use: %s PICXXFXXX file.hex\n\n", argv[0]);
+   printf ("supported processors:\n");
+	  
+   pc = getproclist(plist, PMAX);
+
+   int j;
+   for(int i=0; i < pc; i++)
+   {
+     printf("\t%s", &plist[i][0]);
+     j++;
+     if(j >5)
+     {
+	 j=0;    
+	 printf("\n");
+     } 
+   }
+   printf("\n\n"); 
 
 #ifdef _WIN_
    system ("PAUSE");

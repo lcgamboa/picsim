@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2008-2020  Luis Claudio Gambôa Lopes
+   Copyright (c) : 2008-2020  Luis Claudio Gamboa Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -24,9 +24,36 @@
    ######################################################################## */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "../include/picsim.h"
+
+
+static int strCompare(const void* s1, const void* s2) 
+{
+  return strcmp( (const char *)s1, (const char *)s2); 
+} 
+
+
+int getproclist(char list[][30], int size)
+{
+ int i;
+
+ if(size > PIC_count)
+ {
+   size = PIC_count;
+ }
+
+ for (i = 0; i < size; i++)
+  {
+    strcpy (list[i],PICS[i].name);
+  }
+
+ qsort(list , size, sizeof(const char)*30, strCompare); 
+
+ return size;
+}
 
 unsigned int
 getprocbyname(const char *str)

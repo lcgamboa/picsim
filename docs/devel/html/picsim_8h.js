@@ -50,6 +50,7 @@ var picsim_8h =
     [ "getnamebyproc", "picsim_8h.html#a1471ffe76824660cdd15323279ed0231", null ],
     [ "getPinName", "picsim_8h.html#a68e787d59c22066c8b66049936245fc0", null ],
     [ "getprocbyname", "picsim_8h.html#a924adddc9cd0e35e3ffa5a36d35d4675", null ],
+    [ "getproclist", "picsim_8h.html#ac65b4f29a652868151b36241051a93a7", null ],
     [ "pic_end", "picsim_8h.html#aad8e35b8dfa6c994097048490549e1fb", null ],
     [ "pic_erase_flash", "picsim_8h.html#a554c01e1fff9cbc773c4dcafa06a310c", null ],
     [ "pic_get_pin", "picsim_8h.html#a5e487a112bed4fea6cbe6ab9fea496ef", null ],

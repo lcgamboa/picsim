@@ -320,6 +320,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pics
 <tr class="memitem:a782b6a6b0c2997125e097da37860b801"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="picsim_8h.html#a782b6a6b0c2997125e097da37860b801">write_ihx18</a> (const char *fname)</td></tr>
 <tr class="memdesc:a782b6a6b0c2997125e097da37860b801"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dump all non volatile P18 microcontroller memory to HEX file.  <a href="picsim_8h.html#a782b6a6b0c2997125e097da37860b801">More...</a><br /></td></tr>
 <tr class="separator:a782b6a6b0c2997125e097da37860b801"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac65b4f29a652868151b36241051a93a7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="picsim_8h.html#ac65b4f29a652868151b36241051a93a7">getproclist</a> (char list[][30], int size)</td></tr>
+<tr class="memdesc:ac65b4f29a652868151b36241051a93a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return list name of supported processors <br  />
+  <a href="picsim_8h.html#ac65b4f29a652868151b36241051a93a7">More...</a><br /></td></tr>
+<tr class="separator:ac65b4f29a652868151b36241051a93a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a924adddc9cd0e35e3ffa5a36d35d4675"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="picsim_8h.html#a924adddc9cd0e35e3ffa5a36d35d4675">getprocbyname</a> (const char *str)</td></tr>
 <tr class="memdesc:a924adddc9cd0e35e3ffa5a36d35d4675"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return processor ID by name.  <a href="picsim_8h.html#a924adddc9cd0e35e3ffa5a36d35d4675">More...</a><br /></td></tr>
 <tr class="separator:a924adddc9cd0e35e3ffa5a36d35d4675"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -709,6 +713,44 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>PIC_count</b></td></tr
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>ID of microcontroller </dd></dl>
+
+</div>
+</div>
+<a id="ac65b4f29a652868151b36241051a93a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac65b4f29a652868151b36241051a93a7">&#9670;&nbsp;</a></span>getproclist()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int getproclist </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>list</em>[][30], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return list name of supported processors <br  />
+ </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">variable</td><td>to return the number of supported processors </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>array of names </dd></dl>
 
 </div>
 </div>
@@ -1357,7 +1399,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>PIC_count</b></td></tr
 </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="astructpic__desc_html"><div class="ttname"><a href="structpic__desc.html">pic_desc</a></div><div class="ttdef"><b>Definition:</b> picsim.h:643</div></div>
+<div class="ttc" id="astructpic__desc_html"><div class="ttname"><a href="structpic__desc.html">pic_desc</a></div><div class="ttdef"><b>Definition:</b> picsim.h:651</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

@@ -8,5 +8,6 @@ var searchData=
   ['getfsrname_5f18_12',['getFSRname_18',['../picsim_8h.html#ac088e01d49b1c27b8ee88a0e37f80ee2',1,'picsim.h']]],
   ['getnamebyproc_13',['getnamebyproc',['../picsim_8h.html#a1471ffe76824660cdd15323279ed0231',1,'picsim.h']]],
   ['getpinname_14',['getPinName',['../picsim_8h.html#a68e787d59c22066c8b66049936245fc0',1,'picsim.h']]],
-  ['getprocbyname_15',['getprocbyname',['../picsim_8h.html#a924adddc9cd0e35e3ffa5a36d35d4675',1,'picsim.h']]]
+  ['getprocbyname_15',['getprocbyname',['../picsim_8h.html#a924adddc9cd0e35e3ffa5a36d35d4675',1,'picsim.h']]],
+  ['getproclist_16',['getproclist',['../picsim_8h.html#ac65b4f29a652868151b36241051a93a7',1,'picsim.h']]]
 ];
