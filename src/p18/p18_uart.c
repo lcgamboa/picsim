@@ -48,6 +48,8 @@ p18_uart_rst(int nser)
    pic->serial[0].serial_TRIS_RX_MASK = (0x01 << pic->pins[pic->usart_rx[0] - 1].pord);
 
    pic->serial[0].s_open = 1;
+   
+   bitbang_uart_rst(&pic->serial[0].bbuart);
   }
 }
 
@@ -88,6 +90,7 @@ p18_uart_rst_3(int nser)
    pic->serial[0].serial_TRIS_RX = &pic->ram[sfr_addr (pic->pins[pic->usart_rx[0] - 1].port) - 0x05];
    pic->serial[0].serial_TRIS_RX_MASK = (0x01 << pic->pins[pic->usart_rx[0] - 1].pord);
    pic->serial[0].s_open = 1;
+   bitbang_uart_rst(&pic->serial[0].bbuart);
   }
  else if (nser == 1)
   {
@@ -106,6 +109,7 @@ p18_uart_rst_3(int nser)
    pic->serial[1].serial_TRIS_RX = &pic->ram[sfr_addr (pic->pins[pic->usart_rx[1] - 1].port) - 0x05];
    pic->serial[1].serial_TRIS_RX_MASK = (0x01 << pic->pins[pic->usart_rx[1] - 1].pord);
    pic->serial[1].s_open = 1;
+   bitbang_uart_rst(&pic->serial[1].bbuart);
   }
 
 }

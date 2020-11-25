@@ -68,6 +68,7 @@ extern "C" {
 #include"p16fxxx_defs.h"
 #include"p16fxxxe_defs.h"
 #include"p18fxxx_defs.h"
+#include"bitbang_uart.h"
 
 #define SERIAL_MAX 2   
 #define BUFFMAX 8192  //4K word
@@ -96,7 +97,6 @@ extern "C" {
      */    
 typedef struct{
         //USART 
-        int sr;
         unsigned char recb;
         int serialc;
         unsigned char txtemp[2];
@@ -131,6 +131,7 @@ typedef struct{
         unsigned short serial_RCREG_ADDR;
         unsigned char * serial_TRIS_RX;
         unsigned char serial_TRIS_RX_MASK;   
+        bitbang_uart_t bbuart;
     } _serial;
 
     /**

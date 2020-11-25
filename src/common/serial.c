@@ -41,32 +41,39 @@
 #include <sys/ioctl.h>
 #endif
 
-#include "../include/picsim.h"
-//#include "periferic16.h"
-//#include "periferic16e.h"
-//#include "periferic18.h"
+#include "../../include/picsim.h"
 
 #define _POSIX_SOURCE 1 /* POSIX compliant source */
 #define FALSE 0
 #define TRUE 1
 
+int pic_wr_pin18(unsigned char pin, unsigned char value);
+int pic_dir_pin18(unsigned char pin, unsigned char dir);
+
+int pic_wr_pin16E(unsigned char pin, unsigned char value);
+int pic_dir_pin16E(unsigned char pin, unsigned char dir);
+
+int pic_wr_pin16(unsigned char pin, unsigned char value);
+int pic_dir_pin16(unsigned char pin, unsigned char dir);
+
 int
 serial_open(int nser)
 {
 
+ if (nser >= SERIAL_MAX) return 1;
 
  pic->serial[nser].bc = 0;
- pic->serial[nser].sr = 0;
  pic->serial[nser].serialc = 0;
  pic->serial[nser].recb = 0;
  pic->serial[nser].s_open = 0;
 
- if (nser >= SERIAL_MAX) return 1;
+ bitbang_uart_init (&pic->serial[nser].bbuart);
+
 
  if (pic->serial[nser].SERIALDEVICE[0] == 0)
   {
-      pic->serial[nser].serialfd = 0;
-      return 0;
+   pic->serial[nser].serialfd = 0;
+   return 0;
   }
 
 #ifdef _WIN_
@@ -111,6 +118,7 @@ serial_close(int nser)
 #endif
    pic->serial[nser].serialfd = 0;
   }
+ bitbang_uart_end (&pic->serial[nser].bbuart);
  return 0;
 }
 
@@ -217,6 +225,9 @@ serial_cfg(int nser)
    break;
   }
 
+ bitbang_uart_set_clk_freq (&pic->serial[nser].bbuart, pic->freq / 4);
+ bitbang_uart_set_speed (&pic->serial[nser].bbuart, pic->serial[nser].serialbaud);
+
 #ifdef _WIN_
  //BOOL bPortReady;
  DCB dcb;
@@ -319,6 +330,16 @@ serial_rec(_pic * pic, int nser, unsigned char * c)
    nbytes = read (pic->serial[nser].serialfd, c, 1);
    if (nbytes < 0)nbytes = 0;
 #endif    
+
+   if (!nbytes)
+    {
+     if (bitbang_uart_data_available (&pic->serial[nser].bbuart))
+      {
+       *c = bitbang_uart_recv (&pic->serial[nser].bbuart);
+       nbytes = 1;
+      }
+    }
+
    return nbytes;
   }
  else
@@ -402,6 +423,8 @@ void
 serial(int nser)
 {
  unsigned char rctemp;
+ unsigned int sr;
+
 
  if (pic->lram == pic->serial[nser].serial_TXREG_ADDR)
   {
@@ -410,6 +433,8 @@ serial(int nser)
    pic->serial[nser].txtemp[(unsigned char) pic->serial[nser].txtc] = *pic->serial[nser].serial_TXREG;
    *pic->serial[nser].serial_TXSTA &= ~0x02; //TRMT=0 full   
    *pic->serial[nser].serial_PIR &= ~pic->serial[nser].TXIF_mask; //TXIF=0 trasmiting
+   bitbang_uart_send (&pic->serial[nser].bbuart, *pic->serial[nser].serial_TXREG);
+   pic->serial[nser].serialc = 0;
   }
 
  if (pic->lram == pic->serial[nser].serial_RCSTA_ADDR)
@@ -417,7 +442,7 @@ serial(int nser)
    if ((*pic->serial[nser].serial_RCSTA & 0x10) == 0)
     {
      *pic->serial[nser].serial_RCSTA &= ~0x02; //clear OERR
-     pic->serial[nser].serialc = 0;
+     sr = 1;
     }
   }
 
@@ -464,9 +489,24 @@ serial(int nser)
      *pic->serial[nser].serial_PIR |= pic->serial[nser].TXIF_mask; //TXIF=1  
      pic->serial[nser].txtc = -1;
 
-     pic->pins[pic->usart_rx[nser] - 1].ptype = PT_USART;
-     pic->pins[pic->usart_tx[nser] - 1].ptype = PT_USART;
+     //pic->pins[pic->usart_rx[nser] - 1].ptype = PT_USART;
+     //pic->pins[pic->usart_tx[nser] - 1].ptype = PT_USART;
      if (pic->serial[nser].flowcontrol)pic_set_pin (pic->serial[nser].rtspin, 0); //enable send
+     switch (pic->family)
+      {
+      case P16:
+       pic_dir_pin16 (pic->usart_tx[nser], PD_OUT);
+       pic_dir_pin16 (pic->usart_rx[nser], PD_IN);
+       break;
+      case P16E:
+       pic_dir_pin16E (pic->usart_tx[nser], PD_OUT);
+       pic_dir_pin16E (pic->usart_rx[nser], PD_IN);
+       break;
+      case P18:
+       pic_dir_pin18 (pic->usart_tx[nser], PD_OUT);
+       pic_dir_pin18 (pic->usart_rx[nser], PD_IN);
+       break;
+      }
     }
 
 
@@ -481,6 +521,8 @@ serial(int nser)
        pic->serial[nser].txtemp[(unsigned char) pic->serial[nser].txtc] = *pic->serial[nser].serial_TXREG;
        *pic->serial[nser].serial_TXSTA &= ~0x02; //TRMT=0 full   
        *pic->serial[nser].serial_PIR &= ~pic->serial[nser].TXIF_mask; //TXIF=0 trasmiting
+       bitbang_uart_send (&pic->serial[nser].bbuart, *pic->serial[nser].serial_TXREG);
+       sr = 1;
       }
     }
 
@@ -490,20 +532,24 @@ serial(int nser)
    if (*pic->serial[nser].serial_TXSTA & 0x04)
     {
      //BRGH=1  start + 8 bits + stop
-     if (pic->serial[nser].serialc >= (((*pic->serial[nser].serial_SPBRG) + 1)*40))pic->serial[nser].sr = 1;
+     if (pic->serial[nser].serialc >= (((*pic->serial[nser].serial_SPBRG) + 1)*40))
+      {
+       sr = 1;
+      }
     }
    else
     {
      //BRGH=0  start + 8 bits + stop
-     if (pic->serial[nser].serialc >= (((*pic->serial[nser].serial_SPBRG) + 1)*160))pic->serial[nser].sr = 1;
+     if (pic->serial[nser].serialc >= (((*pic->serial[nser].serial_SPBRG) + 1)*160))
+      {
+       sr = 1;
+      }
     }
 
-
-   if (pic->serial[nser].sr == 1)
+   if (sr)
     {
-
+     sr = 0;
      pic->serial[nser].serialc = 0;
-
 
      if ((pic->serial[nser].s_open == 1)&&((*pic->serial[nser].serial_TRIS_RX & pic->serial[nser].serial_TRIS_RX_MASK) != 0)) //work only if RX tris bit is set
       {
@@ -539,7 +585,9 @@ serial(int nser)
          *pic->serial[nser].serial_PIR |= pic->serial[nser].RXIF_mask;
         }
       }
-
+    }
+   if (!bitbang_uart_transmitting (&pic->serial[nser].bbuart))
+    {
      //if(((pic->ram[P18_TXSTA] & 0x02) == 0 ) &&((pic->ram[pic->pins[pic->usart[1]-1].port+0x12] &  (0x01 << pic->pins[pic->usart[1]-1].pord)) == 0))
      if ((*pic->serial[nser].serial_TXSTA & 0x02) == 0)
       {
@@ -552,22 +600,34 @@ serial(int nser)
         }
        *pic->serial[nser].serial_PIR |= pic->serial[nser].TXIF_mask; //TXIF=1  
       }
-     pic->serial[nser].sr = 0;
+    }
+   switch (pic->family)
+    {
+    case P16:
+     pic_wr_pin16 (pic->usart_tx[nser], bitbang_uart_io (&pic->serial[nser].bbuart, pic->pins[pic->usart_rx[nser] - 1].value));
+     break;
+    case P16E:
+     pic_wr_pin16E (pic->usart_tx[nser], bitbang_uart_io (&pic->serial[nser].bbuart, pic->pins[pic->usart_rx[nser] - 1].value));
+     break;
+    case P18:
+     pic_wr_pin18 (pic->usart_tx[nser], bitbang_uart_io (&pic->serial[nser].bbuart, pic->pins[pic->usart_rx[nser] - 1].value));
+     break;
     }
 
    //Hardware flowcontrol
-
   }
  else
   {
    if (pic->serial[nser].s_open == 1)
     {
      pic->serial[nser].s_open = 0;
-     pic->pins[pic->usart_rx[nser] - 1].ptype = PT_CMOS;
-     pic->pins[pic->usart_tx[nser] - 1].ptype = PT_CMOS;
+     //pic->pins[pic->usart_rx[nser] - 1].ptype = PT_CMOS;
+     //pic->pins[pic->usart_tx[nser] - 1].ptype = PT_CMOS;
      if (pic->serial[nser].flowcontrol)pic_set_pin (pic->serial[nser].rtspin, 1); //disable send
     }
   }
+
+
 
 }
 

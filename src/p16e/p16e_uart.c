@@ -46,6 +46,8 @@ p16e_uart_rst(void)
  pic->serial[0].serial_TRIS_RX = &pic->ram[sfr_addr (pic->pins[pic->usart_rx[0] - 1].port)+(sfr_addr (pic->P16Emap.TRISA) - sfr_addr (pic->P16Emap.PORTA)) ];
  pic->serial[0].serial_TRIS_RX_MASK = (0x01 << pic->pins[pic->usart_rx[0] - 1].pord);
  pic->serial[0].s_open = 1;
+ 
+ bitbang_uart_rst(&pic->serial[0].bbuart);
 }
 
 void
@@ -67,6 +69,8 @@ p16e_uart_rst_2(void)
  pic->serial[0].serial_TRIS_RX = &pic->ram[sfr_addr (pic->pins[pic->usart_rx[0] - 1].port)+(sfr_addr (pic->P16Emap.TRISA) - sfr_addr (pic->P16Emap.PORTA)) ];
  pic->serial[0].serial_TRIS_RX_MASK = (0x01 << pic->pins[pic->usart_rx[0] - 1].pord);
  pic->serial[0].s_open = 1;
+ 
+ bitbang_uart_rst(&pic->serial[0].bbuart);
 }
 
 
