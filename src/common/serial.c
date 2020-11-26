@@ -330,7 +330,6 @@ serial_rec(_pic * pic, int nser, unsigned char * c)
    nbytes = read (pic->serial[nser].serialfd, c, 1);
    if (nbytes < 0)nbytes = 0;
 #endif    
-
    if (!nbytes)
     {
      if (bitbang_uart_data_available (&pic->serial[nser].bbuart))
@@ -339,7 +338,6 @@ serial_rec(_pic * pic, int nser, unsigned char * c)
        nbytes = 1;
       }
     }
-
    return nbytes;
   }
  else
@@ -423,8 +421,7 @@ void
 serial(int nser)
 {
  unsigned char rctemp;
- unsigned int sr;
-
+ unsigned char sr = 0;
 
  if (pic->lram == pic->serial[nser].serial_TXREG_ADDR)
   {
@@ -434,7 +431,6 @@ serial(int nser)
    *pic->serial[nser].serial_TXSTA &= ~0x02; //TRMT=0 full   
    *pic->serial[nser].serial_PIR &= ~pic->serial[nser].TXIF_mask; //TXIF=0 trasmiting
    bitbang_uart_send (&pic->serial[nser].bbuart, *pic->serial[nser].serial_TXREG);
-   pic->serial[nser].serialc = 0;
   }
 
  if (pic->lram == pic->serial[nser].serial_RCSTA_ADDR)
@@ -442,7 +438,7 @@ serial(int nser)
    if ((*pic->serial[nser].serial_RCSTA & 0x10) == 0)
     {
      *pic->serial[nser].serial_RCSTA &= ~0x02; //clear OERR
-     sr = 1;
+     pic->serial[nser].serialc = 0;
     }
   }
 
@@ -507,6 +503,8 @@ serial(int nser)
        pic_dir_pin18 (pic->usart_rx[nser], PD_IN);
        break;
       }
+     pic->pins[pic->usart_rx[nser] - 1].value = 1;
+     pic->pins[pic->usart_tx[nser] - 1].value = 1;
     }
 
 
@@ -522,7 +520,6 @@ serial(int nser)
        *pic->serial[nser].serial_TXSTA &= ~0x02; //TRMT=0 full   
        *pic->serial[nser].serial_PIR &= ~pic->serial[nser].TXIF_mask; //TXIF=0 trasmiting
        bitbang_uart_send (&pic->serial[nser].bbuart, *pic->serial[nser].serial_TXREG);
-       sr = 1;
       }
     }
 
@@ -550,6 +547,7 @@ serial(int nser)
     {
      sr = 0;
      pic->serial[nser].serialc = 0;
+
 
      if ((pic->serial[nser].s_open == 1)&&((*pic->serial[nser].serial_TRIS_RX & pic->serial[nser].serial_TRIS_RX_MASK) != 0)) //work only if RX tris bit is set
       {
@@ -585,22 +583,24 @@ serial(int nser)
          *pic->serial[nser].serial_PIR |= pic->serial[nser].RXIF_mask;
         }
       }
-    }
-   if (!bitbang_uart_transmitting (&pic->serial[nser].bbuart))
-    {
-     //if(((pic->ram[P18_TXSTA] & 0x02) == 0 ) &&((pic->ram[pic->pins[pic->usart[1]-1].port+0x12] &  (0x01 << pic->pins[pic->usart[1]-1].pord)) == 0))
-     if ((*pic->serial[nser].serial_TXSTA & 0x02) == 0)
-      {
-       if (pic->serial[nser].s_open == 1) serial_send (nser, pic->serial[nser].txtemp[0]);
-       *pic->serial[nser].serial_TXSTA |= 0x02; //TRMT=1 empty  
 
-       if (((*pic->serial[nser].serial_PIE & pic->serial[nser].TXIF_mask) == pic->serial[nser].TXIF_mask)&&((*pic->serial[nser].serial_PIR & pic->serial[nser].TXIF_mask) != pic->serial[nser].TXIF_mask))
+     if (!bitbang_uart_transmitting (&pic->serial[nser].bbuart))
+      {
+       //if(((pic->ram[P18_TXSTA] & 0x02) == 0 ) &&((pic->ram[pic->pins[pic->usart[1]-1].port+0x12] &  (0x01 << pic->pins[pic->usart[1]-1].pord)) == 0))
+       if ((*pic->serial[nser].serial_TXSTA & 0x02) == 0)
         {
-         if (pic->print)printf ("serial tx interrupt (%#04X)\n", pic->serial[nser].txtemp[0]);
+         if (pic->serial[nser].s_open == 1) serial_send (nser, pic->serial[nser].txtemp[0]);
+         *pic->serial[nser].serial_TXSTA |= 0x02; //TRMT=1 empty  
+
+         if (((*pic->serial[nser].serial_PIE & pic->serial[nser].TXIF_mask) == pic->serial[nser].TXIF_mask)&&((*pic->serial[nser].serial_PIR & pic->serial[nser].TXIF_mask) != pic->serial[nser].TXIF_mask))
+          {
+           if (pic->print)printf ("serial tx interrupt (%#04X)\n", pic->serial[nser].txtemp[0]);
+          }
+         *pic->serial[nser].serial_PIR |= pic->serial[nser].TXIF_mask; //TXIF=1  
         }
-       *pic->serial[nser].serial_PIR |= pic->serial[nser].TXIF_mask; //TXIF=1  
       }
     }
+
    switch (pic->family)
     {
     case P16:
@@ -647,3 +647,4 @@ pic_set_serial(_pic * pic_, int nser, const char * name, int flowcontrol, int ct
   }
  return 0;
 }
+
