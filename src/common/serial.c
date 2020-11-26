@@ -226,7 +226,7 @@ serial_cfg(int nser)
   }
 
  bitbang_uart_set_clk_freq (&pic->serial[nser].bbuart, pic->freq / 4);
- bitbang_uart_set_speed (&pic->serial[nser].bbuart, pic->serial[nser].serialbaud);
+ bitbang_uart_set_speed (&pic->serial[nser].bbuart, pic->serial[nser].serialexbaud);
 
 #ifdef _WIN_
  //BOOL bPortReady;
