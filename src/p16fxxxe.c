@@ -1443,7 +1443,7 @@ pic_decode_16E(void)
     {
      (*pic->P16Emap.LATD) = (*pic->P16Emap.PORTD);
     }
-   if (plram == pic->P16Emap.PORTE)
+   if ((plram == pic->P16Emap.PORTE)&&(pic->P16Emap.LATE))
     {
      (*pic->P16Emap.LATE) = (*pic->P16Emap.PORTE);
     }
