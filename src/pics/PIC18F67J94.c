@@ -734,7 +734,7 @@ PIC18F67J94_reset(void)
  pic->int1 = 0;
  pic->int2 = 0;
 
- //p18_tmr0_rst ();
+ p18_tmr0_rst ();
  //p18_tmr1_rst ();
  //p18_tmr2_rst ();
  //p18_adc_rst ();
@@ -755,7 +755,7 @@ PIC18F67J94_periferic (void)
  //p18_int_pin ();
  //p18_int_portb ();
  //p18_int_ports ();
- //p18_tmr0 ();
+ p18_tmr0 ();
  //p18_wdt ();
  //p18_eeprom ();
  //p18_tmr1 ();
