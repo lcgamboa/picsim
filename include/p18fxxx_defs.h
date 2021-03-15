@@ -104,22 +104,35 @@ extern "C" {
         unsigned char * PIE4;
         unsigned char * PIR4;
         unsigned char * IPR4;
-
+        unsigned char * PIE5;
+        unsigned char * PIR5;
+        unsigned char * IPR5;
+        unsigned char * PIE6;
+        unsigned char * PIR6;
+        unsigned char * IPR6;
+        
         unsigned char * PORTA;
         unsigned char * PORTB;
         unsigned char * PORTC;
         unsigned char * PORTD;
         unsigned char * PORTE;
+        unsigned char * PORTF;
+        unsigned char * PORTG;
         unsigned char * LATA;
         unsigned char * LATB;
         unsigned char * LATC;
         unsigned char * LATD;
         unsigned char * LATE;
+        unsigned char * LATF;
+        unsigned char * LATG;
         unsigned char * TRISA;
         unsigned char * TRISB;
         unsigned char * TRISC;
         unsigned char * TRISD;
         unsigned char * TRISE;
+        unsigned char * TRISF;
+        unsigned char * TRISG;
+        
         unsigned char * ANSELA;
         unsigned char * ANSELB;
         unsigned char * ANSELC;

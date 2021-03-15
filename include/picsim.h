@@ -336,11 +336,15 @@ extern unsigned char NO_IO[6];
         unsigned char portc;
         unsigned char portd;
         unsigned char porte;
+        unsigned char portf;
+        unsigned char portg;
         unsigned char trisa;
         unsigned char trisb;
         unsigned char trisc;
         unsigned char trisd;
         unsigned char trise;
+        unsigned char trisf;
+        unsigned char trisg;
         //MSSP
         unsigned char ssp_ck;
         unsigned char ssp_sck;

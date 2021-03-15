@@ -106,6 +106,8 @@ pic_dir_pin18(unsigned char pin, unsigned char dir)
    pic->trisc = (*pic->P18map.TRISC);
    if (pic->P18map.TRISD)pic->trisd = (*pic->P18map.TRISD);
    if (pic->P18map.TRISE)pic->trise = (*pic->P18map.TRISE);
+   if (pic->P18map.TRISF)pic->trisf = (*pic->P18map.TRISF);
+   if (pic->P18map.TRISG)pic->trisg = (*pic->P18map.TRISG);
    return 1;
   }
  return 0;
@@ -123,12 +125,16 @@ periferic18_rst(void)
  pic->portc = 129;
  pic->portd = 129;
  pic->porte = 129;
-
+ pic->portf = 129;
+ pic->portg = 129;
+  
  pic->trisa = 129;
  pic->trisb = 129;
  pic->trisc = 129;
  pic->trisd = 129;
  pic->trise = 129;
+ pic->trisf = 129;
+ pic->trisg = 129;
 
  pic->sstep = 0;
  pic->dbg = 5;
@@ -284,7 +290,9 @@ periferic18_step_out(void)
      ((*pic->P18map.PORTB) != pic->portb) ||
      ((*pic->P18map.PORTC) != pic->portc) ||
      ((pic->P18map.PORTD)&&((*pic->P18map.PORTD)) != pic->portd) ||
-     ((pic->P18map.PORTE)&&((*pic->P18map.PORTE)) != pic->porte))
+     ((pic->P18map.PORTE)&&((*pic->P18map.PORTE)) != pic->porte) ||
+     ((pic->P18map.PORTF)&&((*pic->P18map.PORTF)) != pic->portf) ||
+     ((pic->P18map.PORTG)&&((*pic->P18map.PORTG)) != pic->portg))
   {
    for (i = 0; i < pic->PINCOUNT; i++)
     {
@@ -321,6 +329,8 @@ periferic18_step_out(void)
    pic->portc = (*pic->P18map.PORTC);
    if (pic->P18map.PORTD)pic->portd = (*pic->P18map.PORTD);
    if (pic->P18map.PORTE)pic->porte = (*pic->P18map.PORTE);
+   if (pic->P18map.PORTF)pic->portf = (*pic->P18map.PORTF);
+   if (pic->P18map.PORTG)pic->portg = (*pic->P18map.PORTG);
   }
 
 
@@ -329,7 +339,9 @@ periferic18_step_out(void)
      ((*pic->P18map.TRISB) != pic->trisb) ||
      ((*pic->P18map.TRISC) != pic->trisc) ||
      ((pic->P18map.TRISD)&&((*pic->P18map.TRISD) != pic->trisd)) ||
-     ((pic->P18map.TRISE)&&((*pic->P18map.TRISE) != pic->trise)))
+     ((pic->P18map.TRISE)&&((*pic->P18map.TRISE) != pic->trise)) ||
+     ((pic->P18map.TRISF)&&((*pic->P18map.TRISF) != pic->trisf)) ||
+     ((pic->P18map.TRISG)&&((*pic->P18map.TRISG) != pic->trisg)))
   {
    for (i = 0; i < pic->PINCOUNT; i++)
     {
@@ -356,6 +368,8 @@ periferic18_step_out(void)
    pic->trisc = (*pic->P18map.TRISC);
    if (pic->P18map.TRISD)pic->trisd = (*pic->P18map.TRISD);
    if (pic->P18map.TRISE)pic->trise = (*pic->P18map.TRISE);
+   if (pic->P18map.TRISF)pic->trisf = (*pic->P18map.TRISF);
+   if (pic->P18map.TRISG)pic->trisg = (*pic->P18map.TRISG);
   }
 
 
