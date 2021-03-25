@@ -793,7 +793,7 @@ PIC18F67J94_stop (void)
 void
 PIC18F67J94_start(void)
 {
- pic->ROMSIZE = 65528;
+ pic->ROMSIZE = 65536;
  pic->EEPROMSIZE = 0;
  pic->RAMSIZE = 4096;
  pic->PINCOUNT = 64;
