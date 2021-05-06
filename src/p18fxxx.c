@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2008-2020  Luis Claudio Gambôa Lopes
+   Copyright (c) : 2008-2020  Luis Claudio Gamboa Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -954,11 +954,12 @@ pic_decode_18(void)
       *status |= 0x04;
      else
       *status &= ~0x04;
-     break;
+     
      if ((*pic->P18map.WREG) & 0x80)
       *status |= 0x10;
      else
       *status &= ~0x10;
+     break;
     case 0x0900:
      //IORLW    k    	Inclusive OR literalw/ WREG  1     	0000 1001 kkkk kkkk Z, N
      if (pic->print)printf ("IORLW %#06X\n", opc & 0x00FF);
