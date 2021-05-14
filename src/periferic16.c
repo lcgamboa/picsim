@@ -28,8 +28,8 @@
 #include"../include/periferic16.h"
 
 
-const int fpw2[] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072, 
-  262144, 524288, 1048576, 2097152, 4194304, 8388608 };
+const int fpw2[] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072,
+ 262144, 524288, 1048576, 2097152, 4194304, 8388608};
 
 
 void pic_decode_16(void);
@@ -143,10 +143,13 @@ interrupt16(void)
      //TMR1IE TMR1IF
      if (((*pic->P16map.PIE1) & 0x01)&&((*pic->P16map.PIR1) & 0x01)) return 1;
 
-     //CCP2IE CCP2IF
-     if (((*pic->P16map.PIE2) & 0x01)&&((*pic->P16map.PIR2) & 0x01)) return 1;
-     //CCP3IE CCP3IF
-     if (((*pic->P16map.PIE2) & 0x02)&&((*pic->P16map.PIR2) & 0x02)) return 1;
+     if (pic->P16map.PIE2)
+      {
+       //CCP2IE CCP2IF
+       if (((*pic->P16map.PIE2) & 0x01)&&((*pic->P16map.PIR2) & 0x01)) return 1;
+       //CCP3IE CCP3IF
+       if (((*pic->P16map.PIE2) & 0x02)&&((*pic->P16map.PIR2) & 0x02)) return 1;
+      }
     }
 
   }
