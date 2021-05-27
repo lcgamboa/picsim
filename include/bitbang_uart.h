@@ -28,8 +28,8 @@
 extern "C" {
 #endif
 
-#ifndef BITBAMG_UART
-#define BITBAMG_UART
+#ifndef BITBANG_UART
+#define BITBANG_UART
 
 #include <stdio.h>
 
@@ -66,7 +66,7 @@ unsigned char  bitbang_uart_recv(bitbang_uart_t *bu);
 
 unsigned char bitbang_uart_io(bitbang_uart_t *bu, unsigned char rx);
 
-#endif //BITBAMG_UART
+#endif //BITBANG_UART
 
 #ifdef __cplusplus
 }
