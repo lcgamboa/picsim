@@ -146,8 +146,8 @@ typedef struct{
      * \defgroup pintype pin types
      * @{
      */
-#define PT_CMOS    0x01
-#define PT_TTL     0x02 
+#define PT_POWER   0x00
+#define PT_DIGITAL 0x01
 #define PT_ANALOG  0x04
 #define PT_ANAREF  0x05
 #define PT_USART   0x06

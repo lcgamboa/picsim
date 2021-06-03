@@ -29,28 +29,28 @@
 
 #include "../include/picsim.h"
 
-
-static int strCompare(const void* s1, const void* s2) 
+static int
+strCompare(const void* s1, const void* s2)
 {
-  return strcmp( (const char *)s1, (const char *)s2); 
-} 
+ return strcmp ((const char *) s1, (const char *) s2);
+}
 
-
-int getproclist(char list[][30], int size)
+int
+getproclist(char list[][30], int size)
 {
  int i;
 
- if(size > PIC_count)
- {
+ if (size > PIC_count)
+  {
    size = PIC_count;
- }
+  }
 
  for (i = 0; i < size; i++)
   {
-    strcpy (list[i],PICS[i].name);
+   strcpy (list[i], PICS[i].name);
   }
 
- qsort(list , size, sizeof(const char)*30, strCompare); 
+ qsort (list, size, sizeof (const char)*30, strCompare);
 
  return size;
 }
@@ -712,6 +712,18 @@ getPinName(_pic * pic, int pin, char * pname)
     {
      sprintf (pname, "GND");
     }
+   else if (pic->pins[pin].port == P_RST)
+    {
+     sprintf (pname, "RST");
+    }
+   else if (pic->pins[pin].port == P_OSC)
+    {
+     sprintf (pname, "OSC");
+    }
+   else if (pic->pins[pin].port == P_USB)
+    {
+     sprintf (pname, "USB");
+    }
    else if (pic->pins[pin].port == pic->P16map.PORTA)
     {
      sprintf (pname, "RA%i", pic->pins[pin].pord);
@@ -746,6 +758,18 @@ getPinName(_pic * pic, int pin, char * pname)
     {
      sprintf (pname, "GND");
     }
+   else if (pic->pins[pin].port == P_RST)
+    {
+     sprintf (pname, "RST");
+    }
+   else if (pic->pins[pin].port == P_OSC)
+    {
+     sprintf (pname, "OSC");
+    }
+   else if (pic->pins[pin].port == P_USB)
+    {
+     sprintf (pname, "USB");
+    }
    else if (pic->pins[pin].port == pic->P16Emap.PORTA)
     {
      sprintf (pname, "RA%i", pic->pins[pin].pord);
@@ -779,6 +803,18 @@ getPinName(_pic * pic, int pin, char * pname)
    else if (pic->pins[pin].port == P_VSS)
     {
      sprintf (pname, "GND");
+    }
+   else if (pic->pins[pin].port == P_RST)
+    {
+     sprintf (pname, "RST");
+    }
+   else if (pic->pins[pin].port == P_OSC)
+    {
+     sprintf (pname, "OSC");
+    }
+   else if (pic->pins[pin].port == P_USB)
+    {
+     sprintf (pname, "USB");
     }
    else if (pic->pins[pin].port == pic->P18map.PORTA)
     {

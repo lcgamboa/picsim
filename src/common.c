@@ -207,13 +207,21 @@ pic_reset(int flags)
    pic->pins[i].pord = 0;
    pic->pins[i].port = 0;
    pic->pins[i].value = 0;
-   pic->pins[i].ptype = PT_CMOS;
+   pic->pins[i].ptype = PT_DIGITAL;
    pic->pins[i].dir = PD_IN;
    //pic->pins[i].ovalue=0;
    pic->pins[i].oavalue = 0;
   }
 
  pic->reset ();
+
+ for (i = 0; i < pic->PINCOUNT; i++)
+  {
+     if((pic->pins[i].port == P_VDD )||(pic->pins[i].port == P_VSS ))
+     {
+       pic->pins[i].ptype = PT_POWER;      
+     }
+  }
 
  switch (pic->family)
   {

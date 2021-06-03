@@ -105,7 +105,7 @@ p16e_adc(void)
         }
        else
         {
-         pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+         pic->pins[pic->adc[i] - 1].ptype = PT_DIGITAL;
          if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin16E (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
         }
       }
@@ -124,7 +124,7 @@ p16e_adc(void)
         }
        else
         {
-         pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+         pic->pins[pic->adc[i] - 1].ptype = PT_DIGITAL;
          if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin16E (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
         }
       }
@@ -143,7 +143,7 @@ p16e_adc(void)
         }
        else
         {
-         pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+         pic->pins[pic->adc[i] - 1].ptype = PT_DIGITAL;
          if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin16E (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
         }
       }
@@ -162,7 +162,7 @@ p16e_adc(void)
         }
        else
         {
-         pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+         pic->pins[pic->adc[i] - 1].ptype = PT_DIGITAL;
          if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin16E (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
         }
       }
@@ -181,7 +181,7 @@ p16e_adc(void)
         }
        else
         {
-         pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+         pic->pins[pic->adc[i] - 1].ptype = PT_DIGITAL;
          if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin16E (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
         }
       }

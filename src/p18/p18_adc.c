@@ -100,7 +100,7 @@ p18_adc(void)
          if (((*pic->P18map.ADCON1)&0x0F) < (0x0F - i))
           pic->pins[pic->adc[i] - 1].ptype = PT_ANALOG;
          else
-          pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+          pic->pins[pic->adc[i] - 1].ptype = PT_DIGITAL;
         }
 
        if ((*pic->P18map.ADCON1) & 0x20)//VCFG1  
@@ -126,7 +126,7 @@ p18_adc(void)
             }
            else
             {
-             pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+             pic->pins[pic->adc[i] - 1].ptype = PT_DIGITAL;
              if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin18 (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
             }
           }
@@ -145,7 +145,7 @@ p18_adc(void)
             }
            else
             {
-             pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+             pic->pins[pic->adc[i] - 1].ptype = PT_DIGITAL;
              if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin18 (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
             }
           }
@@ -164,7 +164,7 @@ p18_adc(void)
             }
            else
             {
-             pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+             pic->pins[pic->adc[i] - 1].ptype = PT_DIGITAL;
              if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin18 (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
             }
           }
@@ -183,7 +183,7 @@ p18_adc(void)
             }
            else
             {
-             pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+             pic->pins[pic->adc[i] - 1].ptype = PT_DIGITAL;
              if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin18 (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
             }
           }
@@ -202,7 +202,7 @@ p18_adc(void)
             }
            else
             {
-             pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+             pic->pins[pic->adc[i] - 1].ptype = PT_DIGITAL;
              if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin18 (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
             }
           }
@@ -299,9 +299,9 @@ p18_adc_2(void)
        pic->pins[pic->adc[2] - 1].ptype = PT_ANALOG;
        pic->pins[pic->adc[3] - 1].ptype = PT_ANALOG;
        pic->pins[pic->adc[4] - 1].ptype = PT_ANALOG;
-       pic->pins[pic->adc[5] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[6] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[7] - 1].ptype = PT_CMOS;
+       pic->pins[pic->adc[5] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[6] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[7] - 1].ptype = PT_DIGITAL;
        break;
       case 3:
        pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
@@ -309,40 +309,40 @@ p18_adc_2(void)
        pic->pins[pic->adc[2] - 1].ptype = PT_ANALOG;
        pic->pins[pic->adc[3] - 1].ptype = PT_ANAREF;
        pic->pins[pic->adc[4] - 1].ptype = PT_ANALOG;
-       pic->pins[pic->adc[5] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[6] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[7] - 1].ptype = PT_CMOS;
+       pic->pins[pic->adc[5] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[6] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[7] - 1].ptype = PT_DIGITAL;
        break;
       case 4:
        pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
        pic->pins[pic->adc[1] - 1].ptype = PT_ANALOG;
-       pic->pins[pic->adc[2] - 1].ptype = PT_CMOS;
+       pic->pins[pic->adc[2] - 1].ptype = PT_DIGITAL;
        pic->pins[pic->adc[3] - 1].ptype = PT_ANALOG;
-       pic->pins[pic->adc[4] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[5] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[6] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[7] - 1].ptype = PT_CMOS;
+       pic->pins[pic->adc[4] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[5] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[6] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[7] - 1].ptype = PT_DIGITAL;
        break;
       case 5:
        pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
        pic->pins[pic->adc[1] - 1].ptype = PT_ANALOG;
-       pic->pins[pic->adc[2] - 1].ptype = PT_CMOS;
+       pic->pins[pic->adc[2] - 1].ptype = PT_DIGITAL;
        pic->pins[pic->adc[3] - 1].ptype = PT_ANAREF;
-       pic->pins[pic->adc[4] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[5] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[6] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[7] - 1].ptype = PT_CMOS;
+       pic->pins[pic->adc[4] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[5] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[6] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[7] - 1].ptype = PT_DIGITAL;
        break;
       case 6:
       case 7:
-       pic->pins[pic->adc[0] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[1] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[2] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[3] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[4] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[5] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[6] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[7] - 1].ptype = PT_CMOS;
+       pic->pins[pic->adc[0] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[1] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[2] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[3] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[4] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[5] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[6] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[7] - 1].ptype = PT_DIGITAL;
        break;
       case 8:
        pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
@@ -361,8 +361,8 @@ p18_adc_2(void)
        pic->pins[pic->adc[3] - 1].ptype = PT_ANALOG;
        pic->pins[pic->adc[4] - 1].ptype = PT_ANALOG;
        pic->pins[pic->adc[5] - 1].ptype = PT_ANALOG;
-       pic->pins[pic->adc[6] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[7] - 1].ptype = PT_CMOS;
+       pic->pins[pic->adc[6] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[7] - 1].ptype = PT_DIGITAL;
        break;
       case 10:
        pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
@@ -371,8 +371,8 @@ p18_adc_2(void)
        pic->pins[pic->adc[3] - 1].ptype = PT_ANAREF;
        pic->pins[pic->adc[4] - 1].ptype = PT_ANALOG;
        pic->pins[pic->adc[5] - 1].ptype = PT_ANALOG;
-       pic->pins[pic->adc[6] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[7] - 1].ptype = PT_CMOS;
+       pic->pins[pic->adc[6] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[7] - 1].ptype = PT_DIGITAL;
        break;
       case 11:
        pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
@@ -381,8 +381,8 @@ p18_adc_2(void)
        pic->pins[pic->adc[3] - 1].ptype = PT_ANAREF;
        pic->pins[pic->adc[4] - 1].ptype = PT_ANALOG;
        pic->pins[pic->adc[5] - 1].ptype = PT_ANALOG;
-       pic->pins[pic->adc[6] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[7] - 1].ptype = PT_CMOS;
+       pic->pins[pic->adc[6] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[7] - 1].ptype = PT_DIGITAL;
        break;
       case 12:
        pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
@@ -390,39 +390,39 @@ p18_adc_2(void)
        pic->pins[pic->adc[2] - 1].ptype = PT_ANAREF;
        pic->pins[pic->adc[3] - 1].ptype = PT_ANAREF;
        pic->pins[pic->adc[4] - 1].ptype = PT_ANALOG;
-       pic->pins[pic->adc[5] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[6] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[7] - 1].ptype = PT_CMOS;
+       pic->pins[pic->adc[5] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[6] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[7] - 1].ptype = PT_DIGITAL;
        break;
       case 13:
        pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
        pic->pins[pic->adc[1] - 1].ptype = PT_ANALOG;
        pic->pins[pic->adc[2] - 1].ptype = PT_ANAREF;
        pic->pins[pic->adc[3] - 1].ptype = PT_ANAREF;
-       pic->pins[pic->adc[4] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[5] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[6] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[7] - 1].ptype = PT_CMOS;
+       pic->pins[pic->adc[4] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[5] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[6] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[7] - 1].ptype = PT_DIGITAL;
        break;
       case 14:
        pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
-       pic->pins[pic->adc[1] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[2] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[3] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[4] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[5] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[6] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[7] - 1].ptype = PT_CMOS;
+       pic->pins[pic->adc[1] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[2] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[3] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[4] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[5] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[6] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[7] - 1].ptype = PT_DIGITAL;
        break;
       case 15:
        pic->pins[pic->adc[0] - 1].ptype = PT_ANALOG;
-       pic->pins[pic->adc[1] - 1].ptype = PT_CMOS;
+       pic->pins[pic->adc[1] - 1].ptype = PT_DIGITAL;
        pic->pins[pic->adc[2] - 1].ptype = PT_ANAREF;
        pic->pins[pic->adc[3] - 1].ptype = PT_ANAREF;
-       pic->pins[pic->adc[4] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[5] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[6] - 1].ptype = PT_CMOS;
-       pic->pins[pic->adc[7] - 1].ptype = PT_CMOS;
+       pic->pins[pic->adc[4] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[5] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[6] - 1].ptype = PT_DIGITAL;
+       pic->pins[pic->adc[7] - 1].ptype = PT_DIGITAL;
        break;
       }
 
@@ -497,7 +497,7 @@ p18_adc_3(void)
          if (((*pic->P18map.ADCON1)&0x0F) < (0x0F - i))
           pic->pins[pic->adc[i] - 1].ptype = PT_ANALOG;
          else
-          pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+          pic->pins[pic->adc[i] - 1].ptype = PT_DIGITAL;
         }
 
        if ((*pic->P18map.ADCON1) & 0x20)//VCFG1  
@@ -523,7 +523,7 @@ p18_adc_3(void)
             }
            else
             {
-             pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+             pic->pins[pic->adc[i] - 1].ptype = PT_DIGITAL;
              if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin18 (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
             }
           }
@@ -542,7 +542,7 @@ p18_adc_3(void)
             }
            else
             {
-             pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+             pic->pins[pic->adc[i] - 1].ptype = PT_DIGITAL;
              if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin18 (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
             }
           }
@@ -561,7 +561,7 @@ p18_adc_3(void)
             }
            else
             {
-             pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+             pic->pins[pic->adc[i] - 1].ptype = PT_DIGITAL;
              if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin18 (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
             }
           }
@@ -580,7 +580,7 @@ p18_adc_3(void)
             }
            else
             {
-             pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+             pic->pins[pic->adc[i] - 1].ptype = PT_DIGITAL;
              if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin18 (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
             }
           }
@@ -599,7 +599,7 @@ p18_adc_3(void)
             }
            else
             {
-             pic->pins[pic->adc[i] - 1].ptype = PT_CMOS;
+             pic->pins[pic->adc[i] - 1].ptype = PT_DIGITAL;
              if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin18 (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
             }
           }
