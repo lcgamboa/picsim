@@ -228,72 +228,74 @@ serial_cfg(int nser)
  bitbang_uart_set_clk_freq (&pic->serial[nser].bbuart, pic->freq / 4);
  bitbang_uart_set_speed (&pic->serial[nser].bbuart, pic->serial[nser].serialexbaud);
 
+ if (pic->serial[nser].serialfd > 0)
+  {
 #ifdef _WIN_
- //BOOL bPortReady;
- DCB dcb;
- COMMTIMEOUTS CommTimeouts;
+   //BOOL bPortReady;
+   DCB dcb;
+   COMMTIMEOUTS CommTimeouts;
 
- /*bPortReady =*/ GetCommState (pic->serial[nser].serialfd, &dcb);
- dcb.BaudRate = BAUDRATE;
- dcb.ByteSize = 8;
- dcb.Parity = NOPARITY;
- dcb.StopBits = ONESTOPBIT;
- dcb.fAbortOnError = TRUE;
+   /*bPortReady =*/ GetCommState (pic->serial[nser].serialfd, &dcb);
+   dcb.BaudRate = BAUDRATE;
+   dcb.ByteSize = 8;
+   dcb.Parity = NOPARITY;
+   dcb.StopBits = ONESTOPBIT;
+   dcb.fAbortOnError = TRUE;
 
- // set XON/XOFF
- dcb.fOutX = FALSE; // XON/XOFF off for transmit
- dcb.fInX = FALSE; // XON/XOFF off for receive
- // set RTSCTS
- dcb.fOutxCtsFlow = FALSE; // turn off CTS flow control
- //dcb.fRtsControl = RTS_CONTROL_HANDSHAKE; //
- dcb.fRtsControl = RTS_CONTROL_DISABLE; //
- // set DSRDTR
- dcb.fOutxDsrFlow = FALSE; // turn off DSR flow control
- //dcb.fDtrControl = DTR_CONTROL_ENABLE; //
- dcb.fDtrControl = DTR_CONTROL_DISABLE; //
- // dcb.fDtrControl = DTR_CONTROL_HANDSHAKE; //
+   // set XON/XOFF
+   dcb.fOutX = FALSE; // XON/XOFF off for transmit
+   dcb.fInX = FALSE; // XON/XOFF off for receive
+   // set RTSCTS
+   dcb.fOutxCtsFlow = FALSE; // turn off CTS flow control
+   //dcb.fRtsControl = RTS_CONTROL_HANDSHAKE; //
+   dcb.fRtsControl = RTS_CONTROL_DISABLE; //
+   // set DSRDTR
+   dcb.fOutxDsrFlow = FALSE; // turn off DSR flow control
+   //dcb.fDtrControl = DTR_CONTROL_ENABLE; //
+   dcb.fDtrControl = DTR_CONTROL_DISABLE; //
+   // dcb.fDtrControl = DTR_CONTROL_HANDSHAKE; //
 
- /*bPortReady =*/ SetCommState (pic->serial[nser].serialfd, &dcb);
+   /*bPortReady =*/ SetCommState (pic->serial[nser].serialfd, &dcb);
 
- // Communication timeouts are optional
+   // Communication timeouts are optional
 
- /*bPortReady =*/ GetCommTimeouts (pic->serial[nser].serialfd, &CommTimeouts);
+   /*bPortReady =*/ GetCommTimeouts (pic->serial[nser].serialfd, &CommTimeouts);
 
- CommTimeouts.ReadIntervalTimeout = MAXDWORD;
- CommTimeouts.ReadTotalTimeoutConstant = 0;
- CommTimeouts.ReadTotalTimeoutMultiplier = 0;
- CommTimeouts.WriteTotalTimeoutConstant = 0;
- CommTimeouts.WriteTotalTimeoutMultiplier = 0;
+   CommTimeouts.ReadIntervalTimeout = MAXDWORD;
+   CommTimeouts.ReadTotalTimeoutConstant = 0;
+   CommTimeouts.ReadTotalTimeoutMultiplier = 0;
+   CommTimeouts.WriteTotalTimeoutConstant = 0;
+   CommTimeouts.WriteTotalTimeoutMultiplier = 0;
 
- /*bPortReady =*/ SetCommTimeouts (pic->serial[nser].serialfd, &CommTimeouts);
+   /*bPortReady =*/ SetCommTimeouts (pic->serial[nser].serialfd, &CommTimeouts);
 
 
- EscapeCommFunction (pic->serial[nser].serialfd, SETRTS);
+   EscapeCommFunction (pic->serial[nser].serialfd, SETRTS);
 
 #else
- struct termios newtio;
- int cmd;
+   struct termios newtio;
+   int cmd;
 
- //        tcgetattr(fd,&oldtio); /* save current port settings */
+   //        tcgetattr(fd,&oldtio); /* save current port settings */
 
- bzero (&newtio, sizeof (newtio));
- newtio.c_cflag = BAUDRATE | CS8 | CLOCAL | CREAD;
- newtio.c_iflag = IGNPAR | IGNBRK;
- newtio.c_oflag = 0;
+   bzero (&newtio, sizeof (newtio));
+   newtio.c_cflag = BAUDRATE | CS8 | CLOCAL | CREAD;
+   newtio.c_iflag = IGNPAR | IGNBRK;
+   newtio.c_oflag = 0;
 
- /* set input mode (non-canonical, no echo,...) */
- newtio.c_lflag = 0;
+   /* set input mode (non-canonical, no echo,...) */
+   newtio.c_lflag = 0;
 
- newtio.c_cc[VTIME] = 0; /* inter-character timer unused */
- newtio.c_cc[VMIN] = 5; /* blocking read until 5 chars received */
+   newtio.c_cc[VTIME] = 0; /* inter-character timer unused */
+   newtio.c_cc[VMIN] = 5; /* blocking read until 5 chars received */
 
- tcflush (pic->serial[nser].serialfd, TCIFLUSH);
- tcsetattr (pic->serial[nser].serialfd, TCSANOW, &newtio);
+   tcflush (pic->serial[nser].serialfd, TCIFLUSH);
+   tcsetattr (pic->serial[nser].serialfd, TCSANOW, &newtio);
 
- cmd = TIOCM_RTS;
- ioctl (pic->serial[nser].serialfd, TIOCMBIS, &cmd);
+   cmd = TIOCM_RTS;
+   ioctl (pic->serial[nser].serialfd, TIOCMBIS, &cmd);
 #endif
-
+  }
  return 0;
 }
 
@@ -341,7 +343,14 @@ serial_rec(_pic * pic, int nser, unsigned char * c)
    return nbytes;
   }
  else
-  return 0;
+  {
+   if (bitbang_uart_data_available (&pic->serial[nser].bbuart))
+    {
+     *c = bitbang_uart_recv (&pic->serial[nser].bbuart);
+     return 1;
+    }
+  }
+ return 0;
 }
 
 unsigned long
@@ -469,10 +478,9 @@ serial(int nser)
   {
    if (pic->serial[nser].s_open == 0)
     {
-
+     serial_cfg (nser);
      if (pic->serial[nser].serialfd > 0)
       {
-       serial_cfg (nser);
        pic->serial[nser].s_open = 1;
        if (pic->print)printf ("#Open Port:%s!\n", pic->serial[nser].SERIALDEVICE);
       }
@@ -549,7 +557,7 @@ serial(int nser)
      pic->serial[nser].serialc = 0;
 
 
-     if ((pic->serial[nser].s_open == 1)&&((*pic->serial[nser].serial_TRIS_RX & pic->serial[nser].serial_TRIS_RX_MASK) != 0)) //work only if RX tris bit is set
+     if (((*pic->serial[nser].serial_TRIS_RX & pic->serial[nser].serial_TRIS_RX_MASK) != 0)) //work only if RX tris bit is set
       {
        if (serial_recbuff (nser, &rctemp) == 1)
         {
