@@ -40,7 +40,7 @@ p16_adc(void)
  float val;
  int chn;
  short dval;
- 
+
  if (((*pic->P16map.ADCON0) & 0x05) == 0x05) // ADON and GO/DONE
   {
    pic->adcstep++;
@@ -65,8 +65,37 @@ p16_adc(void)
       {
        val = 0;
       }
-
-     dval = ((1023 * val) / 5.0);
+     
+     if (pic->processor == P16F777)
+      {
+       dval = ((1023 * val) / 5.0);
+      }
+     else
+      { //VREF selection 
+       switch ((*pic->P16map.ADCON1)&0x0F)
+        {
+        case 1://VREF+
+        case 3:
+        case 5:
+        case 10:
+         dval = ((1023 * val) /pic->pins[pic->adc[3] - 1].avalue);
+         break;
+        case 8://VREF+ VREF-
+        case 11:
+        case 12:
+        case 13:
+        case 15:
+         dval = ((1023 * (val-pic->pins[pic->adc[2] - 1].avalue)) /
+             (pic->pins[pic->adc[3] - 1].avalue-pic->pins[pic->adc[2] - 1].avalue));
+         break;
+        default:
+         dval = ((1023 * val) / 5.0);
+         break;
+        }
+      }
+     
+     if(dval <0 ) dval=0;
+     if(dval > 1023) dval=1023;
 
      if (((*pic->P16map.ADCON1)&0x80) == 0x80)
       {

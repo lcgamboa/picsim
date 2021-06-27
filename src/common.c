@@ -449,7 +449,7 @@ pic_set_apin(unsigned char pin, float value)
   {
    if (pic->pins[(pin - 1)].avalue == value) return 1;
 
-   if ((pic->pins[(pin - 1)].dir == PD_IN)&&(pic->pins[(pin - 1)].ptype == PT_ANALOG))
+   if ((pic->pins[(pin - 1)].dir == PD_IN)&&((pic->pins[(pin - 1)].ptype == PT_ANALOG)||(pic->pins[(pin - 1)].ptype == PT_ANAREF)))
     {
      pic->pins[(pin - 1)].avalue = value;
      return 1;

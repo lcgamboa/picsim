@@ -7,8 +7,11 @@ LN= ln -sfn
 CP= cp
 MKDIR = mkdir -p
 
-FLAGS=  -Werror -Os -s DEMANGLE_SUPPORT=0 -s SAFE_HEAP=0 -s ASSERTIONS=0 \
-	 -s TOTAL_MEMORY=16MB -s --preload-file assets  -s --pre-js load.js
+FLAGS=  -Werror -Os 
+
+LINK=    -s DEMANGLE_SUPPORT=0 -s SAFE_HEAP=0 -s ASSERTIONS=0 \
+	 -s TOTAL_MEMORY=16MB -s --preload-file assets  -s --pre-js load.js\
+       	 -s EXPORTED_FUNCTIONS='["_main","_dirt_load"]' 
 
 #FLAGS+=-s USE_PTHREADS=1 -s PTHREAD_POOL_SIZE=2
 
@@ -22,7 +25,7 @@ libdir = ${exec_prefix}/lib
 all: all-lib picsim
 
 picsim: libpicsim_js.a picsim.c 
-	$(CC) $(FLAGS) picsim.c -o picsim.html  libpicsim_js.a 
+	$(CC) $(FLAGS) $(LINK) picsim.c -o picsim.html  libpicsim_js.a 
 
 
 %.o: %.c  
