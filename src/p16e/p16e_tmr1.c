@@ -57,7 +57,7 @@ p16e_tmr1(void)
 
    //CCP - only when TMR1 is ON
    //CCP1 compare modes 
-   if ((pic->CCPCOUNT >= 1)&&(pic->ccp[0] > 0)&&(((*pic->P16Emap.CCP1CON) & 0x0C) == 0x08))
+   if ((pic->CCPCOUNT >= 1)&&(pic->ccp[0].pin > 0)&&(((*pic->P16Emap.CCP1CON) & 0x0C) == 0x08))
     {
      if (((*pic->P16Emap.TMR1H) == (*pic->P16Emap.CCPR1H))&&((*pic->P16Emap.TMR1L) == (*pic->P16Emap.CCPR1L)))//match !!
       {
@@ -65,12 +65,12 @@ p16e_tmr1(void)
        switch ((*pic->P16Emap.CCP1CON) & 0x03)
         {
         case 0://set output
-         if (pic->pins[pic->ccp[0] - 1].dir == PD_OUT)
-          (*pic->pins[(pic->ccp[0] - 1)].port) |= 0x01 << (pic->pins[(pic->ccp[0] - 1)].pord);
+         if (pic->pins[pic->ccp[0].pin - 1].dir == PD_OUT)
+          (*pic->pins[(pic->ccp[0].pin - 1)].port) |= 0x01 << (pic->pins[(pic->ccp[0].pin - 1)].pord);
          break;
         case 1://clear output
-         if (pic->pins[pic->ccp[0] - 1].dir == PD_OUT)
-          (*pic->pins[(pic->ccp[0] - 1)].port) &= ~(0x01 << (pic->pins[(pic->ccp[0] - 1)].pord));
+         if (pic->pins[pic->ccp[0].pin - 1].dir == PD_OUT)
+          (*pic->pins[(pic->ccp[0].pin - 1)].port) &= ~(0x01 << (pic->pins[(pic->ccp[0].pin - 1)].pord));
          break;
         case 2://software interrupt
          break;
@@ -82,7 +82,7 @@ p16e_tmr1(void)
       }
     }
    //CCP2 compare modes 
-   if ((pic->CCPCOUNT >= 2)&&(pic->ccp[1] > 0)&&(((*pic->P16Emap.CCP2CON) & 0x0C) == 0x08))
+   if ((pic->CCPCOUNT >= 2)&&(pic->ccp[1].pin > 0)&&(((*pic->P16Emap.CCP2CON) & 0x0C) == 0x08))
     {
      if (((*pic->P16Emap.TMR1H) == (*pic->P16Emap.CCPR2H))&&((*pic->P16Emap.TMR1L) == (*pic->P16Emap.CCPR2L)))//match !!
       {
@@ -90,12 +90,12 @@ p16e_tmr1(void)
        switch ((*pic->P16Emap.CCP2CON) & 0x03)
         {
         case 0://set output
-         if (pic->pins[pic->ccp[1] - 1].dir == PD_OUT)
-          (*pic->pins[(pic->ccp[1] - 1)].port) |= 0x01 << (pic->pins[(pic->ccp[1] - 1)].pord);
+         if (pic->pins[pic->ccp[1].pin - 1].dir == PD_OUT)
+          (*pic->pins[(pic->ccp[1].pin - 1)].port) |= 0x01 << (pic->pins[(pic->ccp[1].pin - 1)].pord);
          break;
         case 1://clear output
-         if (pic->pins[pic->ccp[1] - 1].dir == PD_OUT)
-          (*pic->pins[(pic->ccp[1] - 1)].port) &= ~(0x01 << (pic->pins[(pic->ccp[1] - 1)].pord));
+         if (pic->pins[pic->ccp[1].pin - 1].dir == PD_OUT)
+          (*pic->pins[(pic->ccp[1].pin - 1)].port) &= ~(0x01 << (pic->pins[(pic->ccp[1].pin - 1)].pord));
          break;
         case 2://software interrupt
          break;

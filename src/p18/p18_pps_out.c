@@ -97,10 +97,10 @@ set_pps(unsigned char val, unsigned char * port, unsigned char pin)
    //case PWM4: break;
    //case PWM3: break;
   case CCP2:
-   pic->ccp[1] = pinn;
+   pic->ccp[1].pin = pinn;
    break;
   case CCP1:
-   pic->ccp[0] = pinn;
+   pic->ccp[0].pin = pinn;
    break;
    //case CWG1D: break;
    //case CWG1C: break;
@@ -111,8 +111,8 @@ set_pps(unsigned char val, unsigned char * port, unsigned char pin)
    if (pic->sck == pinn) pic->sck = 0;
    if (pic->usart_tx[0] == pinn) pic->usart_tx[0] = 0;
    if ((pic->USARTCOUNT > 1)&&(pic->usart_tx[1] == pinn)) pic->usart_tx[1] = 0;
-   if (pic->ccp[1] == pinn) pic->ccp[1] = 0;
-   if (pic->ccp[0] == pinn) pic->ccp[0] = 0;
+   if (pic->ccp[1].pin == pinn) pic->ccp[1].pin = 0;
+   if (pic->ccp[0].pin == pinn) pic->ccp[0].pin = 0;
    break;
   }
 }

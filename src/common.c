@@ -119,7 +119,7 @@ pic_init(_pic * pic_, int processor, const char * fname, int leeprom, float freq
  pic->stack = calloc (pic->STACKSIZE, sizeof (int));
  pic->eeprom = calloc (pic->EEPROMSIZE, sizeof (char));
  pic->pins = calloc (pic->PINCOUNT, sizeof (picpin));
- pic->ccp = calloc (pic->CCPCOUNT, sizeof (char));
+ pic->ccp = calloc (pic->CCPCOUNT, sizeof (ccp_t));
  pic->adc = calloc (pic->ADCCOUNT, sizeof (char));
  pic->usart_rx = calloc (pic->USARTCOUNT, sizeof (char));
  pic->usart_tx = calloc (pic->USARTCOUNT, sizeof (char));

@@ -126,7 +126,7 @@ PIC16F648A_reset(void)
 
  pic->mclr = 4;
 
- pic->ccp[0] = 9;
+ pic->ccp[0].pin = 9;
 /*
  pic->adc[0] = 17;
  pic->adc[1] = 18;

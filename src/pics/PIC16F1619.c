@@ -508,8 +508,8 @@ PIC16F1619_reset(void)
  
  //default values
  
- pic->ccp[0]= 5; 
- pic->ccp[1]= 7;
+ pic->ccp[0].pin= 5; 
+ pic->ccp[1].pin= 7;
 
  pic->usart_rx[0]=12;  
  pic->usart_tx[0]=10;  

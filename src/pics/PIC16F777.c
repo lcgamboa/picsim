@@ -202,9 +202,9 @@ PIC16F777_reset(void)
 
  pic->mclr = 1;
 
- pic->ccp[0] = 17;
- pic->ccp[1] = 36;
- pic->ccp[2] = 38;
+ pic->ccp[0].pin = 17;
+ pic->ccp[1].pin = 36;
+ pic->ccp[2].pin = 38;
 
  pic->adc[0] = 2;
  pic->adc[1] = 3;

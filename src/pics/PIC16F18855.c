@@ -651,11 +651,11 @@ PIC16F18855_reset(void)
 
  //Default values
 
- pic->ccp[0]= 10; 
- pic->ccp[1]= 9; 
- pic->ccp[2]= 23; 
- pic->ccp[3]= 18; 
- pic->ccp[4]= 3; 
+ pic->ccp[0].pin= 10; 
+ pic->ccp[1].pin= 9; 
+ pic->ccp[2].pin= 23; 
+ pic->ccp[3].pin= 18; 
+ pic->ccp[4].pin= 3; 
       
  pic->usart_rx[0]=9;  
  pic->usart_tx[0]=8;  

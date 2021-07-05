@@ -252,8 +252,8 @@ PIC18F4520_reset(void)
 
  pic->mclr = 1;
 
- pic->ccp[0] = 17;
- pic->ccp[1] = 16;//36
+ pic->ccp[0].pin = 17;
+ pic->ccp[1].pin = 16;//36
 
  pic->adc[0] = 2;
  pic->adc[1] = 3;

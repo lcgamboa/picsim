@@ -361,10 +361,10 @@ PIC16F18324_reset(void)
 
  pic->mclr = 4;
 
- pic->ccp[0]= 5; 
- pic->ccp[1]= 7; 
- pic->ccp[2]= 11; 
- pic->ccp[3]= 9; 
+ pic->ccp[0].pin= 5; 
+ pic->ccp[1].pin= 7; 
+ pic->ccp[2].pin= 11; 
+ pic->ccp[3].pin= 9; 
  
  pic->adc[0] = 13;
  pic->adc[1] = 12;

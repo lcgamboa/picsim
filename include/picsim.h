@@ -90,6 +90,18 @@ extern "C" {
         float oavalue; ///< analog output value
     } picpin;
     
+     
+    /**
+     * @brief PICsim pin structure
+     *
+     * Internal structure used to describe one pin.
+     */
+    typedef struct {
+        unsigned char pin; ///< pin
+        unsigned char ovalue; ///< old value
+        unsigned char cap_ps; ///< capture pre scaler
+    }ccp_t;
+    
     /**
      * @brief PICsim serial structure
      *
@@ -282,7 +294,7 @@ extern unsigned char NO_IO[6];
         unsigned char pkg; ///<  @ref packaging
         picpin *pins;
         unsigned char mclr;
-        unsigned char *ccp;
+        ccp_t *ccp;
         unsigned char *adc;
         unsigned char *usart_rx;
         unsigned char *usart_tx;

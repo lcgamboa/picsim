@@ -72,25 +72,25 @@ p16_tmr2(void)
 
        //PWM
 
-       if ((pic->CCPCOUNT >= 1)&&(pic->ccp[0] > 0)&&((*pic->P16map.CCP1CON)& 0x0C) == 0x0C)
+       if ((pic->CCPCOUNT >= 1)&&(pic->ccp[0].pin > 0)&&((*pic->P16map.CCP1CON)& 0x0C) == 0x0C)
         {
          (*pic->P16map.CCPR1H) = (*pic->P16map.CCPR1L);
-         if (pic->pins[pic->ccp[0] - 1].dir == PD_OUT)
-          (*pic->pins[(pic->ccp[0] - 1)].port) |= 0x01 << (pic->pins[(pic->ccp[0] - 1)].pord);
+         if (pic->pins[pic->ccp[0].pin - 1].dir == PD_OUT)
+          (*pic->pins[(pic->ccp[0].pin - 1)].port) |= 0x01 << (pic->pins[(pic->ccp[0].pin - 1)].pord);
         }
 
-       if ((pic->CCPCOUNT >= 2)&&(pic->ccp[1] > 0)&&((*pic->P16map.CCP2CON)& 0x0C) == 0x0C)
+       if ((pic->CCPCOUNT >= 2)&&(pic->ccp[1].pin > 0)&&((*pic->P16map.CCP2CON)& 0x0C) == 0x0C)
         {
          (*pic->P16map.CCPR2H) = (*pic->P16map.CCPR2L);
-         if (pic->pins[pic->ccp[1] - 1].dir == PD_OUT)
-          (*pic->pins[(pic->ccp[1] - 1)].port) |= 0x01 << (pic->pins[(pic->ccp[1] - 1)].pord);
+         if (pic->pins[pic->ccp[1].pin - 1].dir == PD_OUT)
+          (*pic->pins[(pic->ccp[1].pin - 1)].port) |= 0x01 << (pic->pins[(pic->ccp[1].pin - 1)].pord);
         }
 
-       if ((pic->CCPCOUNT >= 3)&&(pic->ccp[2] > 0)&&((*pic->P16map.CCP3CON)& 0x0C) == 0x0C)
+       if ((pic->CCPCOUNT >= 3)&&(pic->ccp[2].pin > 0)&&((*pic->P16map.CCP3CON)& 0x0C) == 0x0C)
         {
          (*pic->P16map.CCPR3H) = (*pic->P16map.CCPR3L);
-         if (pic->pins[pic->ccp[2] - 1].dir == PD_OUT)
-          (*pic->pins[(pic->ccp[2] - 1)].port) |= 0x01 << (pic->pins[(pic->ccp[2] - 1)].pord);
+         if (pic->pins[pic->ccp[2].pin - 1].dir == PD_OUT)
+          (*pic->pins[(pic->ccp[2].pin - 1)].port) |= 0x01 << (pic->pins[(pic->ccp[2].pin - 1)].pord);
         }
 
       }
@@ -99,30 +99,30 @@ p16_tmr2(void)
    //PWM - only if TMR2 is on
 
    //only use 8 bits ! not 10 bits  
-   if ((pic->CCPCOUNT >= 1)&&(pic->ccp[0] > 0)&&((*pic->P16map.CCP1CON)& 0x0C) == 0x0C)
+   if ((pic->CCPCOUNT >= 1)&&(pic->ccp[0].pin > 0)&&((*pic->P16map.CCP1CON)& 0x0C) == 0x0C)
     {
      if ((*pic->P16map.TMR2) >= (*pic->P16map.CCPR1H))
       {
-       if (pic->pins[pic->ccp[0] - 1].dir == PD_OUT)
-        (*pic->pins[(pic->ccp[0] - 1)].port) &= ~(0x01 << (pic->pins[(pic->ccp[0] - 1)].pord));
+       if (pic->pins[pic->ccp[0].pin - 1].dir == PD_OUT)
+        (*pic->pins[(pic->ccp[0].pin - 1)].port) &= ~(0x01 << (pic->pins[(pic->ccp[0].pin - 1)].pord));
       }
     }
 
-   if ((pic->CCPCOUNT >= 2)&&(pic->ccp[1] > 0)&&((*pic->P16map.CCP2CON)& 0x0C) == 0x0C)
+   if ((pic->CCPCOUNT >= 2)&&(pic->ccp[1].pin > 0)&&((*pic->P16map.CCP2CON)& 0x0C) == 0x0C)
     {
      if ((*pic->P16map.TMR2) >= (*pic->P16map.CCPR2H))
       {
-       if (pic->pins[pic->ccp[1] - 1].dir == PD_OUT)
-        (*pic->pins[(pic->ccp[1] - 1)].port) &= ~(0x01 << (pic->pins[(pic->ccp[1] - 1)].pord));
+       if (pic->pins[pic->ccp[1].pin - 1].dir == PD_OUT)
+        (*pic->pins[(pic->ccp[1].pin - 1)].port) &= ~(0x01 << (pic->pins[(pic->ccp[1].pin - 1)].pord));
       }
     }
 
-   if ((pic->CCPCOUNT >= 3)&&(pic->ccp[2] > 0)&&((*pic->P16map.CCP3CON)& 0x0C) == 0x0C)
+   if ((pic->CCPCOUNT >= 3)&&(pic->ccp[2].pin > 0)&&((*pic->P16map.CCP3CON)& 0x0C) == 0x0C)
     {
      if ((*pic->P16map.TMR2) >= (*pic->P16map.CCPR3H))
       {
-       if (pic->pins[pic->ccp[2] - 1].dir == PD_OUT)
-        (*pic->pins[(pic->ccp[2] - 1)].port) &= ~(0x01 << (pic->pins[(pic->ccp[2] - 1)].pord));
+       if (pic->pins[pic->ccp[2].pin - 1].dir == PD_OUT)
+        (*pic->pins[(pic->ccp[2].pin - 1)].port) &= ~(0x01 << (pic->pins[(pic->ccp[2].pin - 1)].pord));
       }
     }
 

@@ -154,19 +154,19 @@ set_pps(unsigned char val, unsigned char * port, unsigned char pin)
      //case PWM4: break;
      //case PWM3: break;
     case CCP1:
-     pic->ccp[0] = pinn;
+     pic->ccp[0].pin = pinn;
      break;
     case CCP2:
-     pic->ccp[1] = pinn;
+     pic->ccp[1].pin = pinn;
      break;
     case CCP3:
-     pic->ccp[2] = pinn;
+     pic->ccp[2].pin = pinn;
      break;
     case CCP4:
-     pic->ccp[3] = pinn;
+     pic->ccp[3].pin = pinn;
      break;
     case CCP5:
-     pic->ccp[4] = pinn;
+     pic->ccp[4].pin = pinn;
      break;
      //case CWG1D: break;
      //case CWG1C: break;
@@ -176,11 +176,11 @@ set_pps(unsigned char val, unsigned char * port, unsigned char pin)
      if (pic->sdo == pinn) pic->sdo = 0;
      if (pic->sck == pinn) pic->sck = 0;
      if (pic->usart_tx[0] == pinn) pic->usart_tx[0] = 0;
-     if (pic->ccp[1] == pinn) pic->ccp[1] = 0;
-     if (pic->ccp[0] == pinn) pic->ccp[0] = 0;
-     if (pic->ccp[2] == pinn) pic->ccp[2] = 0;
-     if (pic->ccp[3] == pinn) pic->ccp[3] = 0;
-     if (pic->ccp[4] == pinn) pic->ccp[4] = 0;
+     if (pic->ccp[1].pin == pinn) pic->ccp[1].pin = 0;
+     if (pic->ccp[0].pin == pinn) pic->ccp[0].pin = 0;
+     if (pic->ccp[2].pin == pinn) pic->ccp[2].pin = 0;
+     if (pic->ccp[3].pin == pinn) pic->ccp[3].pin = 0;
+     if (pic->ccp[4].pin == pinn) pic->ccp[4].pin = 0;
      break;
     }
   }
@@ -212,16 +212,16 @@ set_pps(unsigned char val, unsigned char * port, unsigned char pin)
      //case PWM4: break;
      //case PWM3: break;
     case _CCP1:
-     pic->ccp[0] = pinn;
+     pic->ccp[0].pin = pinn;
      break;
     case _CCP2:
-     pic->ccp[1] = pinn;
+     pic->ccp[1].pin = pinn;
      break;
     case _CCP3:
-     pic->ccp[2] = pinn;
+     pic->ccp[2].pin = pinn;
      break;
     case _CCP4:
-     pic->ccp[3] = pinn;
+     pic->ccp[3].pin = pinn;
      break;
      //case CWG1D: break;
      //case CWG1C: break;
@@ -231,10 +231,10 @@ set_pps(unsigned char val, unsigned char * port, unsigned char pin)
      if (pic->sdo == pinn) pic->sdo = 0;
      if (pic->sck == pinn) pic->sck = 0;
      if (pic->usart_tx[0] == pinn) pic->usart_tx[0] = 0;
-     if (pic->ccp[3] == pinn) pic->ccp[3] = 0;
-     if (pic->ccp[2] == pinn) pic->ccp[2] = 0;
-     if (pic->ccp[1] == pinn) pic->ccp[1] = 0;
-     if (pic->ccp[0] == pinn) pic->ccp[0] = 0;
+     if (pic->ccp[3].pin == pinn) pic->ccp[3].pin = 0;
+     if (pic->ccp[2].pin == pinn) pic->ccp[2].pin = 0;
+     if (pic->ccp[1].pin == pinn) pic->ccp[1].pin = 0;
+     if (pic->ccp[0].pin == pinn) pic->ccp[0].pin = 0;
      break;
     }
   }
