@@ -36,7 +36,7 @@
 #endif
 
 
-extern void pic_decode_18(_pic * pic);
+extern void pic_decode_18(void);
 
 
 #define ROM	0x01
@@ -374,7 +374,7 @@ pic_icsp18(void)
 	   case 0x00: //Core Instruction                 0000
 	     if(pic->print)printf("Core Instruction  %#04X \n",(icsp_cmddata&0x000FFFF0)>>4);
           
-             if(pic->s2 !=0)pic_decode_18(pic);
+             if(pic->s2 !=0)pic_decode_18();
 
 	     pc_bkp=pic->pc;
              rom_bkp=pic->prog[pic->ROMSIZE]; 

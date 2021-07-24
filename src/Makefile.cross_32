@@ -8,7 +8,7 @@ CP= cp
 MKDIR = mkdir -p
 
 #FLAGS= -ggdb -Wall
-FLAGS= -Wall -O3 -fsigned-char -D_WIN_
+FLAGS= -Wall -O2 -flto -fsigned-char -D_WIN_
 
 prefix = /usr/i686-w64-mingw32
 exec_prefix = ${prefix}
@@ -41,7 +41,7 @@ LIBHEADERFILES := p16fxxx_defs.h p16fxxxe_defs.h p18fxxx_defs.h periferic18.h pe
 
 # How to create the shared library
 $(LIBSHBASENAME): $(OBJS)
-	$(CC) -shared -Wl,--out-implib,$(LIBSHBASENAME).a -Wl,--no-undefined -Wl,--enable-runtime-pseudo-reloc -o $@  $^    
+	$(CC) -flto -shared -Wl,--out-implib,$(LIBSHBASENAME).a -Wl,--no-undefined -Wl,--enable-runtime-pseudo-reloc -o $@  $^    
 
 # And the static library
 $(LIBSTLIBNAME): $(OBJS)

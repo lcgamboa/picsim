@@ -7,7 +7,7 @@ LN= ln -sfn
 CP= cp
 MKDIR = mkdir -p
 
-FLAGS= -Wall -O2 -fpic -fsigned-char -Winline 
+FLAGS= -Wall -O2 -flto -fpic -fsigned-char -Winline 
 
 prefix = /usr
 exec_prefix = ${prefix}
@@ -41,7 +41,7 @@ LIBTARGETS := $(LIBSHLIBNAME) $(LIBSHSONAME) $(LIBSHBASENAME)
 
 # How to create the shared library
 $(LIBSHLIBNAME): $(OBJS)
-	$(CC) -shared -Wl,-soname,$(LIBSHSONAME) -o $@  $^    
+	$(CC) -O2 -flto -shared -Wl,-soname,$(LIBSHSONAME) -o $@  $^    
 
 $(LIBSHSONAME): $(LIBSHLIBNAME)
 	$(RM) $@

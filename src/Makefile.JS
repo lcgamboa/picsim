@@ -7,7 +7,7 @@ LN= ln -sfn
 CP= cp
 MKDIR = mkdir -p
 
-FLAGS=  -Werror -Os 
+FLAGS=  -Werror -O2 -flto 
 
 LINK=    -s DEMANGLE_SUPPORT=0 -s SAFE_HEAP=0 -s ASSERTIONS=0 \
 	 -s TOTAL_MEMORY=16MB -s --preload-file assets  -s --pre-js load.js\
@@ -46,7 +46,7 @@ LIBTARGETS := $(LIBSTLIBNAME)
 
 # How to create the shared library
 $(LIBSHLIBNAME): $(OBJS)
-	$(CC) -shared -Wl,-soname,$(LIBSHSONAME) -o $@  $^    
+	$(CC) -flto -shared -Wl,-soname,$(LIBSHSONAME) -o $@  $^    
 
 $(LIBSHSONAME): $(LIBSHLIBNAME)
 	$(RM) $@
