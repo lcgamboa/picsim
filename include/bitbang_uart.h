@@ -28,8 +28,8 @@
 extern "C" {
 #endif
 
-#ifndef BITBANG_UART
-#define BITBANG_UART
+#ifndef BB_UART
+#define BB_UART
 
 #include <stdio.h>
 
@@ -51,22 +51,22 @@ typedef struct {
     unsigned char dataw;        //data to write
     unsigned char data_to_send; //flag data to write
     unsigned long freq;
-} bitbang_uart_t;
+} bb_uart_t;
 
 
-void bitbang_uart_rst(bitbang_uart_t *bu);
-void bitbang_uart_init(bitbang_uart_t *bu);
-void bitbang_uart_end(bitbang_uart_t *bu);
-void bitbang_uart_set_clk_freq(bitbang_uart_t *bu, unsigned long freq);
-void bitbang_uart_set_speed(bitbang_uart_t *bu, unsigned int speed);
-unsigned char  bitbang_uart_transmitting(bitbang_uart_t *bu);
-void bitbang_uart_send(bitbang_uart_t *bu, unsigned char data);
-unsigned char  bitbang_uart_data_available(bitbang_uart_t *bu);
-unsigned char  bitbang_uart_recv(bitbang_uart_t *bu);
+void bb_uart_rst(bb_uart_t *bu);
+void bb_uart_init(bb_uart_t *bu);
+void bb_uart_end(bb_uart_t *bu);
+void bb_uart_set_clk_freq(bb_uart_t *bu, unsigned long freq);
+void bb_uart_set_speed(bb_uart_t *bu, unsigned int speed);
+unsigned char  bb_uart_transmitting(bb_uart_t *bu);
+void bb_uart_send(bb_uart_t *bu, unsigned char data);
+unsigned char  bb_uart_data_available(bb_uart_t *bu);
+unsigned char  bb_uart_recv(bb_uart_t *bu);
 
-unsigned char bitbang_uart_io(bitbang_uart_t *bu, unsigned char rx);
+unsigned char bb_uart_io(bb_uart_t *bu, unsigned char rx);
 
-#endif //BITBANG_UART
+#endif //BB_UART
 
 #ifdef __cplusplus
 }

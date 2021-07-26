@@ -36,7 +36,7 @@
 #define dprintf if (1) {} else printf 
 
 void
-bitbang_uart_rst(bitbang_uart_t *bu)
+bb_uart_rst(bb_uart_t *bu)
 {
  bu->prx = 1;
  bu->insr = 0;
@@ -53,9 +53,9 @@ bitbang_uart_rst(bitbang_uart_t *bu)
 }
 
 void
-bitbang_uart_init(bitbang_uart_t *bu)
+bb_uart_init(bb_uart_t *bu)
 {
- bitbang_uart_rst (bu);
+ bb_uart_rst (bu);
  bu->speed = 9600;
  bu->freq = 1000000L;
  bu->cycle_count = 100;
@@ -63,10 +63,10 @@ bitbang_uart_init(bitbang_uart_t *bu)
 }
 
 void
-bitbang_uart_end(bitbang_uart_t *bu) { }
+bb_uart_end(bb_uart_t *bu) { }
 
 void
-bitbang_uart_set_clk_freq(bitbang_uart_t *bu, unsigned long freq)
+bb_uart_set_clk_freq(bb_uart_t *bu, unsigned long freq)
 {
  bu->freq = freq;
  bu->cycle_count = bu->freq / (16 * bu->speed);
@@ -74,7 +74,7 @@ bitbang_uart_set_clk_freq(bitbang_uart_t *bu, unsigned long freq)
 }
 
 void
-bitbang_uart_set_speed(bitbang_uart_t *bu, unsigned int speed)
+bb_uart_set_speed(bb_uart_t *bu, unsigned int speed)
 {
  if (speed)
   {
@@ -89,7 +89,7 @@ bitbang_uart_set_speed(bitbang_uart_t *bu, unsigned int speed)
 }
 
 unsigned char
-bitbang_uart_io(bitbang_uart_t *bu, unsigned char rx)
+bb_uart_io(bb_uart_t *bu, unsigned char rx)
 {
 
  //read rx
@@ -181,26 +181,26 @@ bitbang_uart_io(bitbang_uart_t *bu, unsigned char rx)
 }
 
 unsigned char
-bitbang_uart_transmitting(bitbang_uart_t *bu)
+bb_uart_transmitting(bb_uart_t *bu)
 {
  return (bu->bcw > 0 );
 }
 
 void
-bitbang_uart_send(bitbang_uart_t *bu, unsigned char data)
+bb_uart_send(bb_uart_t *bu, unsigned char data)
 {
  bu->dataw = data;
  bu->data_to_send = 1;
 }
 
 unsigned char
-bitbang_uart_data_available(bitbang_uart_t *bu)
+bb_uart_data_available(bb_uart_t *bu)
 {
  return bu->data_recv;
 }
 
 unsigned char
-bitbang_uart_recv(bitbang_uart_t *bu)
+bb_uart_recv(bb_uart_t *bu)
 {
  bu->data_recv = 0;
  return bu->datar;

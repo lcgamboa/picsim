@@ -67,7 +67,7 @@ serial_open(int nser)
  pic->serial[nser].recb = 0;
  pic->serial[nser].s_open = 0;
 
- bitbang_uart_init (&pic->serial[nser].bbuart);
+ bb_uart_init (&pic->serial[nser].bbuart);
 
 
  if (pic->serial[nser].SERIALDEVICE[0] == 0)
@@ -118,7 +118,7 @@ serial_close(int nser)
 #endif
    pic->serial[nser].serialfd = 0;
   }
- bitbang_uart_end (&pic->serial[nser].bbuart);
+ bb_uart_end (&pic->serial[nser].bbuart);
  return 0;
 }
 
@@ -225,8 +225,8 @@ serial_cfg(int nser)
    break;
   }
 
- bitbang_uart_set_clk_freq (&pic->serial[nser].bbuart, pic->freq / 4);
- bitbang_uart_set_speed (&pic->serial[nser].bbuart, pic->serial[nser].serialexbaud);
+ bb_uart_set_clk_freq (&pic->serial[nser].bbuart, pic->freq / 4);
+ bb_uart_set_speed (&pic->serial[nser].bbuart, pic->serial[nser].serialexbaud);
 
  if (pic->serial[nser].serialfd > 0)
   {
@@ -334,9 +334,9 @@ serial_rec(_pic * pic, int nser, unsigned char * c)
 #endif    
    if (!nbytes)
     {
-     if (bitbang_uart_data_available (&pic->serial[nser].bbuart))
+     if (bb_uart_data_available (&pic->serial[nser].bbuart))
       {
-       *c = bitbang_uart_recv (&pic->serial[nser].bbuart);
+       *c = bb_uart_recv (&pic->serial[nser].bbuart);
        nbytes = 1;
       }
     }
@@ -344,9 +344,9 @@ serial_rec(_pic * pic, int nser, unsigned char * c)
   }
  else
   {
-   if (bitbang_uart_data_available (&pic->serial[nser].bbuart))
+   if (bb_uart_data_available (&pic->serial[nser].bbuart))
     {
-     *c = bitbang_uart_recv (&pic->serial[nser].bbuart);
+     *c = bb_uart_recv (&pic->serial[nser].bbuart);
      return 1;
     }
   }
@@ -439,7 +439,7 @@ serial(int nser)
    pic->serial[nser].txtemp[(unsigned char) pic->serial[nser].txtc] = *pic->serial[nser].serial_TXREG;
    *pic->serial[nser].serial_TXSTA &= ~0x02; //TRMT=0 full   
    *pic->serial[nser].serial_PIR &= ~pic->serial[nser].TXIF_mask; //TXIF=0 trasmiting
-   bitbang_uart_send (&pic->serial[nser].bbuart, *pic->serial[nser].serial_TXREG);
+   bb_uart_send (&pic->serial[nser].bbuart, *pic->serial[nser].serial_TXREG);
   }
 
  if (pic->lram == pic->serial[nser].serial_RCSTA_ADDR)
@@ -527,7 +527,7 @@ serial(int nser)
        pic->serial[nser].txtemp[(unsigned char) pic->serial[nser].txtc] = *pic->serial[nser].serial_TXREG;
        *pic->serial[nser].serial_TXSTA &= ~0x02; //TRMT=0 full   
        *pic->serial[nser].serial_PIR &= ~pic->serial[nser].TXIF_mask; //TXIF=0 trasmiting
-       bitbang_uart_send (&pic->serial[nser].bbuart, *pic->serial[nser].serial_TXREG);
+       bb_uart_send (&pic->serial[nser].bbuart, *pic->serial[nser].serial_TXREG);
       }
     }
 
@@ -592,7 +592,7 @@ serial(int nser)
         }
       }
 
-     if (!bitbang_uart_transmitting (&pic->serial[nser].bbuart))
+     if (!bb_uart_transmitting (&pic->serial[nser].bbuart))
       {
        //if(((pic->ram[P18_TXSTA] & 0x02) == 0 ) &&((pic->ram[pic->pins[pic->usart[1]-1].port+0x12] &  (0x01 << pic->pins[pic->usart[1]-1].pord)) == 0))
        if ((*pic->serial[nser].serial_TXSTA & 0x02) == 0)
@@ -612,13 +612,13 @@ serial(int nser)
    switch (pic->family)
     {
     case P16:
-     pic_wr_pin16 (pic->usart_tx[nser], bitbang_uart_io (&pic->serial[nser].bbuart, pic->pins[pic->usart_rx[nser] - 1].value));
+     pic_wr_pin16 (pic->usart_tx[nser], bb_uart_io (&pic->serial[nser].bbuart, pic->pins[pic->usart_rx[nser] - 1].value));
      break;
     case P16E:
-     pic_wr_pin16E (pic->usart_tx[nser], bitbang_uart_io (&pic->serial[nser].bbuart, pic->pins[pic->usart_rx[nser] - 1].value));
+     pic_wr_pin16E (pic->usart_tx[nser], bb_uart_io (&pic->serial[nser].bbuart, pic->pins[pic->usart_rx[nser] - 1].value));
      break;
     case P18:
-     pic_wr_pin18 (pic->usart_tx[nser], bitbang_uart_io (&pic->serial[nser].bbuart, pic->pins[pic->usart_rx[nser] - 1].value));
+     pic_wr_pin18 (pic->usart_tx[nser], bb_uart_io (&pic->serial[nser].bbuart, pic->pins[pic->usart_rx[nser] - 1].value));
      break;
     }
 

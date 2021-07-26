@@ -143,7 +143,7 @@ typedef struct{
         unsigned short serial_RCREG_ADDR;
         unsigned char * serial_TRIS_RX;
         unsigned char serial_TRIS_RX_MASK;   
-        bitbang_uart_t bbuart;
+        bb_uart_t bbuart;
     } _serial;
 
     /**
