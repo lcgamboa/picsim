@@ -52,7 +52,7 @@ pic_wr_pin16(unsigned char pin, unsigned char value)
      if (pic->processor != P16F84A)
       pic->ram[sfr_addr (pic->pins[(pin - 1)].port) | 0x100] = (*pic->pins[(pin - 1)].port); //espelhamento bank2 = bank0
     }
-
+   pic->ioupdated = 1; 
    return 1;
   }
  else
@@ -292,6 +292,7 @@ periferic16_step_out(void)
         port = sfr_addr (pic->pins[i].port);
         pic->pins[i].value = ((pic->ram[port] & val) != 0);
         pic->pins[i].lvalue = pic->pins[i].value;
+        pic->ioupdated = 1;
         break;
        case PD_IN:
         val = 0x01 << (pic->pins[i].pord);

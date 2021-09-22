@@ -357,6 +357,7 @@ extern unsigned char NO_IO[6];
         unsigned char trise;
         unsigned char trisf;
         unsigned char trisg;
+        unsigned char ioupdated;
         //MSSP
         unsigned char ssp_ck;
         unsigned char ssp_sck;

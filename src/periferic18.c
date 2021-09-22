@@ -55,7 +55,7 @@ pic_wr_pin18(unsigned char pin, unsigned char value)
       }
 #endif              
     }
-
+   pic->ioupdated = 1;
    return 1;
   }
  else
@@ -309,6 +309,7 @@ periferic18_step_out(void)
         port = sfr_addr (pic->pins[i].port);
         pic->pins[i].value = ((pic->ram[port] & val) != 0);
         pic->pins[i].lvalue = pic->pins[i].value;
+        pic->ioupdated = 1;
         break;
        case PD_IN:
         val = 0x01 << (pic->pins[i].pord);
