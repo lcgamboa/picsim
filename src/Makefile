@@ -7,7 +7,7 @@ LN= ln -sfn
 CP= cp
 MKDIR = mkdir -p
 
-FLAGS= -Wall -O2 -flto -fpic -fsigned-char -Winline 
+FLAGS= -Wall -O2 -flto -fpic -fsigned-char -Winline --param inline-unit-growth=60
 
 prefix = /usr
 exec_prefix = ${prefix}
