@@ -9,7 +9,10 @@ MKDIR = mkdir -p
 
 FLAGS= -Wall -O2 -flto -fpic -fsigned-char -Winline --param inline-unit-growth=60
 
-prefix = $(DESTDIR)/usr
+
+
+DESTDIR ?= /usr
+prefix = $(DESTDIR)
 exec_prefix = ${prefix}
 datadir = ${datarootdir}
 bindir = ${exec_prefix}/bin
