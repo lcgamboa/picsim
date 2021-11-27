@@ -19,7 +19,7 @@ libdir = ${exec_prefix}/lib
 all: all-lib picsim
 
 picsim: libpicsim.a picsim.c modules.c
-	$(CC) $(FLAGS) picsim.c -o picsim  libpicsim.a 
+	$(CC) $(FLAGS) picsim.c -o picsim -Wl,-flto libpicsim.a 
 	$(CC) $(FLAGS) $(OBJS) modules.c -o modules 
 
 %.o: %.c  
