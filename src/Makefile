@@ -70,6 +70,7 @@ clean-lib:
 
 install: all
 	strip -s $(LIBNAME).so
+	install -d ${libdir}
 	$(CP) -dvf $(LIBNAME)* ${libdir}
 
 uninstall:
