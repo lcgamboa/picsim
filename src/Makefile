@@ -2,12 +2,12 @@ include Makefile.Common
 
 CC= gcc
 RM= rm -f
-AR= ar
+AR= gcc-ar
 LN= ln -sfn
 CP= cp
 MKDIR = mkdir -p
 
-FLAGS= -Wall -O2 -flto -Wl,-flto -fpic -fsigned-char -Winline --param inline-unit-growth=60
+FLAGS= -Wall -O2 -flto -fpic -fsigned-char -Winline --param inline-unit-growth=60
 
 prefix = /usr
 exec_prefix = ${prefix}
