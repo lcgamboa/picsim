@@ -674,7 +674,7 @@ extern unsigned char NO_IO[6];
     } pic_desc;
 
 
-#define PMAX 20
+#define PMAX 25
 
     extern pic_desc PICS[PMAX];
     extern int PIC_count;
