@@ -37,6 +37,7 @@ void p16_mssp(void);
 
 void p16_adc_rst(void);
 void p16_adc(void);
+void p16_adc_2(void);
 
 void p16_tmr0_rst(void);
 void p16_tmr0(void);

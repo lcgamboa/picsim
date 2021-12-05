@@ -27,6 +27,8 @@
 #include"../../include/picsim.h"
 #include"../../include/periferic16.h"
 
+int pic_wr_pin16(unsigned char pin, unsigned char value);
+
 void
 p16_adc_rst(void)
 {
@@ -65,7 +67,7 @@ p16_adc(void)
       {
        val = 0;
       }
-     
+
      if (pic->processor == P16F777)
       {
        dval = ((1023 * val) / 5.0);
@@ -78,24 +80,24 @@ p16_adc(void)
         case 3:
         case 5:
         case 10:
-         dval = ((1023 * val) /pic->pins[pic->adc[3] - 1].avalue);
+         dval = ((1023 * val) / pic->pins[pic->adc[3] - 1].avalue);
          break;
         case 8://VREF+ VREF-
         case 11:
         case 12:
         case 13:
         case 15:
-         dval = ((1023 * (val-pic->pins[pic->adc[2] - 1].avalue)) /
-             (pic->pins[pic->adc[3] - 1].avalue-pic->pins[pic->adc[2] - 1].avalue));
+         dval = ((1023 * (val - pic->pins[pic->adc[2] - 1].avalue)) /
+                 (pic->pins[pic->adc[3] - 1].avalue - pic->pins[pic->adc[2] - 1].avalue));
          break;
         default:
          dval = ((1023 * val) / 5.0);
          break;
         }
       }
-     
-     if(dval <0 ) dval=0;
-     if(dval > 1023) dval=1023;
+
+     if (dval < 0) dval = 0;
+     if (dval > 1023) dval = 1023;
 
      if (((*pic->P16map.ADCON1)&0x80) == 0x80)
       {
@@ -534,5 +536,126 @@ p16_adc(void)
     }
 
    pic->adcon1 = (*pic->P16map.ADCON1)&0x0F;
+  }
+}
+
+void
+p16_adc_2(void)
+{
+ float val;
+ int chn;
+ short dval;
+
+ if (((*pic->P16map.ADCON0) & 0x03) == 0x03) // ADON and GO/DONE
+  {
+   pic->adcstep++;
+   if (pic->adcstep > 10)
+    {
+
+     chn = ((*pic->P16map.ADCON0)&0x3C) >> 2;
+
+     if (chn < pic->ADCCOUNT)
+      {
+       if (pic->pins[pic->adc[chn] - 1].ptype == PT_ANALOG)
+        {
+         val = pic->pins[pic->adc[chn] - 1].avalue;
+        }
+       else
+        {
+         val = 0;
+        }
+      }
+     else
+      {
+       if (chn == 14)
+        {
+         val = 0; //CVref - comparators not implemented 
+        }
+       else
+        {
+         val = 0.6; //Fixed reference
+        }
+      }
+
+     //VREF selection 
+     switch ((*pic->P16map.ADCON1)&0x30 >> 4)
+      {
+      case 1://VREF+
+       dval = ((1023 * val) / pic->pins[pic->adc[3] - 1].avalue);
+       break;
+      case 2://VREF-
+       dval = ((1023 * (val - pic->pins[pic->adc[2] - 1].avalue)) /
+               (5.0 - pic->pins[pic->adc[2] - 1].avalue));
+       break;
+      case 3://VREF+ VREF-
+       dval = ((1023 * (val - pic->pins[pic->adc[2] - 1].avalue)) /
+               (pic->pins[pic->adc[3] - 1].avalue - pic->pins[pic->adc[2] - 1].avalue));
+       break;
+      default: //disabled
+       dval = ((1023 * val) / 5.0);
+       break;
+      }
+
+     if (dval < 0) dval = 0;
+     if (dval > 1023) dval = 1023;
+
+     if (((*pic->P16map.ADCON1)&0x80) == 0x80)
+      {
+       (*pic->P16map.ADRESH) = (dval & 0xFF00) >> 8;
+       (*pic->P16map.ADRESL) = (dval & 0x00FF);
+      }
+     else
+      {
+       dval = dval << 6;
+       (*pic->P16map.ADRESH) = (dval & 0xFF00) >> 8;
+       (*pic->P16map.ADRESL) = (dval & 0x00FF);
+      }
+
+     (*pic->P16map.ADCON0) &= ~0x02;
+
+     //ADIF
+     (*pic->P16map.PIR1) |= 0x40;
+
+     pic->adcstep = 0;
+
+     // printf("AD0=%02X AD1=%02X\n",pic->ram[ADCON0],pic->ram[ADCON1]);
+     // printf("ADC conversion channel (%i)=%#04X (%08.3f)\n",chn,dval,val); 
+    }
+  }
+ else
+  {
+   pic->adcstep = 0;
+  }
+
+ if (pic->lram == sfr_addr (pic->P16map.ANSEL))
+  {
+   for (int i = 0; i < 8; i++)
+    {
+     if ((*pic->P16map.ANSEL) & (1 << i))
+      {
+       pic->pins[pic->adc[i] - 1].ptype = PT_ANALOG;
+      }
+     else
+      {
+       pic->pins[pic->adc[i] - 1].ptype = PT_DIGITAL;
+       if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin16 (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
+      }
+    }
+  }
+
+ if (pic->lram == sfr_addr (pic->P16map.ANSELH))
+  {
+   for (int i = 8; i < 14; i++)
+    {
+     if ((*pic->P16map.ANSELH) & (1 << (i - 8)))
+      {
+       pic->pins[pic->adc[i] - 1].ptype = PT_ANALOG;
+      }
+     else
+      {
+       pic->pins[pic->adc[i] - 1].ptype = PT_DIGITAL;
+       if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin16 (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
+      }
+    }
   }
 }

@@ -99,8 +99,8 @@ PIC16F887_map(void)
  pic->P16map.EEADRH = &pic->ram[0x10F];
  //pic->P16map.SRCON = &pic->ram[0x185];
  //pic->P16map.BAUDCTL = &pic->ram[0x187];
- //pic->P16map.ANSEL = &pic->ram[0x188];
- //pic->P16map.ANSELH = &pic->ram[0x189];
+ pic->P16map.ANSEL = &pic->ram[0x188];
+ pic->P16map.ANSELH = &pic->ram[0x189];
  pic->P16map.EECON1 = &pic->ram[0x18C];
  pic->P16map.EECON2 = &pic->ram[0x18D];
 }
@@ -256,7 +256,7 @@ void
 PIC16F887_periferic (void)
 {
  p16_mssp ();
- p16_adc ();
+ p16_adc_2 ();
  p16_int_pin();
  p16_int_portb();
  p16_tmr0 ();

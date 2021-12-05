@@ -100,6 +100,8 @@ extern "C" {
         unsigned char * ADRESL;
         unsigned char * ADRESH;
 
+        unsigned char * ANSEL;
+        unsigned char * ANSELH;
 
         unsigned char * EECON1;
         unsigned char * EECON2;
