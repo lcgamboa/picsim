@@ -60,3 +60,27 @@ p16_int_portb(void)
     }
   }
 }
+
+
+void
+p16_int_portb_2(void)
+{
+ unsigned char temp;
+
+ temp = (*pic->P16map.TRISB);
+ if (((*pic->P16map.PORTB) & temp) != (pic->portb & temp))
+  {
+   pic->portbm = 1;
+  }
+
+ if (pic->rram == sfr_addr (pic->P16map.PORTB))
+  {
+   pic->portbm = 0;
+  }
+
+ if (pic->portbm)
+  {
+   pic->ram[(0x0000) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x01; //RBIF
+   pic->ram[(0x0080) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x01;
+  }
+}

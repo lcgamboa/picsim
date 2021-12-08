@@ -258,7 +258,7 @@ PIC16F887_periferic (void)
  p16_mssp ();
  p16_adc_2 ();
  p16_int_pin();
- p16_int_portb();
+ p16_int_portb_2();
  p16_tmr0 ();
  p16_wdt ();
  p16_eeprom_2 ();

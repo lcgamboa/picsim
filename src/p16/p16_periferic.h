@@ -60,6 +60,7 @@ void p16_int_pin(void);
 
 void p16_int_portb_rst(void);
 void p16_int_portb(void);
+void p16_int_portb_2(void);
 
 void p16_uart_rst(void);
 #define p16_uart(X) serial(X)
