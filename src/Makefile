@@ -7,7 +7,7 @@ LN= ln -sfn
 CP= cp
 MKDIR = mkdir -p
 
-FLAGS= -Wall -O2 -flto -fpic -fsigned-char -Winline --param inline-unit-growth=60
+FLAGS= -Wall -g -O2 -flto -fpic -fsigned-char -Winline --param inline-unit-growth=60
 
 
 
@@ -72,7 +72,7 @@ clean-lib:
 	$(RM) $(LIBTARGETS) $(LIBEXTRACLEAN)
 
 install: all
-	strip -s $(LIBNAME).so
+	#strip -s $(LIBNAME).so
 	install -d ${libdir}
 	$(CP) -dvf $(LIBNAME)* ${libdir}
 
