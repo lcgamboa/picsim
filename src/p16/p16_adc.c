@@ -578,7 +578,7 @@ p16_adc_2(void)
       }
 
      //VREF selection 
-     switch ((*pic->P16map.ADCON1)&0x30 >> 4)
+     switch (((*pic->P16map.ADCON1)&0x30) >> 4)
       {
       case 1://VREF+
        dval = ((1023 * val) / pic->pins[pic->adc[3] - 1].avalue);
