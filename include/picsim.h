@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2008-2020  Luis Claudio Gamboa Lopes
+   Copyright (c) : 2008-2022  Luis Claudio Gamboa Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -88,6 +88,7 @@ extern "C" {
         float avalue; ///< analog input value
         unsigned char ovalue; ///< defaut open pin value
         float oavalue; ///< analog output value
+        unsigned char lsvalue; ///< last set value (used by open collector simulation)
     } picpin;
     
      

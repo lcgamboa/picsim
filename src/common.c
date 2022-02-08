@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2008-2020  Luis Claudio Gamboa Lopes
+   Copyright (c) : 2008-2022  Luis Claudio Gamboa Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -397,7 +397,9 @@ pic_set_pin(unsigned char pin, unsigned char value)
  unsigned char val;
 
  if (pin && ((pin - 1) < pic->PINCOUNT))
-  {
+  {	  
+   pic->pins[(pin - 1)].lsvalue = value; //for open collector simulation
+					 //
    if (pic->pins[(pin - 1)].value == value) return 1;
 
    if ((pic->pins[(pin - 1)].dir == PD_IN)&&(pic->pins[(pin - 1)].ptype < 3))
@@ -439,7 +441,7 @@ pic_set_pin(unsigned char pin, unsigned char value)
   }
  else
   return 0;
-};
+}
 
 int
 pic_set_apin(unsigned char pin, float value)
@@ -473,7 +475,7 @@ pic_get_pin_type(unsigned char pin)
   }
  else
   return 0;
-};
+}
 
 unsigned char
 pic_get_pin_dir(unsigned char pin)
