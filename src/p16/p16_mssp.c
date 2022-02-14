@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2019-2020  Luis Claudio Gamboa Lopes
+   Copyright (c) : 2019-2022  Luis Claudio Gamboa Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -40,6 +40,7 @@ p16_mssp_rst(void)
  pic->sspsr = 0;
  pic->ssp_bit = 0;
  pic->sspsr = 0;
+ pic->ssp_ck = 0;
 }
 
 void
@@ -67,6 +68,7 @@ p16_mssp(void)
       {
        (*pic->P16map.SSPSTAT) &= ~0x01; //BF
       }
+
      if (pic->ssp_bit)
       {
        if (pic->ssp_sck == 1)
@@ -81,6 +83,7 @@ p16_mssp(void)
          pic->ssp_bit--;
         }
        pic->ssp_sck++;
+       
        if(!pic->ssp_bit)(*pic->P16map.SSPSTAT) |= 0x01; //BF
       }
 
@@ -130,7 +133,7 @@ p16_mssp(void)
     case 0x08://I2C Master mode, clock = FOSC /(4 * (SSPADD + 1))
      pic->ssp_sck++;
 
-     if (pic->ssp_sck == (((*pic->P16map.SSPADD) + 1 / 2) - 1))
+      if(pic->ssp_sck == 1)
       {
 
        if (((*pic->P16map.SSPCON2) & 0x01)) //start
@@ -139,7 +142,7 @@ p16_mssp(void)
          pic_dir_pin16 (pic->sdi, PD_OUT);
          pic_wr_pin16 (pic->sdi, 1);
          pic_wr_pin16 (pic->sck, 1);
-
+         pic->ssp_ck |= 0x01;
          //printf("I2C_start 1\n");
         }
        else if (((*pic->P16map.SSPCON2) & 0x02)) //restart
@@ -147,6 +150,7 @@ p16_mssp(void)
          pic_dir_pin16 (pic->sdi, PD_OUT);
          pic_wr_pin16 (pic->sdi, 1);
          pic_wr_pin16 (pic->sck, 1);
+         pic->ssp_ck |= 0x02;
          //printf("restar1\n");
         }
        else if (((*pic->P16map.SSPCON2) & 0x04)) //stop
@@ -154,38 +158,42 @@ p16_mssp(void)
          pic_dir_pin16 (pic->sdi, PD_OUT);
          pic_wr_pin16 (pic->sdi, 0);
          pic_wr_pin16 (pic->sck, 1);
+         pic->ssp_ck |= 0x04;
          //printf("stop1\n");
         }
       }
 
-     if (pic->ssp_sck == (((*pic->P16map.SSPADD) + 1 / 2) + 1))
+     if (pic->ssp_sck == ((((*pic->P16map.SSPADD) + 1) / 2)))
       {
 
-       if (((*pic->P16map.SSPCON2) & 0x01)) //start
+       if (((*pic->P16map.SSPCON2) & 0x01)&&(pic->ssp_ck & 0x01)) //start
         {
          (*pic->P16map.SSPCON2) &= ~0x01;
          pic_dir_pin16 (pic->sck, PD_OUT);
          pic_wr_pin16 (pic->sdi, 0);
          pic_wr_pin16 (pic->sck, 1);
-
+         (*pic->P16map.PIR1) |= 0x08; //SSPIF
+         pic->ssp_ck &= ~0x01;
          //printf("start 2\n");
         }
-       else if (((*pic->P16map.SSPCON2) & 0x02)) //restart
+       else if (((*pic->P16map.SSPCON2) & 0x02)&&(pic->ssp_ck & 0x02)) //restart
         {
          (*pic->P16map.SSPCON2) &= ~0x02;
 
          pic_wr_pin16 (pic->sdi, 0);
-         pic_wr_pin16 (pic->sdi, 1);
+         pic_wr_pin16 (pic->sck, 1);
+         (*pic->P16map.PIR1) |= 0x08; //SSPIF
+         pic->ssp_ck &= ~0x02;
          //printf("restart 2\n");
         }
-       else if (((*pic->P16map.SSPCON2) & 0x04)) //stop
+       else if (((*pic->P16map.SSPCON2) & 0x04)&&(pic->ssp_ck & 0x04)) //stop
         {
          (*pic->P16map.SSPCON2) &= ~0x04;
-
-         pic->ssp_bit = 10;
-
+         pic->ssp_bit = 11;
          pic_wr_pin16 (pic->sdi, 1);
          pic_wr_pin16 (pic->sck, 1);
+         (*pic->P16map.PIR1) |= 0x08; //SSPIF
+         pic->ssp_ck &= ~0x04;
          //printf("stop 2\n");
         }
       }
@@ -209,7 +217,6 @@ p16_mssp(void)
        //printf("read\n");
        (*pic->P16map.SSPBUF) = 0;
        pic_dir_pin16 (pic->sdi, PD_IN);
-       pic->ssp_ck = pic->pins[pic->sck - 1].value;
        (*pic->P16map.SSPSTAT) &= ~0x01; //BF
 
        pic->ssp_scka = 1;
@@ -221,11 +228,9 @@ p16_mssp(void)
        pic->ssp_sck = 0;
 
        //write
-       if ((((*pic->P16map.SSPSTAT) & 0x04))&&(pic->ssp_bit <= 9))
+       if ((((*pic->P16map.SSPSTAT) & 0x04))&&(pic->ssp_bit <= 10))
         {
-         pic_wr_pin16 (pic->sck, !pic->pins[pic->sck - 1].value);
-
-
+         
          if ((pic->pins[pic->sck - 1].value == 0)&&(pic->ssp_bit <= 8))
           {
            pic_wr_pin16 (pic->sdi, ((*pic->P16map.SSPBUF) & (0x01 << (7 - pic->ssp_bit))) > 0);
@@ -236,6 +241,8 @@ p16_mssp(void)
             }
           }
 
+          pic_wr_pin16 (pic->sck, !pic->pins[pic->sck - 1].value);
+
 
          if ((pic->pins[pic->sck - 1].value == 1)&&(pic->ssp_bit > 8))
           {
@@ -244,6 +251,11 @@ p16_mssp(void)
            else
             (*pic->P16map.SSPCON2) &= ~0x40; //ACKSTAT
 
+           pic->ssp_bit++;
+          }
+          
+          if ((pic->pins[pic->sck - 1].value == 0)&&(pic->ssp_bit > 9))
+          {
            (*pic->P16map.SSPSTAT) &= ~0x04; //R/W
            (*pic->P16map.PIR1) |= 0x08; //SSPIF
            (*pic->P16map.SSPSTAT) &= ~0x01; //BF
@@ -254,20 +266,13 @@ p16_mssp(void)
         }
 
        //read 
-       if ((((*pic->P16map.SSPCON2) & 0x08) || ((*pic->P16map.SSPCON2)& 0x10))&&(pic->ssp_bit <= 9))
+       if ((((*pic->P16map.SSPCON2) & 0x08) || ((*pic->P16map.SSPCON2)& 0x10))&&(pic->ssp_bit <= 10))
         {
-         //printf("sck 1 =%i\n", pic->pins[pic->sck-1].value);
-         pic->ssp_ck ^= 0x01;
-         pic_wr_pin16 (pic->sck, pic->ssp_ck);
-         //printf("sck 2 =%i\n", pic->pins[pic->sck-1].value);
 
-         if ((pic->pins[pic->sck - 1].value == 0)&&(pic->ssp_bit <= 8))
-          {
-           pic->ssp_bit++;
-          }
 
          if ((pic->pins[pic->sck - 1].value == 1)&&(pic->ssp_bit <= 8))
           {
+           pic->ssp_bit++; 
            (*pic->P16map.SSPBUF) |= (pic->pins[pic->sdi - 1].value << (8 - pic->ssp_bit));
            if (pic->ssp_bit == 8)
             {
@@ -281,25 +286,34 @@ p16_mssp(void)
             }
           }
 
-         if (((*pic->P16map.SSPCON2)& 0x10)&&(pic->pins[pic->sck - 1].value == 1)&&(pic->ssp_bit > 8))
+          if((pic->ssp_bit <= 8) || ((pic->ssp_bit == 9)&& (pic->pins[pic->sck - 1].value == 1))
+          ||(pic->ssp_bit > 9))
+          { 
+           pic_wr_pin16 (pic->sck, !pic->pins[pic->sck - 1].value);
+          }
+
+          if ((pic->pins[pic->sck - 1].value == 0)&&(pic->ssp_bit > 9))
           {
-           pic_dir_pin16 (pic->sdi, PD_OUT);
-           pic_wr_pin16 (pic->sdi, ((*pic->P16map.SSPCON2)&0x20) > 0);
            (*pic->P16map.PIR1) |= 0x08; //SSPIF
            pic->ssp_bit++;
 
            (*pic->P16map.SSPCON2) &= ~0x10; //ACKDT
-
           }
 
+         if (((*pic->P16map.SSPCON2)& 0x10)&&(pic->pins[pic->sck - 1].value == 0)&&(pic->ssp_bit > 8))
+          {
+           pic_dir_pin16 (pic->sdi, PD_OUT);
+           pic_wr_pin16 (pic->sdi, ((*pic->P16map.SSPCON2)&0x20) > 0);
+           pic->ssp_bit++;
+          }
+          
+          
          //  printf("rbit(%i)  sck=%i  sda=%i sdadir=%i\n",pic->ssp_bit,pic->pins[pic->sck-1].value,pic->pins[pic->sdi-1].value,pic->pins[pic->sdi-1].dir); 
         }
 
-       if (pic->ssp_bit == 10)
+       if (pic->ssp_bit == 11)//&&(pic->pins[pic->sck - 1].value == 0))
         {
          pic_dir_pin16 (pic->sdi, PD_OUT);
-         pic_wr_pin16 (pic->sdi, 1);
-         pic->ssp_bit++;
         }
       }
      break;
