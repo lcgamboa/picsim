@@ -95,18 +95,18 @@ p16e_adc(void)
 
  if (pic->lram == sfr_addr (pic->P16Emap.ANSELA))
   {
-   for (int i = 0; i < pic->ADCCOUNT; i++)
+   for (int i = 0; i < pic->PINCOUNT; i++)
     {
-     if ((pic->adc[i])&&(pic->pins[pic->adc[i] - 1].port == pic->P16Emap.PORTA))
+     if (pic->pins[i].port == pic->P16Emap.PORTA)
       {
-       if ((*pic->P16Emap.ANSELA) & (1 << pic->pins[pic->adc[i] - 1].pord))
+       if ((*pic->P16Emap.ANSELA) & (1 << pic->pins[i].pord))
         {
-         pic->pins[pic->adc[i] - 1].ptype = PT_ANALOG;
+         pic->pins[i].ptype = PT_ANALOG;
         }
        else
         {
-         pic->pins[pic->adc[i] - 1].ptype = PT_DIGITAL;
-         if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin16E (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
+         pic->pins[i].ptype = PT_DIGITAL;
+         if (pic->pins[i].dir == PD_IN)pic_wr_pin16E (i+1, pic->pins[i].ovalue);
         }
       }
     }
@@ -114,75 +114,75 @@ p16e_adc(void)
 
  if (pic->lram == sfr_addr (pic->P16Emap.ANSELB))
   {
-   for (int i = 0; i < pic->ADCCOUNT; i++)
+   for (int i = 0; i < pic->PINCOUNT; i++)
     {
-     if ((pic->adc[i])&&(pic->pins[pic->adc[i] - 1].port == pic->P16Emap.PORTB))
+     if (pic->pins[i].port == pic->P16Emap.PORTB)
       {
-       if ((*pic->P16Emap.ANSELB) & (1 << pic->pins[pic->adc[i] - 1].pord))
+       if ((*pic->P16Emap.ANSELB) & (1 << pic->pins[i].pord))
         {
-         pic->pins[pic->adc[i] - 1].ptype = PT_ANALOG;
+         pic->pins[i].ptype = PT_ANALOG;
         }
        else
         {
-         pic->pins[pic->adc[i] - 1].ptype = PT_DIGITAL;
-         if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin16E (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
+         pic->pins[i].ptype = PT_DIGITAL;
+         if (pic->pins[i].dir == PD_IN)pic_wr_pin16E (i+1, pic->pins[i].ovalue);
         }
       }
     }
   }
 
- if (pic->lram == sfr_addr (pic->P16Emap.ANSELC))
+  if (pic->lram == sfr_addr (pic->P16Emap.ANSELC))
   {
-   for (int i = 0; i < pic->ADCCOUNT; i++)
+   for (int i = 0; i < pic->PINCOUNT; i++)
     {
-     if ((pic->adc[i])&&(pic->pins[pic->adc[i] - 1].port == pic->P16Emap.PORTC))
+     if (pic->pins[i].port == pic->P16Emap.PORTC)
       {
-       if ((*pic->P16Emap.ANSELC) & (1 << pic->pins[pic->adc[i] - 1].pord))
+       if ((*pic->P16Emap.ANSELC) & (1 << pic->pins[i].pord))
         {
-         pic->pins[pic->adc[i] - 1].ptype = PT_ANALOG;
+         pic->pins[i].ptype = PT_ANALOG;
         }
        else
         {
-         pic->pins[pic->adc[i] - 1].ptype = PT_DIGITAL;
-         if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin16E (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
+         pic->pins[i].ptype = PT_DIGITAL;
+         if (pic->pins[i].dir == PD_IN)pic_wr_pin16E (i+1, pic->pins[i].ovalue);
         }
       }
     }
   }
 
- if ((pic->P16Emap.ANSELD)&&(pic->lram == sfr_addr (pic->P16Emap.ANSELD)))
+ if (pic->lram == sfr_addr (pic->P16Emap.ANSELD))
   {
-   for (int i = 0; i < pic->ADCCOUNT; i++)
+   for (int i = 0; i < pic->PINCOUNT; i++)
     {
-     if ((pic->adc[i])&&(pic->pins[pic->adc[i] - 1].port == pic->P16Emap.PORTD))
+     if (pic->pins[i].port == pic->P16Emap.PORTD)
       {
-       if ((*pic->P16Emap.ANSELD) & (1 << pic->pins[pic->adc[i] - 1].pord))
+       if ((*pic->P16Emap.ANSELD) & (1 << pic->pins[i].pord))
         {
-         pic->pins[pic->adc[i] - 1].ptype = PT_ANALOG;
+         pic->pins[i].ptype = PT_ANALOG;
         }
        else
         {
-         pic->pins[pic->adc[i] - 1].ptype = PT_DIGITAL;
-         if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin16E (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
+         pic->pins[i].ptype = PT_DIGITAL;
+         if (pic->pins[i].dir == PD_IN)pic_wr_pin16E (i+1, pic->pins[i].ovalue);
         }
       }
     }
   }
 
- if ((pic->P16Emap.ANSELE)&&(pic->lram == sfr_addr (pic->P16Emap.ANSELE)))
+   if (pic->lram == sfr_addr (pic->P16Emap.ANSELE))
   {
-   for (int i = 0; i < pic->ADCCOUNT; i++)
+   for (int i = 0; i < pic->PINCOUNT; i++)
     {
-     if ((pic->adc[i])&&(pic->pins[pic->adc[i] - 1].port == pic->P16Emap.PORTE))
+     if (pic->pins[i].port == pic->P16Emap.PORTE)
       {
-       if ((*pic->P16Emap.ANSELE) & (1 << pic->pins[pic->adc[i] - 1].pord))
+       if ((*pic->P16Emap.ANSELE) & (1 << pic->pins[i].pord))
         {
-         pic->pins[pic->adc[i] - 1].ptype = PT_ANALOG;
+         pic->pins[i].ptype = PT_ANALOG;
         }
        else
         {
-         pic->pins[pic->adc[i] - 1].ptype = PT_DIGITAL;
-         if (pic->pins[pic->adc[i] - 1].dir == PD_IN)pic_wr_pin16E (pic->adc[i], pic->pins[pic->adc[i] - 1].ovalue);
+         pic->pins[i].ptype = PT_DIGITAL;
+         if (pic->pins[i].dir == PD_IN)pic_wr_pin16E (i+1, pic->pins[i].ovalue);
         }
       }
     }
