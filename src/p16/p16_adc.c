@@ -70,7 +70,7 @@ p16_adc(void)
 
      if (pic->processor == P16F777)
       {
-       dval = ((1023 * val) / 5.0);
+       dval = ((1023 * val) / pic->vcc);
       }
      else
       { //VREF selection 
@@ -91,7 +91,7 @@ p16_adc(void)
                  (pic->pins[pic->adc[3] - 1].avalue - pic->pins[pic->adc[2] - 1].avalue));
          break;
         default:
-         dval = ((1023 * val) / 5.0);
+         dval = ((1023 * val) / pic->vcc);
          break;
         }
       }
@@ -585,14 +585,14 @@ p16_adc_2(void)
        break;
       case 2://VREF-
        dval = ((1023 * (val - pic->pins[pic->adc[2] - 1].avalue)) /
-               (5.0 - pic->pins[pic->adc[2] - 1].avalue));
+               (pic->vcc - pic->pins[pic->adc[2] - 1].avalue));
        break;
       case 3://VREF+ VREF-
        dval = ((1023 * (val - pic->pins[pic->adc[2] - 1].avalue)) /
                (pic->pins[pic->adc[3] - 1].avalue - pic->pins[pic->adc[2] - 1].avalue));
        break;
       default: //disabled
-       dval = ((1023 * val) / 5.0);
+       dval = ((1023 * val) / pic->vcc);
        break;
       }
 

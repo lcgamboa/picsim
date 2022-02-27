@@ -62,7 +62,7 @@ p16e_adc(void)
        val = 0;
       }
 
-     dval = ((1023 * val) / 5.0);
+     dval = ((1023 * val) / pic->vcc);
 
      if (((*pic->P16Emap.ADCON1)&0x80) == 0x80)
       {
@@ -217,7 +217,7 @@ p16e_adc_2(void)
        val = 0;
       }
 
-     dval = ((1023 * val) / 5.0);
+     dval = ((1023 * val) / pic->vcc);
 
      if (((*pic->P16Emap.ADCON0)&0x04) == 0x04)
       {

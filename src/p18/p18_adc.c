@@ -71,14 +71,14 @@ p18_adc(void)
          break;
         case 0x20://VREF-
          dval = ((1023 * (val - pic->pins[pic->adc[2] - 1].avalue)) /
-                 (5.0 - pic->pins[pic->adc[2] - 1].avalue));
+                 (pic->vcc - pic->pins[pic->adc[2] - 1].avalue));
          break;
         case 0x30://VREF+ VREF-
          dval = ((1023 * (val - pic->pins[pic->adc[2] - 1].avalue)) /
                  (pic->pins[pic->adc[3] - 1].avalue - pic->pins[pic->adc[2] - 1].avalue));
          break;
         default:
-         dval = ((1023 * val) / 5.0);
+         dval = ((1023 * val) / pic->vcc);
          break;
         }
 
@@ -280,7 +280,7 @@ p18_adc_2(void)
                  (pic->pins[pic->adc[3] - 1].avalue - pic->pins[pic->adc[2] - 1].avalue));
          break;
         default:
-         dval = ((1023 * val) / 5.0);
+         dval = ((1023 * val) / pic->vcc);
          break;
         }
 
@@ -503,7 +503,7 @@ p18_adc_3(void)
          val = 0;
         }
        //TODO add VREF selection support
-       dval = ((1023 * val) / 5.0);
+       dval = ((1023 * val) / pic->vcc);
 
        if ((*pic->P18map.ADCON0)&0x04)//ADFM
         { //Rigth

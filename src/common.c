@@ -95,6 +95,8 @@ pic_init(_pic * pic_, int processor, const char * fname, int leeprom, float freq
 
  pic->pkg = PDIP;
 
+ pic->vcc = 5.0;
+ 
  retcode = -1;
  for (i = 0; i < PIC_count; i++)
   {

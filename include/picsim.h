@@ -336,6 +336,7 @@ extern unsigned char NO_IO[6];
         //portb int mismatch
         unsigned char portbm;
         //adc
+        float vcc;  ///< Microcontroller VCC used by ADC
         int adcstep;
         unsigned char adcon1;
         //wdt
