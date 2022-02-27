@@ -40,6 +40,7 @@ void p16e_mssp(void);
 
 void p16e_adc_rst(void);
 void p16e_adc(void);
+void p16e_adc_2(void);
 
 void p16e_tmr0_rst(void);
 void p16e_tmr0(void);

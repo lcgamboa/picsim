@@ -152,7 +152,9 @@ PIC16F18855_map(void)
  pic->P16Emap.ADCAP = &pic->ram[0x9B];
  pic->P16Emap.ADPRE = &pic->ram[0x9C];
  pic->P16Emap.ADACQ = &pic->ram[0x9D];
+ */
  pic->P16Emap.ADPCH = &pic->ram[0x9E];
+ /*
  pic->P16Emap.ADCNT = &pic->ram[0x10C];
  pic->P16Emap.ADRPT = &pic->ram[0x10D];
  */
@@ -692,7 +694,7 @@ PIC16F18855_periferic(void)
 {
   p16e_pps_out();
   p16e_mssp ();
-  p16e_adc ();
+  p16e_adc_2 ();
   p16e_int_pin_2();
   p16e_int_ports();
   p16e_tmr0_2 ();
