@@ -586,6 +586,57 @@ PIC16F18855_reset(void)
  pic->pins[25].port = pic->P16Emap.PORTB;pic->pins[25].pord = 5;
  pic->pins[26].port = pic->P16Emap.PORTB;pic->pins[26].pord = 6;
  pic->pins[27].port = pic->P16Emap.PORTB;pic->pins[27].pord = 7;
+
+ pic->mclr = 1;
+
+ pic->adc[0]= 2;
+ pic->adc[1]= 3;
+ pic->adc[2]= 4;
+ pic->adc[3]= 5;
+ pic->adc[4]= 6;
+ pic->adc[5]= 7;
+ pic->adc[6]= 10;
+ pic->adc[7]= 9;
+
+ pic->adc[8]= 21;
+ pic->adc[9]= 22;
+ pic->adc[10]= 23;
+ pic->adc[11]= 24;
+ pic->adc[12]= 25;
+ pic->adc[13]= 26;
+ pic->adc[14]= 27;
+ pic->adc[15]= 28;
+       
+ pic->adc[16]= 15;
+ pic->adc[17]= 16;
+ pic->adc[18]= 17;
+ pic->adc[19]= 18;
+ pic->adc[20]= 23;
+ pic->adc[21]= 24;
+ pic->adc[22]= 25;
+ pic->adc[23]= 26;
+       
+ pic->pgc= 27;
+ pic->pgd= 28;
+
+ //Default values
+
+ pic->ccp[0].pin= 13; 
+ pic->ccp[1].pin= 12; 
+ pic->ccp[2].pin= 26; 
+ pic->ccp[3].pin= 21; 
+ pic->ccp[4].pin= 6; 
+      
+ pic->usart_rx[0]= 18;  
+ pic->usart_tx[0]= 17;  
+
+ pic->sck= 14;
+ pic->sdo= 10;
+ pic->sdi= 15;
+
+ pic->t0cki= 6;
+ pic->t1cki= 11;
+ 
  }
  else if(pic->pkg == QFN)
  {
@@ -618,7 +669,7 @@ PIC16F18855_reset(void)
  pic->pins[25].port = pic->P16Emap.PORTE;pic->pins[25].pord=3; 
  pic->pins[26].port = pic->P16Emap.PORTA;pic->pins[26].pord=0;
  pic->pins[27].port = pic->P16Emap.PORTA;pic->pins[27].pord=1;
- }
+ 
  pic->mclr = 26;
 
  pic->adc[0]=27;
@@ -668,7 +719,8 @@ PIC16F18855_reset(void)
 
  pic->t0cki=3;
  pic->t1cki=8;
-       
+ }
+
  //TODO add P16E pin interrupt support
  /*      
  pic->int0 = 0;
