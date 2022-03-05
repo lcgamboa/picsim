@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2008-2020  Luis Claudio Gamboa Lopes
+   Copyright (c) : 2008-2022  Luis Claudio Gamboa Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -40,17 +40,18 @@ main()
 
  if (fout)
   {
+   fprintf(fout,"#include \"../include/picsim.h\"\n\n");
    fprintf(fout,"//dirt hack to include dynamic load in static lib\n\n");
    
    for (i = 0; i < PIC_count; i++)
     {
-     fprintf (fout, " void %s_start(void);\n", PICS[i].name);
+     fprintf (fout, " void %s_start(_pic * pic);\n", PICS[i].name);
     }
    
-   fprintf(fout,"\n\nvoid dirt_load (void)\n{\n");
+   fprintf(fout,"\n\nvoid dirt_load (_pic * pic)\n{\n");
    for (i = 0; i < PIC_count; i++)
     {
-     fprintf (fout, " %s_start();\n", PICS[i].name);
+     fprintf (fout, " %s_start(pic);\n", PICS[i].name);
     }
    fprintf(fout,"};\n");
    

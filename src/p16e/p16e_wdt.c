@@ -23,173 +23,156 @@
    For e-mail suggestions :  lcgamboa@yahoo.com
    ######################################################################## */
 
-#include<stdio.h>
-#include"../../include/picsim.h"
-#include"../../include/periferic16e.h"
+#include "../../include/periferic16e.h"
+#include "../../include/picsim.h"
+#include <stdio.h>
 
 extern const int fpw2[];
 
-void
-p16e_wdt_rst(void)
-{
- pic->twdt = 0;
- pic->wdt = 0;
+void p16e_wdt_rst(_pic *pic) {
+  pic->twdt = 0;
+  pic->wdt = 0;
 }
 
-void
-p16e_wdt(void)
-{
+void p16e_wdt(_pic *pic) {
 
- //TODO WDT support window and clock select  
- /*
- pic->config[2] &  0x0700  WDTCWS WDT Configuration Clock Select bits
- pic->config[2] &  0x3800  WDTCCS WDT Configuration Window Select bits
- pic->config[2] &  0x001F  WDTCPS WDT Configuration Period Select bits
-  */
+  // TODO WDT support window and clock select
+  /*
+  pic->config[2] &  0x0700  WDTCWS WDT Configuration Clock Select bits
+  pic->config[2] &  0x3800  WDTCCS WDT Configuration Window Select bits
+  pic->config[2] &  0x001F  WDTCPS WDT Configuration Period Select bits
+   */
 
- if ((pic->getconf (CFG_WDT) == 0x60) || //Enabled
-    ((pic->getconf (CFG_WDT) == 0x40)&& pic->sleep) || //Enabled and disabled in sleep    
-    ((pic->getconf (CFG_WDT) == 0x20)&&((*pic->P16Emap.WDTCON0) & 0x01))) //Software Enable
+  if ((pic->getconf(pic, CFG_WDT) == 0x60) || // Enabled
+      ((pic->getconf(pic, CFG_WDT) == 0x40) &&
+       pic->sleep) || // Enabled and disabled in sleep
+      ((pic->getconf(pic, CFG_WDT) == 0x20) &&
+       ((*pic->P16Emap.WDTCON0) & 0x01))) // Software Enable
   {
-   pic->twdt += 4.0 / pic->freq;
+    pic->twdt += 4.0 / pic->freq;
 
-   int div;
+    int div;
 
-   if ((pic->config[2] & 0x001F) == 0x1F)//software controlled
+    if ((pic->config[2] & 0x001F) == 0x1F) // software controlled
     {
-     div = ((*pic->P16Emap.WDTCON0) & 0x3E) >> 1;
+      div = ((*pic->P16Emap.WDTCON0) & 0x3E) >> 1;
+    } else // configuration controlled
+    {
+      div = pic->config[2] & 0x001F;
     }
-   else //configuration controlled
-    {
-     div = pic->config[2] & 0x001F;
-    }
 
-   if (div > 18)div = 0;
+    if (div > 18)
+      div = 0;
 
-   if (pic->twdt > (1e-3 * fpw2[div]))
-    {
-     pic->twdt = 0;
-     pic->wdt++;
-     if (pic->wdt == pic->WDT_MS)
-      {
-       //reset
-       pic->wdt = 0;
+    if (pic->twdt > (1e-3 * fpw2[div])) {
+      pic->twdt = 0;
+      pic->wdt++;
+      if (pic->wdt == pic->WDT_MS) {
+        // reset
+        pic->wdt = 0;
 
-       unsigned char temp;
-       int bk;
-       int offset = 0x007F & sfr_addr (pic->P16Emap.STATUS);
-       temp = (*pic->P16Emap.STATUS);
-       temp &= ~0x10;
+        unsigned char temp;
+        int bk;
+        int offset = 0x007F & sfr_addr(pic->P16Emap.STATUS);
+        temp = (*pic->P16Emap.STATUS);
+        temp &= ~0x10;
 
-       for (bk = 0; bk < 32; bk++)
-        pic->ram[(0x0080 * bk) | offset] = temp;
+        for (bk = 0; bk < 32; bk++)
+          pic->ram[(0x0080 * bk) | offset] = temp;
 
-       if (pic->sleep == 1)
-        {
-         pic->sleep = 0;
-        }
-       else
-        {
-         pic_reset (0);
+        if (pic->sleep == 1) {
+          pic->sleep = 0;
+        } else {
+          pic_reset(pic, 0);
         }
       }
     }
   }
 }
 
-void
-p16e_wdt_2(void)
-{
- 
- if ((pic->getconf (CFG_WDT) == 0x18) || //Enabled
-    ((pic->getconf (CFG_WDT) == 0x10)&& pic->sleep) || //Enabled and disabled in sleep    
-    ((pic->getconf (CFG_WDT) == 0x08)&&((*pic->P16Emap.WDTCON) & 0x01))) //Software Enable
+void p16e_wdt_2(_pic *pic) {
+
+  if ((pic->getconf(pic, CFG_WDT) == 0x18) || // Enabled
+      ((pic->getconf(pic, CFG_WDT) == 0x10) &&
+       pic->sleep) || // Enabled and disabled in sleep
+      ((pic->getconf(pic, CFG_WDT) == 0x08) &&
+       ((*pic->P16Emap.WDTCON) & 0x01))) // Software Enable
   {
-   pic->twdt += 4.0 / pic->freq;
+    pic->twdt += 4.0 / pic->freq;
 
-   int div= ((*pic->P16Emap.WDTCON) & 0x3E) >> 1;
-   
-   if (div > 18)div = 0;
+    int div = ((*pic->P16Emap.WDTCON) & 0x3E) >> 1;
 
-   if (pic->twdt > (1e-3 * fpw2[div]))
-    {   
-     pic->twdt = 0;
-     pic->wdt++;
-     if (pic->wdt == pic->WDT_MS)
-      {
-       //reset
-       pic->wdt = 0;
+    if (div > 18)
+      div = 0;
 
-       unsigned char temp;
-       int bk;
-       int offset = 0x007F & sfr_addr (pic->P16Emap.STATUS);
-       temp = (*pic->P16Emap.STATUS);
-       temp &= ~0x10;
+    if (pic->twdt > (1e-3 * fpw2[div])) {
+      pic->twdt = 0;
+      pic->wdt++;
+      if (pic->wdt == pic->WDT_MS) {
+        // reset
+        pic->wdt = 0;
 
-       for (bk = 0; bk < 32; bk++)
-        pic->ram[(0x0080 * bk) | offset] = temp;
+        unsigned char temp;
+        int bk;
+        int offset = 0x007F & sfr_addr(pic->P16Emap.STATUS);
+        temp = (*pic->P16Emap.STATUS);
+        temp &= ~0x10;
 
-       if (pic->sleep == 1)
-        {
-         pic->sleep = 0;
-        }
-       else
-        {
-         pic_reset (0);
+        for (bk = 0; bk < 32; bk++)
+          pic->ram[(0x0080 * bk) | offset] = temp;
+
+        if (pic->sleep == 1) {
+          pic->sleep = 0;
+        } else {
+          pic_reset(pic, 0);
         }
       }
     }
   }
 }
 
+void p16e_wdt_3(_pic *pic) {
 
-void
-p16e_wdt_3(void)
-{
+  // TODO WDT support window and clock select
+  /*
+  pic->config[2] &  0x0700  WDTCWS WDT Configuration Clock Select bits
+  pic->config[2] &  0x3800  WDTCCS WDT Configuration Window Select bits
+  pic->config[2] &  0x001F  WDTCPS WDT Configuration Period Select bits
+   */
 
- //TODO WDT support window and clock select  
- /*
- pic->config[2] &  0x0700  WDTCWS WDT Configuration Clock Select bits
- pic->config[2] &  0x3800  WDTCCS WDT Configuration Window Select bits
- pic->config[2] &  0x001F  WDTCPS WDT Configuration Period Select bits
-  */
-
- if ((pic->getconf (CFG_WDT) == 0x0C) || //Enabled
-    ((pic->getconf (CFG_WDT) == 0x08)&& pic->sleep) || //Enabled and disabled in sleep    
-    ((pic->getconf (CFG_WDT) == 0x04)&&((*pic->P16Emap.WDTCON) & 0x01))) //Software Enable
+  if ((pic->getconf(pic, CFG_WDT) == 0x0C) || // Enabled
+      ((pic->getconf(pic, CFG_WDT) == 0x08) &&
+       pic->sleep) || // Enabled and disabled in sleep
+      ((pic->getconf(pic, CFG_WDT) == 0x04) &&
+       ((*pic->P16Emap.WDTCON) & 0x01))) // Software Enable
   {
-   pic->twdt += 4.0 / pic->freq;
+    pic->twdt += 4.0 / pic->freq;
 
-  
-   int div = ((*pic->P16Emap.WDTCON) & 0x3E) >> 1;
+    int div = ((*pic->P16Emap.WDTCON) & 0x3E) >> 1;
 
-   if (div > 18)div = 0;
+    if (div > 18)
+      div = 0;
 
-   if (pic->twdt > (1e-3 * fpw2[div]))
-    {
-     pic->twdt = 0;
-     pic->wdt++;
-     if (pic->wdt == pic->WDT_MS)
-      {   
-       //reset
-       pic->wdt = 0;
+    if (pic->twdt > (1e-3 * fpw2[div])) {
+      pic->twdt = 0;
+      pic->wdt++;
+      if (pic->wdt == pic->WDT_MS) {
+        // reset
+        pic->wdt = 0;
 
-       unsigned char temp;
-       int bk;
-       int offset = 0x007F & sfr_addr (pic->P16Emap.STATUS);
-       temp = (*pic->P16Emap.STATUS);
-       temp &= ~0x10;
+        unsigned char temp;
+        int bk;
+        int offset = 0x007F & sfr_addr(pic->P16Emap.STATUS);
+        temp = (*pic->P16Emap.STATUS);
+        temp &= ~0x10;
 
-       for (bk = 0; bk < 32; bk++)
-        pic->ram[(0x0080 * bk) | offset] = temp;
+        for (bk = 0; bk < 32; bk++)
+          pic->ram[(0x0080 * bk) | offset] = temp;
 
-       if (pic->sleep == 1)
-        {
-         pic->sleep = 0;
-        }
-       else
-        {
-         pic_reset (0);
+        if (pic->sleep == 1) {
+          pic->sleep = 0;
+        } else {
+          pic_reset(pic, 0);
         }
       }
     }

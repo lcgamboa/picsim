@@ -23,64 +23,48 @@
    For e-mail suggestions :  lcgamboa@yahoo.com
    ######################################################################## */
 
-#include<stdio.h>
-#include"../../include/picsim.h"
-#include"../../include/periferic16.h"
+#include "../../include/periferic16.h"
+#include "../../include/picsim.h"
+#include <stdio.h>
 
-void
-p16_int_portb_rst(void)
-{
- pic->portbm = 0;
-}
+void p16_int_portb_rst(_pic *pic) { pic->portbm = 0; }
 
-void
-p16_int_portb(void)
-{
- unsigned char temp;
+void p16_int_portb(_pic *pic) {
+  unsigned char temp;
 
- temp = (*pic->P16map.TRISB)&0xF0;
- if (((*pic->P16map.PORTB) & temp) != (pic->portb & temp))
-  {
-   pic->portbm = 1;
+  temp = (*pic->P16map.TRISB) & 0xF0;
+  if (((*pic->P16map.PORTB) & temp) != (pic->portb & temp)) {
+    pic->portbm = 1;
   }
 
- if (pic->rram == sfr_addr (pic->P16map.PORTB))
-  {
-   pic->portbm = 0;
+  if (pic->rram == sfr_addr(pic->P16map.PORTB)) {
+    pic->portbm = 0;
   }
 
- if (pic->portbm)
-  {
-   pic->ram[(0x0000) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x01; //RBIF
-   pic->ram[(0x0080) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x01;
-   if (pic->processor != P16F84A)
-    {
-     pic->ram[(0x0100) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x01;
-     pic->ram[(0x0180) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x01;
+  if (pic->portbm) {
+    pic->ram[(0x0000) | (sfr_addr(pic->P16map.INTCON) & 0x007F)] |= 0x01; // RBIF
+    pic->ram[(0x0080) | (sfr_addr(pic->P16map.INTCON) & 0x007F)] |= 0x01;
+    if (pic->processor != P16F84A) {
+      pic->ram[(0x0100) | (sfr_addr(pic->P16map.INTCON) & 0x007F)] |= 0x01;
+      pic->ram[(0x0180) | (sfr_addr(pic->P16map.INTCON) & 0x007F)] |= 0x01;
     }
   }
 }
 
+void p16_int_portb_2(_pic *pic) {
+  unsigned char temp;
 
-void
-p16_int_portb_2(void)
-{
- unsigned char temp;
-
- temp = (*pic->P16map.TRISB);
- if (((*pic->P16map.PORTB) & temp) != (pic->portb & temp))
-  {
-   pic->portbm = 1;
+  temp = (*pic->P16map.TRISB);
+  if (((*pic->P16map.PORTB) & temp) != (pic->portb & temp)) {
+    pic->portbm = 1;
   }
 
- if (pic->rram == sfr_addr (pic->P16map.PORTB))
-  {
-   pic->portbm = 0;
+  if (pic->rram == sfr_addr(pic->P16map.PORTB)) {
+    pic->portbm = 0;
   }
 
- if (pic->portbm)
-  {
-   pic->ram[(0x0000) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x01; //RBIF
-   pic->ram[(0x0080) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x01;
+  if (pic->portbm) {
+    pic->ram[(0x0000) | (sfr_addr(pic->P16map.INTCON) & 0x007F)] |= 0x01; // RBIF
+    pic->ram[(0x0080) | (sfr_addr(pic->P16map.INTCON) & 0x007F)] |= 0x01;
   }
 }

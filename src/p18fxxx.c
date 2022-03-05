@@ -33,7 +33,7 @@ static unsigned short opc;
 static unsigned short raddr;
 static unsigned short bank;
 
-static inline void fraddr(void) {
+static inline void fraddr(_pic *pic) {
   if (opc & 0x0100) // a =1
   {
     raddr = bank | (opc & 0x00FF);
@@ -62,7 +62,7 @@ static inline void fraddr(void) {
   (((addr) < pic->RAMSIZE) ? (addr) : ((addr) % pic->RAMSIZE))
 
 // TODO add [or not] support to extended instructions
-void pic_decode_18(void) {
+void pic_decode_18(_pic *pic) {
   unsigned short temp;
   unsigned char ctemp;
   // unsigned short opc;
@@ -84,7 +84,7 @@ void pic_decode_18(void) {
   short jrange;
 
   /*
-  #define  fraddr()\
+  #define  fraddr(pic)\
       if(opc & 0x0100)\
         raddr=bank|(opc & 0x00FF);\
       else\
@@ -99,8 +99,8 @@ void pic_decode_18(void) {
 
   if (pic->sleep == 1) {
     if (pic->print)
-      printf("sleep WDT=%i wdt=%f ms=%i\n", pic->getconf(CFG_WDT), pic->twdt,
-             pic->wdt);
+      printf("sleep WDT=%i wdt=%f ms=%i\n", pic->getconf(pic, CFG_WDT),
+             pic->twdt, pic->wdt);
     return;
   }
 
@@ -899,7 +899,7 @@ void pic_decode_18(void) {
        //RESET       		Software device RESET        1     	0000 0000 1111 1111 All
       case 0x00FF:
        if (pic->print)printf ("RESET\n");
-       pic_reset (0);
+       pic_reset (pic, 0);
        return;
        break;
       default:
@@ -921,7 +921,7 @@ void pic_decode_18(void) {
       // 001a ffff ffff None
       if (pic->print)
         printf("MULWF %#06X,%d\n", opc & 0x00FF, (opc & 0x0100) >> 8);
-      fraddr();
+      fraddr(pic);
       temp = (*pic->P18map.WREG) * pic->ram[raddr];
       (*pic->P18map.PRODH) = (temp & 0xFF00) >> 8;
       (*pic->P18map.PRODL) = temp & 0x00FF;
@@ -937,7 +937,7 @@ void pic_decode_18(void) {
       if (pic->print)
         printf("DECF %#06X,%d,%d\n", opc & 0x00FF, (opc & 0x0200) >> 9,
                (opc & 0x0100) >> 8);
-      fraddr();
+      fraddr(pic);
       if ((0xF0 & ((0x0F & (pic->ram[raddr])) + 0x0F)) != 0)
         *status |= 0x02;
       else
@@ -1161,7 +1161,7 @@ void pic_decode_18(void) {
       if (pic->print)
         printf("IORWF %#04X,%d,%d\n", opc & 0x00FF, (opc & 0x0200) >> 9,
                (opc & 0x0100) >> 8);
-      fraddr();
+      fraddr(pic);
       pic->rram = raddr;
       if (opc & 0x0200) {
         pic->ram[raddr] = (*pic->P18map.WREG) | pic->ram[raddr];
@@ -1193,7 +1193,7 @@ void pic_decode_18(void) {
       if (pic->print)
         printf("ANDWF %#04X,%d,%d\n", opc & 0x00FF, (opc & 0x0200) >> 9,
                (opc & 0x0100) >> 8);
-      fraddr();
+      fraddr(pic);
       pic->rram = raddr;
       if (opc & 0x0200) {
         pic->ram[raddr] = (*pic->P18map.WREG) & pic->ram[raddr];
@@ -1225,7 +1225,7 @@ void pic_decode_18(void) {
       if (pic->print)
         printf("XORWF %#04X,%d,%d\n", opc & 0x00FF, (opc & 0x0200) >> 9,
                (opc & 0x0100) >> 8);
-      fraddr();
+      fraddr(pic);
       pic->rram = raddr;
       if (opc & 0x0200) {
         pic->ram[raddr] = (*pic->P18map.WREG) ^ pic->ram[raddr];
@@ -1257,7 +1257,7 @@ void pic_decode_18(void) {
       if (pic->print)
         printf("COMF %#06X,%d,%d\n", opc & 0x00FF, (opc & 0x0200) >> 9,
                (opc & 0x0100) >> 8);
-      fraddr();
+      fraddr(pic);
       pic->rram = raddr;
       if (opc & 0x0200) {
         pic->ram[raddr] = ~pic->ram[raddr];
@@ -1296,7 +1296,7 @@ void pic_decode_18(void) {
       if (pic->print)
         printf("ADDWFC %#06X,%d,%d\n", opc & 0x00FF, (opc & 0x0200) >> 9,
                (opc & 0x0100) >> 8);
-      fraddr();
+      fraddr(pic);
       if ((0xF0 & ((0x0F & ((*pic->P18map.WREG) + pic->ram[raddr])) +
                    ((*pic->P18map.STATUS) & 0x01))) != 0)
         *status |= 0x02; // DC=1
@@ -1352,7 +1352,7 @@ void pic_decode_18(void) {
       if (pic->print)
         printf("ADDWF %#06X,%d,%d\n", opc & 0x00FF, (opc & 0x0200) >> 9,
                (opc & 0x0100) >> 8);
-      fraddr();
+      fraddr(pic);
       if ((0xF0 & ((0x0F & (*pic->P18map.WREG)) + (0x0F & pic->ram[raddr]))) !=
           0)
         *status |= 0x02;
@@ -1408,7 +1408,7 @@ void pic_decode_18(void) {
       if (pic->print)
         printf("INCF %#06X,%d,%d\n", opc & 0x00FF, (opc & 0x0200) >> 9,
                (opc & 0x0100) >> 8);
-      fraddr();
+      fraddr(pic);
       if ((0xF0 & ((0x0F & (pic->ram[raddr])) + 1)) != 0)
         *status |= 0x02;
       else
@@ -1464,7 +1464,7 @@ void pic_decode_18(void) {
       if (pic->print)
         printf("DECFSZ %#06X,%d,%d\n", opc & 0x00FF, (opc & 0x0200) >> 9,
                (opc & 0x0100) >> 8);
-      fraddr();
+      fraddr(pic);
       pic->rram = raddr;
       if (opc & 0x0200) {
         pic->ram[raddr]--;
@@ -1495,7 +1495,7 @@ void pic_decode_18(void) {
       if (pic->print)
         printf("RRCF %#06X,%d,%d\n", opc & 0x00FF, (opc & 0x0200) >> 9,
                (opc & 0x0100) >> 8);
-      fraddr();
+      fraddr(pic);
       pic->rram = raddr;
       temp = (pic->ram[raddr]);
       if ((*status & 0x01) == 0x01)
@@ -1529,7 +1529,7 @@ void pic_decode_18(void) {
       if (pic->print)
         printf("RLCF %#06X,%d,%d\n", opc & 0x00FF, (opc & 0x0200) >> 9,
                (opc & 0x0100) >> 8);
-      fraddr();
+      fraddr(pic);
       pic->rram = raddr;
       temp = (pic->ram[raddr]) << 1;
       if ((*status & 0x01) == 0x01)
@@ -1560,7 +1560,7 @@ void pic_decode_18(void) {
       if (pic->print)
         printf("SWAPF %#06X,%d,%d\n", opc & 0x00FF, (opc & 0x0200) >> 9,
                (opc & 0x0100) >> 8);
-      fraddr();
+      fraddr(pic);
       pic->rram = raddr;
       if (opc & 0x0200) {
         pic->ram[raddr] =
@@ -1578,7 +1578,7 @@ void pic_decode_18(void) {
       if (pic->print)
         printf("INCFSZ %#06X,%d,%d\n", opc & 0x00FF, (opc & 0x0200) >> 9,
                (opc & 0x0100) >> 8);
-      fraddr();
+      fraddr(pic);
       pic->rram = raddr;
       if (opc & 0x0200) {
         pic->ram[raddr]++;
@@ -1609,7 +1609,7 @@ void pic_decode_18(void) {
       if (pic->print)
         printf("RRNCF %#06X,%d,%d\n", opc & 0x00FF, (opc & 0x0200) >> 9,
                (opc & 0x0100) >> 8);
-      fraddr();
+      fraddr(pic);
       pic->rram = raddr;
       temp = (pic->ram[raddr]);
       if ((pic->ram[raddr] & 0x01) == 0x01)
@@ -1641,7 +1641,7 @@ void pic_decode_18(void) {
       if (pic->print)
         printf("RLNCF %#06X,%d,%d\n", opc & 0x00FF, (opc & 0x0200) >> 9,
                (opc & 0x0100) >> 8);
-      fraddr();
+      fraddr(pic);
       pic->rram = raddr;
       temp = (pic->ram[raddr]) << 1;
       if ((pic->ram[raddr] & 0x80) == 0x80)
@@ -1670,7 +1670,7 @@ void pic_decode_18(void) {
       if (pic->print)
         printf("INFSNZ %#06X,%d,%d\n", opc & 0x00FF, (opc & 0x0200) >> 9,
                (opc & 0x0100) >> 8);
-      fraddr();
+      fraddr(pic);
       pic->rram = raddr;
       if (opc & 0x0200) {
         pic->ram[raddr]++;
@@ -1693,7 +1693,7 @@ void pic_decode_18(void) {
       if (pic->print)
         printf("DCFSNZ %#06X,%d,%d\n", opc & 0x00FF, (opc & 0x0200) >> 9,
                (opc & 0x0100) >> 8);
-      fraddr();
+      fraddr(pic);
       pic->rram = raddr;
       if (opc & 0x0200) {
         pic->ram[raddr]--;
@@ -1723,7 +1723,7 @@ void pic_decode_18(void) {
       if (pic->print)
         printf("MOVF %#06X,%d,%d\n", opc & 0x00FF, (opc & 0x0200) >> 9,
                (opc & 0x0100) >> 8);
-      fraddr();
+      fraddr(pic);
       if (opc & 0x0200) {
         if (pic->ram[raddr] == 0)
           *status |= 0x04;
@@ -1755,7 +1755,7 @@ void pic_decode_18(void) {
       if (pic->print)
         printf("SUBFWB %#06X,%d,%d\n", opc & 0x00FF, (opc & 0x0200) >> 9,
                (opc & 0x0100) >> 8);
-      fraddr();
+      fraddr(pic);
       if ((0xF0 &
            ((0x0F & (~pic->ram[raddr])) + (!((*pic->P18map.STATUS) & 0x01)) +
             1 + (0x0F & (*pic->P18map.WREG)))) != 0)
@@ -1819,7 +1819,7 @@ void pic_decode_18(void) {
       if (pic->print)
         printf("SUBWFB %#06X,%d,%d\n", opc & 0x00FF, (opc & 0x0200) >> 9,
                (opc & 0x0100) >> 8);
-      fraddr();
+      fraddr(pic);
       if ((0xF0 & ((0x0F & (~(*pic->P18map.WREG))) +
                    (!((*pic->P18map.STATUS) & 0x01)) + 1 +
                    (0x0F & pic->ram[raddr]))) != 0)
@@ -1885,7 +1885,7 @@ void pic_decode_18(void) {
       if (pic->print)
         printf("SUBWF %#06X,%d,%d\n", opc & 0x00FF, (opc & 0x0200) >> 9,
                (opc & 0x0100) >> 8);
-      fraddr();
+      fraddr(pic);
       if ((0xF0 & ((0x0F & (~(*pic->P18map.WREG))) + 1 +
                    (0x0F & pic->ram[raddr]))) != 0)
         *status |= 0x02;
@@ -1954,7 +1954,7 @@ void pic_decode_18(void) {
       // 000a ffff ffff None            1, 2
       if (pic->print)
         printf("CPFSLT %#06X,%d \n", opc & 0x00FF, (opc & 0x0100) >> 8);
-      fraddr();
+      fraddr(pic);
       pic->rram = raddr;
       if (pic->ram[raddr] < (*pic->P18map.WREG)) {
         pic->jpc = pic->pc + 2;
@@ -1966,7 +1966,7 @@ void pic_decode_18(void) {
       // 001a ffff ffff None            4
       if (pic->print)
         printf("CPFSEQ  %#06X,%d \n", opc & 0x00FF, (opc & 0x0100) >> 8);
-      fraddr();
+      fraddr(pic);
       pic->rram = raddr;
       if (pic->ram[raddr] == (*pic->P18map.WREG)) {
         pic->jpc = pic->pc + 2;
@@ -1978,7 +1978,7 @@ void pic_decode_18(void) {
       // 010a ffff ffff None            4
       if (pic->print)
         printf("CPFSGT %#06X,%d \n", opc & 0x00FF, (opc & 0x0100) >> 8);
-      fraddr();
+      fraddr(pic);
       pic->rram = raddr;
       if (pic->ram[raddr] > (*pic->P18map.WREG)) {
         pic->jpc = pic->pc + 2;
@@ -1990,7 +1990,7 @@ void pic_decode_18(void) {
       // 011a ffff ffff None            1, 2
       if (pic->print)
         printf("TSTFSZ %#06X,%d \n", opc & 0x00FF, (opc & 0x0100) >> 8);
-      fraddr();
+      fraddr(pic);
       pic->rram = raddr;
       if (!pic->ram[raddr]) {
         pic->jpc = pic->pc + 2;
@@ -2002,7 +2002,7 @@ void pic_decode_18(void) {
       // 100a ffff ffff None
       if (pic->print)
         printf("SETF %#06X,%d \n", opc & 0x00FF, (opc & 0x0100) >> 8);
-      fraddr();
+      fraddr(pic);
       pic->rram = raddr;
       pic->lram = raddr;
       pic->ram[raddr] = 0xFF;
@@ -2012,7 +2012,7 @@ void pic_decode_18(void) {
       // 101a ffff ffff Z               2
       if (pic->print)
         printf("CLRF %#06X,%d \n", opc & 0x00FF, (opc & 0x0100) >> 8);
-      fraddr();
+      fraddr(pic);
       pic->rram = raddr;
       pic->lram = raddr;
       pic->ram[raddr] = 0;
@@ -2023,7 +2023,7 @@ void pic_decode_18(void) {
       // 110a ffff ffff C, DC, Z, OV, N 1, 2
       if (pic->print)
         printf("NEGF %#06X,%d\n", opc & 0x00FF, (opc & 0x0100) >> 8);
-      fraddr();
+      fraddr(pic);
       pic->rram = raddr;
       if ((0xF0 & ((0x0F & (~pic->ram[raddr])) + 1)) != 0)
         *status |= 0x02;
@@ -2059,7 +2059,7 @@ void pic_decode_18(void) {
       // 111a ffff ffff None
       if (pic->print)
         printf("MOVWF %#06X,%d\n", opc & 0x00FF, (opc & 0x0100) >> 8);
-      fraddr();
+      fraddr(pic);
       pic->ram[raddr] = (*pic->P18map.WREG);
       pic->lram = raddr;
       pic->rram = sfr_addr(pic->P18map.WREG);
@@ -2075,7 +2075,7 @@ void pic_decode_18(void) {
     if (pic->print)
       printf("BTG %#06X,%d,%d\n", opc & 0x00FF, (opc & 0x0E00) >> 9,
              (opc & 0x0100) >> 8);
-    fraddr();
+    fraddr(pic);
     pic->rram = raddr;
     pic->ram[raddr] ^= (0x01 << ((opc & 0x0E00) >> 9));
     pic->lram = raddr;
@@ -2086,7 +2086,7 @@ void pic_decode_18(void) {
     if (pic->print)
       printf("BSF %#06X,%d,%d\n", opc & 0x00FF, (opc & 0x0E00) >> 9,
              (opc & 0x0100) >> 8);
-    fraddr();
+    fraddr(pic);
     pic->rram = raddr;
     pic->ram[raddr] |= (0x01 << ((opc & 0x0E00) >> 9));
     pic->lram = raddr;
@@ -2097,7 +2097,7 @@ void pic_decode_18(void) {
     if (pic->print)
       printf("BCF %#06X,%d,%d\n", opc & 0x00FF, (opc & 0x0E00) >> 9,
              (opc & 0x0100) >> 8);
-    fraddr();
+    fraddr(pic);
     pic->rram = raddr;
     pic->ram[raddr] &= ~(0x01 << ((opc & 0x0E00) >> 9));
     pic->lram = raddr;
@@ -2108,7 +2108,7 @@ void pic_decode_18(void) {
     if (pic->print)
       printf("BTFSS %#06X,%d,%d\n", opc & 0x00FF, (opc & 0x0E00) >> 9,
              (opc & 0x0100) >> 8);
-    fraddr();
+    fraddr(pic);
     pic->rram = raddr;
     if ((pic->ram[raddr] & (0x01 << ((opc & 0x0E00) >> 9))) != 0) {
       pic->jpc = pic->pc + 2;
@@ -2121,7 +2121,7 @@ void pic_decode_18(void) {
     if (pic->print)
       printf("BTFSC %#06X,%d,%d\n", opc & 0x00FF, (opc & 0x0E00) >> 9,
              (opc & 0x0100) >> 8);
-    fraddr();
+    fraddr(pic);
     pic->rram = raddr;
     if ((pic->ram[raddr] & (0x01 << ((opc & 0x0E00) >> 9))) == 0) {
       pic->jpc = pic->pc + 2;

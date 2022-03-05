@@ -23,38 +23,28 @@
    For e-mail suggestions :  lcgamboa@yahoo.com
    ######################################################################## */
 
-#include<stdio.h>
-#include"../../include/picsim.h"
-#include"../../include/periferic16e.h"
+#include "../../include/periferic16e.h"
+#include "../../include/picsim.h"
+#include <stdio.h>
 
-void
-p16e_int_pin_rst(void)
-{
- pic->int0v = 0;
-}
+void p16e_int_pin_rst(_pic *pic) { pic->int0v = 0; }
 
-void
-p16e_int_pin(void)
-{
- //INT
+void p16e_int_pin(_pic *pic) {
+  // INT
 
- if ((pic->pins[pic->int0 - 1].dir == PD_IN)&&(pic->pins[pic->int0 - 1].value != pic->int0v))
-  {
-   if (((!pic->int0v) &&((*pic->P16Emap.OPTION_REG) & 0x40)) || ((pic->int0v) && (!((*pic->P16Emap.OPTION_REG) & 0x40))))
-    {
-     unsigned short offset = (sfr_addr (pic->P16Emap.INTCON) & 0x007F);
-     for (int bk = 0; bk < 32; bk++)
-      {
-       pic->ram[(0x0080 * bk) | (offset)] |= 0x02; //INTF
+  if ((pic->pins[pic->int0 - 1].dir == PD_IN) &&
+      (pic->pins[pic->int0 - 1].value != pic->int0v)) {
+    if (((!pic->int0v) && ((*pic->P16Emap.OPTION_REG) & 0x40)) ||
+        ((pic->int0v) && (!((*pic->P16Emap.OPTION_REG) & 0x40)))) {
+      unsigned short offset = (sfr_addr(pic->P16Emap.INTCON) & 0x007F);
+      for (int bk = 0; bk < 32; bk++) {
+        pic->ram[(0x0080 * bk) | (offset)] |= 0x02; // INTF
       }
     }
   }
- pic->int0v = pic->pins[pic->int0 - 1].value;
-
+  pic->int0v = pic->pins[pic->int0 - 1].value;
 }
 
-void
-p16e_int_pin_2(void)
-{
-  //TODO add support to PIC16F18XXX
+void p16e_int_pin_2(_pic *pic) {
+  // TODO add support to PIC16F18XXX
 }

@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2008-2020  Luis Claudio Gambôa Lopes
+   Copyright (c) : 2008-2020  Luis Claudio Gambï¿½a Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -27,13 +27,12 @@
 extern "C" {
 #endif
 
-int serial_open(int nser);
-void serial(int nser);
-int serial_close(int nser);
+#include "../include/picsim.h"
 
+int serial_open(_pic *pic, int nser);
+void serial(_pic *pic, int nser);
+int serial_close(_pic *pic, int nser);
 
 #ifdef __cplusplus
 }
 #endif
-
-

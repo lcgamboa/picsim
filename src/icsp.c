@@ -57,7 +57,7 @@ static unsigned char  icsp_cmd;
 
 
 void 
-pic_icsp_init(void)
+pic_icsp_init(_pic * pic)
 {
      //entrando em icsp_mode de  programacao  
         icsp_sda=0;
@@ -77,7 +77,7 @@ pic_icsp_init(void)
  
 
 int 
-pic_icsp(void)
+pic_icsp(_pic * pic)
 {
  
   int icsp_scka=1;
@@ -87,14 +87,14 @@ pic_icsp(void)
 //icsp
 
      icsp_scka=icsp_sck;
-     icsp_sck=pic_get_pin(pic->pgc); 
+     icsp_sck=pic_get_pin(pic, pic->pgc); 
 
 
      if((icsp_scka != icsp_sck)&&(icsp_sck == 0))  
      {
        if(icsp_mode == 0)     
        { 
-         icsp_sda=pic_get_pin(pic->pgd); 
+         icsp_sda=pic_get_pin(pic, pic->pgd); 
          icsp_cmddata|=(icsp_sda<<icsp_bit);
        }
        icsp_bit++;

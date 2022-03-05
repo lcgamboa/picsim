@@ -23,56 +23,44 @@
    For e-mail suggestions :  lcgamboa@yahoo.com
    ######################################################################## */
 
-#include<stdio.h>
-#include"../../include/picsim.h"
-#include"../../include/periferic16e.h"
+#include "../../include/periferic16e.h"
+#include "../../include/picsim.h"
+#include <stdio.h>
 
-void
-p16e_int_ports_rst(void) { }
+void p16e_int_ports_rst(_pic *pic) {}
 
-void
-p16e_int_ports(void)
-{
+void p16e_int_ports(_pic *pic) {
 
- unsigned char temp;
- unsigned char val;
- //POSITIVE
- temp = (*pic->P16Emap.TRISB)&(*pic->P16Emap.IOCBP);
- val = ((*pic->P16Emap.PORTB) & temp) & ~(pic->portb & temp);
- if (val)
-  {
-   (*pic->P16Emap.IOCBF) |= val;
-   unsigned short offset = (sfr_addr (pic->P16Emap.INTCON) & 0x007F);
-   for (int bk = 0; bk < 32; bk++)
-    {
-     pic->ram[(0x0080 * bk) | (offset)] |= 0x01; //IOCIF
+  unsigned char temp;
+  unsigned char val;
+  // POSITIVE
+  temp = (*pic->P16Emap.TRISB) & (*pic->P16Emap.IOCBP);
+  val = ((*pic->P16Emap.PORTB) & temp) & ~(pic->portb & temp);
+  if (val) {
+    (*pic->P16Emap.IOCBF) |= val;
+    unsigned short offset = (sfr_addr(pic->P16Emap.INTCON) & 0x007F);
+    for (int bk = 0; bk < 32; bk++) {
+      pic->ram[(0x0080 * bk) | (offset)] |= 0x01; // IOCIF
     }
   }
 
- //NEGATIVE
- temp = (*pic->P16Emap.TRISB)&(*pic->P16Emap.IOCBN);
- val=~((*pic->P16Emap.PORTB) & temp) & (pic->portb & temp);
- if (val)
-  {
-   (*pic->P16Emap.IOCBF) |= val;
-   unsigned short offset = (sfr_addr (pic->P16Emap.INTCON) & 0x007F);
-   for (int bk = 0; bk < 32; bk++)
-    {
-     pic->ram[(0x0080 * bk) | (offset)] |= 0x01; //IOCIF
+  // NEGATIVE
+  temp = (*pic->P16Emap.TRISB) & (*pic->P16Emap.IOCBN);
+  val = ~((*pic->P16Emap.PORTB) & temp) & (pic->portb & temp);
+  if (val) {
+    (*pic->P16Emap.IOCBF) |= val;
+    unsigned short offset = (sfr_addr(pic->P16Emap.INTCON) & 0x007F);
+    for (int bk = 0; bk < 32; bk++) {
+      pic->ram[(0x0080 * bk) | (offset)] |= 0x01; // IOCIF
     }
   }
 
- if (pic->lram == sfr_addr (pic->P16Emap.IOCBF))
-  {
-   if ((*pic->P16Emap.IOCBF) == 0)
-    {
-     unsigned short offset = (sfr_addr (pic->P16Emap.INTCON) & 0x007F);
-     for (int bk = 0; bk < 32; bk++)
-      {
-       pic->ram[(0x0080 * bk) | (offset)] &= 0xFE; //IOCIF
+  if (pic->lram == sfr_addr(pic->P16Emap.IOCBF)) {
+    if ((*pic->P16Emap.IOCBF) == 0) {
+      unsigned short offset = (sfr_addr(pic->P16Emap.INTCON) & 0x007F);
+      for (int bk = 0; bk < 32; bk++) {
+        pic->ram[(0x0080 * bk) | (offset)] &= 0xFE; // IOCIF
       }
     }
-
   }
-
 }

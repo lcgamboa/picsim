@@ -23,126 +23,96 @@
    For e-mail suggestions :  lcgamboa@yahoo.com
    ######################################################################## */
 
-#include<stdio.h>
-#include"../../include/picsim.h"
-#include"../../include/periferic16.h"
+#include "../../include/periferic16.h"
+#include "../../include/picsim.h"
+#include <stdio.h>
 
-void
-p16_eeprom_rst(void) 
-{
- pic->ee_wr = 0;
-}
+void p16_eeprom_rst(_pic *pic) { pic->ee_wr = 0; }
 
-void
-p16_eeprom(void)
-{
- if (((*pic->P16map.EECON1) & 0x04) == 0x04)
-  {
-   if ((*pic->P16map.EECON2) != 0)
-    {
-     if ((*pic->P16map.EECON2) == 0x55)
-      {
-       (*pic->P16map.EECON2) = 0;
-       pic->ee_wr = -1;
-      }
-     else
-      {
-       if (((*pic->P16map.EECON2) == 0xAA)&&(pic->ee_wr == -1))
-        {
-         (*pic->P16map.EECON2) = 0;
-         pic->ee_wr = 1;
-        }
-       else
-        {
-         (*pic->P16map.EECON2) = 0;
-         pic->ee_wr = 0;
+void p16_eeprom(_pic *pic) {
+  if (((*pic->P16map.EECON1) & 0x04) == 0x04) {
+    if ((*pic->P16map.EECON2) != 0) {
+      if ((*pic->P16map.EECON2) == 0x55) {
+        (*pic->P16map.EECON2) = 0;
+        pic->ee_wr = -1;
+      } else {
+        if (((*pic->P16map.EECON2) == 0xAA) && (pic->ee_wr == -1)) {
+          (*pic->P16map.EECON2) = 0;
+          pic->ee_wr = 1;
+        } else {
+          (*pic->P16map.EECON2) = 0;
+          pic->ee_wr = 0;
         }
       }
     }
   }
 
- if (((*pic->P16map.EECON1) & 0x03) != 0x00)
-  {
-   if (((*pic->P16map.EECON1) & 0x01) == 0x01) //RD
+  if (((*pic->P16map.EECON1) & 0x03) != 0x00) {
+    if (((*pic->P16map.EECON1) & 0x01) == 0x01) // RD
     {
-     (*pic->P16map.EEDATA) = pic->eeprom[(*pic->P16map.EEADR)];
-     (*pic->P16map.EECON1) &= ~0x01;
-    }
-   else
-    {
-     if (pic->ee_wr == 1)
-      {
-       pic->eeprom[(*pic->P16map.EEADR)] = (*pic->P16map.EEDATA);
-       (*pic->P16map.EECON1) &= ~0x02;
-       pic->ee_wr = 0;
+      (*pic->P16map.EEDATA) = pic->eeprom[(*pic->P16map.EEADR)];
+      (*pic->P16map.EECON1) &= ~0x01;
+    } else {
+      if (pic->ee_wr == 1) {
+        pic->eeprom[(*pic->P16map.EEADR)] = (*pic->P16map.EEDATA);
+        (*pic->P16map.EECON1) &= ~0x02;
+        pic->ee_wr = 0;
       }
     }
   }
 }
 
-void
-p16_eeprom_2(void)
-{
+void p16_eeprom_2(_pic *pic) {
 
- if (((*pic->P16map.EECON1) & 0x04) == 0x04)
-  {
-   if ((*pic->P16map.EECON2) != 0)
-    {
-     if ((*pic->P16map.EECON2) == 0x55)
-      {
-       (*pic->P16map.EECON2) = 0;
-       pic->ee_wr = -1;
-      }
-     else
-      {
-       if (((*pic->P16map.EECON2) == 0xAA)&&(pic->ee_wr == -1))
-        {
-         (*pic->P16map.EECON2) = 0;
-         pic->ee_wr = 1;
-        }
-       else
-        {
-         (*pic->P16map.EECON2) = 0;
-         pic->ee_wr = 0;
+  if (((*pic->P16map.EECON1) & 0x04) == 0x04) {
+    if ((*pic->P16map.EECON2) != 0) {
+      if ((*pic->P16map.EECON2) == 0x55) {
+        (*pic->P16map.EECON2) = 0;
+        pic->ee_wr = -1;
+      } else {
+        if (((*pic->P16map.EECON2) == 0xAA) && (pic->ee_wr == -1)) {
+          (*pic->P16map.EECON2) = 0;
+          pic->ee_wr = 1;
+        } else {
+          (*pic->P16map.EECON2) = 0;
+          pic->ee_wr = 0;
         }
       }
     }
   }
 
-
-
- if (((*pic->P16map.EECON1) & 0x03) != 0x00)
-  {
-   if (((*pic->P16map.EECON1) & 0x01) == 0x01) //RD
+  if (((*pic->P16map.EECON1) & 0x03) != 0x00) {
+    if (((*pic->P16map.EECON1) & 0x01) == 0x01) // RD
     {
-     if (((*pic->P16map.EECON1) & 0x80) == 0)
-      {
-       (*pic->P16map.EEDATA) = pic->eeprom[(*pic->P16map.EEADR)];
+      if (((*pic->P16map.EECON1) & 0x80) == 0) {
+        (*pic->P16map.EEDATA) = pic->eeprom[(*pic->P16map.EEADR)];
+      } else {
+        (*pic->P16map.EEDATA) =
+            (pic->prog[((*pic->P16map.EEADRH) << 8) | (*pic->P16map.EEADR)]) &
+            0x00FF;
+        (*pic->P16map.EEDATH) =
+            ((pic->prog[((*pic->P16map.EEADRH) << 8) | (*pic->P16map.EEADR)]) &
+             0xFF00) >>
+            8;
+        //       printf("Reading
+        //       %04X=%04X\n",(pic->ram[P877_EEADRH]<<8)|pic->ram[P877_EEADR],(pic->ram[P877_EEDATAH]<<8)
+        //       | pic->ram[P877_EEDATA]);
       }
-     else
-      {
-       (*pic->P16map.EEDATA) = (pic->prog[((*pic->P16map.EEADRH) << 8) | (*pic->P16map.EEADR)])&0x00FF;
-       (*pic->P16map.EEDATH) = ((pic->prog[((*pic->P16map.EEADRH) << 8) | (*pic->P16map.EEADR)])&0xFF00) >> 8;
-       //       printf("Reading %04X=%04X\n",(pic->ram[P877_EEADRH]<<8)|pic->ram[P877_EEADR],(pic->ram[P877_EEDATAH]<<8) | pic->ram[P877_EEDATA]);
-      }
-     (*pic->P16map.EECON1) &= ~0x01;
-    }
-   else
-    {
-     if (pic->ee_wr == 1)
-      {
-       if (((*pic->P16map.EECON1) & 0x80) == 0)
-        {
-         pic->eeprom[(*pic->P16map.EEADR)] = (*pic->P16map.EEDATA);
-        }
-       else
-        {
-         pic->prog[((*pic->P16map.EEADRH) << 8) | (*pic->P16map.EEADR)] = ((*pic->P16map.EEDATH) << 8) | (*pic->P16map.EEDATA);
+      (*pic->P16map.EECON1) &= ~0x01;
+    } else {
+      if (pic->ee_wr == 1) {
+        if (((*pic->P16map.EECON1) & 0x80) == 0) {
+          pic->eeprom[(*pic->P16map.EEADR)] = (*pic->P16map.EEDATA);
+        } else {
+          pic->prog[((*pic->P16map.EEADRH) << 8) | (*pic->P16map.EEADR)] =
+              ((*pic->P16map.EEDATH) << 8) | (*pic->P16map.EEDATA);
 
-         //      printf("Writing %04X=%04X\n",(pic->ram[P877_EEADRH]<<8)|pic->ram[P877_EEADR],(pic->ram[P877_EEDATAH]<<8) | pic->ram[P877_EEDATA]);
+          //      printf("Writing
+          //      %04X=%04X\n",(pic->ram[P877_EEADRH]<<8)|pic->ram[P877_EEADR],(pic->ram[P877_EEDATAH]<<8)
+          //      | pic->ram[P877_EEDATA]);
         }
-       (*pic->P16map.EECON1) &= ~0x02;
-       pic->ee_wr = 0;
+        (*pic->P16map.EECON1) &= ~0x02;
+        pic->ee_wr = 0;
       }
     }
   }

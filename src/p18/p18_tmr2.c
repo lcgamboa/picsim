@@ -23,157 +23,140 @@
    For e-mail suggestions :  lcgamboa@yahoo.com
    ######################################################################## */
 
-#include<stdio.h>
-#include"../../include/picsim.h"
-#include"../../include/periferic18.h"
+#include "../../include/periferic18.h"
+#include "../../include/picsim.h"
+#include <stdio.h>
 
 extern const int fpw2[];
 
-void
-p18_tmr2_rst(void)
-{
- pic->cp2 = 0;
- pic->cp2_ = 0;
- pic->t2pr = 0;
+void p18_tmr2_rst(_pic *pic) {
+  pic->cp2 = 0;
+  pic->cp2_ = 0;
+  pic->t2pr = 0;
 }
 
-void
-p18_tmr2(void)
-{
- if (((*pic->P18map.T2CON) & 0x04) == 0x04) //TMR2EN
+void p18_tmr2(_pic *pic) {
+  if (((*pic->P18map.T2CON) & 0x04) == 0x04) // TMR2EN
   {
-   pic->cp2++;
+    pic->cp2++;
 
-   if (((*pic->P18map.T2CON)&0x02) == 0x02)
-    {
-     pic->t2pr = 16;
-    }
-   else if (((*pic->P18map.T2CON)&0x01) == 0x01)
-    {
-     pic->t2pr = 4;
-    }
-   else
-    {
-     pic->t2pr = 1;
+    if (((*pic->P18map.T2CON) & 0x02) == 0x02) {
+      pic->t2pr = 16;
+    } else if (((*pic->P18map.T2CON) & 0x01) == 0x01) {
+      pic->t2pr = 4;
+    } else {
+      pic->t2pr = 1;
     }
 
-   if (pic->cp2 >= pic->t2pr)
-    {
-     (*pic->P18map.TMR2)++;
-     if ((*pic->P18map.TMR2) == (*pic->P18map.PR2))
-      {
-       (*pic->P18map.TMR2) = 0;
-       pic->cp2_++;
+    if (pic->cp2 >= pic->t2pr) {
+      (*pic->P18map.TMR2)++;
+      if ((*pic->P18map.TMR2) == (*pic->P18map.PR2)) {
+        (*pic->P18map.TMR2) = 0;
+        pic->cp2_++;
 
-       if (pic->cp2_ >= ((((*pic->P18map.T2CON)&0x78) >> 3) + 1))
-        {
-         (*pic->P18map.PIR1) |= 0x02; //TMR2IF
-         pic->cp2_ = 0;
+        if (pic->cp2_ >= ((((*pic->P18map.T2CON) & 0x78) >> 3) + 1)) {
+          (*pic->P18map.PIR1) |= 0x02; // TMR2IF
+          pic->cp2_ = 0;
         }
 
-       //PWM       
-       if ((pic->CCPCOUNT >= 1)&&(pic->ccp[0].pin > 0)&&((*pic->P18map.CCP1CON)& 0x0C) == 0x0C)
-        {
-         (*pic->P18map.CCPR1H) = (*pic->P18map.CCPR1L);
-         if (pic->pins[pic->ccp[0].pin - 1].dir == PD_OUT)
-          (*pic->pins[(pic->ccp[0].pin - 1)].port) |= 0x01 << (pic->pins[(pic->ccp[0].pin - 1)].pord);
+        // PWM
+        if ((pic->CCPCOUNT >= 1) && (pic->ccp[0].pin > 0) &&
+            ((*pic->P18map.CCP1CON) & 0x0C) == 0x0C) {
+          (*pic->P18map.CCPR1H) = (*pic->P18map.CCPR1L);
+          if (pic->pins[pic->ccp[0].pin - 1].dir == PD_OUT)
+            (*pic->pins[(pic->ccp[0].pin - 1)].port) |=
+                0x01 << (pic->pins[(pic->ccp[0].pin - 1)].pord);
         }
 
-       if ((pic->CCPCOUNT >= 2)&&(pic->ccp[1].pin > 0)&&((*pic->P18map.CCP2CON)& 0x0C) == 0x0C)
-        {
-         (*pic->P18map.CCPR2H) = (*pic->P18map.CCPR2L);
-         if (pic->pins[pic->ccp[1].pin - 1].dir == PD_OUT)
-          (*pic->pins[(pic->ccp[1].pin - 1)].port) |= 0x01 << (pic->pins[(pic->ccp[1].pin - 1)].pord);
+        if ((pic->CCPCOUNT >= 2) && (pic->ccp[1].pin > 0) &&
+            ((*pic->P18map.CCP2CON) & 0x0C) == 0x0C) {
+          (*pic->P18map.CCPR2H) = (*pic->P18map.CCPR2L);
+          if (pic->pins[pic->ccp[1].pin - 1].dir == PD_OUT)
+            (*pic->pins[(pic->ccp[1].pin - 1)].port) |=
+                0x01 << (pic->pins[(pic->ccp[1].pin - 1)].pord);
         }
       }
-     pic->cp2 = 0;
+      pic->cp2 = 0;
     }
-   //PWM - only if TMR2 is on
+    // PWM - only if TMR2 is on
 
-   //only use 8 bits ! not 10 bits  
-   if ((pic->CCPCOUNT >= 1)&&(pic->ccp[0].pin > 0)&&((*pic->P18map.CCP1CON)& 0x0C) == 0x0C)
-    {
-     if ((*pic->P18map.TMR2) >= (*pic->P18map.CCPR1H))
-      {
-       if (pic->pins[pic->ccp[0].pin - 1].dir == PD_OUT)
-        (*pic->pins[(pic->ccp[0].pin - 1)].port) &= ~(0x01 << (pic->pins[(pic->ccp[0].pin - 1)].pord));
+    // only use 8 bits ! not 10 bits
+    if ((pic->CCPCOUNT >= 1) && (pic->ccp[0].pin > 0) &&
+        ((*pic->P18map.CCP1CON) & 0x0C) == 0x0C) {
+      if ((*pic->P18map.TMR2) >= (*pic->P18map.CCPR1H)) {
+        if (pic->pins[pic->ccp[0].pin - 1].dir == PD_OUT)
+          (*pic->pins[(pic->ccp[0].pin - 1)].port) &=
+              ~(0x01 << (pic->pins[(pic->ccp[0].pin - 1)].pord));
       }
     }
 
-   if ((pic->CCPCOUNT >= 2)&&(pic->ccp[1].pin > 0)&&((*pic->P18map.CCP2CON)& 0x0C) == 0x0C)
-    {
-     if ((*pic->P18map.TMR2) >= (*pic->P18map.CCPR2H))
-      {
-       if (pic->pins[pic->ccp[1].pin - 1].dir == PD_OUT)
-        (*pic->pins[(pic->ccp[1].pin - 1)].port) &= ~(0x01 << (pic->pins[(pic->ccp[1].pin - 1)].pord));
+    if ((pic->CCPCOUNT >= 2) && (pic->ccp[1].pin > 0) &&
+        ((*pic->P18map.CCP2CON) & 0x0C) == 0x0C) {
+      if ((*pic->P18map.TMR2) >= (*pic->P18map.CCPR2H)) {
+        if (pic->pins[pic->ccp[1].pin - 1].dir == PD_OUT)
+          (*pic->pins[(pic->ccp[1].pin - 1)].port) &=
+              ~(0x01 << (pic->pins[(pic->ccp[1].pin - 1)].pord));
       }
     }
-  
   }
 }
 
-void
-p18_tmr2_2(void)
-{
- //TODO TMR2 incomplet
- if ((*pic->P18map.T2CON) & 0x80) //TMR2EN
+void p18_tmr2_2(_pic *pic) {
+  // TODO TMR2 incomplet
+  if ((*pic->P18map.T2CON) & 0x80) // TMR2EN
   {
-   pic->cp2++;
+    pic->cp2++;
 
-   if (pic->cp2 >= fpw2[((*pic->P18map.T2CON)&0x70) >> 4])
-    {
-     (*pic->P18map.T2TMR)++;
-     if ((*pic->P18map.T2TMR) == (*pic->P18map.T2PR))
-      {
-       (*pic->P18map.T2TMR) = 0;
-       pic->cp2_++;
+    if (pic->cp2 >= fpw2[((*pic->P18map.T2CON) & 0x70) >> 4]) {
+      (*pic->P18map.T2TMR)++;
+      if ((*pic->P18map.T2TMR) == (*pic->P18map.T2PR)) {
+        (*pic->P18map.T2TMR) = 0;
+        pic->cp2_++;
 
-       if (pic->cp2_ >= ((((*pic->P18map.T2CON)&0x0F)) + 1))
-        {
-         (*pic->P18map.PIR4) |= 0x02; //TMR2IF
-         pic->cp2_ = 0;
+        if (pic->cp2_ >= ((((*pic->P18map.T2CON) & 0x0F)) + 1)) {
+          (*pic->P18map.PIR4) |= 0x02; // TMR2IF
+          pic->cp2_ = 0;
         }
 
-       //PWM
+        // PWM
 
-       if ((pic->CCPCOUNT >= 1)&&(pic->ccp[0].pin > 0)&&((*pic->P18map.CCP1CON)& 0x0C) == 0x0C)
-        {
-         (*pic->P18map.CCPR1H) = (*pic->P18map.CCPR1L);
-         if (pic->pins[pic->ccp[0].pin - 1].dir == PD_OUT)
-          (*pic->pins[(pic->ccp[0].pin - 1)].port) |= 0x01 << (pic->pins[(pic->ccp[0].pin - 1)].pord);
+        if ((pic->CCPCOUNT >= 1) && (pic->ccp[0].pin > 0) &&
+            ((*pic->P18map.CCP1CON) & 0x0C) == 0x0C) {
+          (*pic->P18map.CCPR1H) = (*pic->P18map.CCPR1L);
+          if (pic->pins[pic->ccp[0].pin - 1].dir == PD_OUT)
+            (*pic->pins[(pic->ccp[0].pin - 1)].port) |=
+                0x01 << (pic->pins[(pic->ccp[0].pin - 1)].pord);
         }
 
-       if ((pic->CCPCOUNT >= 2)&&(pic->ccp[1].pin > 0)&&((*pic->P18map.CCP2CON)& 0x0C) == 0x0C)
-        {
-         (*pic->P18map.CCPR2H) = (*pic->P18map.CCPR2L);
-         if (pic->pins[pic->ccp[1].pin - 1].dir == PD_OUT)
-          (*pic->pins[(pic->ccp[1].pin - 1)].port) |= 0x01 << (pic->pins[(pic->ccp[1].pin - 1)].pord);
+        if ((pic->CCPCOUNT >= 2) && (pic->ccp[1].pin > 0) &&
+            ((*pic->P18map.CCP2CON) & 0x0C) == 0x0C) {
+          (*pic->P18map.CCPR2H) = (*pic->P18map.CCPR2L);
+          if (pic->pins[pic->ccp[1].pin - 1].dir == PD_OUT)
+            (*pic->pins[(pic->ccp[1].pin - 1)].port) |=
+                0x01 << (pic->pins[(pic->ccp[1].pin - 1)].pord);
         }
-
       }
-     pic->cp2 = 0;
+      pic->cp2 = 0;
     }
-  
-   //PWM - only if TMR2 is on
-   //only use 8 bits ! not 10 bits  
-   if ((pic->CCPCOUNT >= 1)&&(pic->ccp[0].pin > 0)&&((*pic->P18map.CCP1CON)& 0x0C) == 0x0C)
-    {
-     if ((*pic->P18map.T2TMR) >= (*pic->P18map.CCPR1H))
-      {
-       if (pic->pins[pic->ccp[0].pin - 1].dir == PD_OUT)
-        (*pic->pins[(pic->ccp[0].pin - 1)].port) &= ~(0x01 << (pic->pins[(pic->ccp[0].pin - 1)].pord));
+
+    // PWM - only if TMR2 is on
+    // only use 8 bits ! not 10 bits
+    if ((pic->CCPCOUNT >= 1) && (pic->ccp[0].pin > 0) &&
+        ((*pic->P18map.CCP1CON) & 0x0C) == 0x0C) {
+      if ((*pic->P18map.T2TMR) >= (*pic->P18map.CCPR1H)) {
+        if (pic->pins[pic->ccp[0].pin - 1].dir == PD_OUT)
+          (*pic->pins[(pic->ccp[0].pin - 1)].port) &=
+              ~(0x01 << (pic->pins[(pic->ccp[0].pin - 1)].pord));
       }
     }
 
-   if ((pic->CCPCOUNT >= 2)&&(pic->ccp[1].pin > 0)&&((*pic->P18map.CCP2CON)& 0x0C) == 0x0C)
-    {
-     if ((*pic->P18map.T2TMR) >= (*pic->P18map.CCPR2H))
-      {
-       if (pic->pins[pic->ccp[1].pin - 1].dir == PD_OUT)
-        (*pic->pins[(pic->ccp[1].pin - 1)].port) &= ~(0x01 << (pic->pins[(pic->ccp[1].pin - 1)].pord));
+    if ((pic->CCPCOUNT >= 2) && (pic->ccp[1].pin > 0) &&
+        ((*pic->P18map.CCP2CON) & 0x0C) == 0x0C) {
+      if ((*pic->P18map.T2TMR) >= (*pic->P18map.CCPR2H)) {
+        if (pic->pins[pic->ccp[1].pin - 1].dir == PD_OUT)
+          (*pic->pins[(pic->ccp[1].pin - 1)].port) &=
+              ~(0x01 << (pic->pins[(pic->ccp[1].pin - 1)].pord));
       }
     }
-  
   }
- 
 }

@@ -23,37 +23,27 @@
    For e-mail suggestions :  lcgamboa@yahoo.com
    ######################################################################## */
 
-#include<stdio.h>
-#include"../../include/picsim.h"
-#include"../../include/periferic18.h"
+#include "../../include/periferic18.h"
+#include "../../include/picsim.h"
+#include <stdio.h>
 
-void
-p18_int_portb_rst(void)
-{
- pic->portbm = 0;
-}
+void p18_int_portb_rst(_pic *pic) { pic->portbm = 0; }
 
-void
-p18_int_portb(void)
-{
- unsigned char temp;
+void p18_int_portb(_pic *pic) {
+  unsigned char temp;
 
- temp = (*pic->P18map.TRISB)&0xF0;
- if (((*pic->P18map.PORTB) & temp) != (pic->portb & temp))
-  {
-   pic->portbm = 1;
+  temp = (*pic->P18map.TRISB) & 0xF0;
+  if (((*pic->P18map.PORTB) & temp) != (pic->portb & temp)) {
+    pic->portbm = 1;
   }
 
- if (pic->rram == sfr_addr (pic->P18map.PORTB))
-  {
-   pic->portbm = 0;
-   //Only disable mismatch
-   //(*pic->P18map.INTCON)&=~0x01;//RBIF
+  if (pic->rram == sfr_addr(pic->P18map.PORTB)) {
+    pic->portbm = 0;
+    // Only disable mismatch
+    //(*pic->P18map.INTCON)&=~0x01;//RBIF
   }
 
- if (pic->portbm)
-  {
-   (*pic->P18map.INTCON) |= 0x01; //RBIF
+  if (pic->portbm) {
+    (*pic->P18map.INTCON) |= 0x01; // RBIF
   }
-
 }

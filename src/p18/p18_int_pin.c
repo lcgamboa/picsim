@@ -23,84 +23,76 @@
    For e-mail suggestions :  lcgamboa@yahoo.com
    ######################################################################## */
 
-#include<stdio.h>
-#include"../../include/picsim.h"
-#include"../../include/periferic18.h"
+#include "../../include/periferic18.h"
+#include "../../include/picsim.h"
+#include <stdio.h>
 
-void
-p18_int_pin_rst(void)
-{
- pic->int0v = 0;
- pic->int1v = 0;
- pic->int2v = 0;
+void p18_int_pin_rst(_pic *pic) {
+  pic->int0v = 0;
+  pic->int1v = 0;
+  pic->int2v = 0;
 }
 
-void
-p18_int_pin(void)
-{
- //INT0
- if ((pic->pins[pic->int0 - 1].dir == PD_IN)&&(pic->pins[pic->int0 - 1].value != pic->int0v))
-  {
-   if (((!pic->int0v) &&((*pic->P18map.INTCON2) & 0x40)) || ((pic->int0v) && (!((*pic->P18map.INTCON2) & 0x40))))
-    {
-     (*pic->P18map.INTCON) |= 0x02; //INTF
+void p18_int_pin(_pic *pic) {
+  // INT0
+  if ((pic->pins[pic->int0 - 1].dir == PD_IN) &&
+      (pic->pins[pic->int0 - 1].value != pic->int0v)) {
+    if (((!pic->int0v) && ((*pic->P18map.INTCON2) & 0x40)) ||
+        ((pic->int0v) && (!((*pic->P18map.INTCON2) & 0x40)))) {
+      (*pic->P18map.INTCON) |= 0x02; // INTF
     }
   }
- pic->int0v = pic->pins[pic->int0 - 1].value;
+  pic->int0v = pic->pins[pic->int0 - 1].value;
 
- //INT1
- if ((pic->pins[pic->int1 - 1].dir == PD_IN)&&(pic->pins[pic->int1 - 1].value != pic->int1v))
-  {
-   if (((!pic->int1v) &&((*pic->P18map.INTCON2) & 0x20)) || ((pic->int1v) && (!((*pic->P18map.INTCON2) & 0x20))))
-    {
-     (*pic->P18map.INTCON3) |= 0x01; //INT1F
+  // INT1
+  if ((pic->pins[pic->int1 - 1].dir == PD_IN) &&
+      (pic->pins[pic->int1 - 1].value != pic->int1v)) {
+    if (((!pic->int1v) && ((*pic->P18map.INTCON2) & 0x20)) ||
+        ((pic->int1v) && (!((*pic->P18map.INTCON2) & 0x20)))) {
+      (*pic->P18map.INTCON3) |= 0x01; // INT1F
     }
   }
- pic->int1v = pic->pins[pic->int1 - 1].value;
+  pic->int1v = pic->pins[pic->int1 - 1].value;
 
- //INT2
- if ((pic->pins[pic->int2 - 1].dir == PD_IN)&&(pic->pins[pic->int2 - 1].value != pic->int2v))
-  {
-   if (((!pic->int2v) &&((*pic->P18map.INTCON2) & 0x10)) || ((pic->int2v) && (!((*pic->P18map.INTCON2) & 0x10))))
-    {
-     (*pic->P18map.INTCON3) |= 0x02; //INT2F
+  // INT2
+  if ((pic->pins[pic->int2 - 1].dir == PD_IN) &&
+      (pic->pins[pic->int2 - 1].value != pic->int2v)) {
+    if (((!pic->int2v) && ((*pic->P18map.INTCON2) & 0x10)) ||
+        ((pic->int2v) && (!((*pic->P18map.INTCON2) & 0x10)))) {
+      (*pic->P18map.INTCON3) |= 0x02; // INT2F
     }
   }
- pic->int2v = pic->pins[pic->int2 - 1].value;
+  pic->int2v = pic->pins[pic->int2 - 1].value;
 }
 
-
-
-void
-p18_int_pin_2(void)
-{
- //INT0
- if ((pic->pins[pic->int0 - 1].dir == PD_IN)&&(pic->pins[pic->int0 - 1].value != pic->int0v))
-  {
-   if (((!pic->int0v) &&((*pic->P18map.INTCON) & 0x01)) || ((pic->int0v) && (!((*pic->P18map.INTCON) & 0x01))))
-    {
-     (*pic->P18map.PIR0) |= 0x01; //INTF
+void p18_int_pin_2(_pic *pic) {
+  // INT0
+  if ((pic->pins[pic->int0 - 1].dir == PD_IN) &&
+      (pic->pins[pic->int0 - 1].value != pic->int0v)) {
+    if (((!pic->int0v) && ((*pic->P18map.INTCON) & 0x01)) ||
+        ((pic->int0v) && (!((*pic->P18map.INTCON) & 0x01)))) {
+      (*pic->P18map.PIR0) |= 0x01; // INTF
     }
   }
- pic->int0v = pic->pins[pic->int0 - 1].value;
+  pic->int0v = pic->pins[pic->int0 - 1].value;
 
- //INT1
- if ((pic->pins[pic->int1 - 1].dir == PD_IN)&&(pic->pins[pic->int1 - 1].value != pic->int1v))
-  {
-   if (((!pic->int1v) &&((*pic->P18map.INTCON) & 0x02)) || ((pic->int1v) && (!((*pic->P18map.INTCON) & 0x02))))
-    {
-     (*pic->P18map.PIR0) |= 0x02; //INTF
+  // INT1
+  if ((pic->pins[pic->int1 - 1].dir == PD_IN) &&
+      (pic->pins[pic->int1 - 1].value != pic->int1v)) {
+    if (((!pic->int1v) && ((*pic->P18map.INTCON) & 0x02)) ||
+        ((pic->int1v) && (!((*pic->P18map.INTCON) & 0x02)))) {
+      (*pic->P18map.PIR0) |= 0x02; // INTF
     }
   }
- pic->int1v = pic->pins[pic->int1 - 1].value;
+  pic->int1v = pic->pins[pic->int1 - 1].value;
 
- //INT2
- if ((pic->pins[pic->int2 - 1].dir == PD_IN)&&(pic->pins[pic->int2 - 1].value != pic->int2v))
-  {
-   if (((!pic->int2v) &&((*pic->P18map.INTCON) & 0x04)) || ((pic->int2v) && (!((*pic->P18map.INTCON) & 0x04))))
-    {
-     (*pic->P18map.PIR0) |= 0x04; //INTF
+  // INT2
+  if ((pic->pins[pic->int2 - 1].dir == PD_IN) &&
+      (pic->pins[pic->int2 - 1].value != pic->int2v)) {
+    if (((!pic->int2v) && ((*pic->P18map.INTCON) & 0x04)) ||
+        ((pic->int2v) && (!((*pic->P18map.INTCON) & 0x04)))) {
+      (*pic->P18map.PIR0) |= 0x04; // INTF
     }
   }
- pic->int2v = pic->pins[pic->int2 - 1].value;
+  pic->int2v = pic->pins[pic->int2 - 1].value;
 }

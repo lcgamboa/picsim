@@ -29,68 +29,66 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include"../../include/periferic18.h"
-#include"../../include/serial.h"
-    
-int interrupt18(void);    
-int interrupt18_2(void);       
-    
-void p18_mssp_rst(void);
-void p18_mssp(void);
-void p18_mssp_2(void);
+#include "../../include/periferic18.h"
+#include "../../include/serial.h"
 
-void p18_adc_rst(void);
-void p18_adc(void);
-void p18_adc_2(void);
-void p18_adc_3(void);
+int interrupt18(_pic *pic);
+int interrupt18_2(_pic *pic);
 
-void p18_tmr0_rst(void);
-void p18_tmr0(void);
-void p18_tmr0_2(void);
+void p18_mssp_rst(_pic *pic);
+void p18_mssp(_pic *pic);
+void p18_mssp_2(_pic *pic);
 
-void p18_tmr1_rst(void);
-void p18_tmr1(void);
-void p18_tmr1_2(void);
+void p18_adc_rst(_pic *pic);
+void p18_adc(_pic *pic);
+void p18_adc_2(_pic *pic);
+void p18_adc_3(_pic *pic);
 
-void p18_tmr2_rst(void);
-void p18_tmr2(void);
-void p18_tmr2_2(void);
+void p18_tmr0_rst(_pic *pic);
+void p18_tmr0(_pic *pic);
+void p18_tmr0_2(_pic *pic);
 
-void p18_tmr3_rst(void);
-void p18_tmr3(void);
+void p18_tmr1_rst(_pic *pic);
+void p18_tmr1(_pic *pic);
+void p18_tmr1_2(_pic *pic);
 
-void p18_eeprom_rst(void);
-void p18_eeprom(void);
-void p18_eeprom_2(void);
+void p18_tmr2_rst(_pic *pic);
+void p18_tmr2(_pic *pic);
+void p18_tmr2_2(_pic *pic);
 
-void p18_wdt_rst(void);
-void p18_wdt(void);    
-void p18_wdt_2(void); 
+void p18_tmr3_rst(_pic *pic);
+void p18_tmr3(_pic *pic);
 
-void p18_int_pin_rst(void); 
-void p18_int_pin(void);
-void p18_int_pin_2(void);
+void p18_eeprom_rst(_pic *pic);
+void p18_eeprom(_pic *pic);
+void p18_eeprom_2(_pic *pic);
 
-void p18_int_portb_rst(void);
-void p18_int_portb(void);
+void p18_wdt_rst(_pic *pic);
+void p18_wdt(_pic *pic);
+void p18_wdt_2(_pic *pic);
 
-void p18_int_ports_rst(void);
-void p18_int_ports(void);
+void p18_int_pin_rst(_pic *pic);
+void p18_int_pin(_pic *pic);
+void p18_int_pin_2(_pic *pic);
 
-void p18_uart_rst(int nser);
-void p18_uart_rst_2(int nser);
-void p18_uart_rst_3(int nser);
-#define p18_uart(X) serial(X);
-#define p18_uart_start(X) serial_open (X);
-#define p18_uart_stop(X) serial_close (X);
+void p18_int_portb_rst(_pic *pic);
+void p18_int_portb(_pic *pic);
 
-void p18_pps_out_rst(void);
-void p18_pps_out(void);
+void p18_int_ports_rst(_pic *pic);
+void p18_int_ports(_pic *pic);
 
+void p18_uart_rst(_pic *pic, int nser);
+void p18_uart_rst_2(_pic *pic, int nser);
+void p18_uart_rst_3(_pic *pic, int nser);
+#define p18_uart(X, Y) serial(X, Y)
+#define p18_uart_start(X, Y) serial_open(X, Y)
+#define p18_uart_stop(X, Y) serial_close(X, Y)
+
+void p18_pps_out_rst(_pic *pic);
+void p18_pps_out(_pic *pic);
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* P18_PERIFERIC_H */
-

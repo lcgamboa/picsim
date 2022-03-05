@@ -23,62 +23,58 @@
    For e-mail suggestions :  lcgamboa@yahoo.com
    ######################################################################## */
 
-#include<stdio.h>
-#include"../../include/picsim.h"
-#include"../../include/periferic16.h"
+#include "../../include/periferic16.h"
+#include "../../include/picsim.h"
+#include <stdio.h>
 
 extern const int fpw2[];
 
-void 
-p16_tmr0_rst(void)
-{
-  pic->cp0 = 0;
-}
+void p16_tmr0_rst(_pic *pic) { pic->cp0 = 0; }
 
-void 
-p16_tmr0(void)
-{
- if ((((*pic->P16map.OPTION_REG) & 0x20) == 0x00) || //TOCS=FOSC/4
-     ((((*pic->P16map.OPTION_REG) & 0x30) == 0x20)&&((pic->t0cki_ == 0)&&(pic->pins[pic->t0cki - 1].value == 1))) || //T0CS=t0cki  T0SE =0
-     ((((*pic->P16map.OPTION_REG) & 0x30) == 0x30)&&((pic->t0cki_ == 1)&&(pic->pins[pic->t0cki - 1].value == 0)))) //T0CS=t0cki  T0SE =1
+void p16_tmr0(_pic *pic) {
+  if ((((*pic->P16map.OPTION_REG) & 0x20) == 0x00) || // TOCS=FOSC/4
+      ((((*pic->P16map.OPTION_REG) & 0x30) == 0x20) &&
+       ((pic->t0cki_ == 0) &&
+        (pic->pins[pic->t0cki - 1].value == 1))) || // T0CS=t0cki  T0SE =0
+      ((((*pic->P16map.OPTION_REG) & 0x30) == 0x30) &&
+       ((pic->t0cki_ == 1) &&
+        (pic->pins[pic->t0cki - 1].value == 0)))) // T0CS=t0cki  T0SE =1
   {
-   pic->cp0++;
+    pic->cp0++;
 
-   if (pic->lram == sfr_addr (pic->P16map.TMR0))pic->cp0 = 0; //RESET prescaler	 
+    if (pic->lram == sfr_addr(pic->P16map.TMR0))
+      pic->cp0 = 0; // RESET prescaler
 
-   if (((*pic->P16map.OPTION_REG) & 0x08) == 0x08) //PSA
+    if (((*pic->P16map.OPTION_REG) & 0x08) == 0x08) // PSA
     {
-     if ((((*pic->P16map.TMR0) + 1) == 0x100))
-      {
-       pic->ram[(0x0000) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x04; //T0IF
-       pic->ram[(0x0080) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x04;
-       if (pic->processor != P16F84A)
-        {
-         pic->ram[(0x0100) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x04;
-         pic->ram[(0x0180) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x04;
+      if ((((*pic->P16map.TMR0) + 1) == 0x100)) {
+        pic->ram[(0x0000) | (sfr_addr(pic->P16map.INTCON) & 0x007F)] |=
+            0x04; // T0IF
+        pic->ram[(0x0080) | (sfr_addr(pic->P16map.INTCON) & 0x007F)] |= 0x04;
+        if (pic->processor != P16F84A) {
+          pic->ram[(0x0100) | (sfr_addr(pic->P16map.INTCON) & 0x007F)] |= 0x04;
+          pic->ram[(0x0180) | (sfr_addr(pic->P16map.INTCON) & 0x007F)] |= 0x04;
         };
       }
-     (*pic->P16map.TMR0)++;
-     pic->cp0 = 0;
-    }
-   else
-    {
-     if (pic->cp0 >= 2 * (fpw2[(*pic->P16map.OPTION_REG)&0x07]))
-      {
-       if ((((*pic->P16map.TMR0) + 1) == 0x100))
-        {
-         pic->ram[(0x0000) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x04; //T0IF
-         pic->ram[(0x0080) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x04;
-         if (pic->processor != P16F84A)
-          {
-           pic->ram[(0x0100) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x04;
-           pic->ram[(0x0180) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x04;
+      (*pic->P16map.TMR0)++;
+      pic->cp0 = 0;
+    } else {
+      if (pic->cp0 >= 2 * (fpw2[(*pic->P16map.OPTION_REG) & 0x07])) {
+        if ((((*pic->P16map.TMR0) + 1) == 0x100)) {
+          pic->ram[(0x0000) | (sfr_addr(pic->P16map.INTCON) & 0x007F)] |=
+              0x04; // T0IF
+          pic->ram[(0x0080) | (sfr_addr(pic->P16map.INTCON) & 0x007F)] |= 0x04;
+          if (pic->processor != P16F84A) {
+            pic->ram[(0x0100) | (sfr_addr(pic->P16map.INTCON) & 0x007F)] |=
+                0x04;
+            pic->ram[(0x0180) | (sfr_addr(pic->P16map.INTCON) & 0x007F)] |=
+                0x04;
           }
         }
-       (*pic->P16map.TMR0)++;
-       pic->cp0 = 0;
+        (*pic->P16map.TMR0)++;
+        pic->cp0 = 0;
       }
     }
   }
- pic->t0cki_ = pic->pins[pic->t0cki - 1].value;
+  pic->t0cki_ = pic->pins[pic->t0cki - 1].value;
 }

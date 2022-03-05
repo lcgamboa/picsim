@@ -57,7 +57,7 @@ checksum(char* str)
 }
 
 int
-read_ihx(const char * fname, int leeprom)
+read_ihx(_pic * pic, const char * fname, int leeprom)
 {
  FILE* fin;
  int lc = 0;
@@ -174,7 +174,7 @@ read_ihx(const char * fname, int leeprom)
 }
 
 int
-read_ihx_16e(const char * fname, int leeprom)
+read_ihx_16e(_pic * pic, const char * fname, int leeprom)
 {
  FILE* fin;
  int lc = 0;
@@ -291,7 +291,7 @@ read_ihx_16e(const char * fname, int leeprom)
 }
 
 int
-read_ihx_18(const char * fname, int leeprom)
+read_ihx_18(_pic * pic, const char * fname, int leeprom)
 {
  FILE* fin;
  int lc = 0;
@@ -410,7 +410,7 @@ read_ihx_18(const char * fname, int leeprom)
 };
 
 int
-write_ihx(const char * fname)
+write_ihx(_pic * pic, const char * fname)
 {
 
  FILE * fout;
@@ -602,7 +602,7 @@ write_ihx(const char * fname)
 }
 
 int
-write_ihx16e(const char * fname)
+write_ihx16e(_pic * pic, const char * fname)
 {
 
  FILE * fout;
@@ -795,7 +795,7 @@ write_ihx16e(const char * fname)
 }
 
 int
-write_ihx18(const char * fname)
+write_ihx18(_pic * pic, const char * fname)
 {
 
  FILE * fout;

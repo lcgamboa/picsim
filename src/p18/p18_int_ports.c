@@ -23,43 +23,35 @@
    For e-mail suggestions :  lcgamboa@yahoo.com
    ######################################################################## */
 
-#include<stdio.h>
-#include"../../include/picsim.h"
-#include"../../include/periferic18.h"
+#include "../../include/periferic18.h"
+#include "../../include/picsim.h"
+#include <stdio.h>
 
-void
-p18_int_ports_rst(void) { }
+void p18_int_ports_rst(_pic *pic) {}
 
-void
-p18_int_ports(void)
-{
+void p18_int_ports(_pic *pic) {
 
- unsigned char temp;
- unsigned char val;
- //POSITIVE
- temp = (*pic->P18map.TRISB)&(*pic->P18map.IOCBP);
- val = ((*pic->P18map.PORTB) & temp) & ~(pic->portb & temp);
- if (val)
-  {
-   (*pic->P18map.IOCBF)  |= val;
-   (*pic->P18map.PIR0)   |= 0x10; //IOCIF
+  unsigned char temp;
+  unsigned char val;
+  // POSITIVE
+  temp = (*pic->P18map.TRISB) & (*pic->P18map.IOCBP);
+  val = ((*pic->P18map.PORTB) & temp) & ~(pic->portb & temp);
+  if (val) {
+    (*pic->P18map.IOCBF) |= val;
+    (*pic->P18map.PIR0) |= 0x10; // IOCIF
   }
 
- //NEGATIVE
- temp = (*pic->P18map.TRISB)&(*pic->P18map.IOCBN);
- val=~((*pic->P18map.PORTB) & temp) & (pic->portb & temp);
- if (val)
-  {
-   (*pic->P18map.IOCBF) |= val;
-   (*pic->P18map.PIR0)  |= 0x10; //IOCIF
+  // NEGATIVE
+  temp = (*pic->P18map.TRISB) & (*pic->P18map.IOCBN);
+  val = ~((*pic->P18map.PORTB) & temp) & (pic->portb & temp);
+  if (val) {
+    (*pic->P18map.IOCBF) |= val;
+    (*pic->P18map.PIR0) |= 0x10; // IOCIF
   }
 
- if (pic->lram == sfr_addr (pic->P18map.IOCBF))
-  {
-   if ((*pic->P18map.IOCBF) == 0)
-    {
-     (*pic->P18map.PIR0) &= 0xEF; //IOCIF
+  if (pic->lram == sfr_addr(pic->P18map.IOCBF)) {
+    if ((*pic->P18map.IOCBF) == 0) {
+      (*pic->P18map.PIR0) &= 0xEF; // IOCIF
     }
   }
-
 }

@@ -23,31 +23,24 @@
    For e-mail suggestions :  lcgamboa@yahoo.com
    ######################################################################## */
 
-#include<stdio.h>
-#include"../../include/picsim.h"
-#include"../../include/periferic16.h"
+#include "../../include/periferic16.h"
+#include "../../include/picsim.h"
+#include <stdio.h>
 
+void p16_int_pin_rst(_pic *pic) { pic->int0v = 0; }
 
-void
-p16_int_pin_rst(void) 
-{ 
-  pic->int0v = 0;
-}
+void p16_int_pin(_pic *pic) {
 
-void
-p16_int_pin(void) 
-{ 
-
- if ((pic->pins[pic->int0 - 1].dir == PD_IN)&&(pic->pins[pic->int0 - 1].value != pic->int0v))
-  {
-   if (((!pic->int0v) &&((*pic->P16map.OPTION_REG) & 0x40)) || ((pic->int0v) && (!((*pic->P16map.OPTION_REG) & 0x40))))
-    {
-     pic->ram[(0x0000) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x02; //INTF
-     pic->ram[(0x0080) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x02;
-     pic->ram[(0x0100) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x02;
-     pic->ram[(0x0180) | (sfr_addr (pic->P16map.INTCON) & 0x007F)] |= 0x02;
+  if ((pic->pins[pic->int0 - 1].dir == PD_IN) &&
+      (pic->pins[pic->int0 - 1].value != pic->int0v)) {
+    if (((!pic->int0v) && ((*pic->P16map.OPTION_REG) & 0x40)) ||
+        ((pic->int0v) && (!((*pic->P16map.OPTION_REG) & 0x40)))) {
+      pic->ram[(0x0000) | (sfr_addr(pic->P16map.INTCON) & 0x007F)] |=
+          0x02; // INTF
+      pic->ram[(0x0080) | (sfr_addr(pic->P16map.INTCON) & 0x007F)] |= 0x02;
+      pic->ram[(0x0100) | (sfr_addr(pic->P16map.INTCON) & 0x007F)] |= 0x02;
+      pic->ram[(0x0180) | (sfr_addr(pic->P16map.INTCON) & 0x007F)] |= 0x02;
     }
   }
- pic->int0v = pic->pins[pic->int0 - 1].value;
-
+  pic->int0v = pic->pins[pic->int0 - 1].value;
 }

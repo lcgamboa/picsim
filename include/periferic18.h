@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2008-2015  Luis Claudio Gambôa Lopes
+   Copyright (c) : 2008-2015  Luis Claudio Gambï¿½a Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -27,11 +27,12 @@
 extern "C" {
 #endif
 
-void periferic18_rst(void);
-void periferic18_step_in(void);
-void periferic18_step_out(void);
+#include "../include/picsim.h"
+
+void periferic18_rst(_pic *pic);
+void periferic18_step_in(_pic *pic);
+void periferic18_step_out(_pic *pic);
 
 #ifdef __cplusplus
 }
-#endif 
-
+#endif

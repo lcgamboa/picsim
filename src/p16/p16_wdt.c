@@ -23,82 +23,72 @@
    For e-mail suggestions :  lcgamboa@yahoo.com
    ######################################################################## */
 
-#include<stdio.h>
-#include"../../include/picsim.h"
-#include"../../include/periferic16.h"
+#include "../../include/periferic16.h"
+#include "../../include/picsim.h"
+#include <stdio.h>
 
 extern const int fpw2[];
 
-void
-p16_wdt_rst(void) 
-{ 
- pic->twdt = 0;
- pic->wdt = 0;
+void p16_wdt_rst(_pic *pic) {
+  pic->twdt = 0;
+  pic->wdt = 0;
 }
 
-void
-p16_wdt(void) 
-{ 
-  if (pic->getconf (CFG_WDT))
-  {
-   pic->twdt += 4.0 / pic->freq;
+void p16_wdt(_pic *pic) {
+  if (pic->getconf(pic, CFG_WDT)) {
+    pic->twdt += 4.0 / pic->freq;
 
-   if (((*pic->P16map.OPTION_REG) & 0x08)) //PSA
+    if (((*pic->P16map.OPTION_REG) & 0x08)) // PSA
     {
-     if (pic->twdt > (1e-3 * fpw2[(*pic->P16map.OPTION_REG) & 0x07]))
-      {
-       pic->twdt = 0;
-       pic->wdt++;
-       if (pic->wdt == pic->WDT_MS)
-        {
-         //reset
-         pic->wdt = 0;
+      if (pic->twdt > (1e-3 * fpw2[(*pic->P16map.OPTION_REG) & 0x07])) {
+        pic->twdt = 0;
+        pic->wdt++;
+        if (pic->wdt == pic->WDT_MS) {
+          // reset
+          pic->wdt = 0;
 
-         pic->ram[((0x0000) << 2) | (sfr_addr (pic->P16map.STATUS) & 0x007F)] &= ~0x10;
-         pic->ram[((0x0020) << 2) | (sfr_addr (pic->P16map.STATUS) & 0x007F)] &= ~0x10;
-         pic->ram[((0x0040) << 2) | (sfr_addr (pic->P16map.STATUS) & 0x007F)] &= ~0x10;
-         pic->ram[((0x0060) << 2) | (sfr_addr (pic->P16map.STATUS) & 0x007F)] &= ~0x10;
+          pic->ram[((0x0000) << 2) | (sfr_addr(pic->P16map.STATUS) & 0x007F)] &=
+              ~0x10;
+          pic->ram[((0x0020) << 2) | (sfr_addr(pic->P16map.STATUS) & 0x007F)] &=
+              ~0x10;
+          pic->ram[((0x0040) << 2) | (sfr_addr(pic->P16map.STATUS) & 0x007F)] &=
+              ~0x10;
+          pic->ram[((0x0060) << 2) | (sfr_addr(pic->P16map.STATUS) & 0x007F)] &=
+              ~0x10;
 
-         if (pic->sleep == 1)
-          {
-           pic->sleep = 0;
-          }
-         else
-          {
-           pic_reset (0);
+          if (pic->sleep == 1) {
+            pic->sleep = 0;
+          } else {
+            pic_reset(pic, 0);
           }
         }
       }
-    }
-   else
-    {
-     if (pic->twdt > 1e-3)
-      {
-       pic->twdt = 0;
-       pic->wdt++;
-       if (pic->wdt == pic->WDT_MS)
-        {
-         //reset
-         pic->wdt = 0;
+    } else {
+      if (pic->twdt > 1e-3) {
+        pic->twdt = 0;
+        pic->wdt++;
+        if (pic->wdt == pic->WDT_MS) {
+          // reset
+          pic->wdt = 0;
 
-         pic->ram[((0x0000) << 2) | (sfr_addr (pic->P16map.STATUS) & 0x007F)] &= ~0x10;
-         pic->ram[((0x0020) << 2) | (sfr_addr (pic->P16map.STATUS) & 0x007F)] &= ~0x10;
-         if (pic->processor != P16F84A)
-          {
-           pic->ram[((0x0040) << 2) | (sfr_addr (pic->P16map.STATUS) & 0x007F)] &= ~0x10;
-           pic->ram[((0x0060) << 2) | (sfr_addr (pic->P16map.STATUS) & 0x007F)] &= ~0x10;
+          pic->ram[((0x0000) << 2) | (sfr_addr(pic->P16map.STATUS) & 0x007F)] &=
+              ~0x10;
+          pic->ram[((0x0020) << 2) | (sfr_addr(pic->P16map.STATUS) & 0x007F)] &=
+              ~0x10;
+          if (pic->processor != P16F84A) {
+            pic->ram[((0x0040) << 2) |
+                     (sfr_addr(pic->P16map.STATUS) & 0x007F)] &= ~0x10;
+            pic->ram[((0x0060) << 2) |
+                     (sfr_addr(pic->P16map.STATUS) & 0x007F)] &= ~0x10;
           }
-         if (pic->sleep == 1)
-          {
-           pic->sleep = 0;
-          }
-         else
-          {
-           pic_reset (0);
+          if (pic->sleep == 1) {
+            pic->sleep = 0;
+          } else {
+            pic_reset(pic, 0);
           }
         }
-       //        printf("WDT=%02X\n",pic->wdt);
+        //        printf("WDT=%02X\n",pic->wdt);
       }
     }
-   }
+  }
 }
