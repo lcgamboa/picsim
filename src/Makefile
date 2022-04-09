@@ -2,13 +2,12 @@ include Makefile.Common
 
 CC= gcc
 RM= rm -f
-AR= gcc-ar
+AR= ar
 LN= ln -sfn
 CP= cp
 MKDIR = mkdir -p
 
 FLAGS= -Wall -g -O2 -flto -fpic -fsigned-char -Winline --param inline-unit-growth=60
-
 
 
 DESTDIR ?= /usr
@@ -29,14 +28,22 @@ picsim: libpicsim.a picsim.c modules.c
 	$(CC) -c $(FLAGS) $< -o $@ 
 
 
+OS := $(shell uname)
 
 # The static lib name, the shared lib name, and the internal ('so') name of
 # the shared lib.
 LIBNAME = libpicsim
-LIBSHBASENAME = $(LIBNAME).so
-LIBSHLIBNAME = $(LIBNAME).so.$(LIBVER)
 LIBSTLIBNAME = $(LIBNAME).a
-LIBSHSONAME := $(LIBNAME).so.$(LIBMAINVER)
+ifeq ($(OS),Darwin)
+	LIBEXT=dylib
+	LIBSHBASENAME = $(LIBNAME).dylib
+	LIBSHLIBNAME = $(LIBNAME).$(LIBVER).dylib
+	LIBSHSONAME := $(LIBNAME).$(LIBMAINVER).dylib
+else
+	LIBSHBASENAME = $(LIBNAME).so
+	LIBSHLIBNAME = $(LIBNAME).so.$(LIBVER)
+	LIBSHSONAME := $(LIBNAME).so.$(LIBMAINVER)
+endif 
 
 LIBTARGETS := $(LIBSHLIBNAME) $(LIBSHSONAME) $(LIBSHBASENAME)
 
@@ -44,7 +51,11 @@ LIBTARGETS := $(LIBSHLIBNAME) $(LIBSHSONAME) $(LIBSHBASENAME)
 
 # How to create the shared library
 $(LIBSHLIBNAME): $(OBJS)
-	$(CC) -O2 -flto -shared -Wl,-soname,$(LIBSHSONAME) -o $@  $^    
+ifeq ($(OS),Darwin)
+	$(CC) -O2 -flto -shared -Wl,-install_name,$(LIBSHSONAME) -o $@  $^
+else
+	$(CC) -O2 -flto -shared -Wl,-soname,$(LIBSHSONAME) -o $@  $^   
+endif 
 
 $(LIBSHSONAME): $(LIBSHLIBNAME)
 	$(RM) $@
