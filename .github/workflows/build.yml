@@ -1,0 +1,15 @@
+name: Build picsim
+on: [push]
+jobs:
+  build-macos:
+    runs-on: macos-11
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build
+        run: make
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build
+        run: make
