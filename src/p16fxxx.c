@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2008-2020  Luis Claudio Gamboa Lopes
+   Copyright (c) : 2008-2022  Luis Claudio Gamboa Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -33,10 +33,6 @@ void pic_decode_16(_pic *pic) {
   unsigned short temp;
   unsigned short opc;
   unsigned short bank = ((*pic->P16map.STATUS) & 0x0060) << 2;
-  unsigned char *status =
-      &pic->ram[bank | (sfr_addr(pic->P16map.STATUS) & 0x007F)];
-  unsigned char *intcon =
-      &pic->ram[bank | (sfr_addr(pic->P16map.INTCON) & 0x007F)];
   unsigned short afsr = (((*pic->P16map.STATUS) & 0x0080) << 1) |
                         pic->ram[bank | (sfr_addr(pic->P16map.FSR) & 0x007F)];
   //  unsigned short  pc_ant;
@@ -123,7 +119,7 @@ void pic_decode_16(_pic *pic) {
           pic->stack[7] = 0;
           pic->s2 = 1;
           //		  if((pic->ram[ICKBUG] & 0x80)== 0x80)printf("Out DEBUG
-          //mode\n");
+          // mode\n");
           pic->debug = 0;
           pic->sstep = 0;
           pic->dbg = 0;
@@ -131,9 +127,11 @@ void pic_decode_16(_pic *pic) {
           (*pic->P16map.ICKBUG) &= ~0x80;
 #endif
           break;
-        case 0x0063:
-          // SLEEP   --  	Go into Standby mode         1     0000000 1100011
-          // TO,PD
+        case 0x0063: {
+          unsigned char *status =
+              &pic->ram[bank | (sfr_addr(pic->P16map.STATUS) & 0x007F)];
+          // SLEEP   --  	Go into Standby mode         1     0000000
+          // 1100011 TO,PD
           if (pic->print)
             printf("SLEEP\n");
           pic->wdt = 0;
@@ -141,20 +139,24 @@ void pic_decode_16(_pic *pic) {
           pic->sleep = 1;
           *status &= ~0x08;
           *status |= 0x10;
-          break;
-        case 0x0064:
-          // CLRWDT  --  	Clear Watchdog Timer         1     0000000 1100100
-          // TO,PD
+        } break;
+        case 0x0064: {
+          unsigned char *status =
+              &pic->ram[bank | (sfr_addr(pic->P16map.STATUS) & 0x007F)];
+          // CLRWDT  --  	Clear Watchdog Timer         1     0000000
+          // 1100100 TO,PD
           if (pic->print)
             printf("CLRWDT\n");
           pic->wdt = 0;
           pic->twdt = 0;
           *status |= 0x08;
           *status |= 0x10;
-          break;
-        case 0x0009:
+        } break;
+        case 0x0009: {
           // RETFIE  --  	Return from interrupt        2     0000000
           // 0001001
+          unsigned char *intcon =
+              &pic->ram[bank | (sfr_addr(pic->P16map.INTCON) & 0x007F)];
           if (pic->print)
             printf("RETFIE\n");
           pic->jpc = pic->stack[0];
@@ -164,7 +166,7 @@ void pic_decode_16(_pic *pic) {
           pic->s2 = 1;
           *intcon |= 0x80;
           pic->lram = sfr_addr(pic->P16map.INTCON);
-          break;
+        } break;
         default:
           printf("unknown opcode 0x%04X at 0x%06X !\n", opc, pic->pc - 2);
           break;
@@ -202,9 +204,11 @@ void pic_decode_16(_pic *pic) {
         break;
       };
       break;
-    case 0x0200:
+    case 0x0200: {
       // SUBWF   f, d 	Subtract W from f            1     000010 dfffffff
       // C,DC,Z  1, 2
+      unsigned char *status =
+          &pic->ram[bank | (sfr_addr(pic->P16map.STATUS) & 0x007F)];
       if (pic->print)
         printf("SUBWF %#04X,%d\n", opc & 0x007F, (opc & 0x0080) >> 7);
 
@@ -234,11 +238,13 @@ void pic_decode_16(_pic *pic) {
           *status |= 0x04;
         else
           *status &= ~0x04;
-      };
-      break;
-    case 0x0300:
+      }
+    } break;
+    case 0x0300: {
       // DECF    f, d 	Decrement f                  1     000011 dfffffff Z 1,
       // 2
+      unsigned char *status =
+          &pic->ram[bank | (sfr_addr(pic->P16map.STATUS) & 0x007F)];
       if (pic->print)
         printf("DECF %#04X,%d\n", opc & 0x007F, (opc & 0x0080) >> 7);
       if ((opc & 0x0080) == 0) {
@@ -254,11 +260,13 @@ void pic_decode_16(_pic *pic) {
           *status |= 0x04;
         else
           *status &= ~0x04;
-      };
-      break;
-    case 0x0400:
+      }
+    } break;
+    case 0x0400: {
       // IORWF   f, d 	Inclusive OR W with f        1     000100 dfffffff Z 1,
       // 2
+      unsigned char *status =
+          &pic->ram[bank | (sfr_addr(pic->P16map.STATUS) & 0x007F)];
       if (pic->print)
         printf("IORWF %#04X,%d\n", opc & 0x007F, (opc & 0x0080) >> 7);
       if ((opc & 0x0080) == 0) {
@@ -275,11 +283,13 @@ void pic_decode_16(_pic *pic) {
           *status |= 0x04;
         else
           *status &= ~0x04;
-      };
-      break;
-    case 0x0500:
+      }
+    } break;
+    case 0x0500: {
       // ANDWF   f, d 	AND W with f                 1     000101 dfffffff
       // Z       1, 2
+      unsigned char *status =
+          &pic->ram[bank | (sfr_addr(pic->P16map.STATUS) & 0x007F)];
       if (pic->print)
         printf("ANDWF %#04X,%d\n", opc & 0x007F, (opc & 0x0080) >> 7);
       if ((opc & 0x0080) == 0) {
@@ -296,11 +306,13 @@ void pic_decode_16(_pic *pic) {
           *status |= 0x04;
         else
           *status &= ~0x04;
-      };
-      break;
-    case 0x0600:
+      }
+    } break;
+    case 0x0600: {
       // XORWF   f, d 	Exclusive OR W with f        1     000110 dfffffff Z 1,
       // 2
+      unsigned char *status =
+          &pic->ram[bank | (sfr_addr(pic->P16map.STATUS) & 0x007F)];
       if (pic->print)
         printf("XORWF %#04X,%d\n", opc & 0x007F, (opc & 0x0080) >> 7);
       if ((opc & 0x0080) == 0) {
@@ -317,11 +329,13 @@ void pic_decode_16(_pic *pic) {
           *status |= 0x04;
         else
           *status &= ~0x04;
-      };
-      break;
-    case 0x0700:
+      }
+    } break;
+    case 0x0700: {
       // ADDWF	f, d 	Add W and f                  1     000111 dfffffff
       // C,DC,Z  1, 2
+      unsigned char *status =
+          &pic->ram[bank | (sfr_addr(pic->P16map.STATUS) & 0x007F)];
       if (pic->print)
         printf("ADDWF %#04X,%d\n", opc & 0x007F, (opc & 0x0080) >> 7);
 
@@ -351,11 +365,13 @@ void pic_decode_16(_pic *pic) {
           *status |= 0x04;
         else
           *status &= ~0x04;
-      };
-      break;
-    case 0x0800:
+      }
+    } break;
+    case 0x0800: {
       // MOVF    f, d 	Move f                       1     001000 dfffffff Z 1,
       // 2
+      unsigned char *status =
+          &pic->ram[bank | (sfr_addr(pic->P16map.STATUS) & 0x007F)];
       if (pic->print)
         printf("MOVF %#04X,%d\n", opc & 0x007F, (opc & 0x0080) >> 7);
       if ((opc & 0x0080) == 0) {
@@ -372,11 +388,13 @@ void pic_decode_16(_pic *pic) {
           *status &= ~0x04;
         pic->rram = bank | (opc & 0x007F);
         pic->lram = bank | (opc & 0x007F);
-      };
-      break;
-    case 0x0900:
+      }
+    } break;
+    case 0x0900: {
       // COMF    f, d 	Complement f                 1     001001 dfffffff Z 1,
       // 2
+      unsigned char *status =
+          &pic->ram[bank | (sfr_addr(pic->P16map.STATUS) & 0x007F)];
       if (pic->print)
         printf("COMF %#04X,%d\n", opc & 0x007F, (opc & 0x0080) >> 7);
       if ((opc & 0x0080) == 0) {
@@ -392,11 +410,13 @@ void pic_decode_16(_pic *pic) {
           *status |= 0x04;
         else
           *status &= ~0x04;
-      };
-      break;
-    case 0x0A00:
+      }
+    } break;
+    case 0x0A00: {
       // INCF    f, d 	Increment f                  1     001010 dfffffff
       // Z       1, 2
+      unsigned char *status =
+          &pic->ram[bank | (sfr_addr(pic->P16map.STATUS) & 0x007F)];
       if (pic->print)
         printf("INCF %#04X,%d\n", opc & 0x007F, (opc & 0x0080) >> 7);
       if ((opc & 0x0080) == 0) {
@@ -412,8 +432,8 @@ void pic_decode_16(_pic *pic) {
           *status |= 0x04;
         else
           *status &= ~0x04;
-      };
-      break;
+      }
+    } break;
     case 0x0B00:
       // DECFSZ  f, d 	Decrement f, Skip if 0       1(2)  001011 dfffffff
       // 1, 2, 3
@@ -434,9 +454,11 @@ void pic_decode_16(_pic *pic) {
         };
       };
       break;
-    case 0x0C00:
+    case 0x0C00: {
       // RRF     f, d 	Rotate Right f through Carry 1     001100 dfffffff
       // C       1, 2
+      unsigned char *status =
+          &pic->ram[bank | (sfr_addr(pic->P16map.STATUS) & 0x007F)];
       if (pic->print)
         printf("RRF %#04X,%d\n", opc & 0x007F, (opc & 0x0080) >> 7);
       temp = (pic->ram[bank | (opc & 0x007F)]);
@@ -454,10 +476,12 @@ void pic_decode_16(_pic *pic) {
         pic->ram[bank | (opc & 0x007F)] = 0x00FF & temp;
         pic->lram = bank | (opc & 0x007F);
       }
-      break;
-    case 0x0D00:
+    } break;
+    case 0x0D00: {
       // RLF     f, d 	Rotate Left f through Carry  1     001101 dfffffff
       // C       1, 2
+      unsigned char *status =
+          &pic->ram[bank | (sfr_addr(pic->P16map.STATUS) & 0x007F)];
       if (pic->print)
         printf("RLF %#04X,%d\n", opc & 0x007F, (opc & 0x0080) >> 7);
       temp = (pic->ram[bank | (opc & 0x007F)]);
@@ -475,7 +499,7 @@ void pic_decode_16(_pic *pic) {
         pic->ram[bank | (opc & 0x007F)] = 0x00FF & temp;
         pic->lram = bank | (opc & 0x007F);
       }
-      break;
+    } break;
     case 0x0E00:
       // SWAPF   f, d 	Swap nibbles in f            1     001110 dfffffff
       // 1, 2
@@ -625,8 +649,10 @@ void pic_decode_16(_pic *pic) {
       pic->s2 = 1;
       pic->w = (opc & 0x00FF);
       break;
-    case 0x0800:
+    case 0x0800: {
       // IORLW   k  	Inclusive OR literal with W  1     111000 kkkkkkkk Z
+      unsigned char *status =
+          &pic->ram[bank | (sfr_addr(pic->P16map.STATUS) & 0x007F)];
       if (pic->print)
         printf("IORLW %#04X\n", opc & 0x00FF);
       pic->w |= (opc & 0x00FF);
@@ -634,9 +660,11 @@ void pic_decode_16(_pic *pic) {
         *status |= 0x04;
       else
         *status &= ~0x04;
-      break;
-    case 0x0900:
+    } break;
+    case 0x0900: {
       // ANDLW   k 	AND literal with W           1     111001 kkkkkkkk Z
+      unsigned char *status =
+          &pic->ram[bank | (sfr_addr(pic->P16map.STATUS) & 0x007F)];
       if (pic->print)
         printf("ANDLW %#04X\n", opc & 0x00FF);
       pic->w &= (opc & 0x00FF);
@@ -644,9 +672,11 @@ void pic_decode_16(_pic *pic) {
         *status |= 0x04;
       else
         *status &= ~0x04;
-      break;
-    case 0x0A00:
+    } break;
+    case 0x0A00: {
       // XORLW   k  	Exclusive OR literal with W  1     111010 kkkkkkkk Z
+      unsigned char *status =
+          &pic->ram[bank | (sfr_addr(pic->P16map.STATUS) & 0x007F)];
       if (pic->print)
         printf("XORLW %#04X\n", opc & 0x00FF);
       pic->w ^= (opc & 0x00FF);
@@ -654,11 +684,13 @@ void pic_decode_16(_pic *pic) {
         *status |= 0x04;
       else
         *status &= ~0x04;
-      break;
+    } break;
     case 0x0C00:
-    case 0x0D00:
+    case 0x0D00: {
       // SUBLW   k  	Subtract W from literal      1     11110x kkkkkkkk
       // C,DC,Z
+      unsigned char *status =
+          &pic->ram[bank | (sfr_addr(pic->P16map.STATUS) & 0x007F)];
       if (pic->print)
         printf("SUBLW %#04X\n", opc & 0x00FF);
 
@@ -679,11 +711,13 @@ void pic_decode_16(_pic *pic) {
         *status |= 0x04;
       else
         *status &= ~0x04;
-      break;
+    } break;
     case 0x0E00:
-    case 0x0F00:
+    case 0x0F00: {
       // ADDLW   k  	Add literal and W            1     11111x kkkkkkkk
       // C,DC,Z
+      unsigned char *status =
+          &pic->ram[bank | (sfr_addr(pic->P16map.STATUS) & 0x007F)];
       if (pic->print)
         printf("ADDLW %#04X\n", opc & 0x00FF);
 
@@ -704,7 +738,7 @@ void pic_decode_16(_pic *pic) {
         *status |= 0x04;
       else
         *status &= ~0x04;
-      break;
+    } break;
     default:
       printf("unknown opcode 0x%04X at 0x%06X !\n", opc, pic->pc - 2);
       break;

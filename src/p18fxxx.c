@@ -125,9 +125,12 @@ void pic_decode_18(_pic *pic) {
     return;
   }
 
- if (pic->print)printf ("pc=%#06X\t", pic->pc);
- fflush(stdout);
-     
+ if (pic->print)
+ {
+    printf("pc=%#06X\t", pic->pc);
+    fflush(stdout);
+ }
+
  // debug
  if ((pic->pc >= 0x200028)&&((pic->pc <= 0x200037)))
   {
@@ -234,8 +237,6 @@ void pic_decode_18(_pic *pic) {
      (*pic->P18map.PLUSW2)=0;
    }
   */
-
-
 
 
  switch (opc & 0xF000)
