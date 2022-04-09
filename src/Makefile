@@ -2,7 +2,6 @@ include Makefile.Common
 
 CC= gcc
 RM= rm -f
-AR= ar
 LN= ln -sfn
 CP= cp
 MKDIR = mkdir -p
@@ -35,11 +34,13 @@ OS := $(shell uname)
 LIBNAME = libpicsim
 LIBSTLIBNAME = $(LIBNAME).a
 ifeq ($(OS),Darwin)
+	AR= ar
 	LIBEXT=dylib
 	LIBSHBASENAME = $(LIBNAME).dylib
 	LIBSHLIBNAME = $(LIBNAME).$(LIBVER).dylib
 	LIBSHSONAME := $(LIBNAME).$(LIBMAINVER).dylib
 else
+	AR= gcc-ar
 	LIBSHBASENAME = $(LIBNAME).so
 	LIBSHLIBNAME = $(LIBNAME).so.$(LIBVER)
 	LIBSHSONAME := $(LIBNAME).so.$(LIBMAINVER)
