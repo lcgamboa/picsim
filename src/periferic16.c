@@ -38,6 +38,9 @@ int pic_wr_pin16(_pic *pic, unsigned char pin, unsigned char value) {
   unsigned char val;
 
   if ((pin - 1) < pic->PINCOUNT) {
+    if (pic->pins[(pin - 1)].value != value) {
+      pic->ioupdated = 1;
+    }
     pic->pins[(pin - 1)].value = value;
     if ((pic->pins[(pin - 1)].pord >= 0) && (pic->pins[(pin - 1)].port)) {
       val = 0x01 << (pic->pins[(pin - 1)].pord);
@@ -49,7 +52,6 @@ int pic_wr_pin16(_pic *pic, unsigned char pin, unsigned char value) {
         pic->ram[sfr_addr(pic->pins[(pin - 1)].port) | 0x100] =
             (*pic->pins[(pin - 1)].port); // espelhamento bank2 = bank0
     }
-    pic->ioupdated = 1;
     return 1;
   } else
     return 0;

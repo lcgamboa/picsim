@@ -290,6 +290,7 @@ struct _pic {
   unsigned char w;
   unsigned char wdt;
   unsigned char s2;
+  unsigned long long cycles;
   float freq;          ///< frequency
   unsigned char sleep; ///< sleep mode on
   unsigned char pkg;   ///<  @ref packaging

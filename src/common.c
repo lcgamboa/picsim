@@ -167,6 +167,8 @@ int pic_reset(_pic *pic, int flags) {
   pic->lram = 0;
   pic->rram = 0;
 
+  pic->cycles =0;
+
   pic->jpc = 0xFFFFF;
 
   pic->t0cki_ = 0;
@@ -329,6 +331,7 @@ void pic_step(_pic *pic) {
     periferic18_step_out(pic);
     break;
   }
+  pic->cycles++;
 }
 
 void pic_end(_pic *pic) {

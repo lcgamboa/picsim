@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2008-2020  Luis Claudio Gamb�a Lopes
+   Copyright (c) : 2008-2020  Luis Claudio Gamboa Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -35,6 +35,9 @@ int pic_wr_pin18(_pic *pic, unsigned char pin, unsigned char value) {
   unsigned char val;
 
   if ((pin - 1) < pic->PINCOUNT) {
+    if (pic->pins[(pin - 1)].value != value) {
+      pic->ioupdated = 1;
+    }
     pic->pins[(pin - 1)].value = value;
 
     if ((pic->pins[(pin - 1)].pord >= 0) && (pic->pins[(pin - 1)].port)) {
@@ -52,7 +55,6 @@ int pic_wr_pin18(_pic *pic, unsigned char pin, unsigned char value) {
       }
 #endif
     }
-    pic->ioupdated = 1;
     return 1;
   } else
     return 0;
