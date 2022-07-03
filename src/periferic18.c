@@ -368,6 +368,7 @@ void periferic18_step_out(_pic *pic) {
       pic->trisf = (*pic->P18map.TRISF);
     if (pic->P18map.TRISG)
       pic->trisg = (*pic->P18map.TRISG);
+    pic->ioupdated = 1;
   }
 
   // interrupt

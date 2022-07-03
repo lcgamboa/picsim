@@ -274,6 +274,7 @@ void periferic16E_step_out(_pic *pic) {
       pic->trisd = (*pic->P16Emap.TRISD);
     if (pic->P16Emap.TRISE)
       pic->trise = (*pic->P16Emap.TRISE);
+    pic->ioupdated = 1;
   }
 
   // interrupt
