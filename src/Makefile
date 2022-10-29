@@ -55,7 +55,7 @@ $(LIBSHLIBNAME): $(OBJS)
 ifeq ($(OS),Darwin)
 	$(CC) -O2 -flto=auto -shared -Wl,-install_name,$(LIBSHSONAME) -o $@  $^
 else
-	$(CC) -O2 -flto-auto -shared -Wl,-soname,$(LIBSHSONAME) -o $@  $^   
+	$(CC) -O2 -flto=auto -shared -Wl,-soname,$(LIBSHSONAME) -o $@  $^   
 endif 
 
 $(LIBSHSONAME): $(LIBSHLIBNAME)
