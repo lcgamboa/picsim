@@ -6,7 +6,7 @@ LN= ln -sfn
 CP= cp
 MKDIR = mkdir -p
 
-FLAGS= -Wall -g -O2 -flto=auto -fpic -fsigned-char -Winline --param inline-unit-growth=60
+FLAGS= -Wall -g -O2 -flto -fpic -fsigned-char -Winline --param inline-unit-growth=60
 
 
 DESTDIR ?= /usr
@@ -53,9 +53,9 @@ LIBTARGETS := $(LIBSHLIBNAME) $(LIBSHSONAME) $(LIBSHBASENAME)
 # How to create the shared library
 $(LIBSHLIBNAME): $(OBJS)
 ifeq ($(OS),Darwin)
-	$(CC) -O2 -flto=auto -shared -Wl,-install_name,$(LIBSHSONAME) -o $@  $^
+	$(CC) -O2 -flto -shared -Wl,-install_name,$(LIBSHSONAME) -o $@  $^
 else
-	$(CC) -O2 -flto=auto -shared -Wl,-soname,$(LIBSHSONAME) -o $@  $^   
+	$(CC) -O2 -flto -shared -Wl,-soname,$(LIBSHSONAME) -o $@  $^   
 endif 
 
 $(LIBSHSONAME): $(LIBSHLIBNAME)
