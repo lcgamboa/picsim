@@ -74,6 +74,7 @@ void PIC16F887_map(_pic *pic) {
   // pic->P16map.OSCTUNE = &pic->ram[0x90];
   pic->P16map.SSPCON2 = &pic->ram[0x91];
   pic->P16map.PR2 = &pic->ram[0x92];
+  pic->P16map.SSPADD = &pic->ram[0x93];
   pic->P16map.SSPSTAT = &pic->ram[0x94];
   // pic->P16map.WPUB = &pic->ram[0x95];
   // pic->P16map.IOCB = &pic->ram[0x96];

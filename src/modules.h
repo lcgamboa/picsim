@@ -1,4 +1,5 @@
 #include "../include/picsim.h"
+
 //dirt hack to include dynamic load in static lib
 
  void PIC16F887_start(_pic * pic);
@@ -22,6 +23,7 @@
  void PIC18F4550_start(_pic * pic);
  void PIC18F452_start(_pic * pic);
  void PIC18F4520_start(_pic * pic);
+ void PIC18F4580_start(_pic * pic);
 
 
 void dirt_load (_pic * pic)
@@ -47,4 +49,5 @@ void dirt_load (_pic * pic)
  PIC18F4550_start(pic);
  PIC18F452_start(pic);
  PIC18F4520_start(pic);
+ PIC18F4580_start(pic);
 };
