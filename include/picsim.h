@@ -136,6 +136,8 @@ typedef struct {
   unsigned char TXIF_mask;
   unsigned char *serial_RCSTA;
   unsigned char *serial_SPBRG;
+  unsigned char *serial_SPBRGH;
+  unsigned char *serial_BAUDCTL;
   unsigned char *serial_RCREG;
   unsigned char *serial_TXREG;
   unsigned short serial_TXREG_ADDR;

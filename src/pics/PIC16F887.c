@@ -81,7 +81,7 @@ void PIC16F887_map(_pic *pic) {
   // pic->P16map.VRCON = &pic->ram[0x97];
   pic->P16map.TXSTA = &pic->ram[0x98];
   pic->P16map.SPBRG = &pic->ram[0x99];
-  // pic->P16map.SPBRGH = &pic->ram[0x9A];
+  pic->P16map.SPBRGH = &pic->ram[0x9A];
   // pic->P16map.PWM1CON = &pic->ram[0x9B];
   // pic->P16map.ECCPAS = &pic->ram[0x9C];
   // pic->P16map.PSTRCON = &pic->ram[0x9D];
@@ -96,7 +96,7 @@ void PIC16F887_map(_pic *pic) {
   pic->P16map.EEDATH = &pic->ram[0x10E];
   pic->P16map.EEADRH = &pic->ram[0x10F];
   // pic->P16map.SRCON = &pic->ram[0x185];
-  // pic->P16map.BAUDCTL = &pic->ram[0x187];
+  pic->P16map.BAUDCTL = &pic->ram[0x187];
   pic->P16map.ANSEL = &pic->ram[0x188];
   pic->P16map.ANSELH = &pic->ram[0x189];
   pic->P16map.EECON1 = &pic->ram[0x18C];

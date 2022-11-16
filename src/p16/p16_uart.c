@@ -35,6 +35,8 @@ void p16_uart_rst(_pic *pic) {
   pic->serial[0].serial_TXSTA = pic->P16map.TXSTA;
   pic->serial[0].serial_RCSTA = pic->P16map.RCSTA;
   pic->serial[0].serial_SPBRG = pic->P16map.SPBRG;
+  pic->serial[0].serial_SPBRGH = pic->P16map.SPBRGH;
+  pic->serial[0].serial_BAUDCTL = pic->P16map.BAUDCTL;
   pic->serial[0].serial_RCREG = pic->P16map.RCREG;
   pic->serial[0].serial_TXREG = pic->P16map.TXREG;
   pic->serial[0].serial_TXREG_ADDR = sfr_addr(pic->P16map.TXREG);

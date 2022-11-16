@@ -122,13 +122,29 @@ int serial_cfg(_pic *pic, int nser) {
   if (nser >= SERIAL_MAX)
     return 1;
 
-  if (*pic->serial[nser].serial_TXSTA & 0x04) // BRGH=1
-  {
-    pic->serial[nser].serialexbaud =
-        pic->freq / (16 * ((*pic->serial[nser].serial_SPBRG) + 1));
-  } else {
-    pic->serial[nser].serialexbaud =
-        pic->freq / (64 * ((*pic->serial[nser].serial_SPBRG) + 1));
+  if ((pic->serial[nser].serial_BAUDCTL == NULL) ||
+      (!((*pic->serial[nser].serial_BAUDCTL) & 0x08))) {
+
+    if (*pic->serial[nser].serial_TXSTA & 0x04) // BRGH=1
+    {
+      pic->serial[nser].serialexbaud =
+          pic->freq / (16 * ((*pic->serial[nser].serial_SPBRG) + 1));
+    } else {
+      pic->serial[nser].serialexbaud =
+          pic->freq / (64 * ((*pic->serial[nser].serial_SPBRG) + 1));
+    }
+  } else { // BRG16=1
+
+    if (*pic->serial[nser].serial_TXSTA & 0x04) // BRGH=1
+    {
+      pic->serial[nser].serialexbaud =
+          pic->freq / (4 * (((*pic->serial[nser].serial_SPBRGH) << 8) +
+                            (*pic->serial[nser].serial_SPBRG) + 1));
+    } else {
+      pic->serial[nser].serialexbaud =
+          pic->freq / (16 * (((*pic->serial[nser].serial_SPBRG) << 8) +
+                             (*pic->serial[nser].serial_SPBRG) + 1));
+    }
   }
 
   switch (((int)((pic->serial[nser].serialexbaud / 300.0) + 0.5))) {
@@ -482,17 +498,40 @@ void serial(_pic *pic, int nser) {
 
     pic->serial[nser].serialc++;
 
-    if (*pic->serial[nser].serial_TXSTA & 0x04) {
-      // BRGH=1  start + 8 bits + stop
-      if (pic->serial[nser].serialc >=
-          (((*pic->serial[nser].serial_SPBRG) + 1) * 40)) {
-        sr = 1;
+    if ((pic->serial[nser].serial_BAUDCTL == NULL) ||
+        (!((*pic->serial[nser].serial_BAUDCTL) & 0x08))) {
+
+      if (*pic->serial[nser].serial_TXSTA & 0x04) {
+        // BRGH=1  start + 8 bits + stop
+        if (pic->serial[nser].serialc >=
+            (((*pic->serial[nser].serial_SPBRG) + 1) * 40)) {
+          sr = 1;
+        }
+      } else {
+        // BRGH=0  start + 8 bits + stop
+        if (pic->serial[nser].serialc >=
+            (((*pic->serial[nser].serial_SPBRG) + 1) * 160)) {
+          sr = 1;
+        }
       }
-    } else {
-      // BRGH=0  start + 8 bits + stop
-      if (pic->serial[nser].serialc >=
-          (((*pic->serial[nser].serial_SPBRG) + 1) * 160)) {
-        sr = 1;
+    } else { // BRG16=1
+
+      if (*pic->serial[nser].serial_TXSTA & 0x04) {
+        // BRGH=1  start + 8 bits + stop
+        if (pic->serial[nser].serialc >=
+            ((((*pic->serial[nser].serial_SPBRGH) << 8) +
+              (*pic->serial[nser].serial_SPBRG) + 1) *
+             10)) {
+          sr = 1;
+        }
+      } else {
+        // BRGH=0  start + 8 bits + stop
+        if (pic->serial[nser].serialc >=
+            ((((*pic->serial[nser].serial_SPBRGH) << 8) +
+              (*pic->serial[nser].serial_SPBRG) + 1) *
+             40)) {
+          sr = 1;
+        }
       }
     }
 
