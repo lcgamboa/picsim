@@ -114,6 +114,10 @@ int pic_init(_pic *pic, int processor, const char *fname, int leeprom,
   pic->usart_rx = calloc(pic->USARTCOUNT, sizeof(char));
   pic->usart_tx = calloc(pic->USARTCOUNT, sizeof(char));
 
+  memset(&pic->P16map, 0x00, sizeof(P16map_t));
+  memset(&pic->P16Emap, 0x00, sizeof(P16Emap_t));
+  memset(&pic->P18map, 0x00, sizeof(P18map_t));
+
   pic->mmap(pic);
 
   pic_erase_flash(pic);
@@ -167,7 +171,7 @@ int pic_reset(_pic *pic, int flags) {
   pic->lram = 0;
   pic->rram = 0;
 
-  pic->cycles =0;
+  pic->cycles = 0;
 
   pic->jpc = 0xFFFFF;
 

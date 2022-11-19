@@ -34,8 +34,9 @@ void p16e_uart_rst(_pic *pic) {
   pic->serial[0].TXIF_mask = 0x10;
   pic->serial[0].serial_TXSTA = pic->P16Emap.TXSTA;
   pic->serial[0].serial_RCSTA = pic->P16Emap.RCSTA;
-  // FIXME only 16bits SPBRG
   pic->serial[0].serial_SPBRG = pic->P16Emap.SP1BRGL;
+  pic->serial[0].serial_SPBRGH = pic->P16Emap.SP1BRGH;
+  pic->serial[0].serial_BAUDCTL = pic->P16Emap.BAUDCON1;
   pic->serial[0].serial_RCREG = pic->P16Emap.RCREG;
   pic->serial[0].serial_TXREG = pic->P16Emap.TXREG;
   pic->serial[0].serial_TXREG_ADDR = sfr_addr(pic->P16Emap.TXREG);
@@ -58,8 +59,9 @@ void p16e_uart_rst_2(_pic *pic) {
   pic->serial[0].TXIF_mask = 0x10;
   pic->serial[0].serial_TXSTA = pic->P16Emap.TX1STA;
   pic->serial[0].serial_RCSTA = pic->P16Emap.RC1STA;
-  // FIXME only 16bits SPBRG
   pic->serial[0].serial_SPBRG = pic->P16Emap.SP1BRGL;
+  pic->serial[0].serial_SPBRGH = pic->P16Emap.SP1BRGH;
+  pic->serial[0].serial_BAUDCTL = pic->P16Emap.BAUDCON1;
   pic->serial[0].serial_RCREG = pic->P16Emap.RC1REG;
   pic->serial[0].serial_TXREG = pic->P16Emap.TX1REG;
   pic->serial[0].serial_TXREG_ADDR = sfr_addr(pic->P16Emap.TX1REG);

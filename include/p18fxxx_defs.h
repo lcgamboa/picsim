@@ -4,7 +4,7 @@
 
    //########################################################################
 
-   Copyright (c) : 2008-2020  Luis Claudio Gambôa Lopes
+   Copyright (c) : 2008-2022  Luis Claudio Gamboa Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -204,6 +204,7 @@ extern "C" {
         unsigned char * SPBRGH;
         unsigned char * RCSTA;
         unsigned char * TXSTA;
+        unsigned char * BAUDCON; 
 
         unsigned char * RC1REG;
         unsigned char * TX1REG;
@@ -211,6 +212,7 @@ extern "C" {
         unsigned char * SP1BRGH;
         unsigned char * RC1STA;
         unsigned char * TX1STA;
+        unsigned char * BAUDCON1;
         
         unsigned char * RC2REG;
         unsigned char * TX2REG;
@@ -218,7 +220,7 @@ extern "C" {
         unsigned char * SP2BRGH;
         unsigned char * RC2STA;
         unsigned char * TX2STA;
-
+        unsigned char * BAUDCON2;
 
         unsigned char * T2CON;
         unsigned char * PR2;

@@ -129,8 +129,8 @@ void PIC16F1939_map(_pic *pic) {
   pic->P16Emap.TXREG = &pic->ram[0x19A];
   pic->P16Emap.RCSTA = &pic->ram[0x19D];
   pic->P16Emap.TXSTA = &pic->ram[0x19E];
+  pic->P16Emap.BAUDCON1 = &pic->ram[0x19F];
   /*
-  pic->P16Emap.BAUDCON = &pic->ram[0x19F];
   pic->P16Emap.WPUB = &pic->ram[0x20D];
   pic->P16Emap.WPUE = &pic->ram[0x210];
    */

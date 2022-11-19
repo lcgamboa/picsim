@@ -105,6 +105,7 @@ extern "C" {
         unsigned char * TX1STA;
         unsigned char * SP1BRGL;
         unsigned char * SP1BRGH;
+        unsigned char * BAUDCON1;
 
         unsigned char * TXSTA;
         unsigned char * RCSTA;

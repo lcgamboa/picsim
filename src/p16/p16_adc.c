@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2019-2020  Luis Claudio Gamboa Lopes
+   Copyright (c) : 2019-2022  Luis Claudio Gamboa Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -587,6 +587,29 @@ void p16_adc_2(_pic *pic) {
     }
   } else {
     pic->adcstep = 0;
+  }
+
+  if (pic->lram == sfr_addr(pic->P16map.ADCON1)) {
+    // VREF selection
+    switch (((*pic->P16map.ADCON1) & 0x30) >> 4) {
+    case 1: // VREF+
+      pic->pins[pic->adc[3] - 1].ptype = PT_ANAREF;
+      break;
+    case 2: // VREF-
+      pic->pins[pic->adc[2] - 1].ptype = PT_ANAREF;
+      break;
+    case 3: // VREF+ VREF-
+      pic->pins[pic->adc[3] - 1].ptype = PT_ANAREF;
+      pic->pins[pic->adc[2] - 1].ptype = PT_ANAREF;
+      break;
+    default: // disabled
+      pic->pins[pic->adc[3] - 1].ptype =
+          ((*pic->P16map.ANSEL) & 0x08) ? PT_ANALOG : PT_DIGITAL;
+      pic->pins[pic->adc[2] - 1].ptype =
+          ((*pic->P16map.ANSEL) & 0x04) ? PT_ANALOG : PT_DIGITAL;
+      break;
+    }
+    pic->ioupdated = 1;
   }
 
   if (pic->lram == sfr_addr(pic->P16map.ANSEL)) {

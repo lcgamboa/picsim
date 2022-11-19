@@ -157,9 +157,9 @@ void PIC18F46J50_map(_pic *pic) {
   pic->P18map.T3CON = &pic->ram[0xF79];
   pic->P18map.TMR3L = &pic->ram[0xF7A];
   pic->P18map.TMR3H = &pic->ram[0xF7B];
-  // pic->P18map.BAUDCON2 = &pic->ram[0xF7C];
+  pic->P18map.BAUDCON2 = &pic->ram[0xF7C];
   pic->P18map.SPBRGH2 = &pic->ram[0xF7D];
-  // pic->P18map.BAUDCON1 = &pic->ram[0xF7E];
+  pic->P18map.BAUDCON1 = &pic->ram[0xF7E];
   pic->P18map.SPBRGH1 = &pic->ram[0xF7F];
   pic->P18map.PORTA = &pic->ram[0xF80];
   pic->P18map.PORTB = &pic->ram[0xF81];

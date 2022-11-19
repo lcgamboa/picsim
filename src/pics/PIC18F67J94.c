@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2019-2021  Luis Claudio Gamboa Lopes
+   Copyright (c) : 2019-2022  Luis Claudio Gamboa Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -327,7 +327,9 @@ void PIC18F67J94_map(_pic *pic) {
    pic->P18map.BAUDCON3 = &pic->ram[0xF2D];
    pic->P18map.TXSTA3 = &pic->ram[0xF2E];
    pic->P18map.RCSTA3 = &pic->ram[0xF2F];
-   pic->P18map.SPBRGH1 = &pic->ram[0xF30];
+   */
+   pic->P18map.SPBRGH = &pic->ram[0xF30];
+   /*
    pic->P18map.BAUDCON2 = &pic->ram[0xF31];
    pic->P18map.TXSTA2 = &pic->ram[0xF32];
    pic->P18map.RCSTA2 = &pic->ram[0xF33];
@@ -335,7 +337,7 @@ void PIC18F67J94_map(_pic *pic) {
    pic->P18map.CCPTMRS1 = &pic->ram[0xF35];
    pic->P18map.CCPTMRS0 = &pic->ram[0xF36];
    pic->P18map.CM3CON = &pic->ram[0xF37];
-   pic->P18map.CM2CON = &pic->ram[0xF38];
+   pic->P18map.CM2CON = &pic->ram[0xF38];s
    pic->P18map.SSP2CON3 = &pic->ram[0xF39];
    pic->P18map.T8CON = &pic->ram[0xF3A];
    pic->P18map.PR8 = &pic->ram[0xF3B];
@@ -386,7 +388,9 @@ void PIC18F67J94_map(_pic *pic) {
   pic->P18map.OSCCON4 = &pic->ram[0xF64];
   pic->P18map.OSCCON3 = &pic->ram[0xF65];
   pic->P18map.OSCCON2 = &pic->ram[0xF66];
-  pic->P18map.BAUDCON1 = &pic->ram[0xF67];
+  */
+  pic->P18map.BAUDCON = &pic->ram[0xF67];
+  /*
   pic->P18map.SSP1MSK = &pic->ram[0xF68];
   pic->P18map.SSP1CON3 = &pic->ram[0xF69];
   pic->P18map.TXBUF = &pic->ram[0xF6A];

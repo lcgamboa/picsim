@@ -36,6 +36,8 @@ void p18_uart_rst(_pic *pic, int nser) {
     pic->serial[0].serial_TXSTA = pic->P18map.TXSTA;
     pic->serial[0].serial_RCSTA = pic->P18map.RCSTA;
     pic->serial[0].serial_SPBRG = pic->P18map.SPBRG;
+    pic->serial[0].serial_SPBRGH = pic->P18map.SPBRGH;
+    pic->serial[0].serial_BAUDCTL = pic->P18map.BAUDCON;
     pic->serial[0].serial_RCREG = pic->P18map.RCREG;
     pic->serial[0].serial_TXREG = pic->P18map.TXREG;
     pic->serial[0].serial_TXREG_ADDR = sfr_addr(pic->P18map.TXREG);
@@ -57,9 +59,11 @@ void p18_uart_rst_2(_pic *pic, int nser) {
   if (nser == 0) {
     pic->P18map.TXSTA = pic->P18map.TX1STA;
     pic->P18map.RCSTA = pic->P18map.RC1STA;
-    pic->P18map.SPBRG = pic->P18map.SP1BRGL; // TODO support to SP1BRGL
+    pic->P18map.SPBRG = pic->P18map.SP1BRGL; 
+    pic->P18map.SPBRGH = pic->P18map.SP1BRGH; 
     pic->P18map.RCREG = pic->P18map.RC1REG;
     pic->P18map.TXREG = pic->P18map.TX1REG;
+    pic->P18map.BAUDCON = pic->P18map.BAUDCON1;
     p18_uart_rst(pic, nser);
   }
 }
@@ -73,8 +77,9 @@ void p18_uart_rst_3(_pic *pic, int nser) {
     pic->serial[0].TXIF_mask = 0x10;
     pic->serial[0].serial_TXSTA = pic->P18map.TX1STA;
     pic->serial[0].serial_RCSTA = pic->P18map.RC1STA;
-    pic->serial[0].serial_SPBRG = pic->P18map.SP1BRGL; // TODO support to
-                                                       // SP1BRGL
+    pic->serial[0].serial_SPBRG = pic->P18map.SP1BRGL; 
+    pic->serial[0].serial_SPBRGH = pic->P18map.SPBRGH;
+    pic->serial[0].serial_BAUDCTL = pic->P18map.BAUDCON1;
     pic->serial[0].serial_RCREG = pic->P18map.RC1REG;
     pic->serial[0].serial_TXREG = pic->P18map.TX1REG;
     pic->serial[0].serial_TXREG_ADDR = sfr_addr(pic->P18map.TX1REG);

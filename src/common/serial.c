@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2008-2020  Luis Claudio Gamb�a Lopes
+   Copyright (c) : 2008-2022  Luis Claudio Gamboa Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -478,6 +478,8 @@ void serial(_pic *pic, int nser) {
       }
       pic->pins[pic->usart_rx[nser] - 1].value = 1;
       pic->pins[pic->usart_tx[nser] - 1].value = 1;
+      pic->ioupdated = 1;
+      bb_uart_open(&pic->serial[nser].bbuart);
     }
 
     // envia byte para TSTR

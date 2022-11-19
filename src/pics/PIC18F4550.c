@@ -136,8 +136,8 @@ void PIC18F4550_map(_pic *pic) {
   pic->P18map.CVRCON = &pic->ram[0xFB5];
   pic->P18map.ECCP1AS = &pic->ram[0xFB6];
   pic->P18map.ECCP1DEL = &pic->ram[0xFB7];
-  pic->P18map.BAUDCON = &pic->ram[0xFB8];
   */
+  pic->P18map.BAUDCON = &pic->ram[0xFB8];
   pic->P18map.CCP2CON = &pic->ram[0xFBA];
   pic->P18map.CCP1CON = &pic->ram[0xFBD];
   pic->P18map.ADCON2 = &pic->ram[0xFC0];
