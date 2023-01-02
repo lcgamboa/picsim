@@ -94,6 +94,7 @@ void p16e_mssp(_pic *pic)
           pic->sspsr = 0;
         }
       }
+
       break;
       // case 0x04://SPI Slave mode, clock = SCK pin. SS pin control enabled.
     case 0x05: // SPI Slave mode, clock = SCK pin. SS pin control disabled.
@@ -111,9 +112,8 @@ void p16e_mssp(_pic *pic)
           (pic->ssp_sck ==
            1)) // CKP =0 CKE =0     //coloca saida na borda de subida
       {
-        pic_wr_pin16E(
-            pic, pic->sdo,
-            (((*pic->P16Emap.SSP1BUF) & (1 << (7 - pic->ssp_bit))) > 0));
+        pic_wr_pin16E(pic, pic->sdo,
+                     (((*pic->P16Emap.SSP1BUF) & (1 << (7 - pic->ssp_bit))) > 0));
       }
 
       if ((pic->ssp_scka == 1) &&
@@ -204,7 +204,7 @@ void p16e_mssp(_pic *pic)
         {
           (*pic->P16Emap.SSP1CON2) &= ~0x04;
 
-          pic->ssp_bit = 10;
+          pic->ssp_bit = 11;
 
           pic_wr_pin16E(pic, pic->sdi, 1);
           pic_wr_pin16E(pic, pic->sck, 1);
@@ -286,7 +286,7 @@ void p16e_mssp(_pic *pic)
         // read
         if ((((*pic->P16Emap.SSP1CON2) & 0x08) ||
              ((*pic->P16Emap.SSP1CON2) & 0x10)) &&
-            (pic->ssp_bit <= 10))
+            (pic->ssp_bit <= 11))
         {
 
           if ((pic->pins[pic->sck - 1].value == 1) && (pic->ssp_bit <= 8))
@@ -331,11 +331,12 @@ void p16e_mssp(_pic *pic)
 
           //  printf("rbit(%i)  sck=%i  sda=%i
           //  sdadir=%i\n",pic->ssp_bit,pic->pins[pic->sck-1].value,pic->pins[pic->sdi-1].value,pic->pins[pic->sdi-1].dir);
-        }
+        
 
-        if (pic->ssp_bit == 11)
-        {
-          pic_dir_pin16E(pic, pic->sdi, PD_OUT);
+          if (pic->ssp_bit == 11)
+          {
+            pic_dir_pin16E(pic, pic->sdi, PD_IN);
+          }
         }
       }
       break;

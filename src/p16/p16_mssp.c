@@ -282,7 +282,7 @@ void p16_mssp(_pic *pic)
         // read
         if ((((*pic->P16map.SSPCON2) & 0x08) ||
              ((*pic->P16map.SSPCON2) & 0x10)) &&
-            (pic->ssp_bit <= 10))
+            (pic->ssp_bit <= 11))
         {
 
           if ((pic->pins[pic->sck - 1].value == 1) && (pic->ssp_bit <= 8))
@@ -327,11 +327,12 @@ void p16_mssp(_pic *pic)
 
           //  printf("rbit(%i)  sck=%i  sda=%i
           //  sdadir=%i\n",pic->ssp_bit,pic->pins[pic->sck-1].value,pic->pins[pic->sdi-1].value,pic->pins[pic->sdi-1].dir);
-        }
+        
 
-        if (pic->ssp_bit == 11) //&&(pic->pins[pic->sck - 1].value == 0))
-        {
-          pic_dir_pin16(pic, pic->sdi, PD_OUT);
+          if (pic->ssp_bit == 11)
+          {
+            pic_dir_pin16(pic, pic->sdi, PD_IN);
+          }
         }
       }
       break;
