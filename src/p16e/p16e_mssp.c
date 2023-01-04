@@ -70,19 +70,24 @@ void p16e_mssp(_pic *pic)
 
       if (pic->ssp_bit)
       {
-        if (pic->ssp_sck == 1)
+        switch (pic->ssp_sck)
         {
+        case 0: // to low
+          pic_wr_pin16E(pic, pic->sck, 0);
+          pic->ssp_bit--;
+          break;
+        case 1: // midle low
           pic_wr_pin16E(
               pic, pic->sdo,
               (((*pic->P16Emap.SSP1BUF) & (1 << ((pic->ssp_bit - 1)))) > 0));
-          pic_wr_pin16E(pic, pic->sck, 1);
-        }
-        else if (pic->ssp_sck == 2)
-        {
+          break;
+        case 2: // to high
           pic->sspsr |= (pic->pins[pic->sdi - 1].value) << (pic->ssp_bit - 1);
-          pic_wr_pin16E(pic, pic->sck, 0);
-          pic->ssp_sck = 0;
-          pic->ssp_bit--;
+          pic_wr_pin16E(pic, pic->sck, 1);
+          break;
+        case 3: // midle high
+          pic->ssp_sck = -1;
+          break;
         }
         pic->ssp_sck++;
 
@@ -113,7 +118,7 @@ void p16e_mssp(_pic *pic)
            1)) // CKP =0 CKE =0     //coloca saida na borda de subida
       {
         pic_wr_pin16E(pic, pic->sdo,
-                     (((*pic->P16Emap.SSP1BUF) & (1 << (7 - pic->ssp_bit))) > 0));
+                      (((*pic->P16Emap.SSP1BUF) & (1 << (7 - pic->ssp_bit))) > 0));
       }
 
       if ((pic->ssp_scka == 1) &&
@@ -331,7 +336,6 @@ void p16e_mssp(_pic *pic)
 
           //  printf("rbit(%i)  sck=%i  sda=%i
           //  sdadir=%i\n",pic->ssp_bit,pic->pins[pic->sck-1].value,pic->pins[pic->sdi-1].value,pic->pins[pic->sdi-1].dir);
-        
 
           if (pic->ssp_bit == 11)
           {

@@ -58,7 +58,7 @@ void p16_mssp(_pic *pic)
       if (pic->lram == sfr_addr(pic->P16map.SSPBUF))
       {
         pic->ssp_bit = 8;
-        pic->ssp_sck = 0;
+        pic->ssp_sck = 1;
         pic_wr_pin16(pic, pic->sck, 0);
         pic_dir_pin16(pic, pic->sdi, PD_IN);
       }
@@ -69,20 +69,27 @@ void p16_mssp(_pic *pic)
 
       if (pic->ssp_bit)
       {
-        if (pic->ssp_sck == 1)
+
+        switch (pic->ssp_sck)
         {
+        case 0: // to low
+          pic_wr_pin16(pic, pic->sck, 0);
+          pic->ssp_bit--;
+          break;
+        case 1: // midle low
           pic_wr_pin16(
               pic, pic->sdo,
               (((*pic->P16map.SSPBUF) & (1 << ((pic->ssp_bit - 1)))) > 0));
-          pic_wr_pin16(pic, pic->sck, 1);
-        }
-        else if (pic->ssp_sck == 2)
-        {
+          break;
+        case 2: // to high
           pic->sspsr |= (pic->pins[pic->sdi - 1].value) << (pic->ssp_bit - 1);
-          pic_wr_pin16(pic, pic->sck, 0);
-          pic->ssp_sck = 0;
-          pic->ssp_bit--;
+          pic_wr_pin16(pic, pic->sck, 1);
+          break;
+        case 3: // midle high
+          pic->ssp_sck = -1;
+          break;
         }
+
         pic->ssp_sck++;
 
         if (!pic->ssp_bit)
@@ -327,7 +334,6 @@ void p16_mssp(_pic *pic)
 
           //  printf("rbit(%i)  sck=%i  sda=%i
           //  sdadir=%i\n",pic->ssp_bit,pic->pins[pic->sck-1].value,pic->pins[pic->sdi-1].value,pic->pins[pic->sdi-1].dir);
-        
 
           if (pic->ssp_bit == 11)
           {
