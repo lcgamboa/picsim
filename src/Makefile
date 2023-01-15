@@ -94,6 +94,7 @@ uninstall:
 
 clean:  clean-lib
 	rm -f picsim libpicsim.a $(OBJS)
+	rm -f modules
 	rm -f examples/*_sdcc*/*.asm
 	rm -f share/examples/*_mikroc_pro*/*.asm
 	rm -f examples/*/*.adb
