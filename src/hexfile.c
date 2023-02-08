@@ -157,7 +157,7 @@ read_ihx(_pic * pic, const char * fname, int leeprom)
       }
      else
       {
-       printf ("ERRO: Picsim->File bad checksum line %i!(%s)\n", lc, fname);
+       printf ("ERROR: Picsim->File bad checksum line %i!(%s)\n", lc, fname);
        fclose (fin);
        return HEX_CHKSUM;
       }
@@ -167,7 +167,7 @@ read_ihx(_pic * pic, const char * fname, int leeprom)
   }
  else
   {
-   printf ("ERRO: Picsim->File not found!(%s)\n", fname);
+   printf ("ERROR: Picsim->File not found!(%s)\n", fname);
    return HEX_NFOUND;
   }
  return 0; //no error
@@ -274,7 +274,7 @@ read_ihx_16e(_pic * pic, const char * fname, int leeprom)
       }
      else
       {
-       printf ("ERRO: Picsim->File bad checksum line %i!(%s)\n", lc, fname);
+       printf ("ERROR: Picsim->File bad checksum line %i!(%s)\n", lc, fname);
        fclose (fin);
        return HEX_CHKSUM;
       }
@@ -284,7 +284,7 @@ read_ihx_16e(_pic * pic, const char * fname, int leeprom)
   }
  else
   {
-   printf ("ERRO: Picsim->File not found!(%s)\n", fname);
+   printf ("ERROR: Picsim->File not found!(%s)\n", fname);
    return HEX_NFOUND;
   }
  return 0; //no error
@@ -393,7 +393,7 @@ read_ihx_18(_pic * pic, const char * fname, int leeprom)
       }
      else
       {
-       printf ("ERRO: Picsim->File bad checksum line %i!(%s)\n", lc, fname);
+       printf ("ERROR: Picsim->File bad checksum line %i!(%s)\n", lc, fname);
        fclose (fin);
        return HEX_CHKSUM;
       }
@@ -403,7 +403,7 @@ read_ihx_18(_pic * pic, const char * fname, int leeprom)
   }
  else
   {
-   printf ("ERRO: Picsim->File not found!(%s)\n", fname);
+   printf ("ERROR: Picsim->File not found!(%s)\n", fname);
    return HEX_NFOUND;
   }
  return 0; //no error
@@ -595,7 +595,7 @@ write_ihx(_pic * pic, const char * fname)
   }
  else
   {
-   printf ("ERRO: Picsim->File not found!(%s)\n", fname);
+   printf ("ERROR: Picsim->File not found!(%s)\n", fname);
    return HEX_NWRITE;
   }
  return 0; //no error
@@ -788,7 +788,7 @@ write_ihx16e(_pic * pic, const char * fname)
   }
  else
   {
-   printf ("ERRO: Picsim->File not found!(%s)\n", fname);
+   printf ("ERROR: Picsim->File not found!(%s)\n", fname);
    return HEX_NWRITE;
   }
  return 0; //no error
@@ -994,7 +994,7 @@ write_ihx18(_pic * pic, const char * fname)
   }
  else
   {
-   printf ("ERRO: Picsim->File not found!(%s)\n", fname);
+   printf ("ERROR: Picsim->File not found!(%s)\n", fname);
    return HEX_NWRITE;
   }
  return 0; //no error
