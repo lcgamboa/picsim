@@ -23,6 +23,7 @@
  void PIC16F1939_start(_pic * pic);
  void PIC16F18855_start(_pic * pic);
  void PIC16F18324_start(_pic * pic);
+ void PIC16F1829_start(_pic * pic);
  void PIC16F1789_start(_pic * pic);
  void PIC16F1788_start(_pic * pic);
  void PIC16F1619_start(_pic * pic);
@@ -51,6 +52,7 @@ void dirt_load (_pic * pic)
  PIC16F1939_start(pic);
  PIC16F18855_start(pic);
  PIC16F18324_start(pic);
+ PIC16F1829_start(pic);
  PIC16F1789_start(pic);
  PIC16F1788_start(pic);
  PIC16F1619_start(pic);
