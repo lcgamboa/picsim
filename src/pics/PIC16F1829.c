@@ -298,7 +298,7 @@ void PIC16F1829_reset(_pic* pic) {
     p16e_mssp_rst(pic);
     p16e_int_pin_rst(pic);
     p16e_int_ports_rst(pic);
-    p16e_uart_rst_2(pic);
+    p16e_uart_rst_2(pic, 0);
 }
 
 void PIC16F1829_periferic(_pic* pic) {

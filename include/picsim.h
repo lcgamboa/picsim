@@ -677,7 +677,7 @@ typedef struct {
   void (*start)(_pic *pic);
 } pic_desc;
 
-#define PMAX 25
+#define PMAX 30
 
 extern pic_desc PICS[PMAX];
 extern int PIC_count;
