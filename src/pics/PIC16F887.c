@@ -317,6 +317,10 @@ int PIC16F887_getconf(_pic* pic, unsigned int cfg) {
     return 0;
 }
 
+void PIC16F887_disable_debug(_pic* pic) {
+    pic->config[0] |= 0x2000;
+}
+
 void PIC16F887_stop(_pic* pic) {
     p16_uart_stop(pic, 0);
 }
@@ -338,6 +342,7 @@ void PIC16F887_start(_pic* pic) {
     pic->getconf = PIC16F887_getconf;
     pic->periferic = PIC16F887_periferic;
     pic->stop = PIC16F887_stop;
+    pic->disable_debug = PIC16F887_disable_debug;
 
     p16_uart_start(pic, 0);
 }

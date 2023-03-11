@@ -618,6 +618,10 @@ int PIC18F27K40_getconf(_pic* pic, unsigned int cfg) {
     return 0;
 }
 
+void PIC18F27K40_disable_debug(_pic* pic) {
+    pic->config[1] |= 0x0200;
+}
+
 void PIC18F27K40_stop(_pic* pic) {
     p18_uart_stop(pic, 0);
     p18_uart_stop(pic, 1);
@@ -641,6 +645,7 @@ void PIC18F27K40_start(_pic* pic) {
     pic->periferic = PIC18F27K40_periferic;
     pic->interrupt = interrupt18_2;
     pic->stop = PIC18F27K40_stop;
+    pic->disable_debug = PIC18F27K40_disable_debug;
 
     p18_uart_start(pic, 0);
     p18_uart_start(pic, 1);

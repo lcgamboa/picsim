@@ -580,6 +580,10 @@ int PIC18F24Q10_getconf(_pic* pic, unsigned int cfg) {
     return 0;
 }
 
+void PIC18F24Q10_disable_debug(_pic* pic) {
+    pic->config[1] |= 0x0200;
+}
+
 void PIC18F24Q10_stop(_pic* pic) {
     p18_uart_stop(pic, 0);
 }
@@ -602,6 +606,7 @@ void PIC18F24Q10_start(_pic* pic) {
     pic->periferic = PIC18F24Q10_periferic;
     pic->interrupt = interrupt18;
     pic->stop = PIC18F24Q10_stop;
+    pic->disable_debug = PIC18F24Q10_disable_debug;
 
     p18_uart_start(pic, 0);
 }

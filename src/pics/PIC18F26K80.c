@@ -655,6 +655,10 @@ int PIC18F26K80_getconf(_pic* pic, unsigned int cfg) {
     return 0;
 }
 
+void PIC18F26K80_disable_debug(_pic* pic) {
+    pic->config[3] |= 0x0080;
+}
+
 void PIC18F26K80_stop(_pic* pic) {
     p18_uart_stop(pic, 0);
 }
@@ -677,6 +681,7 @@ void PIC18F26K80_start(_pic* pic) {
     pic->periferic = PIC18F26K80_periferic;
     pic->interrupt = interrupt18_2;
     pic->stop = PIC18F26K80_stop;
+    pic->disable_debug = PIC18F26K80_disable_debug;
 
     p18_uart_start(pic, 0);
 }

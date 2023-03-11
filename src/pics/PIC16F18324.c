@@ -459,6 +459,10 @@ int PIC16F18324_getconf(_pic* pic, unsigned int cfg) {
     return 0;
 }
 
+void PIC16F18324_disable_debug(_pic* pic) {
+    pic->config[1] |= 0x0200;
+}
+
 void PIC16F18324_stop(_pic* pic) {
     p16e_uart_stop(pic, 0);
 }
@@ -481,6 +485,7 @@ void PIC16F18324_start(_pic* pic) {
     pic->periferic = PIC16F18324_periferic;
     pic->interrupt = interrupt16E_2;
     pic->stop = PIC16F18324_stop;
+    pic->disable_debug = PIC16F18324_disable_debug;
 
     p16e_uart_start(pic, 0);
 }
