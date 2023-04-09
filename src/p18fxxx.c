@@ -2140,7 +2140,6 @@ void pic_decode_18(_pic *pic) {
     pic->ram[pic->prog[pic->pc >> 1] & 0x0FFF] = pic->ram[opc & 0x0FFF];
     pic->rram = opc & 0x0FFF;
     pic->lram = pic->prog[pic->pc >> 1] & 0x0FFF;
-    pic->s2 = 1;
     break;
   case 0xD000:
     switch (opc & 0x0800) {
