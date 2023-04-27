@@ -191,7 +191,7 @@ int pic_reset(_pic *pic, int flags) {
     pic->pins[i].ptype = PT_DIGITAL;
     pic->pins[i].dir = PD_IN;
     // pic->pins[i].ovalue=0;
-    pic->pins[i].oavalue = 0;
+    pic->pins[i].oavalue = 55;
   }
 
   pic->reset(pic);
