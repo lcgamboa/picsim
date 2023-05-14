@@ -215,7 +215,8 @@ int pic_reset(_pic *pic, int flags) {
     }
 
     (*pic->P16map.TRISA) = 0xFF;
-    (*pic->P16map.TRISB) = 0xFF;
+    if (pic->P16map.TRISB)
+       (*pic->P16map.TRISB) = 0xFF;
     if (pic->P16map.TRISC)
       (*pic->P16map.TRISC) = 0xFF;
     if (pic->P16map.TRISD)
