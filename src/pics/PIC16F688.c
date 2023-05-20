@@ -171,7 +171,7 @@ void PIC16F688_reset(_pic* pic) {
 }
 
 void PIC16F688_periferic(_pic* pic) {
-    p16_adc(pic);
+    p16_adc_2(pic);
     p16_int_pin(pic);
     p16_tmr0(pic);
     p16_wdt(pic);

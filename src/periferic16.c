@@ -82,7 +82,8 @@ int pic_dir_pin16(_pic* pic, unsigned char pin, unsigned char dir) {
 
     if (val) {
         pic->trisa = (*pic->P16map.TRISA);
-        pic->trisb = (*pic->P16map.TRISB);
+        if (pic->P16map.TRISB)
+            pic->trisb = (*pic->P16map.TRISB);
         if (pic->P16map.TRISC)
             pic->trisc = (*pic->P16map.TRISC);
         if (pic->P16map.TRISD)
