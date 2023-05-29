@@ -164,7 +164,7 @@ int serial_cfg(_pic *pic, int nser) {
     BAUDRATE = 600;
 #endif
     break;
-  case 4 ... 7:
+  case 4 ... 6:
     pic->serial[nser].serialbaud = 1200;
 #ifndef _WIN_
     BAUDRATE = B1200;
@@ -172,7 +172,7 @@ int serial_cfg(_pic *pic, int nser) {
     BAUDRATE = 1200;
 #endif
     break;
-  case 8 ... 15:
+  case 7 ... 12:
     pic->serial[nser].serialbaud = 2400;
 #ifndef _WIN_
     BAUDRATE = B2400;
@@ -180,7 +180,7 @@ int serial_cfg(_pic *pic, int nser) {
     BAUDRATE = 2400;
 #endif
     break;
-  case 16 ... 31:
+  case 13 ... 24:
     pic->serial[nser].serialbaud = 4800;
 #ifndef _WIN_
     BAUDRATE = B4800;
@@ -188,7 +188,7 @@ int serial_cfg(_pic *pic, int nser) {
     BAUDRATE = 4800;
 #endif
     break;
-  case 32 ... 63:
+  case 25 ... 48:
     pic->serial[nser].serialbaud = 9600;
 #ifndef _WIN_
     BAUDRATE = B9600;
@@ -196,7 +196,7 @@ int serial_cfg(_pic *pic, int nser) {
     BAUDRATE = 9600;
 #endif
     break;
-  case 64 ... 127:
+  case 49 ... 96:
     pic->serial[nser].serialbaud = 19200;
 #ifndef _WIN_
     BAUDRATE = B19200;
@@ -204,7 +204,7 @@ int serial_cfg(_pic *pic, int nser) {
     BAUDRATE = 19200;
 #endif
     break;
-  case 128 ... 191:
+  case 97 ... 160:
     pic->serial[nser].serialbaud = 38400;
 #ifndef _WIN_
     BAUDRATE = B38400;
@@ -212,7 +212,7 @@ int serial_cfg(_pic *pic, int nser) {
     BAUDRATE = 38400;
 #endif
     break;
-  case 192 ... 383:
+  case 161 ... 320:
     pic->serial[nser].serialbaud = 57600;
 #ifndef _WIN_
     BAUDRATE = B57600;
