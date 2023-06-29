@@ -246,7 +246,7 @@ void periferic16E_step_out(_pic *pic) {
   }
 
   if (((*pic->P16Emap.TRISA) != pic->trisa) ||
-      ((pic->P16Emap.TRISD) && ((*pic->P16Emap.TRISB) != pic->trisb)) ||
+      ((pic->P16Emap.TRISB) && ((*pic->P16Emap.TRISB) != pic->trisb)) ||
       ((*pic->P16Emap.TRISC) != pic->trisc) ||
       ((pic->P16Emap.TRISD) && ((*pic->P16Emap.TRISD) != pic->trisd)) ||
       ((pic->P16Emap.TRISE) && ((*pic->P16Emap.TRISE) != pic->trise))) {
