@@ -685,7 +685,7 @@ extern "C"
     void (*start)(_pic *pic);
   } pic_desc;
 
-#define PMAX 30
+#define PMAX 35
 
   extern pic_desc PICS[PMAX];
   extern int PIC_count;

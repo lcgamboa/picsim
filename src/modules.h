@@ -18,6 +18,7 @@
  void PIC16F886_start(_pic * pic);
  void PIC16F877A_start(_pic * pic);
  void PIC16F84A_start(_pic * pic);
+ void PIC16F819_start(_pic * pic);
  void PIC16F777_start(_pic * pic);
  void PIC16F688_start(_pic * pic);
  void PIC16F648A_start(_pic * pic);
@@ -25,8 +26,10 @@
  void PIC16F1947_start(_pic * pic);
  void PIC16F1939_start(_pic * pic);
  void PIC16F18855_start(_pic * pic);
+ void PIC16F1847_start(_pic * pic);
  void PIC16F18324_start(_pic * pic);
  void PIC16F1829_start(_pic * pic);
+ void PIC16F1827_start(_pic * pic);
  void PIC16F1789_start(_pic * pic);
  void PIC16F1788_start(_pic * pic);
  void PIC16F1619_start(_pic * pic);
@@ -51,6 +54,7 @@ void dirt_load (_pic * pic)
  PIC16F886_start(pic);
  PIC16F877A_start(pic);
  PIC16F84A_start(pic);
+ PIC16F819_start(pic);
  PIC16F777_start(pic);
  PIC16F688_start(pic);
  PIC16F648A_start(pic);
@@ -58,8 +62,10 @@ void dirt_load (_pic * pic)
  PIC16F1947_start(pic);
  PIC16F1939_start(pic);
  PIC16F18855_start(pic);
+ PIC16F1847_start(pic);
  PIC16F18324_start(pic);
  PIC16F1829_start(pic);
+ PIC16F1827_start(pic);
  PIC16F1789_start(pic);
  PIC16F1788_start(pic);
  PIC16F1619_start(pic);
