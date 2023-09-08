@@ -29,6 +29,13 @@ extern "C" {
 
 #include "../include/picsim.h"
 
+
+#ifdef _WIN_
+#define INVALID_SERIAL INVALID_HANDLE_VALUE
+#else
+#define INVALID_SERIAL -1
+#endif
+
 int serial_open(_pic *pic, int nser);
 void serial(_pic *pic, int nser);
 int serial_close(_pic *pic, int nser);
