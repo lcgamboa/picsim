@@ -101,6 +101,8 @@ void PIC16F887_map(_pic* pic) {
     pic->P16map.ANSELH = &pic->ram[0x189];
     pic->P16map.EECON1 = &pic->ram[0x18C];
     pic->P16map.EECON2 = &pic->ram[0x18D];
+
+    pic->port_mirror = 0;
 }
 
 /*PINS

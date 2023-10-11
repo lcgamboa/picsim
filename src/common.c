@@ -86,6 +86,8 @@ int pic_init(_pic* pic, int processor, const char* fname, int leeprom, float fre
 
     pic->vcc = 5.0;
 
+    pic->port_mirror = 1;
+
     retcode = -1;
     for (i = 0; i < PIC_count; i++) {
         if (PICS[i].ID == processor) {

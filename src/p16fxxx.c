@@ -760,26 +760,28 @@ void pic_decode_16(_pic* pic) {
             pic->ram[0x0180 | (sfr_addr(pic->P16map.PCLATH) & 0x007F)] = temp;
         }
 
-        if ((bank == 0x000) || (bank == 0x100)) {
-            temp = pic->ram[bank | (sfr_addr(pic->P16map.PORTA) & 0x007F)];
-            pic->ram[(0x0000) | (sfr_addr(pic->P16map.PORTA) & 0x007F)] = temp;
-            pic->ram[(0x0100) | (sfr_addr(pic->P16map.PORTA) & 0x007F)] = temp;
-            temp = pic->ram[bank | (sfr_addr(pic->P16map.PORTB) & 0x007F)];
-            pic->ram[(0x0000) | (sfr_addr(pic->P16map.PORTB) & 0x007F)] = temp;
-            pic->ram[(0x0100) | (sfr_addr(pic->P16map.PORTB) & 0x007F)] = temp;
-            temp = pic->ram[bank | (sfr_addr(pic->P16map.PORTC) & 0x007F)];
-            pic->ram[(0x0000) | (sfr_addr(pic->P16map.PORTC) & 0x007F)] = temp;
-            pic->ram[(0x0100) | (sfr_addr(pic->P16map.PORTC) & 0x007F)] = temp;
-        } else {
-            temp = pic->ram[bank | (sfr_addr(pic->P16map.TRISA) & 0x007F)];
-            pic->ram[(0x0080) | (sfr_addr(pic->P16map.TRISA) & 0x007F)] = temp;
-            pic->ram[(0x0180) | (sfr_addr(pic->P16map.TRISA) & 0x007F)] = temp;
-            temp = pic->ram[bank | (sfr_addr(pic->P16map.TRISB) & 0x007F)];
-            pic->ram[(0x0080) | (sfr_addr(pic->P16map.TRISB) & 0x007F)] = temp;
-            pic->ram[(0x0180) | (sfr_addr(pic->P16map.TRISB) & 0x007F)] = temp;
-            temp = pic->ram[bank | (sfr_addr(pic->P16map.TRISC) & 0x007F)];
-            pic->ram[(0x0080) | (sfr_addr(pic->P16map.TRISC) & 0x007F)] = temp;
-            pic->ram[(0x0180) | (sfr_addr(pic->P16map.TRISC) & 0x007F)] = temp;
+        if (pic->port_mirror) {
+            if ((bank == 0x000) || (bank == 0x100)) {
+                temp = pic->ram[bank | (sfr_addr(pic->P16map.PORTA) & 0x007F)];
+                pic->ram[(0x0000) | (sfr_addr(pic->P16map.PORTA) & 0x007F)] = temp;
+                pic->ram[(0x0100) | (sfr_addr(pic->P16map.PORTA) & 0x007F)] = temp;
+                temp = pic->ram[bank | (sfr_addr(pic->P16map.PORTB) & 0x007F)];
+                pic->ram[(0x0000) | (sfr_addr(pic->P16map.PORTB) & 0x007F)] = temp;
+                pic->ram[(0x0100) | (sfr_addr(pic->P16map.PORTB) & 0x007F)] = temp;
+                temp = pic->ram[bank | (sfr_addr(pic->P16map.PORTC) & 0x007F)];
+                pic->ram[(0x0000) | (sfr_addr(pic->P16map.PORTC) & 0x007F)] = temp;
+                pic->ram[(0x0100) | (sfr_addr(pic->P16map.PORTC) & 0x007F)] = temp;
+            } else {
+                temp = pic->ram[bank | (sfr_addr(pic->P16map.TRISA) & 0x007F)];
+                pic->ram[(0x0080) | (sfr_addr(pic->P16map.TRISA) & 0x007F)] = temp;
+                pic->ram[(0x0180) | (sfr_addr(pic->P16map.TRISA) & 0x007F)] = temp;
+                temp = pic->ram[bank | (sfr_addr(pic->P16map.TRISB) & 0x007F)];
+                pic->ram[(0x0080) | (sfr_addr(pic->P16map.TRISB) & 0x007F)] = temp;
+                pic->ram[(0x0180) | (sfr_addr(pic->P16map.TRISB) & 0x007F)] = temp;
+                temp = pic->ram[bank | (sfr_addr(pic->P16map.TRISC) & 0x007F)];
+                pic->ram[(0x0080) | (sfr_addr(pic->P16map.TRISC) & 0x007F)] = temp;
+                pic->ram[(0x0180) | (sfr_addr(pic->P16map.TRISC) & 0x007F)] = temp;
+            }
         }
 
         /*

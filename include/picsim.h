@@ -368,6 +368,7 @@ extern "C"
     unsigned char trisf;
     unsigned char trisg;
     unsigned char ioupdated;
+    unsigned char port_mirror;
     // MSSP
     unsigned char ssp_ck;
     unsigned char ssp_sck;
