@@ -62,7 +62,6 @@ void p16e_mssp(_pic *pic)
         pic_wr_pin16E(pic, pic->sck, 0);
         pic_dir_pin16E(pic, pic->sdi, PD_IN);
       }
-
       if (pic->rram == sfr_addr(pic->P16Emap.SSP1BUF))
       {
         (*pic->P16Emap.SSP1STAT) &= ~0x01; // BF
@@ -208,9 +207,7 @@ void p16e_mssp(_pic *pic)
                  (pic->ssp_ck & 0x04)) // stop
         {
           (*pic->P16Emap.SSP1CON2) &= ~0x04;
-
           pic->ssp_bit = 11;
-
           pic_wr_pin16E(pic, pic->sdi, 1);
           pic_wr_pin16E(pic, pic->sck, 1);
           (*pic->P16Emap.PIR1) |= 0x08; // SSPIF
@@ -249,39 +246,42 @@ void p16e_mssp(_pic *pic)
         pic->ssp_sck = 0;
 
         // write
-        if ((((*pic->P16Emap.SSP1STAT) & 0x04)) && (pic->ssp_bit <= 10))
+        if ((((*pic->P16Emap.SSP1STAT) & 0x04)) && (pic->ssp_bit < 10))
         {
 
-          if ((pic->pins[pic->sck - 1].value == 0) && (pic->ssp_bit <= 8))
+          if (pic->pins[pic->sck - 1].value == 0)
           {
-            pic_wr_pin16E(
+            if(pic->ssp_bit < 8)
+            {
+              pic_wr_pin16E(
                 pic, pic->sdi,
                 ((*pic->P16Emap.SSP1BUF) & (0x01 << (7 - pic->ssp_bit))) > 0);
-            pic->ssp_bit++;
-            if (pic->ssp_bit == 9)
-            {
-              pic_dir_pin16E(pic, pic->sdi, PD_IN);
             }
+          
+            pic->ssp_bit++;
           }
 
           pic_wr_pin16E(pic, pic->sck, !pic->pins[pic->sck - 1].value);
 
-          if ((pic->pins[pic->sck - 1].value == 1) && (pic->ssp_bit > 8))
+          if ((pic->pins[pic->sck - 1].value == 0) && (pic->ssp_bit == 8))
+          {
+              pic_dir_pin16E(pic, pic->sdi, PD_IN);
+          }
+
+          if ((pic->pins[pic->sck - 1].value == 1) && (pic->ssp_bit == 9))
           {
             if (pic->pins[pic->sdi - 1].value)
               (*pic->P16Emap.SSP1CON2) |= 0x40; // ACKSTAT
             else
               (*pic->P16Emap.SSP1CON2) &= ~0x40; // ACKSTAT
-
-            pic->ssp_bit++;
           }
 
-          if ((pic->pins[pic->sck - 1].value == 0) && (pic->ssp_bit > 9))
+          if ((pic->pins[pic->sck - 1].value == 0) && (pic->ssp_bit == 9))
           {
             (*pic->P16Emap.SSP1STAT) &= ~0x04; // R/W
-            (*pic->P16Emap.PIR1) |= 0x08;      // SSP1IF
+            (*pic->P16Emap.PIR1) |= 0x08;     // SSP1IF
             (*pic->P16Emap.SSP1STAT) &= ~0x01; // BF
-            pic->ssp_bit++;
+            pic->ssp_bit++; //to finish
           }
 
           //    printf("wbit(%i)  sck=%i  sda=%i

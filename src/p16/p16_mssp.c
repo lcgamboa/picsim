@@ -69,7 +69,6 @@ void p16_mssp(_pic *pic)
 
       if (pic->ssp_bit)
       {
-
         switch (pic->ssp_sck)
         {
         case 0: // to low
@@ -89,7 +88,6 @@ void p16_mssp(_pic *pic)
           pic->ssp_sck = -1;
           break;
         }
-
         pic->ssp_sck++;
 
         if (!pic->ssp_bit)
@@ -247,39 +245,42 @@ void p16_mssp(_pic *pic)
         pic->ssp_sck = 0;
 
         // write
-        if ((((*pic->P16map.SSPSTAT) & 0x04)) && (pic->ssp_bit <= 10))
+        if ((((*pic->P16map.SSPSTAT) & 0x04)) && (pic->ssp_bit < 10))
         {
 
-          if ((pic->pins[pic->sck - 1].value == 0) && (pic->ssp_bit <= 8))
+          if (pic->pins[pic->sck - 1].value == 0)
           {
-            pic_wr_pin16(
+            if(pic->ssp_bit < 8)
+            {
+              pic_wr_pin16(
                 pic, pic->sdi,
                 ((*pic->P16map.SSPBUF) & (0x01 << (7 - pic->ssp_bit))) > 0);
-            pic->ssp_bit++;
-            if (pic->ssp_bit == 9)
-            {
-              pic_dir_pin16(pic, pic->sdi, PD_IN);
             }
+          
+            pic->ssp_bit++;
           }
 
           pic_wr_pin16(pic, pic->sck, !pic->pins[pic->sck - 1].value);
 
-          if ((pic->pins[pic->sck - 1].value == 1) && (pic->ssp_bit > 8))
+          if ((pic->pins[pic->sck - 1].value == 0) && (pic->ssp_bit == 8))
+          {
+              pic_dir_pin16(pic, pic->sdi, PD_IN);
+          }
+
+          if ((pic->pins[pic->sck - 1].value == 1) && (pic->ssp_bit == 9))
           {
             if (pic->pins[pic->sdi - 1].value)
               (*pic->P16map.SSPCON2) |= 0x40; // ACKSTAT
             else
               (*pic->P16map.SSPCON2) &= ~0x40; // ACKSTAT
-
-            pic->ssp_bit++;
           }
 
-          if ((pic->pins[pic->sck - 1].value == 0) && (pic->ssp_bit > 9))
+          if ((pic->pins[pic->sck - 1].value == 0) && (pic->ssp_bit == 9))
           {
             (*pic->P16map.SSPSTAT) &= ~0x04; // R/W
             (*pic->P16map.PIR1) |= 0x08;     // SSPIF
             (*pic->P16map.SSPSTAT) &= ~0x01; // BF
-            pic->ssp_bit++;
+            pic->ssp_bit++; //to finish
           }
 
           //    printf("wbit(%i)  sck=%i  sda=%i
