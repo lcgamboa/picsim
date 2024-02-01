@@ -651,7 +651,7 @@ void PIC18F4580_start(_pic* pic) {
     pic->IDSIZE = 8;
     pic->CONFIGSIZE = 7;
     pic->STACKSIZE = 31;
-    pic->CCPCOUNT = 2;
+    pic->CCPCOUNT = 1;
     pic->ADCCOUNT = 11;
     pic->USARTCOUNT = 1;
     pic->WDT_MS = 4;
