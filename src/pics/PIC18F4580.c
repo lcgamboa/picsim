@@ -563,7 +563,7 @@ void PIC18F4580_reset(_pic* pic) {
     pic->ccp[0].pin = 17;
     pic->ccp[1].pin = 27;
 
-    pic->adc[0] = 36;
+    pic->adc[0] = 2;
     pic->adc[1] = 3;
     pic->adc[2] = 4;
     pic->adc[3] = 5;
