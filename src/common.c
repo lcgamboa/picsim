@@ -227,6 +227,18 @@ int pic_reset(_pic* pic, int flags) {
                 (*pic->P16map.TRISE) = 0x07;
             if (pic->P16map.PR2)
                 (*pic->P16map.PR2) = 0xFF;
+
+            if (pic->port_mirror) {
+                pic->ram[(0x0180) | (sfr_addr(pic->P16map.TRISA) & 0x007F)] = 0xFF;
+                if (pic->P16map.TRISB)
+                    pic->ram[(0x0180) | (sfr_addr(pic->P16map.TRISB) & 0x007F)] = 0xFF;
+                if (pic->P16map.TRISC)
+                    pic->ram[(0x0180) | (sfr_addr(pic->P16map.TRISC) & 0x007F)] = 0xFF;
+                if (pic->P16map.TRISD)
+                    pic->ram[(0x0180) | (sfr_addr(pic->P16map.TRISD) & 0x007F)] = 0xFF;
+                if (pic->P16map.TRISE)
+                    pic->ram[(0x0180) | (sfr_addr(pic->P16map.TRISE) & 0x007F)] = 0xFF;
+            }
             periferic16_rst(pic);
 
             break;
