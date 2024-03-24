@@ -3,6 +3,7 @@
 //dirt hack to include dynamic load in static lib
 
  void PIC18F67J94_start(_pic * pic);
+ void PIC18F67J60_start(_pic * pic);
  void PIC18F47K40_start(_pic * pic);
  void PIC18F46J50_start(_pic * pic);
  void PIC18F4620_start(_pic * pic);
@@ -39,6 +40,7 @@
 void dirt_load (_pic * pic)
 {
  PIC18F67J94_start(pic);
+ PIC18F67J60_start(pic);
  PIC18F47K40_start(pic);
  PIC18F46J50_start(pic);
  PIC18F4620_start(pic);
