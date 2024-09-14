@@ -9,8 +9,5 @@ all: picsim_simple.c
 clean:
 	rm -rf picsim_simple
 
-run:
-	picsim_simple P16F628A ../../examples/shift.hex
-
 
 
