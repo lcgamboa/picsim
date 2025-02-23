@@ -452,7 +452,8 @@ int pic_set_apin(_pic* pic, unsigned char pin, float value) {
             pic->pins[(pin - 1)].avalue = value;
             return 1;
         } else {
-            pic->pins[(pin - 1)].avalue = 0;
+            // pic->pins[(pin - 1)].avalue = 0;
+            pic->pins[(pin - 1)].avalue = value;
             return 0;
         }
     } else
