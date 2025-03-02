@@ -1,6 +1,13 @@
 <map id="include/picsim.h" name="include/picsim.h">
-<area shape="rect" id="node1" title="PICsim &#45; PIC Simulator &#45; API." alt="" coords="153,5,281,32"/>
-<area shape="rect" id="node2" href="$p16fxxx__defs_8h_source.html" title=" " alt="" coords="5,80,128,107"/>
-<area shape="rect" id="node3" href="$p16fxxxe__defs_8h_source.html" title=" " alt="" coords="152,80,283,107"/>
-<area shape="rect" id="node4" href="$p18fxxx__defs_8h_source.html" title=" " alt="" coords="307,80,429,107"/>
+<area shape="rect" id="Node000001" title="PICsim &#45; PIC Simulator &#45; API." alt="" coords="218,5,346,31"/>
+<area shape="rect" id="Node000002" href="$bitbang__uart_8h_source.html" title=" " alt="" coords="5,79,121,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="248,33,113,77,111,72,246,28"/>
+<area shape="rect" id="Node000004" href="$p16fxxx__defs_8h_source.html" title=" " alt="" coords="146,79,269,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="272,33,231,71,228,67,268,29"/>
+<area shape="rect" id="Node000005" href="$p16fxxxe__defs_8h_source.html" title=" " alt="" coords="293,79,423,104"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="296,29,337,67,334,71,292,33"/>
+<area shape="rect" id="Node000006" href="$p18fxxx__defs_8h_source.html" title=" " alt="" coords="447,79,570,104"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="319,28,460,72,458,77,318,33"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="30,152,97,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="66,104,66,138,61,138,61,104"/>
 </map>

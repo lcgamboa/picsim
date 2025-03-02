@@ -1,8 +1,17 @@
 <map id="_pic" name="_pic">
-<area shape="rect" id="node1" title="PICsim PIC structure." alt="" coords="235,95,283,121"/>
-<area shape="rect" id="node2" href="$struct_p18map__t.html" title="PICsim P18 memory map structure." alt="" coords="5,5,92,32"/>
-<area shape="rect" id="node3" href="$struct_p16map__t.html" title="PICsim P16 memory map structure." alt="" coords="116,5,203,32"/>
-<area shape="rect" id="node4" href="$struct__serial.html" title="PICsim serial structure." alt="" coords="227,5,292,32"/>
-<area shape="rect" id="node5" href="$structpicpin.html" title="PICsim pin structure." alt="" coords="317,5,378,32"/>
-<area shape="rect" id="node6" href="$struct_p16_emap__t.html" title="PICsim P16E memory map structure." alt="" coords="403,5,497,32"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="243,181,291,207"/>
+<area shape="rect" id="Node000002" href="$structpicpin.html" title="PICsim pin structure." alt="" coords="5,93,67,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="68,123,133,155,192,173,243,185,242,191,190,179,131,160,65,128"/>
+<area shape="rect" id="Node000003" href="$structccp__t.html" title="PICsim pin structure." alt="" coords="91,93,147,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="147,124,195,155,244,180,241,184,192,160,144,129"/>
+<area shape="rect" id="Node000004" href="$struct__serial.html" title="PICsim serial structure." alt="" coords="171,93,237,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="220,129,238,156,258,180,254,183,234,159,216,132"/>
+<area shape="rect" id="Node000005" href="$structbb__uart__t.html" title=" " alt="" coords="163,5,245,31"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="207,45,207,93,201,93,201,45"/>
+<area shape="rect" id="Node000006" href="$struct_p16map__t.html" title="PICsim P16 memory map structure." alt="" coords="261,93,347,119"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="296,132,274,182,269,180,291,130"/>
+<area shape="rect" id="Node000007" href="$struct_p16_emap__t.html" title="PICsim P16E memory map structure." alt="" coords="371,93,466,119"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="395,130,351,160,292,186,290,182,348,155,392,125"/>
+<area shape="rect" id="Node000008" href="$struct_p18map__t.html" title="PICsim P18 memory map structure." alt="" coords="490,93,577,119"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="505,129,442,160,360,182,291,193,291,187,359,177,440,155,503,124"/>
 </map>

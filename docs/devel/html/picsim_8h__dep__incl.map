@@ -1,0 +1,11 @@
+<map id="include/picsim.h" name="include/picsim.h">
+<area shape="rect" id="Node000001" title="PICsim &#45; PIC Simulator &#45; API." alt="" coords="292,5,420,31"/>
+<area shape="rect" id="Node000002" href="$periferic16_8h_source.html" title=" " alt="" coords="5,79,160,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="300,37,128,81,126,76,298,32"/>
+<area shape="rect" id="Node000003" href="$periferic16e_8h_source.html" title=" " alt="" coords="184,79,347,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="332,41,282,81,279,76,329,37"/>
+<area shape="rect" id="Node000004" href="$periferic18_8h_source.html" title=" " alt="" coords="371,79,525,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="383,37,435,76,431,81,380,41"/>
+<area shape="rect" id="Node000005" href="$serial_8h_source.html" title=" " alt="" coords="550,79,671,104"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="411,32,570,76,569,81,410,37"/>
+</map>

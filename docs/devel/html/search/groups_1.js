@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hex_20functions_20errors_132',['HEX functions errors',['../group__hexload.html',1,'']]]
+  ['dir_0',['pin dir',['../group__pindir.html',1,'']]]
 ];

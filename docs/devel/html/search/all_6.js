@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['hex_5fchksum_17',['HEX_CHKSUM',['../group__hexload.html#ga2b411db808ed095099649e85c0101a0c',1,'picsim.h']]],
-  ['hex_5fnfound_18',['HEX_NFOUND',['../group__hexload.html#gad21f3f13dd6dcdf56f9f71ddfc874919',1,'picsim.h']]],
-  ['hex_5fnwrite_19',['HEX_NWRITE',['../group__hexload.html#ga98d4765ee56347c140cdd2d8d7461ab8',1,'picsim.h']]],
-  ['hex_5fok_20',['HEX_OK',['../group__hexload.html#gaf5caca4114b75abbabbc0af34041d3a0',1,'picsim.h']]],
-  ['hex_20functions_20errors_21',['HEX functions errors',['../group__hexload.html',1,'']]]
+  ['family_0',['family',['../struct__pic.html#a6f1c3e3a98f91eb22d3bbb7ea4828c86',1,'_pic::family'],['../group__family.html',1,'pic family']]],
+  ['flags_1',['config flags',['../group__cfg.html',1,'']]],
+  ['freq_2',['freq',['../struct__pic.html#a4409e94ad13a060b0ffbc0f371c80004',1,'_pic']]],
+  ['functions_20errors_3',['HEX functions errors',['../group__hexload.html',1,'']]],
+  ['functions_20usage_20simple_20example_4',['Library functions usage simple example',['../index.html#example',1,'']]]
 ];

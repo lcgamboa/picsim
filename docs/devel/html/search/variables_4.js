@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['oavalue_118',['oavalue',['../structpicpin.html#aebfe94df32f9179f93d56e84d0d6d2a9',1,'picpin']]],
-  ['ovalue_119',['ovalue',['../structpicpin.html#ae4374d09ce60b4e884fc8003e8a9f704',1,'picpin']]]
+  ['lram_0',['lram',['../struct__pic.html#a2af25516f69cad3d13025bc001611684',1,'_pic']]],
+  ['lsvalue_1',['lsvalue',['../structpicpin.html#a4f0f708ac823566b97e9294a82aee2fd',1,'picpin']]],
+  ['lvalue_2',['lvalue',['../structpicpin.html#a2eb176571ece589cc231f3a4b3718a6a',1,'picpin']]]
 ];

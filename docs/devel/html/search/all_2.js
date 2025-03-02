@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['config_20flags_3',['config flags',['../group__cfg.html',1,'']]]
+  ['bb_5fuart_5ft_0',['bb_uart_t',['../structbb__uart__t.html',1,'']]]
 ];
