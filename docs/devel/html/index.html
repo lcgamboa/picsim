@@ -139,9 +139,103 @@ picsim_simple.c</h2>
 <div class="ttc" id="apicsim_8h_html_a924adddc9cd0e35e3ffa5a36d35d4675"><div class="ttname"><a href="picsim_8h.html#a924adddc9cd0e35e3ffa5a36d35d4675">getprocbyname</a></div><div class="ttdeci">unsigned int getprocbyname(const char *str)</div><div class="ttdoc">Return processor ID by name.</div></div>
 <div class="ttc" id="apicsim_8h_html_ad228b2ee93af4da0c06d1504d340ff7a"><div class="ttname"><a href="picsim_8h.html#ad228b2ee93af4da0c06d1504d340ff7a">pic_step</a></div><div class="ttdeci">void pic_step(_pic *pic_)</div><div class="ttdoc">Execute one simulation step.</div></div>
 <div class="ttc" id="apicsim_8h_html_ae484b831548df85e4db9622c21f4a6e0"><div class="ttname"><a href="picsim_8h.html#ae484b831548df85e4db9622c21f4a6e0">pic_set_serial</a></div><div class="ttdeci">int pic_set_serial(_pic *pic_, int nser, const char *name, int flowcontrol, int ctspin, int rtspin)</div><div class="ttdoc">Configure the serial port connection.</div></div>
-<div class="ttc" id="astruct__pic_html"><div class="ttname"><a href="struct__pic.html">_pic</a></div><div class="ttdef"><b>Definition</b> picsim.h:271</div></div>
-<div class="ttc" id="astruct__pic_html_a61102273361fa4e2b1ada532d9023b8c"><div class="ttname"><a href="struct__pic.html#a61102273361fa4e2b1ada532d9023b8c">_pic::print</a></div><div class="ttdeci">unsigned char print</div><div class="ttdoc">print information ON/OFF</div><div class="ttdef"><b>Definition</b> picsim.h:272</div></div>
+<div class="ttc" id="astruct__pic_html"><div class="ttname"><a href="struct__pic.html">_pic</a></div><div class="ttdef"><b>Definition</b> picsim.h:281</div></div>
+<div class="ttc" id="astruct__pic_html_a61102273361fa4e2b1ada532d9023b8c"><div class="ttname"><a href="struct__pic.html#a61102273361fa4e2b1ada532d9023b8c">_pic::print</a></div><div class="ttdeci">unsigned char print</div><div class="ttdoc">print information ON/OFF</div><div class="ttdef"><b>Definition</b> picsim.h:282</div></div>
 </div><!-- fragment --><h2><a class="anchor" id="makefile"></a>
+Makefile</h2>
+<div class="fragment"><div class="line"> </div>
+<div class="line">CC= gcc</div>
+<div class="line"> </div>
+<div class="line">FLAGS= -Wall -ggdb</div>
+<div class="line"> </div>
+<div class="line">all: picsim_simple.c</div>
+<div class="line">    $(CC) $(FLAGS) picsim_simple.c -o picsim_simple -lpicsim</div>
+<div class="line"> </div>
+<div class="line">clean:</div>
+<div class="line">    rm -rf picsim_simple</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"> </div>
+</div><!-- fragment --><h1><a class="anchor" id="example2"></a>
+Library functions usage realtime example</h1>
+<p>Demonstration of a realtime Linux example of using picsim library functions</p>
+<h2><a class="anchor" id="realtime"></a>
+realtime.c</h2>
+<div class="fragment"><div class="line"> </div>
+<div class="line"><span class="preprocessor">#include &lt;picsim/picsim.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;sys/time.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;signal.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;unistd.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#define FREQ 4000000L</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">static</span> <a class="code hl_struct" href="struct__pic.html">_pic</a> pic1;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> timer_callback(<span class="keywordtype">int</span> signum)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> PORTB;</div>
+<div class="line">  <span class="keyword">static</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> PORTB_old;</div>
+<div class="line">  <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> nsteps = 100e-3 / (4.0 / pic1.<a class="code hl_variable" href="struct__pic.html#a4409e94ad13a060b0ffbc0f371c80004">freq</a>);</div>
+<div class="line">  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; nsteps; i++)</div>
+<div class="line">  {</div>
+<div class="line">    <a class="code hl_function" href="picsim_8h.html#ad228b2ee93af4da0c06d1504d340ff7a">pic_step</a>(&amp;pic1);</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">//READ pins</span></div>
+<div class="line">    <span class="comment">// PORTB |= pic_get_pin(&amp;pic1, 6);</span></div>
+<div class="line">    <span class="comment">// use direct access instead pic_get_pin to speed up</span></div>
+<div class="line"> </div>
+<div class="line">    PORTB = 0;</div>
+<div class="line">    PORTB |= pic1.pins[6 - 1].<a class="code hl_variable" href="structpicpin.html#a537893029f1863ac865b24ec727c24b8">value</a>;       <span class="comment">// RB0</span></div>
+<div class="line">    PORTB |= pic1.pins[7 - 1].<a class="code hl_variable" href="structpicpin.html#a537893029f1863ac865b24ec727c24b8">value</a> &lt;&lt; 1;  <span class="comment">// RB1</span></div>
+<div class="line">    PORTB |= pic1.pins[8 - 1].<a class="code hl_variable" href="structpicpin.html#a537893029f1863ac865b24ec727c24b8">value</a> &lt;&lt; 2;  <span class="comment">// RB2</span></div>
+<div class="line">    PORTB |= pic1.pins[9 - 1].<a class="code hl_variable" href="structpicpin.html#a537893029f1863ac865b24ec727c24b8">value</a> &lt;&lt; 3;  <span class="comment">// RB3</span></div>
+<div class="line">    PORTB |= pic1.pins[10 - 1].<a class="code hl_variable" href="structpicpin.html#a537893029f1863ac865b24ec727c24b8">value</a> &lt;&lt; 4; <span class="comment">// RB4</span></div>
+<div class="line">    PORTB |= pic1.pins[11 - 1].<a class="code hl_variable" href="structpicpin.html#a537893029f1863ac865b24ec727c24b8">value</a> &lt;&lt; 5; <span class="comment">// RB5</span></div>
+<div class="line">    PORTB |= pic1.pins[12 - 1].<a class="code hl_variable" href="structpicpin.html#a537893029f1863ac865b24ec727c24b8">value</a> &lt;&lt; 6; <span class="comment">// RB6</span></div>
+<div class="line">    PORTB |= pic1.pins[13 - 1].<a class="code hl_variable" href="structpicpin.html#a537893029f1863ac865b24ec727c24b8">value</a> &lt;&lt; 7; <span class="comment">// RB7</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">if</span> (PORTB != PORTB_old)</div>
+<div class="line">    {</div>
+<div class="line">      PORTB_old = PORTB;</div>
+<div class="line">      printf(<span class="stringliteral">&quot;PORTB =0x%02X\n&quot;</span>, PORTB);</div>
+<div class="line">    }</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> ctrlc_callback(<span class="keywordtype">int</span> signum)</div>
+<div class="line">{</div>
+<div class="line">  printf(<span class="stringliteral">&quot;end\n&quot;</span>);</div>
+<div class="line">  <a class="code hl_function" href="picsim_8h.html#a4ff277b4cdecf674669b65a1f7d63258">pic_end</a>(&amp;pic1);</div>
+<div class="line">  exit(0);</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_function" href="picsim_8h.html#a136f2a71b80acd53bf6b5a39b9932c3f">pic_init</a>(&amp;pic1, <a class="code hl_function" href="picsim_8h.html#a924adddc9cd0e35e3ffa5a36d35d4675">getprocbyname</a>(<span class="stringliteral">&quot;PIC16F628A&quot;</span>),  <span class="stringliteral">&quot;../../../examples/shift/shift.hex&quot;</span>, 1, FREQ);</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">struct </span>itimerval new_timer;</div>
+<div class="line">  <span class="keyword">struct </span>itimerval old_timer;</div>
+<div class="line"> </div>
+<div class="line">  new_timer.it_value.tv_sec = 0;</div>
+<div class="line">  new_timer.it_value.tv_usec = 100 * 1000; <span class="comment">//100ms</span></div>
+<div class="line">  new_timer.it_interval.tv_sec = 0;</div>
+<div class="line">  new_timer.it_interval.tv_usec = 100 * 1000; <span class="comment">//100ms</span></div>
+<div class="line"> </div>
+<div class="line">  setitimer(ITIMER_REAL, &amp;new_timer, &amp;old_timer);</div>
+<div class="line">  signal(SIGALRM, timer_callback);</div>
+<div class="line">  signal(SIGINT, ctrlc_callback);</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// Waitting forever</span></div>
+<div class="line">  <span class="keywordflow">while</span> (sleep(10))</div>
+<div class="line">    ;</div>
+<div class="line">}</div>
+<div class="ttc" id="astruct__pic_html_a4409e94ad13a060b0ffbc0f371c80004"><div class="ttname"><a href="struct__pic.html#a4409e94ad13a060b0ffbc0f371c80004">_pic::freq</a></div><div class="ttdeci">float freq</div><div class="ttdoc">frequency</div><div class="ttdef"><b>Definition</b> picsim.h:311</div></div>
+<div class="ttc" id="astructpicpin_html_a537893029f1863ac865b24ec727c24b8"><div class="ttname"><a href="structpicpin.html#a537893029f1863ac865b24ec727c24b8">picpin::value</a></div><div class="ttdeci">unsigned char value</div><div class="ttdoc">value</div><div class="ttdef"><b>Definition</b> picsim.h:96</div></div>
+</div><!-- fragment --><h2><a class="anchor" id="makefile2"></a>
 Makefile</h2>
 <div class="fragment"><div class="line"> </div>
 <div class="line">CC= gcc</div>

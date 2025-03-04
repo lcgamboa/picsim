@@ -4,5 +4,6 @@ var searchData=
   ['flags_1',['config flags',['../group__cfg.html',1,'']]],
   ['freq_2',['freq',['../struct__pic.html#a4409e94ad13a060b0ffbc0f371c80004',1,'_pic']]],
   ['functions_20errors_3',['HEX functions errors',['../group__hexload.html',1,'']]],
-  ['functions_20usage_20simple_20example_4',['Library functions usage simple example',['../index.html#example',1,'']]]
+  ['functions_20usage_20realtime_20example_4',['Library functions usage realtime example',['../index.html#example2',1,'']]],
+  ['functions_20usage_20simple_20example_5',['Library functions usage simple example',['../index.html#example',1,'']]]
 ];

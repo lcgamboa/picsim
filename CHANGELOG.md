@@ -5,6 +5,10 @@
 
 ### Other
 
+* Github actions script updated. [lcgamboa]
+
+* Docs updated. [lcgamboa]
+
 * Fix PIC18F interrupt priority execution. [lcgamboa]
 
 * Docs examples updated. [lcgamboa]

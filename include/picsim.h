@@ -50,8 +50,18 @@
  * @include picsim_simple.c
  *
  * @subsection makefile Makefile
- * @include Makefile
+ * @include simple_use/Makefile
  *
+ * @section example2 Library functions usage realtime example
+ *
+ * Demonstration of a realtime Linux example of using picsim library functions
+ *
+ * @subsection realtime realtime.c
+ * @include realtime.c
+ *
+ * @subsection makefile2 Makefile
+ * @include realtime/Makefile
+ * 
  */
 
 #ifdef __cplusplus

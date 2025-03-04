@@ -30,6 +30,10 @@ var NAVTREE =
       [ "picsim_simple.c", "index.html#simple", null ],
       [ "Makefile", "index.html#makefile", null ]
     ] ],
+    [ "Library functions usage realtime example", "index.html#example2", [
+      [ "realtime.c", "index.html#realtime", null ],
+      [ "Makefile", "index.html#makefile2", null ]
+    ] ],
     [ "Topics", "topics.html", "topics" ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
