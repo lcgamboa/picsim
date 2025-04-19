@@ -61,7 +61,7 @@
  *
  * @subsection makefile2 Makefile
  * @include realtime/Makefile
- * 
+ *
  */
 
 #ifdef __cplusplus
@@ -99,7 +99,7 @@ extern "C"
     unsigned char *port;   ///< port address
     float avalue;          ///< analog input value
     unsigned char ovalue;  ///< defaut open pin value
-    float oavalue;         ///< analog output value
+    float oavalue;         ///< digital output average value
     unsigned char lsvalue; ///< last set value (used by open collector simulation)
   } picpin;
 

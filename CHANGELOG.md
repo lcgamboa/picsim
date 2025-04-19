@@ -5,6 +5,8 @@
 
 ### Other
 
+* Docs updated. [lcgamboa]
+
 * Github actions script updated. [lcgamboa]
 
 * Docs updated. [lcgamboa]
