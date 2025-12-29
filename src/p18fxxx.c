@@ -59,6 +59,7 @@ static inline void fraddr(_pic* pic) {
 }
 
 #define VALID_ADDR(addr) (((addr) < pic->RAMSIZE) ? (addr) : ((addr) % pic->RAMSIZE))
+#define VALID_ROM(addr) (((addr) < pic->ROMSIZE) ? (addr) : ((addr) % pic->ROMSIZE))
 
 // TODO add [or not] support to extended instructions
 void pic_decode_18(_pic* pic) {
@@ -140,7 +141,7 @@ void pic_decode_18(_pic* pic) {
   }
  else
   {
-        opc = pic->prog[VALID_ADDR(pic->pc >> 1)];
+        opc = pic->prog[VALID_ROM(pic->pc >> 1)];
         // if(pic->print)printf("prog=%#06X\t",pic->debugv[0]); 
   }
 
