@@ -845,6 +845,7 @@ void pic_decode_18(_pic* pic) {
        break;
       default:
        printf ("unknown opcode 0x%04X at 0x%06X !\n", opc, pic->pc-2);
+       pic->error_flags |= PE_UNKOP;
        break;
                     }
                     break;
@@ -1089,6 +1090,7 @@ void pic_decode_18(_pic* pic) {
                     break;
                 default:
                     printf("unknown opcode 0x%04X at 0x%06X !\n", opc, pic->pc - 2);
+                    pic->error_flags |= PE_UNKOP;
                     break;
             }
             break;
@@ -1220,6 +1222,7 @@ void pic_decode_18(_pic* pic) {
                     break;
                 default:
                     printf("unknown opcode 0x%04X at 0x%06X !\n", opc, pic->pc - 2);
+                    pic->error_flags |= PE_UNKOP;
                     break;
             }
             break;
@@ -1413,6 +1416,7 @@ void pic_decode_18(_pic* pic) {
                     break;
                 default:
                     printf("unknown opcode 0x%04X at 0x%06X !\n", opc, pic->pc - 2);
+                    pic->error_flags |= PE_UNKOP;
                     break;
             }
             break;
@@ -1521,6 +1525,7 @@ void pic_decode_18(_pic* pic) {
                     break;
                 default:
                     printf("unknown opcode 0x%04X at 0x%06X !\n", opc, pic->pc - 2);
+                    pic->error_flags |= PE_UNKOP;
                     break;
             }
             break;
@@ -1631,6 +1636,7 @@ void pic_decode_18(_pic* pic) {
                     break;
                 default:
                     printf("unknown opcode 0x%04X at 0x%06X !\n", opc, pic->pc - 2);
+                    pic->error_flags |= PE_UNKOP;
                     break;
             }
             break;
@@ -1854,6 +1860,7 @@ void pic_decode_18(_pic* pic) {
                     break;
                 default:
                     printf("unknown opcode 0x%04X at 0x%06X !\n", opc, pic->pc - 2);
+                    pic->error_flags |= PE_UNKOP;
                     break;
             }
             break;
@@ -1976,6 +1983,7 @@ void pic_decode_18(_pic* pic) {
                     break;
                 default:
                     printf("unknown opcode 0x%04X at 0x%06X !\n", opc, pic->pc - 2);
+                    pic->error_flags |= PE_UNKOP;
                     break;
             }
             break;
@@ -2074,6 +2082,7 @@ void pic_decode_18(_pic* pic) {
                     break;
                 default:
                     printf("unknown opcode 0x%04X at 0x%06X !\n", opc, pic->pc - 2);
+                    pic->error_flags |= PE_UNKOP;
                     break;
             }
             break;
@@ -2244,6 +2253,7 @@ void pic_decode_18(_pic* pic) {
                     break;
                 default:
                     printf("unknown opcode 0x%04X at 0x%06X !\n", opc, pic->pc - 2);
+                    pic->error_flags |= PE_UNKOP;
                     break;
             }
             break;
@@ -2255,6 +2265,7 @@ void pic_decode_18(_pic* pic) {
             break;
         default:
             printf("unknown opcode 0x%04X at 0x%06X !\n", opc, pic->pc - 2);
+            pic->error_flags |= PE_UNKOP;
             break;
   }
 

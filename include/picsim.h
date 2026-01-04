@@ -260,9 +260,18 @@ extern "C"
 #define HEX_NWRITE 3 ///< File write error
                      /**@}*/
 
+  /**
+   * \defgroup PICsim error codes
+   * @{
+   */
+// HEX load Errors
+#define PE_NOERRO 0 ///< No erro
+#define PE_UNKOP 1  ///< Unknown opcode
+                    /**@}*/
+
   extern unsigned char NO_IO[6];
 
-// pin without IO
+  // pin without IO
 #define P_VDD &NO_IO[0]
 #define P_VSS &NO_IO[1]
 #define P_RST &NO_IO[2]
@@ -325,6 +334,7 @@ extern "C"
     unsigned char t0cki;
     unsigned char t1cki;
     unsigned char intlv;
+    unsigned char error_flags;
     // on chip debbuger
     unsigned char ocd_pgca;
     unsigned char ocd_pgc;

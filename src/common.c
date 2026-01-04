@@ -180,6 +180,8 @@ int pic_reset(_pic* pic, int flags) {
     pic->t0cki_ = 0;
     pic->t1cki_ = 1;
 
+    pic->error_flags = PE_NOERRO;
+
     /*memory clear*/
     memset(pic->ram, 0, pic->RAMSIZE);
     memset(pic->stack, 0, pic->STACKSIZE * sizeof(int));
