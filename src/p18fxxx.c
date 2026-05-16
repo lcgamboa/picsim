@@ -729,9 +729,11 @@ void pic_decode_18(_pic* pic) {
                             if (pic->intlv & 0x01) {
                                 *intcon |= 0x80;
                                 pic->intlv &= ~0x01;
-                            } else {
+                            } else if (pic->intlv & 0x02) {
                                 *intcon |= 0x40;
                                 pic->intlv &= ~0x02;
+                            } else {
+                                *intcon |= 0x80;
                             }
 
                             if (opc & 0x0001) {
