@@ -153,9 +153,6 @@ void PIC16F819_reset(_pic* pic) {
     pic->adc[3] = 2;
     pic->adc[4] = 3;
 
-    pic->usart_rx[0] = 0;
-    pic->usart_tx[0] = 0;
-
     pic->pgc = 12;
     pic->pgd = 13;
 
@@ -185,7 +182,7 @@ void PIC16F819_reset(_pic* pic) {
 
 void PIC16F819_periferic(_pic* pic) {
     p16_mssp(pic);
-    p16_adc(pic);
+    // p16_adc(pic); //FIXME ADC has only 5 channels, atual code is for 8
     p16_int_pin(pic);
     p16_int_portb(pic);
     // p16_int_ports (pic);
@@ -194,7 +191,6 @@ void PIC16F819_periferic(_pic* pic) {
     p16_eeprom(pic);
     p16_tmr1(pic);
     p16_tmr2(pic);
-    // p16_uart(pic, 0);
 }
 
 int PIC16F819_getconf(_pic* pic, unsigned int cfg) {
@@ -239,8 +235,6 @@ void PIC16F819_start(_pic* pic) {
     pic->periferic = PIC16F819_periferic;
     pic->stop = PIC16F819_stop;
     pic->disable_debug = PIC16F819_disable_debug;
-
-    p16_uart_start(pic, 0);
 }
 
 init_pic(PIC16F819, P16, 0x4e0);
