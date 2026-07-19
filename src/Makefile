@@ -86,7 +86,10 @@ clean-lib:
 install: all
 	#strip -s $(LIBNAME).so
 	install -d ${libdir}
-	$(CP) -dvf $(LIBNAME)* ${libdir}
+	install -m 755 $(LIBSHLIBNAME) ${libdir}
+	$(LN) $(LIBSHLIBNAME) ${libdir}/$(LIBSHSONAME)
+	$(LN) $(LIBSHSONAME) ${libdir}/$(LIBSHBASENAME)
+	install -m 644 $(LIBSTLIBNAME) ${libdir}
 
 uninstall:
 	$(RM) ${libdir}/$(LIBNAME)* 
