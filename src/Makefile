@@ -53,7 +53,7 @@ LIBTARGETS := $(LIBSHLIBNAME) $(LIBSHSONAME) $(LIBSHBASENAME)
 # How to create the shared library
 $(LIBSHLIBNAME): $(OBJS)
 ifeq ($(OS),Darwin)
-	$(CC) -O2 -flto -shared -Wl,-install_name,$(LIBSHSONAME) -o $@  $^
+	$(CC) -O2 -flto -shared -Wl,-install_name,"@rpath/$(LIBSHSONAME)" -o $@  $^
 else
 	$(CC) -O2 -flto -shared -Wl,-soname,$(LIBSHSONAME) -o $@  $^   
 endif 
