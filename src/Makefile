@@ -1,12 +1,22 @@
 include Makefile.Common
 
-CC= gcc
 RM= rm -f
 LN= ln -sfn
 CP= cp
 MKDIR = mkdir -p
 
-FLAGS= -Wall -g -O2 -flto -fpic -fsigned-char -Winline --param inline-unit-growth=60
+OS := $(shell uname)
+
+FLAGS= -Wall -g -O2 -flto -fpic -fsigned-char -Winline
+ifeq ($(OS),Darwin)
+    # On Mac, use Apple's Clang compiler
+    CC = clang
+    FLAGS += -mllvm -inline-threshold=275
+else
+    # On Linux, use GCC
+    CC = gcc
+    FLAGS += --param inline-unit-growth=60
+endif
 
 
 DESTDIR ?= /usr
@@ -25,9 +35,6 @@ picsim: libpicsim.a picsim.c modules.c
 
 %.o: %.c  
 	$(CC) -c $(FLAGS) $< -o $@ 
-
-
-OS := $(shell uname)
 
 # The static lib name, the shared lib name, and the internal ('so') name of
 # the shared lib.
@@ -53,7 +60,7 @@ LIBTARGETS := $(LIBSHLIBNAME) $(LIBSHSONAME) $(LIBSHBASENAME)
 # How to create the shared library
 $(LIBSHLIBNAME): $(OBJS)
 ifeq ($(OS),Darwin)
-	$(CC) -O2 -flto -shared -Wl,-install_name,$(LIBSHSONAME) -o $@  $^
+	$(CC) -O2 -flto -shared -Wl,-install_name,"@rpath/$(LIBSHSONAME)" -o $@  $^
 else
 	$(CC) -O2 -flto -shared -Wl,-soname,$(LIBSHSONAME) -o $@  $^   
 endif 
@@ -86,7 +93,10 @@ clean-lib:
 install: all
 	#strip -s $(LIBNAME).so
 	install -d ${libdir}
-	$(CP) -dvf $(LIBNAME)* ${libdir}
+	install -m 755 $(LIBSHLIBNAME) ${libdir}
+	$(LN) $(LIBSHLIBNAME) ${libdir}/$(LIBSHSONAME)
+	$(LN) $(LIBSHSONAME) ${libdir}/$(LIBSHBASENAME)
+	install -m 644 $(LIBSTLIBNAME) ${libdir}
 
 uninstall:
 	$(RM) ${libdir}/$(LIBNAME)* 
