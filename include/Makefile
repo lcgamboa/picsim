@@ -13,8 +13,7 @@ all:
 
 install: 
 	install -d ${includedir}
-	$(CP) -dvf $(LIBHEADERFILES) ${includedir}
-	chmod 644 ${includedir}/*
+	install -m 644 $(LIBHEADERFILES) ${includedir}
 
 uninstall:
 	$(RM) -r ${includedir} 
