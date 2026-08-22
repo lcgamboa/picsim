@@ -1144,6 +1144,10 @@ const char* getPinName(_pic* pic, int pin, char* pname) {
                 sprintf(pname, "RD%i", pic->pins[pin].pord);
             } else if (pic->pins[pin].port == pic->P18map.PORTE) {
                 sprintf(pname, "RE%i", pic->pins[pin].pord);
+            } else if (pic->pins[pin].port == pic->P18map.PORTF) {
+                sprintf(pname, "RF%i", pic->pins[pin].pord);
+            } else if (pic->pins[pin].port == pic->P18map.PORTG) {
+                sprintf(pname, "RG%i", pic->pins[pin].pord);
             } else {
                 strcpy(pname, "error");
             }

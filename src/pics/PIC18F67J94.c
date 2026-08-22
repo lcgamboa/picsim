@@ -783,16 +783,16 @@ void PIC18F67J94_reset(_pic* pic) {
     pic->sdo = 0;
     pic->sdi = 0;
 
-    pic->t0cki = 0;
-    pic->t1cki = 0;
+    pic->t0cki = 11;  // FIXME
+    pic->t1cki = 12;  // FIXME
 
     pic->int0 = 48;
     pic->int1 = 0;
     pic->int2 = 0;
 
     p18_tmr0_rst(pic);
-    // p18_tmr1_rst (pic);
-    // p18_tmr2_rst (pic);
+    p18_tmr1_rst(pic);
+    p18_tmr2_rst(pic);
     // p18_adc_rst (pic);
     // p18_wdt_rst (pic);
     // p18_eeprom_rst (pic);
@@ -800,7 +800,7 @@ void PIC18F67J94_reset(_pic* pic) {
     // p18_int_pin_rst (pic);
     // p18_int_portb_rst (pic);
     // p18_int_ports_rst (pic);
-    p18_uart_rst(pic, 0);
+    // p18_uart_rst(pic, 0);
 }
 
 void PIC18F67J94_periferic(_pic* pic) {
@@ -812,9 +812,9 @@ void PIC18F67J94_periferic(_pic* pic) {
     p18_tmr0(pic);
     // p18_wdt (pic);
     // p18_eeprom (pic);
-    // p18_tmr1 (pic);
-    // p18_tmr2 (pic);
-    p18_uart(pic, 0);
+    p18_tmr1(pic);
+    p18_tmr2(pic);
+    // p18_uart(pic, 0);
 }
 
 int PIC18F67J94_getconf(_pic* pic, unsigned int cfg) {

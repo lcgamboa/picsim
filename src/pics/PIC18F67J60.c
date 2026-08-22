@@ -463,7 +463,7 @@ void PIC18F67J60_reset(_pic* pic) {
     pic->adc[2] = 22;
     pic->adc[3] = 21;
     pic->adc[4] = 27;
-    pic->adc[5] = 0;
+    pic->adc[5] = 12;  // AN11
     pic->adc[6] = 17;
     pic->adc[7] = 16;
     pic->adc[8] = 15;
@@ -523,7 +523,7 @@ int PIC18F67J60_getconf(_pic* pic, unsigned int cfg) {
             return ((pic->config[0] & 0x0001) > 0);
             break;
         case CFG_WDT_DIV:
-            return (pic->config[3] & 0x000F);
+            return (pic->config[2] & 0x000F);
             break;
         case CFG_DEBUG:
             return ((pic->config[0] & 0x8000) == 0);
@@ -541,7 +541,7 @@ void PIC18F67J60_stop(_pic* pic) {
 }
 
 void PIC18F67J60_start(_pic* pic) {
-    pic->ROMSIZE = 65532;
+    pic->ROMSIZE = 65536;
     pic->EEPROMSIZE = 0;
     pic->RAMSIZE = 4096;
     pic->PINCOUNT = 64;
