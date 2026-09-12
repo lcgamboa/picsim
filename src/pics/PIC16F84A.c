@@ -50,6 +50,8 @@ void PIC16F84A_map(_pic* pic) {
     pic->P16map.TRISB = &pic->ram[0x86];
     pic->P16map.EECON1 = &pic->ram[0x88];
     pic->P16map.EECON2 = &pic->ram[0x89];
+
+    pic->port_mirror = 0;
 }
 
 /*PINS
@@ -121,9 +123,6 @@ void PIC16F84A_reset(_pic* pic) {
     pic->pins[17].pord = 1;
 
     pic->mclr = 4;
-
-    pic->usart_rx[0] = 0;
-    pic->usart_tx[0] = 0;
 
     pic->pgc = 12;
     pic->pgd = 13;

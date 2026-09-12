@@ -84,12 +84,21 @@ void main_loop(void) {
 
       switch (family) {
       case P16:
-        printf("PC=0x%04X W=\033[1;32m 0x%#02X \033[0m STATUS=0x%02X "
+        if(pic1.P16map.TMR1H){
+          printf("PC=0x%04X W=\033[1;32m 0x%#02X \033[0m STATUS=0x%02X "
                "PORTA=0x%02X PORTB=0x%02X INTCON=\033[1;32m 0x%02X \033[0m "
                "TMR0=0x%02X TMR1H=0x%04X TMR1L=0x%04X TMR2=0x%04X\n",
                pic1.pc, pic1.w, (*pic1.P16map.STATUS), (*pic1.P16map.PORTA),
                (*pic1.P16map.PORTB), (*pic1.P16map.INTCON), (*pic1.P16map.TMR0),
                (*pic1.P16map.TMR1H), (*pic1.P16map.TMR1L), (*pic1.P16map.TMR2));
+          }
+          else{
+          printf("PC=0x%04X W=\033[1;32m 0x%#02X \033[0m STATUS=0x%02X "
+               "PORTA=0x%02X PORTB=0x%02X INTCON=\033[1;32m 0x%02X \033[0m "
+               "TMR0=0x%02X\n",
+               pic1.pc, pic1.w, (*pic1.P16map.STATUS), (*pic1.P16map.PORTA),
+               (*pic1.P16map.PORTB), (*pic1.P16map.INTCON), (*pic1.P16map.TMR0));
+          }
 
         for (i = 0; i < 16; i++)
           printf("%#04X   ", pic1.ram[i]);
