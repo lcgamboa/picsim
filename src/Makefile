@@ -7,7 +7,7 @@ MKDIR = mkdir -p
 
 OS := $(shell uname)
 
-FLAGS= -Wall -g -O2 -flto -fpic -fsigned-char -Winline
+FLAGS= -Wall -g -O2  -fpic -fsigned-char -Winline
 ifeq ($(OS),Darwin)
     # On Mac, use Apple's Clang compiler
     CC = clang
@@ -60,9 +60,9 @@ LIBTARGETS := $(LIBSHLIBNAME) $(LIBSHSONAME) $(LIBSHBASENAME)
 # How to create the shared library
 $(LIBSHLIBNAME): $(OBJS)
 ifeq ($(OS),Darwin)
-	$(CC) -O2 -flto -shared -Wl,-install_name,"@rpath/$(LIBSHSONAME)" -o $@  $^
+	$(CC) -O2  -shared -Wl,-install_name,"@rpath/$(LIBSHSONAME)" -o $@  $^
 else
-	$(CC) -O2 -flto -shared -Wl,-soname,$(LIBSHSONAME) -o $@  $^   
+	$(CC) -O2  -shared -Wl,-soname,$(LIBSHSONAME) -o $@  $^   
 endif 
 
 $(LIBSHSONAME): $(LIBSHLIBNAME)
